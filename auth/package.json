@@ -5,15 +5,23 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "quercia build -m=production",
-    "dev": "quercia watch"
+    "build": "rm -rf __quercia && quercia build -m=production",
+    "dev": "rm -rf __quercia && quercia watch"
   },
   "dependencies": {
+    "@emotion/css": "^11.0.0-next.12",
+    "@emotion/react": "^11.0.0-next.12",
+    "@emotion/server": "^11.0.0-next.12",
+    "@emotion/styled": "^11.0.0-next.12",
+    "polished": "^3.5.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "use-prefers-theme": "^0.1.2"
   },
   "devDependencies": {
-    "@quercia/cli": "^0.1.3",
+    "@quercia/cli": "^0.1.5",
+    "@types/react": "^16.9.32",
+    "@types/react-dom": "^16.9.6",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3"
   },

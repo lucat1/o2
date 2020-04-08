@@ -8,7 +8,10 @@ module.exports = function ({ config, isServer }) {
     rules: [
       {
         test: /.(ts|tsx)$/,
-        loader: 'ts-loader'
+        loader: 'ts-loader',
+        options: {
+          configFile: require('path').join(__dirname, '..', 'tsconfig.json')
+        }
       }
     ]
   }

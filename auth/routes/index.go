@@ -10,8 +10,9 @@ import (
 // and links to the main urls
 func Index(w http.ResponseWriter, r *http.Request) {
 	quercia.Render(w, r, "index", quercia.Props{
-		"user": quercia.Props{
+		"loggedUser": quercia.Props{
 			"username": "luca",
+			"email":    "fromzeroluke1@gmail.com",
 		},
 	})
 }

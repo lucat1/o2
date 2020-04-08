@@ -4,11 +4,14 @@ import (
 	// initialize zerolog
 	"flag"
 	"net/http"
+	"path"
 	"strconv"
 
 	// initialize zerolog options
 	"github.com/kataras/muxie"
-	"github.com/lucat1/o2.auth/routes"
+	"github.com/lucat1/o2/auth/routes"
+	"github.com/lucat1/o2/pkg/middleware"
+	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/quercia"
 
 	"github.com/rs/zerolog/log"
@@ -26,25 +29,28 @@ func init() {
 	host = flag.String("host", "localhost", "Sets the web server host")
 	flag.Parse()
 
-	// instantiate the http directory for the static files
-	dir = http.Dir("./__quercia")
-	quercia.SetDir(dir)
+	// initialize the logger, store and database
+	store.Init()
 
-	// o2log.Init()
-	// db.Init()
-	// users.Init()
+	// instantiate the http directory for the static files
+	dir = http.Dir(path.Join(store.GetCwd(), "__quercia"))
+	quercia.SetDir(dir)
 }
 
 func main() {
 	mux := muxie.NewMux()
 	//mux.Use(auth.Middleware)
 	mux.Handle("/__quercia/*", http.StripPrefix("/__quercia/", http.FileServer(dir)))
+
+	// log requests during debug
+	mux.Use(middleware.DebugMiddleware)
+
 	mux.HandleFunc("/", routes.Index)
 	// mux.HandleFunc("/register", routes.Register)
 	// mux.HandleFunc("/login", routes.Login)
 	// mux.HandleFunc("/logout", externalauth.Logout)
 	// mux.HandleFunc("/me", routes.Me)
-	// mux.HandleFunc("/*path", routes.NotFound)
+	mux.HandleFunc("/*path", routes.NotFound)
 
 	log.Info().
 		Str("host", *host).
