@@ -1,0 +1,30 @@
+{
+  "name": "o2.auth",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "quercia build -m=production",
+    "dev": "quercia watch"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@quercia/cli": "^0.1.3",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": true,
+    "arrowParens": "avoid",
+    "trailingComma": "none",
+    "proseWrap": "always",
+    "quoteProps": "consistent"
+  }
+}
