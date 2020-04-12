@@ -2,37 +2,28 @@ package auth
 
 import (
 	"errors"
-	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
+	"github.com/rs/zerolog/log"
+	"golang.org/x/crypto/bcrypt"
 )
 
-// Claims is the struct serialized into the JWT
-type Claims struct {
-	Email    string `json:"email"`
-	Username string `json:"username"`
-
-	jwt.StandardClaims
-}
-
-// Login generates a login JWT for the requested user
+// Login checks the given email/password and authenticates a user
 func Login(user models.User) (string, error) {
-	claims := &Claims{
-		Email:    user.Email,
-		Username: user.Username,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(5 * time.Minute).Unix(),
-		},
+	if !models.ExistsUser(models.User{Email: user.Email}) {
+		return "", errors.New("Invalid email address")
 	}
 
-	key := store.GetConfig().Section("").Key("jwt_key").String()
-	_token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	token, err := _token.SignedString([]byte(key))
-	if err != nil {
-		return "", errors.New("JWT: " + err.Error())
+	var dbUser models.User
+	if err := store.GetDB().Where("email = ?", user.Email).First(&dbUser).Error; err != nil {
+		log.Error().Err(err).Msg("Could not find user during login, but the email seems to exist")
+		return "", errors.New("Internal error. Please try again later")
 	}
 
-	return token, nil
+	if bcrypt.CompareHashAndPassword([]byte(dbUser.Password), []byte(user.Password)) != nil {
+		return "", errors.New("Invalid password")
+	}
+
+	return Token(dbUser)
 }

@@ -31,5 +31,5 @@ func Register(user models.User, password string) (string, error) {
 		return "", errors.New("Internal error. Please try again later")
 	}
 
-	return Login(user)
+	return Token(user)
 }

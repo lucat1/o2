@@ -49,7 +49,7 @@ func main() {
 
 	mux.HandleFunc("/", routes.Index)
 	mux.HandleFunc("/register", routes.Register)
-	// mux.HandleFunc("/login", routes.Login)
+	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", routes.Logout)
 	// mux.HandleFunc("/me", routes.Me)
 	mux.HandleFunc("/*path", routes.NotFound)

@@ -1,19 +1,8 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { Head, navigate } from '@quercia/quercia'
-import styled from '@emotion/styled'
 
-const Container = styled.form`
-  height: calc(100vh - 3.5rem);
-  width: 100vw;
-  margin: 0;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
+import Form from '../components/form'
 import Input from '../components/input'
 
 interface Data {
@@ -26,7 +15,7 @@ interface RegisterProps {
   error: string
 }
 
-export default ({ error }: RegisterProps, ref) => {
+export default ({ error }: RegisterProps) => {
   const [isLoading, setLoading] = React.useState(typeof error == 'string')
   const { handleSubmit, register, errors } = useForm<Data>()
 
@@ -53,7 +42,7 @@ export default ({ error }: RegisterProps, ref) => {
       <Head>
         <title>register - auth.o2</title>
       </Head>
-      <Container onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         {error && <h1 style={{ color: 'red' }}>{error}</h1>}
 
         <Input
@@ -103,7 +92,7 @@ export default ({ error }: RegisterProps, ref) => {
         <button disabled={isLoading} type='submit'>
           Submit
         </button>
-      </Container>
+      </Form>
     </>
   )
 }

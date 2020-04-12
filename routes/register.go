@@ -30,7 +30,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method != "POST" {
-		quercia.Render(w, r, "login", data.Compose(r, data.Base))
+		quercia.Render(w, r, "register", data.Compose(r, data.Base))
 		return
 	}
 

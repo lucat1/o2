@@ -5,8 +5,21 @@ import (
 
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
+	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/quercia"
 )
+
+func loginErr(w http.ResponseWriter, r *http.Request, msg string) {
+	quercia.Render(w, r, "login", data.Compose(
+		r,
+		data.Base,
+		func(r *http.Request) quercia.Props {
+			return quercia.Props{
+				"error": msg,
+			}
+		},
+	))
+}
 
 // Login renders the login page and handles authentication
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -22,8 +35,32 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
-	//email := r.Form.Get("email")
-	//password := r.Form.Get("password")
+	email := r.Form.Get("email")
+	password := r.Form.Get("password")
 
+	if email == "" || password == "" {
+		loginErr(w, r, "Please fill in all the required fields")
+		return
+	}
+
+	token, err := auth.Login(models.User{
+		Email:    email,
+		Password: password,
+	})
+
+	if err != nil {
+		loginErr(w, r, err.Error())
+		return
+	}
+
+	cookie := &http.Cookie{
+		Name:  "token",
+		Value: token,
+	}
+
+	// set the cookie both in the client response and also in the reuqest as it
+	// will be used by the `data.Base` function to get the authentication state later
+	http.SetCookie(w, cookie)
+	r.AddCookie(cookie)
 	quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
 }
