@@ -15,4 +15,8 @@ const Logo: React.FunctionComponent = (
   )
 }
 
+if (process.env.NODE_ENV !== 'production') {
+  Logo.displayName = 'Logo'
+}
+
 export default Logo

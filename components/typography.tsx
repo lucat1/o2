@@ -52,3 +52,14 @@ export const Link = factory<LinkProps>(QLink)
 export const SpacedLink = factory<LinkProps>(styled(QLink)`
   margin: 0 0.5rem;
 `)
+
+if (process.env.NODE_ENV !== 'production') {
+  A.displayName = 'Typography(a)'
+  SpacedA.displayName = 'Spaced(a)'
+
+  H4.displayName = 'Typography(h4)'
+  SpacedH4.displayName = 'Spaced(h4)'
+
+  Link.displayName = 'Typography(Link)'
+  SpacedLink.displayName = 'Spaced(Link)'
+}

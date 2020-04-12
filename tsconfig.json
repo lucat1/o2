@@ -3,6 +3,8 @@
     "target": "ES6",
     "module": "ESNext",
     "moduleResolution": "node",
-    "jsx": "react"
+    "jsx": "react",
+    "typeRoots": ["./auth/node_modules/@types"],
+    "types": ["node"]
   }
 }

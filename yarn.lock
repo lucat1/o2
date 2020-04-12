@@ -249,10 +249,10 @@
     widest-line "^2.0.1"
     wrap-ansi "^4.0.0"
 
-"@quercia/cli@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@quercia/cli/-/cli-0.1.5.tgz#e5164e24e799a48aef9d79cf05643a978bf39b3d"
-  integrity sha512-9wfz4aeEKd/V8oNU3jGrNpo062ffKKTVHXKxQTfHmQkZvM8kmpv9ODrYkrPzPpAtolnP2jsUYyN29EjjtgsXbA==
+"@quercia/cli@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@quercia/cli/-/cli-0.1.7.tgz#277101973d810d7f22286d9d513cf04ba767ac26"
+  integrity sha512-iNWShxEgb/ZDomeZzKz5IvGuCT1a61kinANOhOawAlqSKRCf2UYD1HzNyumHqv6rf53AA2kgMMQDkWMtwaHPdQ==
   dependencies:
     uid "^1.0.0"
     "@oclif/command" "^1.5.19"
@@ -268,22 +268,27 @@
     webpack "^4.42.0"
     webpack-node-externals "^1.7.2"
 
-"@quercia/quercia@0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@quercia/quercia/-/quercia-0.1.3.tgz#c6496fb9e0522bef953d619cfdad79ed458058c1"
-  integrity sha512-GNNQVLi9tZg13lVjdaAGGJ8Oze0w0rbHP1GGsVWw8WVF1rTIj4W0fw7OwU0rZoJvMfZ6xKF+wVtIJKsFTwNbAg==
+"@quercia/quercia@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@quercia/quercia/-/quercia-0.1.4.tgz#4b3d1be0d21a6fc2bea30a788b62939bfc48d5da"
+  integrity sha512-M7Kbvk1VKopGBPTtr7cI6d1a2vzgTQLpH374PXaeS0By/WAjvZmSfxndqMoDOrZMWOfS+7BUMWhjuBjt+Bn25A==
   dependencies:
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
 
 "@quercia/runtime@^0.1.1":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@quercia/runtime/-/runtime-0.1.3.tgz#c92be9c0955871f659f8fee65a8b841af36bfbe2"
-  integrity sha512-OkbvayUqMw4wRh1DVvA/d9xr7bo0HwAbamloCVGvrcC2B8YqROCtTzzHSqPAckaJ3eeZYZOKQzrlAjsklHsAeA==
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@quercia/runtime/-/runtime-0.1.4.tgz#5594952fb76982b83372bdfab5444ccfd0c444bf"
+  integrity sha512-6IzLYHms3BQEEzZyVfuLZsEZ/d/1x/nXiQrq1EkhyNpD0PicvdmMOsxzaTbSeICoPCSZCI+XWK1LEt9Y5To6Pg==
   dependencies:
-    "@quercia/quercia" "0.1.3"
+    "@quercia/quercia" "0.1.4"
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
+
+"@types/node@^13.11.1":
+  version "13.11.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.11.1.tgz#49a2a83df9d26daacead30d0ccc8762b128d53c7"
+  integrity sha512-eWQGP3qtxwL8FGneRrC5DwrJLGN4/dH1clNTuLfN81HCrxVtxRjygDTUoZJ5ASlDEeo0ppYFQjQIlXhtXpOn6g==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -303,9 +308,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.9.32":
-  version "16.9.32"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.32.tgz#f6368625b224604148d1ddf5920e4fefbd98d383"
-  integrity sha512-fmejdp0CTH00mOJmxUPPbWCEBWPvRIL4m8r0qD+BSDUqmutPyGQCHifzMpMzdvZwROdEdL78IuZItntFWgPXHQ==
+  version "16.9.34"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.34.tgz#f7d5e331c468f53affed17a8a4d488cd44ea9349"
+  integrity sha512-8AJlYMOfPe1KGLKyHpflCg5z46n0b5DbRfqDksxBLBTUpB75ypDBAO9eCUcjNwE6LCUslwTz00yyG/X9gaVtow==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -2594,6 +2599,11 @@ posix-character-classes@^0.1.0:
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
 
+preact@^10.4.0:
+  version "10.4.0"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.4.0.tgz#90e10264a221690484a56344437a353ffac08600"
+  integrity sha512-34iqY2qPWKAmsi+tNNwYCstta93P+zF1f4DLtsOUPh32uYImNzJY7h7EymCva+6RoJL01v3W3phSRD8jE0sFLg==
+
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
@@ -2719,6 +2729,11 @@ react-dom@^16.13.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.19.1"
+
+react-hook-form@^5.3.1:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-5.4.0.tgz#35177105c4ce4a01584579ab7edc14c6fe764a36"
+  integrity sha512-2m8BpiuFpNkfcAfFHGBWi/pVEsRbkhmH2yPuM7RSmeuXrEnH8Ohk50SnScDWUNwflN4v2x2FAHy4w64ct+SLrA==
 
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"

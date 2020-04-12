@@ -16,12 +16,15 @@
     "polished": "^3.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^5.3.1",
     "use-prefers-theme": "^0.1.2"
   },
   "devDependencies": {
-    "@quercia/cli": "^0.1.5",
+    "@quercia/cli": "^0.1.7",
+    "@types/node": "^13.11.1",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
+    "preact": "^10.4.0",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3"
   },

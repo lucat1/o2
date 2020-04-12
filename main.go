@@ -9,9 +9,10 @@ import (
 
 	// initialize zerolog options
 	"github.com/kataras/muxie"
-	"github.com/lucat1/o2/auth/routes"
 	"github.com/lucat1/o2/pkg/middleware"
+	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
+	"github.com/lucat1/o2/routes"
 	"github.com/lucat1/quercia"
 
 	"github.com/rs/zerolog/log"
@@ -31,6 +32,7 @@ func init() {
 
 	// initialize the logger, store and database
 	store.Init()
+	models.Init()
 
 	// instantiate the http directory for the static files
 	dir = http.Dir(path.Join(store.GetCwd(), "__quercia"))
@@ -46,8 +48,9 @@ func main() {
 	mux.Use(middleware.DebugMiddleware)
 
 	mux.HandleFunc("/", routes.Index)
-	// mux.HandleFunc("/register", routes.Register)
+	mux.HandleFunc("/register", routes.Register)
 	// mux.HandleFunc("/login", routes.Login)
+	mux.HandleFunc("/authorize", routes.Authorize)
 	// mux.HandleFunc("/logout", externalauth.Logout)
 	// mux.HandleFunc("/me", routes.Me)
 	mux.HandleFunc("/*path", routes.NotFound)

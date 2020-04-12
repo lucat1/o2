@@ -4,5 +4,5 @@ export interface LoggedUser {
 }
 
 export interface BaseData {
-  loggedUser?: LoggedUser
+  account?: LoggedUser
 }

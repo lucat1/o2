@@ -12,13 +12,13 @@ import {
 
 import usePrefersTheme from 'use-prefers-theme'
 import Header from '../components/header'
-import Body from '../components/body'
 
 import * as themes from '../types/theme'
 
 const global: Interpolation<themes.Theme> = theme => css`
   body {
     margin: 0;
+    font-size: calc(1rem + 0.5vw);
   }
 
   html {
@@ -44,10 +44,10 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     <CacheProvider value={cache}>
       <ThemeProvider theme={themes[pref]}>
         <Global styles={global} />
+
         <Header service='auth' />
-        <Body>
-          <Component {...pageProps} />
-        </Body>
+
+        <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
   )
