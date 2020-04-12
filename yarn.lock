@@ -268,20 +268,20 @@
     webpack "^4.42.0"
     webpack-node-externals "^1.7.2"
 
-"@quercia/quercia@0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@quercia/quercia/-/quercia-0.1.4.tgz#4b3d1be0d21a6fc2bea30a788b62939bfc48d5da"
-  integrity sha512-M7Kbvk1VKopGBPTtr7cI6d1a2vzgTQLpH374PXaeS0By/WAjvZmSfxndqMoDOrZMWOfS+7BUMWhjuBjt+Bn25A==
+"@quercia/quercia@0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@quercia/quercia/-/quercia-0.1.5.tgz#a0854ee9381124a6a70a47b1cbec721aae64f91d"
+  integrity sha512-NnrLMVD3VWSve/LuNMwcVufzBcgE7/3aYPPS0Ok452vokSAs2sp41qT3yrlS+uEhudfiFdjg5jkT40p1VWdtSQ==
   dependencies:
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
 
 "@quercia/runtime@^0.1.1":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@quercia/runtime/-/runtime-0.1.4.tgz#5594952fb76982b83372bdfab5444ccfd0c444bf"
-  integrity sha512-6IzLYHms3BQEEzZyVfuLZsEZ/d/1x/nXiQrq1EkhyNpD0PicvdmMOsxzaTbSeICoPCSZCI+XWK1LEt9Y5To6Pg==
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@quercia/runtime/-/runtime-0.1.5.tgz#5973cae6dc80e2673b84a1cac8864010e43f06af"
+  integrity sha512-gHzV7JWlwbPvZkLm3+HV6LIRq2YM7ZWfQPdttvUixNqpJupghz1XNroQV1tX1tWZlXxfw1uuV7Sjn7qFlsZIvQ==
   dependencies:
-    "@quercia/quercia" "0.1.4"
+    "@quercia/quercia" "0.1.5"
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
 

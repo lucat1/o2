@@ -71,11 +71,14 @@ const Header: React.FunctionComponent<HeaderProps> = ({ service }) => {
       </div>
       <div>
         {props.account ? (
-          <SpacedH4>
-            <Link known to='/profile'>
-              {props.account.username}
-            </Link>
-          </SpacedH4>
+          <>
+            <SpacedH4>
+              <Link known to='/profile'>
+                {props.account.username}
+              </Link>
+            </SpacedH4>
+            |<Link to='/logout'>⟶</Link>
+          </>
         ) : (
           <>
             <SpacedLink known to='/login'>

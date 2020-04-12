@@ -30,6 +30,12 @@ export default ({ error }: RegisterProps, ref) => {
   const [isLoading, setLoading] = React.useState(typeof error == 'string')
   const { handleSubmit, register, errors } = useForm<Data>()
 
+  React.useEffect(() => {
+    if (error) {
+      setLoading(false)
+    }
+  }, [error])
+
   const onSubmit = async (data: Data) => {
     setLoading(true)
 
@@ -39,8 +45,7 @@ export default ({ error }: RegisterProps, ref) => {
     body.set('username', data.username)
     body.set('password', data.password)
 
-    console.log('navigating 2')
-    navigate('/register', 'POST', { body })
+    navigate('/register', 'POST', { body, credentials: 'same-origin' })
   }
 
   return (
