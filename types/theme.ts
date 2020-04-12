@@ -7,6 +7,7 @@ export interface Theme {
 }
 
 const shared = {
+  primary: '#C792EA',
   red: 'red'
 }
 

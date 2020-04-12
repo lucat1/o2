@@ -10,8 +10,7 @@ export default ({ account }: BaseData) => {
         <title>Index - auth.o2</title>
         <meta content='the index page of the auth.o2 service' />
       </Head>
-      <a>Your username: {account?.username || 'Not logged in'}</a>
-      <Link to='/test'>broken link</Link>
+      <h1>Index page</h1>
     </div>
   )
 }

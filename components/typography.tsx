@@ -3,6 +3,7 @@ import { usePrerender, Link as QLink, LinkProps } from '@quercia/quercia'
 import styled from '@emotion/styled'
 
 import Skeleton from './skeleton'
+import Theme from '../types/theme'
 
 export interface TypographyProps {
   known?: boolean
@@ -43,13 +44,20 @@ type AP = React.DetailedHTMLProps<
   HTMLAnchorElement
 >
 
-export const A = factory<AP>(props => <a {...props} />)
-export const SpacedA = factory<AP>(styled.a`
+const makeA = c => styled(c)<{ theme: Theme }>`
+  text-decoration: none;
+  color: ${props => props.theme.primary};
+`
+const _A = makeA('a')
+const _QLink = makeA(QLink)
+
+export const A = factory<AP>(props => <_A {...props} />)
+export const SpacedA = factory<AP>(styled(_A)`
   margin: 0 0.5rem;
 `)
 
-export const Link = factory<LinkProps>(QLink)
-export const SpacedLink = factory<LinkProps>(styled(QLink)`
+export const Link = factory<LinkProps>(_QLink)
+export const SpacedLink = factory<LinkProps>(styled(_QLink)`
   margin: 0 0.5rem;
 `)
 

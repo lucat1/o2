@@ -38,7 +38,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     pref = 'light'
   }
 
-  pref = 'light'
+  // pref = 'light'
 
   return (
     <CacheProvider value={cache}>

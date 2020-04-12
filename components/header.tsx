@@ -16,9 +16,9 @@ const Container = styled.nav<{ theme?: Theme }>`
   left: 0;
   right: 0;
 
-  /* 3.5 rems - the border (0.0625rem) */
-  height: 3.4375rem;
-  padding: 0 3rem;
+  /* 2.5 ems - the border (0.0625em) */
+  height: 2.4375em;
+  padding: 0 3em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,12 +29,11 @@ const Container = styled.nav<{ theme?: Theme }>`
     align-items: center;
   }
 
-  font-size: 1.15rem;
   background: ${({ theme }) =>
     theme.dark
       ? darken(0.1)(theme.background)
       : lighten(0.5)(theme.background)};
-  border-bottom: 0.0625rem solid
+  border-bottom: 1px solid
     ${({ theme }) =>
       theme.dark
         ? lighten(0.2)(theme.background)
@@ -42,8 +41,8 @@ const Container = styled.nav<{ theme?: Theme }>`
 `
 
 const Logo = styled(_Logo)`
-  height: 1.5rem;
-  margin: 1rem;
+  height: 0.75em;
+  margin: 1em;
   margin-left: 0;
 `
 
@@ -77,7 +76,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({ service }) => {
                 {props.account.username}
               </Link>
             </SpacedH4>
-            |<Link to='/logout'>⟶</Link>
+            <Link to='/logout'>⟶</Link>
           </>
         ) : (
           <>

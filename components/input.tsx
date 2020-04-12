@@ -21,6 +21,7 @@ const InputBase = styled.input<{ theme?: Theme }>`
   min-width: 16rem;
   padding: 0 0.75rem;
   margin-bottom: 1.5rem;
+  color: ${props => props.theme.color};
   background: ${({ theme, disabled }) =>
     theme.dark
       ? disabled
