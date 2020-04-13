@@ -10,7 +10,7 @@ export const Base = styled.div<{ theme?: Theme }>`
     theme.dark
       ? lighten(0.1)(theme.background)
       : darken(0.1)(theme.background)};
-  border-radius: 0.25rem;
+  border-radius: 0.25em;
 `
 
 export interface SkeletonProps {
@@ -18,17 +18,17 @@ export interface SkeletonProps {
   height: number | string
 }
 
-const Skeleton: React.FunctionComponent<SkeletonProps> = props => {
-  const width =
-    typeof props.width === 'string'
-      ? props.width
-      : props.width.toString().substr(0, 3) + 'em'
-  const height =
-    typeof props.height === 'string'
-      ? props.height
-      : props.height.toString().substr(0, 3) + 'em'
+const Skeleton: React.FunctionComponent<SkeletonProps> = ({
+  width,
+  height,
+  ...props
+}) => {
+  const w =
+    typeof width === 'string' ? width : width.toString().substr(0, 3) + 'em'
+  const h =
+    typeof height === 'string' ? height : height.toString().substr(0, 3) + 'em'
 
-  return <Base style={{ width, height }} />
+  return <Base style={{ width: w, height: h }} {...props} />
 }
 
 if (process.env.NODE_ENV !== 'production') {

@@ -57,6 +57,6 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   )
 }
 
-App.displayName = 'AuthApp'
+App.displayName = 'App<o2>'
 
 export default App

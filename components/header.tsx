@@ -4,10 +4,11 @@ import styled from '@emotion/styled'
 import { darken, lighten } from 'polished'
 
 import { SpacedH4, SpacedLink, Link } from './typography'
-import _Logo from './logo'
+import _Logo from './svgs/logo'
 
 import Theme from '../types/theme'
 import { BaseData } from '../types/data'
+import _Body from './body'
 
 const Container = styled.nav<{ theme?: Theme }>`
   position: sticky;
@@ -15,17 +16,7 @@ const Container = styled.nav<{ theme?: Theme }>`
   left: 0;
   right: 0;
 
-  /* 2.5 ems - the border (0.0625em) */
-  height: 2.4375em;
-  line-height: 2.5em;
-  padding: 0 2vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  div {
-    display: flex;
-  }
+  height: calc(2.5em - 1px);
 
   background: ${({ theme }) =>
     theme.dark
@@ -36,6 +27,17 @@ const Container = styled.nav<{ theme?: Theme }>`
       theme.dark
         ? lighten(0.2)(theme.background)
         : darken(0.2)(theme.background)};
+`
+
+const Body = styled(_Body)`
+  line-height: 2.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+  }
 `
 
 // height = 2.4375em
@@ -50,33 +52,35 @@ const Header: React.FunctionComponent = () => {
 
   return (
     <Container>
-      <div>
-        <Logo onClick={() => navigate('/')} />
-        <SpacedH4 known>o2</SpacedH4>
-      </div>
-      <div>
-        {props.account ? (
-          <>
-            <SpacedLink to='/add'>+</SpacedLink>
-            <SpacedH4>
-              <Link known to={`/${props.account.username}`}>
-                {props.account.username}
-              </Link>
-            </SpacedH4>
-            <SpacedLink to='/logout'>⟶</SpacedLink>
-          </>
-        ) : (
-          <>
-            <SpacedLink known to='/login'>
-              login
-            </SpacedLink>
-            <a style={{ userSelect: 'none' }}>/</a>
-            <SpacedLink known to='/register'>
-              register
-            </SpacedLink>
-          </>
-        )}
-      </div>
+      <Body>
+        <div>
+          <Logo onClick={() => navigate('/')} />
+          <SpacedH4 known>o2</SpacedH4>
+        </div>
+        <div>
+          {props.account ? (
+            <>
+              <SpacedLink to='/add'>+</SpacedLink>
+              <SpacedH4>
+                <Link known to={`/${props.account.username}`}>
+                  {props.account.username}
+                </Link>
+              </SpacedH4>
+              <SpacedLink to='/logout'>⟶</SpacedLink>
+            </>
+          ) : (
+            <>
+              <SpacedLink known to='/login'>
+                login
+              </SpacedLink>
+              <a style={{ userSelect: 'none' }}>/</a>
+              <SpacedLink known to='/register'>
+                register
+              </SpacedLink>
+            </>
+          )}
+        </div>
+      </Body>
     </Container>
   )
 }
