@@ -12,13 +12,13 @@ import {
 
 import usePrefersTheme from 'use-prefers-theme'
 import Header from '../components/header'
+import Body from '../components/body'
 
 import * as themes from '../types/theme'
 
 const global: Interpolation<themes.Theme> = theme => css`
-  body {
-    margin: 0;
-    font-size: calc(1rem + 0.25vw);
+  * {
+    box-sizing: border-box;
   }
 
   html {
@@ -28,8 +28,9 @@ const global: Interpolation<themes.Theme> = theme => css`
     transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
   }
 
-  * {
-    box-sizing: border-box;
+  body {
+    margin: 0;
+    font-size: calc(1rem + 0.25vw);
   }
 `
 
@@ -48,7 +49,9 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
         <Header />
 
-        <Component {...pageProps} />
+        <Body>
+          <Component {...pageProps} />
+        </Body>
       </ThemeProvider>
     </CacheProvider>
   )

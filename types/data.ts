@@ -4,6 +4,8 @@ export interface User extends LoggedUser {
   description: string
   location: string
   picture: string
+
+  repositories: Repository[]
 }
 
 export interface Repository {}
