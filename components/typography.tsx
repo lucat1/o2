@@ -16,7 +16,7 @@ export const factory = <T extends Object = any>(
 ): React.FunctionComponent<TypographyProps & T> => ({ known, ...props }) => {
   if (usePrerender() && !known) {
     // make the width resemble more the size of the text
-    let width = props.children.toString().length || defaultLength
+    let width = props.children?.toString().length || defaultLength
     if (typeof props.children === 'object') {
       width = defaultLength
     }
@@ -34,9 +34,17 @@ export const factory = <T extends Object = any>(
   return <H {...props} />
 }
 
-export const H4 = factory(props => <h4 {...props} />)
+export const H2 = factory(
+  styled.h2`
+    margin: 0.5em 0;
+  `
+)
+
+export const H4 = factory(styled.h4`
+  margin: 0;
+`)
 export const SpacedH4 = factory(styled.h4`
-  margin: 0 0.5rem;
+  margin: 0 0.5em;
 `)
 
 type AP = React.DetailedHTMLProps<
@@ -53,12 +61,12 @@ const _QLink = makeA(QLink)
 
 export const A = factory<AP>(props => <_A {...props} />)
 export const SpacedA = factory<AP>(styled(_A)`
-  margin: 0 0.5rem;
+  margin: 0 0.5em;
 `)
 
 export const Link = factory<LinkProps>(_QLink)
 export const SpacedLink = factory<LinkProps>(styled(_QLink)`
-  margin: 0 0.5rem;
+  margin: 0 0.5em;
 `)
 
 if (process.env.NODE_ENV !== 'production') {

@@ -51,7 +51,7 @@ func main() {
 	mux.HandleFunc("/register", routes.Register)
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", routes.Logout)
-	// mux.HandleFunc("/me", routes.Me)
+	mux.HandleFunc("/:username", routes.Profile)
 	mux.HandleFunc("/*path", routes.NotFound)
 
 	log.Info().

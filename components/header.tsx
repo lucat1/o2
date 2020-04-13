@@ -1,13 +1,12 @@
 import * as React from 'react'
-import { usePage, Link as QLink } from '@quercia/quercia'
+import { usePage, navigate } from '@quercia/quercia'
 import styled from '@emotion/styled'
 import { darken, lighten } from 'polished'
 
-import { SpacedA, SpacedH4, SpacedLink, Link } from './typography'
+import { SpacedH4, SpacedLink, Link } from './typography'
 import _Logo from './logo'
 
 import Theme from '../types/theme'
-import services from '../types/services'
 import { BaseData } from '../types/data'
 
 const Container = styled.nav<{ theme?: Theme }>`
@@ -18,15 +17,14 @@ const Container = styled.nav<{ theme?: Theme }>`
 
   /* 2.5 ems - the border (0.0625em) */
   height: 2.4375em;
-  padding: 0 3em;
+  line-height: 2.5em;
+  padding: 0 2vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
   div {
     display: flex;
-    flex-direction: row;
-    align-items: center;
   }
 
   background: ${({ theme }) =>
@@ -40,43 +38,31 @@ const Container = styled.nav<{ theme?: Theme }>`
         : darken(0.2)(theme.background)};
 `
 
-const Logo = styled(_Logo)`
+// height = 2.4375em
+const Logo = styled(_Logo)<React.SVGProps<SVGSVGElement>>`
   height: 0.75em;
-  margin: 1em;
-  margin-left: 0;
+  margin: 0.85em;
 `
 
-interface HeaderProps {
-  service: string
-}
-
-const Header: React.FunctionComponent<HeaderProps> = ({ service }) => {
+const Header: React.FunctionComponent = () => {
   const props = usePage()[1] as BaseData
 
   return (
     <Container>
       <div>
-        <QLink to='/'>
-          <Logo />
-        </QLink>
-        <SpacedH4 known>{service}</SpacedH4>
-        {services
-          .filter(srv => srv !== service)
-          .map(service => (
-            <SpacedA key={service} href='/'>
-              {service}
-            </SpacedA>
-          ))}
+        <Logo onClick={() => navigate('/')} />
+        <SpacedH4 known>o2</SpacedH4>
       </div>
       <div>
         {props.account ? (
           <>
+            <SpacedLink to='/add'>+</SpacedLink>
             <SpacedH4>
-              <Link known to='/profile'>
+              <Link known to={`/${props.account.username}`}>
                 {props.account.username}
               </Link>
             </SpacedH4>
-            <Link to='/logout'>⟶</Link>
+            <SpacedLink to='/logout'>⟶</SpacedLink>
           </>
         ) : (
           <>

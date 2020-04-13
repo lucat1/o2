@@ -18,13 +18,14 @@ import * as themes from '../types/theme'
 const global: Interpolation<themes.Theme> = theme => css`
   body {
     margin: 0;
-    font-size: calc(1rem + 0.5vw);
+    font-size: calc(1rem + 0.25vw);
   }
 
   html {
     background: ${theme.background};
     color: ${theme.color};
     font-family: Operator Mono;
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
   }
 
   * {
@@ -35,7 +36,7 @@ const global: Interpolation<themes.Theme> = theme => css`
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   let pref = usePrefersTheme()
   if (pref === 'none') {
-    pref = 'light'
+    pref = 'dark'
   }
 
   // pref = 'light'
@@ -45,7 +46,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       <ThemeProvider theme={themes[pref]}>
         <Global styles={global} />
 
-        <Header service='auth' />
+        <Header />
 
         <Component {...pageProps} />
       </ThemeProvider>

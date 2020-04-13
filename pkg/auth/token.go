@@ -23,7 +23,7 @@ func Token(user models.User) (string, error) {
 		Email:    user.Email,
 		Username: user.Username,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(5 * time.Minute).Unix(),
+			ExpiresAt: time.Now().Add(8 * time.Hour).Unix(),
 		},
 	}
 

@@ -11,10 +11,10 @@ import (
 // Base recreates gorm.Model but with a UUID instead
 // of an ID. We generate that via satori/go.uuid
 type Base struct {
-	UUID      uuid.UUID `gorm:"type:char(36);primary_key;"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt *time.Time `sql:"index"`
+	UUID      uuid.UUID  `gorm:"type:char(36);primary_key;" json:"-"`
+	CreatedAt time.Time  `json:"-"`
+	UpdatedAt time.Time  `json:"-"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
 }
 
 // BeforeCreate will set a UUID rather than numeric ID.

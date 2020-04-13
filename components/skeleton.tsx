@@ -22,11 +22,11 @@ const Skeleton: React.FunctionComponent<SkeletonProps> = props => {
   const width =
     typeof props.width === 'string'
       ? props.width
-      : props.width.toString().substr(0, 3) + 'rem'
+      : props.width.toString().substr(0, 3) + 'em'
   const height =
     typeof props.height === 'string'
       ? props.height
-      : props.height.toString().substr(0, 3) + 'rem'
+      : props.height.toString().substr(0, 3) + 'em'
 
   return <SkeletonBase style={{ width, height }} />
 }

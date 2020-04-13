@@ -15,5 +15,6 @@ func notFoundData(r *http.Request) quercia.Props {
 
 // NotFound renders a 404 page
 func NotFound(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
 	quercia.Render(w, r, "404", data.Compose(r, data.Base, notFoundData))
 }

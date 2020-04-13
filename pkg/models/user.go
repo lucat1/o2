@@ -8,9 +8,15 @@ import (
 type User struct {
 	Base
 
-	Email    string `gorm:"type:varchar(100);unique_index"`
-	Username string `gorm:"type:varchar(32);unique_index"`
-	Password string
+	Email    string `gorm:"type:varchar(100);unique_index" json:"email"`
+	Username string `gorm:"type:varchar(32);unique_index" json:"username"`
+	Password string `json:"-"`
+
+	Firstname   string `gorm:"type:varchar(50)" json:"firstname"`
+	Lastname    string `gorm:"type:varchar(50)" json:"lastname"`
+	Description string `gorm:"type:varchar(250)" json:"description"`
+	Location    string `gorm:"type:varchar(100)" json:"location"`
+	Picture     string `json:"picture"`
 }
 
 // ExistsUser checks if the requested user exists
