@@ -7,8 +7,8 @@ export default ({ account }: BaseData) => {
   return (
     <>
       <Head>
-        <title>Index - auth.o2</title>
-        <meta content='the index page of the auth.o2 service' />
+        <title>index - o2</title>
+        <meta content='the index page of the o2 service' />
       </Head>
       <h1>Index page</h1>
     </>

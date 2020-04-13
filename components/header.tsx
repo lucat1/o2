@@ -42,6 +42,7 @@ const Container = styled.nav<{ theme?: Theme }>`
 const Logo = styled(_Logo)<React.SVGProps<SVGSVGElement>>`
   height: 0.75em;
   margin: 0.85em;
+  cursor: pointer;
 `
 
 const Header: React.FunctionComponent = () => {

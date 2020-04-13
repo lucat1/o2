@@ -11,7 +11,7 @@ export default ({ path }: NotFoundProps) => {
   return (
     <>
       <Head>
-        <title>not found {!isPrerender && path} - auth.o2</title>
+        <title>not found {!isPrerender && path} - o2</title>
       </Head>
       <h1>Page not found:</h1>
       <h3>url: {path}</h3>

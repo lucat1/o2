@@ -40,7 +40,7 @@ export default ({ error }: RegisterProps) => {
   return (
     <>
       <Head>
-        <title>register - auth.o2</title>
+        <title>register - o2</title>
       </Head>
       <Form onSubmit={handleSubmit(onSubmit)}>
         {error && <h1 style={{ color: 'red' }}>{error}</h1>}

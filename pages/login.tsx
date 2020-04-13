@@ -39,7 +39,7 @@ export default ({ error }: LoginProps) => {
   return (
     <>
       <Head>
-        <title>login - auth.o2</title>
+        <title>login - o2</title>
       </Head>
       <Form onSubmit={handleSubmit(onSubmit)}>
         {error && <h1 style={{ color: 'red' }}>{error}</h1>}

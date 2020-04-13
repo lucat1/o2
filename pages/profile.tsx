@@ -47,8 +47,8 @@ export default ({ user }: ProfileProps) => {
   return (
     <>
       <Head>
-        <title>{user?.username || 'profile'} - auth.o2</title>
-        <meta content='the index page of the auth.o2 service' />
+        <title>{user?.username || 'profile'} - o2</title>
+        <meta content='the index page of the o2 service' />
       </Head>
       <User>
         <Picture />
