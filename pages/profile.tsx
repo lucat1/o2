@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { lighten, darken } from 'polished'
 
 import { H2, H4, SpacedH4, A } from '../components/typography'
-import Skeleton from '../components/skeleton'
+import Skeleton, { Base } from '../components/skeleton'
 import { User } from '../types/data'
 import Theme from '../types/theme'
 
@@ -23,14 +23,10 @@ const User = styled.section`
   align-items: center;
 `
 
-const Picture = styled.div<{ theme?: Theme }>`
+const Picture = styled(Base)<{ theme?: Theme }>`
   width: ${width}em;
   height: ${width}em;
   border-radius: 50%;
-  background: ${({ theme }) =>
-    theme.dark
-      ? lighten(0.2)(theme.background)
-      : darken(0.2)(theme.background)};
 `
 
 const Line = styled.div`

@@ -4,7 +4,7 @@ import { darken, lighten } from 'polished'
 
 import Theme from '../types/theme'
 
-const SkeletonBase = styled.div<{ theme?: Theme }>`
+export const Base = styled.div<{ theme?: Theme }>`
   display: inline-block;
   background: ${({ theme }) =>
     theme.dark
@@ -28,7 +28,7 @@ const Skeleton: React.FunctionComponent<SkeletonProps> = props => {
       ? props.height
       : props.height.toString().substr(0, 3) + 'em'
 
-  return <SkeletonBase style={{ width, height }} />
+  return <Base style={{ width, height }} />
 }
 
 if (process.env.NODE_ENV !== 'production') {
