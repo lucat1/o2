@@ -9,6 +9,7 @@ import (
 
 	// initialize zerolog options
 	"github.com/kataras/muxie"
+	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
@@ -51,6 +52,7 @@ func main() {
 	mux.HandleFunc("/register", routes.Register)
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", routes.Logout)
+	mux.HandleFunc("/add", auth.Required(routes.Add))
 	mux.HandleFunc("/:username", routes.Profile)
 	mux.HandleFunc("/*path", routes.NotFound)
 

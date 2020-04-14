@@ -25,7 +25,11 @@ export default ({ user }: ProfileProps) => (
   <Container>
     <Head>
       <title>{user?.username || 'profile'} - o2</title>
-      <meta content='the index page of the o2 service' />
+      <meta
+        content={
+          'the user profile page' + user?.username ? `of ${user.username}` : ''
+        }
+      />
     </Head>
     <User user={user} />
     <Repos />

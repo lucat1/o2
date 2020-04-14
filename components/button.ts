@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { rgba } from 'polished'
+import { rgba, darken, lighten } from 'polished'
 
 import Theme from '../types/theme'
 
@@ -30,6 +30,15 @@ const Button = styled.button<{ theme?: Theme }>`
       theme.dark
         ? `0 8px 60px ${rgba(theme.color, 0.5)}`
         : `0 8px 30px ${rgba(theme.color, 0.12)}`};
+  }
+
+  &[disabled] {
+    box-shadow: none;
+    cursor: default;
+    background: ${({ theme }) =>
+      theme.dark
+        ? lighten(0.4)(theme.background)
+        : darken(0.4)(theme.background)};
   }
 `
 
