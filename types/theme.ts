@@ -4,6 +4,7 @@ export interface Theme {
   color: string
 
   red: string
+  primary: string
 }
 
 const shared = {

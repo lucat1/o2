@@ -40,8 +40,6 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     pref = 'dark'
   }
 
-  // pref = 'light'
-
   return (
     <CacheProvider value={cache}>
       <ThemeProvider theme={themes[pref]}>

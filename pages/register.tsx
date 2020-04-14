@@ -4,6 +4,7 @@ import { Head, navigate } from '@quercia/quercia'
 
 import Form from '../components/form'
 import Input from '../components/input'
+import Button from '../components/button'
 
 interface Data {
   email: string
@@ -89,9 +90,9 @@ export default ({ error }: RegisterProps) => {
           })}
         />
 
-        <button disabled={isLoading} type='submit'>
+        <Button disabled={isLoading} type='submit'>
           Submit
-        </button>
+        </Button>
       </Form>
     </>
   )

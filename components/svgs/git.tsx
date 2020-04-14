@@ -1,6 +1,8 @@
 import * as React from 'react'
 
-export default (props: React.SVGProps<SVGSVGElement>) => (
+const GIT: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = (
+  props: React.SVGProps<SVGSVGElement>
+) => (
   <svg viewBox='0 0 1009.5 789.9' {...props}>
     <ellipse
       cx='354.1'
@@ -224,3 +226,9 @@ export default (props: React.SVGProps<SVGSVGElement>) => (
     />
   </svg>
 )
+
+if (process.env.NODE_ENV !== 'production') {
+  GIT.displayName = 'GIT'
+}
+
+export default GIT

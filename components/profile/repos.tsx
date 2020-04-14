@@ -1,8 +1,10 @@
 import * as React from 'react'
-import { usePrerender } from '@quercia/quercia'
+import { usePrerender, navigate } from '@quercia/quercia'
 import styled from '@emotion/styled'
 
 import Skeleton from '../skeleton'
+import Button from '../button'
+
 import VCS from '../svgs/git'
 import { ProfileProps } from '../../pages/profile'
 
@@ -19,9 +21,10 @@ const Repos = styled.section`
     }
   }
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 960px) {
     width: 100%;
     padding: 0;
+    padding-top: 2em;
 
     div:nth-child(1) {
       margin-top: calc(2rem + 1vw);
@@ -36,8 +39,10 @@ const Repo = styled.div`
 `
 
 const EmptyRepos = styled(Repos)`
+  display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `
 
 const Repositories = ({ user }: ProfileProps) => {
@@ -45,8 +50,9 @@ const Repositories = ({ user }: ProfileProps) => {
   if ((user?.repositories || []).length == 0 && !usePrerender()) {
     return (
       <EmptyRepos>
+        <h4>You don't have any repositories yet</h4>
         <VCS style={{ width: '70%' }} />
-        <button>test</button>
+        <Button onClick={() => navigate('/add')}>Create</Button>
       </EmptyRepos>
     )
   }

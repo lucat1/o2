@@ -17,7 +17,7 @@ const User = styled.section`
   flex-direction: column;
   align-items: center;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 960px) {
     width: 100%;
   }
 `

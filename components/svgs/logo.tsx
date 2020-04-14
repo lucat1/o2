@@ -3,7 +3,7 @@ import { useTheme } from '@emotion/react'
 
 import Theme from '../../types/theme'
 
-const Logo: React.FunctionComponent = (
+const Logo: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = (
   props: React.SVGProps<SVGSVGElement>
 ) => {
   const theme = useTheme() as Theme

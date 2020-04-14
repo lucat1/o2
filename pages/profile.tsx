@@ -15,7 +15,8 @@ const Container = styled.main`
   flex-direction: row;
   padding: 2em 5em;
 
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 960px) {
+    padding: 2em 0;
     flex-direction: column;
   }
 `
