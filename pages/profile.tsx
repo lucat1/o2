@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head } from '@quercia/quercia'
+import { Head, usePrerender } from '@quercia/quercia'
 import styled from '@emotion/styled'
 
 import User from '../components/profile/user'
@@ -26,12 +26,13 @@ export default ({ user }: ProfileProps) => (
     <Head>
       <title>{user?.username || 'profile'} - o2</title>
       <meta
+        name='description'
         content={
-          'the user profile page' + user?.username ? `of ${user.username}` : ''
+          'the user profile page' + usePrerender() ? `of ${user?.username}` : ''
         }
       />
     </Head>
     <User user={user} />
-    <Repos />
+    <Repos user={user} />
   </Container>
 )

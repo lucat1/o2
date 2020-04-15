@@ -8,7 +8,7 @@ export default ({ account }: BaseData) => {
     <>
       <Head>
         <title>index - o2</title>
-        <meta content='the index page of the o2 service' />
+        <meta name='description' content='the index page of the o2 service' />
       </Head>
       <h1>Index page</h1>
     </>

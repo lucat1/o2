@@ -38,7 +38,7 @@ export default ({ error }: AddProps) => {
     <>
       <Head>
         <title>add - o2</title>
-        <meta content='create a new repositroy in o2' />
+        <meta name='description' content='create a new repositroy in o2' />
       </Head>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
