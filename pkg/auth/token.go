@@ -2,6 +2,7 @@ package auth
 
 import (
 	"errors"
+	"net/http"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -17,13 +18,16 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
+// the lifespan of the token
+const lifespan = 8 * time.Hour
+
 // Token generates a login JWT for the requested user
 func Token(user models.User) (string, error) {
 	claims := &Claims{
 		Email:    user.Email,
 		Username: user.Username,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(8 * time.Hour).Unix(),
+			ExpiresAt: time.Now().Add(lifespan).Unix(),
 		},
 	}
 
@@ -35,4 +39,19 @@ func Token(user models.User) (string, error) {
 	}
 
 	return token, nil
+}
+
+// SetCookie sets the cookie on the connection
+func SetCookie(w http.ResponseWriter, r *http.Request, token string) {
+	cookie := &http.Cookie{
+		Name:    "token",
+		Value:   token,
+		MaxAge:  int(lifespan),
+		Expires: time.Now().Add(lifespan),
+	}
+
+	// set the cookie both in the client response and also in the reuqest as it
+	// will be used by the `data.Base` function to get the authentication state later
+	http.SetCookie(w, cookie)
+	r.AddCookie(cookie)
 }

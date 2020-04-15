@@ -54,14 +54,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cookie := &http.Cookie{
-		Name:  "token",
-		Value: token,
-	}
-
-	// set the cookie both in the client response and also in the reuqest as it
-	// will be used by the `data.Base` function to get the authentication state later
-	http.SetCookie(w, cookie)
-	r.AddCookie(cookie)
+	auth.SetCookie(w, r, token)
 	quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
 }
