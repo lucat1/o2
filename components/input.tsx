@@ -24,7 +24,7 @@ const InputBase = styled('input')`
   outline: none;
   transition: border-width, height 0.3s ease-in-out;
   border-radius: 2rem;
-  border: 0.0625rem solid var(--bg-5);
+  border: 0.0625rem solid var(--bg-3);
 
   :focus {
     border-width: 0.125rem;
