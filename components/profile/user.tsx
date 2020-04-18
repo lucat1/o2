@@ -55,7 +55,7 @@ const Profile = ({ user }: ProfileProps) => (
       {usePrerender() ? (
         <Skeleton width='100%' height='5em' />
       ) : (
-        <code>{user?.description}</code>
+        <code>{user.description}</code>
       )}
     </Description>
   </User>

@@ -7,36 +7,37 @@ import Button from '../button'
 
 import VCS from '../svgs/git'
 import { ProfileProps } from '../../pages/profile'
+import { H2, Link } from '../typography'
 
 const Repos = styled('section')`
   flex: 1;
   padding: 0 2.5em;
 
-  /* apply styles on the repositories divs */
-  div {
-    margin-top: calc(1rem + 1vw);
-
-    &:nth-child(1) {
-      margin-top: 0;
-    }
-  }
-
   @media only screen and (max-width: 960px) {
     width: 100%;
     padding: 0 1em;
     padding-top: 2em;
-
-    div:nth-child(1) {
-      margin-top: calc(2rem + 1vw);
-    }
   }
 `
 
 const Repo = styled('div')`
+  border-radius: 0.25em;
+  border: 1px solid var(--bg-3);
   width: calc(100% - 2px);
   height: calc(8em - 2px);
-  border-radius: 0.25em;
-  border: 1px solid var(--foreground);
+
+  padding: 0 2em;
+  margin-top: calc(1em + 1vw);
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:nth-child(1) {
+    margin-top: 0;
+  }
+
+  @media only screen and (max-width: 960px) {
+    margin-top: calc(2em + 1vw);
+  }
 `
 
 const EmptyRepos = styled(Repos)`
@@ -78,13 +79,20 @@ const Repositories = ({ user, account }: ProfileProps) => {
 
   return (
     <Repos>
-      {(user?.repositories || []).map((repository, i) => {
-        if (usePrerender()) {
-          return <Skeleton key={i} width='100%' height='8em' />
-        }
-
-        return <Repo key={i} />
-      })}
+      {(user?.repositories || []).map((repository, i) => (
+        <Repo key={i}>
+          <H2>
+            <Link to={`/${user?.username}/${repository?.name}`}>
+              {repository?.name}
+            </Link>
+          </H2>
+          {usePrerender() ? (
+            <Skeleton width='100%' height='3.5em' />
+          ) : (
+            <code>{repository.description}</code>
+          )}
+        </Repo>
+      ))}
     </Repos>
   )
 }

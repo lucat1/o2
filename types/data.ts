@@ -8,7 +8,10 @@ export interface User extends LoggedUser {
   repositories: Repository[]
 }
 
-export interface Repository {}
+export interface Repository {
+  name: string
+  description: string
+}
 
 export interface LoggedUser {
   username: string

@@ -3,7 +3,7 @@ import { styled } from 'goober'
 
 export const Base = styled('div')`
   display: inline-block;
-  background: var(--background);
+  background: var(--bg-3);
   border-radius: 0.25em;
 `
 

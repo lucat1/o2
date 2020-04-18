@@ -6,7 +6,7 @@ const Button = styled('button')<{ sm?: boolean }>`
   border-radius: 0.45em;
   font-size: 0.75em;
   background: var(--primary);
-  color: var(--foreground);
+  color: var(--bg-5);
 
   display: inline-flex;
   justify-content: center;
@@ -26,7 +26,7 @@ const Button = styled('button')<{ sm?: boolean }>`
   &[disabled] {
     box-shadow: none;
     cursor: default;
-    background: var(--dimmed-background);
+    background: var(--bg-6);
   }
 `
 

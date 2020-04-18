@@ -8,7 +8,7 @@ const Container = styled('div')`
 
 const Label = styled('label')<{ error?: boolean }>`
   margin: 0.25rem 0 0.25rem 1rem;
-  color: var(${props => (props.error ? '--red' : '--foreground')});
+  color: var(${props => (props.error ? '--red' : '--fg-5')});
   float: ${props => (props.error ? 'right' : 'left')};
 `
 
@@ -18,13 +18,13 @@ const InputBase = styled('input')`
   min-width: 16rem;
   padding: 0 0.75rem;
   margin-bottom: 1.5rem;
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--fg-5);
+  background: var(--bg-5);
 
   outline: none;
   transition: border-width, height 0.3s ease-in-out;
   border-radius: 2rem;
-  border: 0.0625rem solid var(--background);
+  border: 0.0625rem solid var(--bg-5);
 
   :focus {
     border-width: 0.125rem;

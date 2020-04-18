@@ -17,8 +17,8 @@ const Container = styled('nav')`
 
   height: calc(2.5em - 1px);
 
-  background: var(--background);
-  border-bottom: 1px solid var(--foreground);
+  background: var(--bg-4);
+  border-bottom: 1px solid var(--bg-3);
 `
 
 const Body = styled(_Body)`

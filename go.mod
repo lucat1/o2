@@ -17,7 +17,7 @@ require (
 	github.com/onsi/ginkgo v1.12.0 // indirect
 	github.com/onsi/gomega v1.9.0 // indirect
 	github.com/opentracing/opentracing-go v1.1.0 // indirect
-	github.com/ory/fosite v0.31.0
+	github.com/ory/fosite v0.31.0 // indirect
 	github.com/rs/zerolog v1.18.0
 	github.com/satori/go.uuid v1.2.0
 	golang.org/x/crypto v0.0.0-20200406173513-056763e48d71

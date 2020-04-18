@@ -54,6 +54,7 @@ func main() {
 	mux.HandleFunc("/logout", auth.Required(routes.Logout))
 	mux.HandleFunc("/add", auth.Required(routes.Add))
 	mux.HandleFunc("/:username", routes.Profile)
+	mux.HandleFunc("/:username/:reponame", routes.Repository)
 	mux.HandleFunc("/*path", routes.NotFound)
 
 	log.Info().

@@ -2,9 +2,11 @@ package routes
 
 import (
 	"net/http"
+	"path"
 
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
+	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/quercia"
@@ -66,7 +68,23 @@ func Add(w http.ResponseWriter, r *http.Request) {
 			Err(err).
 			Msg("Could not save new repository in the database")
 
-		addErr(w, r, "Internal error. PLease try again layer")
+		addErr(w, r, "Internal error. Please try again layer")
+		return
+	}
+
+	repos := store.GetConfig().Section("repositories").Key("directory").String()
+	if !path.IsAbs(repos) {
+		repos = path.Join(store.GetCwd(), repos)
+	}
+
+	if _, err := git.Init(path.Join(repos, username, reponame)); err != nil {
+		log.Error().
+			Str("owner", username).
+			Str("reponame", reponame).
+			Err(err).
+			Msg("Could not initialize a bare git repository")
+
+		addErr(w, r, "Internal error. Please try again layer")
 		return
 	}
 
