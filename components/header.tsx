@@ -1,16 +1,15 @@
 import * as React from 'react'
 import { usePage, navigate } from '@quercia/quercia'
-import styled from '@emotion/styled'
-import { darken, lighten } from 'polished'
+import { styled } from 'goober'
 
 import { SpacedH4, SpacedLink, Link } from './typography'
+import Button from './button'
 import _Logo from './svgs/logo'
 
-import Theme from '../types/theme'
 import { BaseData } from '../types/data'
 import _Body from './body'
 
-const Container = styled.nav<{ theme?: Theme }>`
+const Container = styled('nav')`
   position: sticky;
   top: 0;
   left: 0;
@@ -18,30 +17,22 @@ const Container = styled.nav<{ theme?: Theme }>`
 
   height: calc(2.5em - 1px);
 
-  background: ${({ theme }) =>
-    theme.dark
-      ? darken(0.1)(theme.background)
-      : lighten(0.5)(theme.background)};
-  border-bottom: 1px solid
-    ${({ theme }) =>
-      theme.dark
-        ? lighten(0.2)(theme.background)
-        : darken(0.2)(theme.background)};
+  background: var(--background);
+  border-bottom: 1px solid var(--foreground);
 `
 
 const Body = styled(_Body)`
-  line-height: 2.5em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
   div {
     display: flex;
+    align-items: center;
   }
 `
 
-// height = 2.4375em
-const Logo = styled(_Logo)<React.SVGProps<SVGSVGElement>>`
+const Logo = styled(_Logo)`
   height: 0.75em;
   margin: 0.85em;
   cursor: pointer;
@@ -71,12 +62,11 @@ const Header: React.FunctionComponent = () => {
           ) : (
             <>
               <SpacedLink known to='/login'>
-                login
+                Login
               </SpacedLink>
-              <a style={{ userSelect: 'none' }}>/</a>
-              <SpacedLink known to='/register'>
-                register
-              </SpacedLink>
+              <Button sm onClick={() => navigate('/register')}>
+                Sign up
+              </Button>
             </>
           )}
         </div>

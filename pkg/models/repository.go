@@ -1,14 +1,41 @@
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/lucat1/o2/pkg/store"
+	"github.com/rs/zerolog/log"
+)
+
 // Repository is the database model for a git repository
 type Repository struct {
-	Owner User `gorm:"unique_index" json:"owner"`
+	gorm.Model
 
-	Name        string `gorm:"unique_index" json:"name"`
+	Owner     User   `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"owner"`
+	OwnerName string `gorm:"type:varchar(36);primary_index" json:"-"`
+
+	Name        string `gorm:"primary_index" json:"name"`
 	Description string `gorm:"type:varchar(250)" json:"description"`
 }
 
 // ExistsRepository checks for the existance of the given repository with the given owner
-func ExistsRepository(owner string, reponame string) bool {
+func ExistsRepository(user User, reponame string) bool {
+	repositories := []Repository{}
+	if err := store.GetDB().
+		Model(&user).
+		Related(&repositories, "Repositories").
+		Error; err != nil {
+		log.Error().
+			Str("owner", user.Username).
+			Err(err).
+			Msg("Error while getting repositories relationship")
+		return false
+	}
+
+	for _, repo := range repositories {
+		if repo.Name == reponame {
+			return true
+		}
+	}
+
 	return false
 }

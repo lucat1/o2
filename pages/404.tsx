@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { usePrerender, Head } from '@quercia/quercia'
-import styled from '@emotion/styled'
+import { styled } from 'goober'
 
 import { H4 } from '../components/typography'
 import NotFound from '../components/svgs/notfound'
 
-const Container = styled.div`
+const Container = styled('div')`
   height: calc(100% - 2.5em);
 
   display: flex;

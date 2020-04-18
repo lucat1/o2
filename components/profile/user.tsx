@@ -1,15 +1,14 @@
 import * as React from 'react'
 import { usePrerender } from '@quercia/quercia'
-import styled from '@emotion/styled'
+import { styled } from 'goober'
 
 import { H2, H4, SpacedH4, A } from '../typography'
 import Skeleton, { Base } from '../skeleton'
 
 import { User } from '../../types/data'
-import Theme from '../../types/theme'
 import { ProfileProps } from '../../pages/profile'
 
-const User = styled.section`
+const User = styled('section')`
   width: 15em;
   padding: 0 2.5em;
 
@@ -22,13 +21,13 @@ const User = styled.section`
   }
 `
 
-const Picture = styled(Base)<{ theme?: Theme }>`
+const Picture = styled(Base)`
   width: 10em;
   height: 10em;
   border-radius: 50%;
 `
 
-const Line = styled.div`
+const Line = styled('div')`
   width: 10em;
   display: flex;
   flex-direction: row;
@@ -63,7 +62,7 @@ const Profile = ({ user }: ProfileProps) => (
 )
 
 if (process.env.NODE_ENV !== 'production') {
-  User.displayName = 'User'
+  ;(User as any).displayName = 'User'
 }
 
 export default Profile

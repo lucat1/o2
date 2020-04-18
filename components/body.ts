@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
+import { styled } from 'goober'
 
-const Body = styled.main`
+const Body = styled('main')`
   margin: auto;
   width: min(100%, calc(60em + 6vw));
 `

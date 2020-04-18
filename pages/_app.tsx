@@ -1,29 +1,35 @@
 import * as React from 'react'
 import { AppProps } from '@quercia/runtime'
+import { glob } from 'goober'
 
-import { cache } from '@emotion/css'
-import {
-  CacheProvider,
-  ThemeProvider,
-  Global,
-  css,
-  Interpolation
-} from '@emotion/react'
-
-import usePrefersTheme from 'use-prefers-theme'
 import Header from '../components/header'
 import Body from '../components/body'
 
-import * as themes from '../types/theme'
+/*
+    @media (prefers-color-scheme: dark) {
+      --background: #000000;
+      --foreground: #ffffff;
+      --dimmed-background: #191919;
+      --primary: #C792EA;
+    }
+    */
 
-const global: Interpolation<themes.Theme> = theme => css`
+const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
+  glob`
+  :root {
+    --background: #ffffff;
+    --foreground: #000000;
+    --dimmed-background: #f4f4f4;
+    --primary: #C792EA;
+  }
+
   * {
     box-sizing: border-box;
   }
 
   html {
-    background: ${theme.background};
-    color: ${theme.color};
+    background: var(--dimmed-background);
+    color: var(--foreground);
     font-family: Operator Mono;
     transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
   }
@@ -34,24 +40,13 @@ const global: Interpolation<themes.Theme> = theme => css`
   }
 `
 
-const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
-  let pref = usePrefersTheme()
-  if (pref === 'none') {
-    pref = 'dark'
-  }
-
   return (
-    <CacheProvider value={cache}>
-      <ThemeProvider theme={themes[pref]}>
-        <Global styles={global} />
-
-        <Header />
-
-        <Body>
-          <Component {...pageProps} />
-        </Body>
-      </ThemeProvider>
-    </CacheProvider>
+    <>
+      <Header />
+      <Body>
+        <Component {...pageProps} />
+      </Body>
+    </>
   )
 }
 

@@ -21,11 +21,19 @@ func profileData(user *models.User) data.Composer {
 
 // Profile renders the user profile and
 func Profile(w http.ResponseWriter, r *http.Request) {
-	var user models.User
 	username := muxie.GetParam(w, "username")
 
-	if err := store.GetDB().Where("username = ?", username).First(&user).Error; err != nil {
-		log.Debug().Err(err).Msg("Error while query the DB to render the profile page")
+	var user models.User
+	if err := store.GetDB().
+		Preload("Repositories").
+		First(&user).
+		Where("username = ?", username).
+		Error; err != nil {
+
+		log.Debug().
+			Str("username", username).
+			Err(err).
+			Msg("Error while query the DB to render the profile page")
 		NotFound(w, r)
 		return
 	}

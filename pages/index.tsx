@@ -3,7 +3,7 @@ import { Head } from '@quercia/quercia'
 
 import { BaseData } from '../types/data'
 
-export default ({ account }: BaseData) => {
+export default () => {
   return (
     <>
       <Head>

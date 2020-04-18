@@ -1,6 +1,8 @@
 package models
 
 import (
+	"errors"
+
 	"github.com/lucat1/o2/pkg/store"
 )
 
@@ -17,6 +19,8 @@ type User struct {
 	Description string `gorm:"type:varchar(250)" json:"description"`
 	Location    string `gorm:"type:varchar(100)" json:"location"`
 	Picture     string `json:"picture"`
+
+	Repositories []Repository `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"repositories"`
 }
 
 // ExistsUser checks if the requested user exists
@@ -25,33 +29,36 @@ type User struct {
 // - Username
 // otherwhise return false
 func ExistsUser(user User) bool {
+	_, err := FindUser(user)
+	return err == nil
+}
+
+// FindUser finds the requested user from these three struct properties:
+// - UUID
+// - Username
+// otherwhise return false
+func FindUser(user User) (User, error) {
 	var dummy User
 	if username := user.Username; username != "" {
 		// we have the username, query the database to search for the user
-		if store.GetDB().Where("username = ?", username).Find(&dummy, "").Error != nil {
-			return false
+		if store.GetDB().Where("username = ?", username).Find(&dummy, "").Error == nil {
+			return dummy, nil
 		}
-
-		return true
 	}
 
 	if email := user.Email; email != "" {
 		// we have the email, query the database to search for the user ('cause email is unique too)
-		if store.GetDB().Where("email = ?", email).Find(&dummy, "").Error != nil {
-			return false
+		if store.GetDB().Where("email = ?", email).Find(&dummy, "").Error == nil {
+			return dummy, nil
 		}
-
-		return true
 	}
 
 	if uuid := user.Base.UUID.String(); uuid != "" {
 		// we have a uuid, we wanna use it as it's more "precise"
-		if store.GetDB().Where("uuid = ?", uuid).Find(&dummy, "").Error != nil {
-			return false
+		if store.GetDB().Where("uuid = ?", uuid).Find(&dummy, "").Error == nil {
+			return dummy, nil
 		}
-
-		return true
 	}
 
-	return false
+	return dummy, errors.New("The requested user does not exist")
 }

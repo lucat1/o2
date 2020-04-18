@@ -1,15 +1,12 @@
-import styled from '@emotion/styled'
-import { rgba, darken, lighten } from 'polished'
+import { styled } from 'goober'
 
-import Theme from '../types/theme'
-
-const Button = styled.button<{ theme?: Theme }>`
-  height: 2.5em;
-  min-width: 8em;
-  border-radius: 0.5em;
+const Button = styled('button')<{ sm?: boolean }>`
+  height: ${({ sm }) => (sm ? 2 : 2.5)}em;
+  min-width: ${({ sm }) => (sm ? 5.5 : 8)}em;
+  border-radius: 0.45em;
   font-size: 0.75em;
-  background: ${props => props.theme.primary};
-  color: ${props => props.theme.background};
+  background: var(--primary);
+  color: var(--foreground);
 
   display: inline-flex;
   justify-content: center;
@@ -18,27 +15,18 @@ const Button = styled.button<{ theme?: Theme }>`
 
   border: none;
   outline: none;
-  margin: 1.5rem;
-  box-shadow: ${({ theme }) =>
-    theme.dark
-      ? `0 5px 30px ${rgba(theme.color, 0.5)}`
-      : `0 5px 10px ${rgba(theme.color, 0.12)}`};
+  margin: ${({ sm }) => (sm ? '0 1em' : '1.5em')};
+  box-shadow: var(--box-shadow-small);
   transition: box-shadow 0.3s ease-in-out;
 
   &:hover {
-    box-shadow: ${({ theme }) =>
-      theme.dark
-        ? `0 8px 60px ${rgba(theme.color, 0.5)}`
-        : `0 8px 30px ${rgba(theme.color, 0.12)}`};
+    box-shadow: var(--box-shadow-medium);
   }
 
   &[disabled] {
     box-shadow: none;
     cursor: default;
-    background: ${({ theme }) =>
-      theme.dark
-        ? lighten(0.4)(theme.background)
-        : darken(0.4)(theme.background)};
+    background: var(--dimmed-background);
   }
 `
 

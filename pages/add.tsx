@@ -41,6 +41,8 @@ export default ({ error }: AddProps) => {
         <meta name='description' content='create a new repositroy in o2' />
       </Head>
       <Form onSubmit={handleSubmit(onSubmit)}>
+        {error && <h1 style={{ color: 'red' }}>{error}</h1>}
+
         <Input
           name='name'
           label='Name'

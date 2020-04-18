@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
+import { styled } from 'goober'
 
-const Form = styled.form`
+const Form = styled('form')`
   height: calc(100vh - 3.5rem);
   width: 100%;
   margin: 0;

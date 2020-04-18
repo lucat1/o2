@@ -9,15 +9,10 @@
     "dev": "rm -rf __quercia && quercia watch"
   },
   "dependencies": {
-    "@emotion/css": "^11.0.0-next.12",
-    "@emotion/react": "^11.0.0-next.12",
-    "@emotion/server": "^11.0.0-next.12",
-    "@emotion/styled": "^11.0.0-next.12",
-    "polished": "^3.5.1",
+    "goober": "lucat1/goober#compat",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^5.3.1",
-    "use-prefers-theme": "^0.1.2"
+    "react-hook-form": "^5.3.1"
   },
   "devDependencies": {
     "@quercia/cli": "^0.2.0",

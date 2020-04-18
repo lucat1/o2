@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { usePrerender, navigate } from '@quercia/quercia'
-import styled from '@emotion/styled'
+import { styled } from 'goober'
 
 import Skeleton from '../skeleton'
 import Button from '../button'
@@ -8,7 +8,7 @@ import Button from '../button'
 import VCS from '../svgs/git'
 import { ProfileProps } from '../../pages/profile'
 
-const Repos = styled.section`
+const Repos = styled('section')`
   flex: 1;
   padding: 0 2.5em;
 
@@ -23,7 +23,7 @@ const Repos = styled.section`
 
   @media only screen and (max-width: 960px) {
     width: 100%;
-    padding: 0;
+    padding: 0 1em;
     padding-top: 2em;
 
     div:nth-child(1) {
@@ -32,10 +32,11 @@ const Repos = styled.section`
   }
 `
 
-const Repo = styled.div`
+const Repo = styled('div')`
   width: calc(100% - 2px);
   height: calc(8em - 2px);
-  border: 1px solid red;
+  border-radius: 0.25em;
+  border: 1px solid var(--foreground);
 `
 
 const EmptyRepos = styled(Repos)`
@@ -45,14 +46,27 @@ const EmptyRepos = styled(Repos)`
   flex-direction: column;
 `
 
-const Repositories = ({ user }: ProfileProps) => {
+const Repositories = ({ user, account }: ProfileProps) => {
   // rener a placeholder pointing the user to create his/hers first repo
   if ((user?.repositories || []).length == 0 && !usePrerender()) {
+    console.log(user?.username, account?.username)
     return (
       <EmptyRepos>
-        <h4>You don't have any repositories yet</h4>
+        <h4>
+          {user?.username == account?.username ? (
+            "You don't"
+          ) : (
+            <>
+              <code>{user.username}</code> doesn't
+            </>
+          )}{' '}
+          have any repositories yet
+        </h4>
         <VCS style={{ width: '70%' }} />
-        <Button onClick={() => navigate('/add')}>Create</Button>
+
+        {user?.username == account?.username && (
+          <Button onClick={() => navigate('/add')}>Create</Button>
+        )}
       </EmptyRepos>
     )
   }

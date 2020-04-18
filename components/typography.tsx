@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { usePrerender, Link as QLink, LinkProps } from '@quercia/quercia'
-import styled from '@emotion/styled'
+import { styled } from 'goober'
 
 import Skeleton from './skeleton'
-import Theme from '../types/theme'
 
 export interface TypographyProps {
   known?: boolean
@@ -35,15 +34,15 @@ export const factory = <T extends Object = any>(
 }
 
 export const H2 = factory(
-  styled.h2`
+  styled('h2')`
     margin: 0.5em 0;
   `
 )
 
-export const H4 = factory(styled.h4`
+export const H4 = factory(styled('h4')`
   margin: 0;
 `)
-export const SpacedH4 = factory(styled.h4`
+export const SpacedH4 = factory(styled('h4')`
   margin: 0 0.5em;
 `)
 
@@ -52,9 +51,9 @@ type AP = React.DetailedHTMLProps<
   HTMLAnchorElement
 >
 
-const makeA = c => styled(c)<{ theme: Theme }>`
+const makeA = c => styled(c)`
   text-decoration: none;
-  color: ${props => props.theme.primary};
+  color: var(--primary);
 `
 const _A = makeA('a')
 const _QLink = makeA(QLink)

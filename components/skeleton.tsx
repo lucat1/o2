@@ -1,15 +1,9 @@
 import * as React from 'react'
-import styled from '@emotion/styled'
-import { darken, lighten } from 'polished'
+import { styled } from 'goober'
 
-import Theme from '../types/theme'
-
-export const Base = styled.div<{ theme?: Theme }>`
+export const Base = styled('div')`
   display: inline-block;
-  background: ${({ theme }) =>
-    theme.dark
-      ? lighten(0.1)(theme.background)
-      : darken(0.1)(theme.background)};
+  background: var(--background);
   border-radius: 0.25em;
 `
 
