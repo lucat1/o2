@@ -4,6 +4,7 @@ import { styled } from 'goober'
 const Container = styled('div')`
   display: flex;
   flex-direction: column;
+  font-size: 1em;
 `
 
 const Label = styled('label')<{ error?: boolean }>`
@@ -13,27 +14,47 @@ const Label = styled('label')<{ error?: boolean }>`
 `
 
 const InputBase = styled('input')`
-  height: 2rem;
-  font-size: 1rem;
-  min-width: 16rem;
-  padding: 0 0.75rem;
-  margin-bottom: 1.5rem;
+  height: 1.5em;
+  width: 12em;
+  font-size: 1em;
+  padding: 0 0.75em;
+  margin-bottom: 1.5em;
+  border-radius: 1.5em;
   color: var(--fg-5);
   background: var(--bg-5);
 
   outline: none;
   transition: border-width, height 0.3s ease-in-out;
-  border-radius: 2rem;
-  border: 0.0625rem solid var(--bg-3);
+  border: 1px solid var(--bg-3);
+`
 
-  :focus {
-    border-width: 0.125rem;
+const InlineContainer = styled('div')`
+  display: flex;
+  margin-bottom: 1.5em;
+
+  input {
+    margin: 0;
   }
+`
+
+const Inline = styled('div')`
+  height: 1.5em;
+  line-height: 1.5em;
+  border-radius: 1.5em;
+  padding: 0 0.75em;
+
+  padding-right: 2em;
+  margin-right: -1.75em;
+
+  background: var(--primary);
+  color: var(--bg-5);
+  border: 1px solid var(--bg-5);
 `
 
 interface InputProps {
   label?: string
   error?: string
+  inline?: string
 }
 
 const Input: React.FunctionComponent<
@@ -42,11 +63,19 @@ const Input: React.FunctionComponent<
     HTMLInputElement
   > &
     InputProps
-> = React.forwardRef(({ label, error, ...props }, ref) => {
+> = React.forwardRef(({ label, error, inline, ...props }, ref) => {
   return (
     <Container>
       {label && <Label htmlFor={props.id}>{label}</Label>}
-      <InputBase {...props} ref={ref} />
+      {inline ? (
+        <InlineContainer>
+          <Inline>{inline}</Inline>
+          <InputBase {...props} ref={ref} />
+        </InlineContainer>
+      ) : (
+        <InputBase {...props} ref={ref} />
+      )}
+
       {error && (
         <Label error htmlFor={props.id}>
           {error}

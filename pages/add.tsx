@@ -6,15 +6,18 @@ import Form from '../components/form'
 import Input from '../components/input'
 import Button from '../components/button'
 
+import { User } from '../types/data'
+
 interface AddProps {
   error?: string
+  account?: User
 }
 
 interface Data {
   name: string
 }
 
-export default ({ error }: AddProps) => {
+export default ({ error, account }: AddProps) => {
   const [isLoading, setLoading] = React.useState(typeof error == 'string')
   const { handleSubmit, register, errors } = useForm<Data>()
 
@@ -46,6 +49,7 @@ export default ({ error }: AddProps) => {
         <Input
           name='name'
           label='Name'
+          inline={(account?.username || '\u00A0'.repeat(5)) + '/'}
           disabled={isLoading}
           error={errors.name?.message.toString()}
           ref={register({
