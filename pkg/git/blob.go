@@ -12,7 +12,7 @@ func (b *Branch) Blob(name string) Blob {
 }
 
 func (b Blob) Read() (string, error) {
-	res, err := Command(b.Branch.repo.Path, "show", b.Branch.name+":"+b.Name)
+	res, err := Command(b.Branch.repo.Path, "show", b.Branch.Name+":"+b.Name)
 	if err != nil {
 		return "", err
 	}

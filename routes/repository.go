@@ -53,7 +53,7 @@ func Repository(w http.ResponseWriter, r *http.Request) {
 
 	// ignore the error. If we get and error it means the repository has not commits
 	// but that's fine as the client will display the `how to push first commit` message
-	tree, _ := repo.Branch("master").Tree("")
+	tree, _ := repo.Branch("master").Tree(".")
 
 	quercia.Render(
 		w, r,

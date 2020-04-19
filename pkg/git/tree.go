@@ -20,12 +20,12 @@ type Entry interface{}
 
 // Base is a struct wich holds all shared fields between trees and blobs
 type Base struct {
-	ID   string
-	Kind EntryKind
+	ID   string    `json:"id"`
+	Kind EntryKind `json:"kind"`
 
-	Branch *Branch
-	Mode   string
-	Size   uint64
+	Branch *Branch `json:"branch"`
+	Mode   string  `json:"id"`
+	Size   uint64  `json:"size"`
 }
 
 // Tree is a group of blobs and possibly other trees
@@ -33,8 +33,8 @@ type Tree struct {
 	Entry
 	Base
 
-	Path     string
-	Children []Entry
+	Path     string  `json:"path"`
+	Children []Entry `json:"children"`
 }
 
 // Blob is a single file in git branch
@@ -42,7 +42,7 @@ type Blob struct {
 	Entry
 	Base
 
-	Name string
+	Name string `json:"name"`
 }
 
 // Tree returns a tree of files and folders
@@ -53,7 +53,7 @@ func (b *Branch) Tree(p string) (tree *Tree, err error) {
 	}
 
 	// TODO: use branch id(sha) instead of name could be better
-	res, err := Command(b.repo.Path, "ls-tree", "-l", b.name, p)
+	res, err := Command(b.repo.Path, "ls-tree", "-l", b.Name, p)
 	if err != nil {
 		return nil, err
 	}
