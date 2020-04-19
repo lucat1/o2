@@ -18,40 +18,34 @@ const (
 )
 
 // Entry is a fake type to group both Trees and Blobs
-type Entry interface {
-	IsBlob() bool
-}
+type Entry interface{}
 
-// Tree is a group of blobs and possibly other trees
-type Tree struct {
-	Entry
-	ID   string
-	Kind EntryKind
-
-	Branch   *Branch
-	Mode     string
-	Size     uint64
-	Path     string
-	Children []Entry
-}
-
-// IsBlob is used to implement the Entry interface
-func (Tree) IsBlob() bool { return false }
-
-// Blob is a single file in git branch
-type Blob struct {
-	Entry
+// Base is a struct wich holds all shared fields between trees and blobs
+type Base struct {
 	ID   string
 	Kind EntryKind
 
 	Branch *Branch
 	Mode   string
 	Size   uint64
-	Name   string
 }
 
-// IsBlob is used to implement the Entry interface
-func (Blob) IsBlob() bool { return true }
+// Tree is a group of blobs and possibly other trees
+type Tree struct {
+	Entry
+	Base
+
+	Path     string
+	Children []Entry
+}
+
+// Blob is a single file in git branch
+type Blob struct {
+	Entry
+	Base
+
+	Name string
+}
 
 // Tree returns a tree of files and folders
 func (b *Branch) Tree(p string) (tree *Tree, err error) {
@@ -73,9 +67,11 @@ func (b *Branch) Tree(p string) (tree *Tree, err error) {
 	}
 
 	returnValue := Tree{
-		Kind:   TreeKind,
-		Branch: b,
-		Path:   p,
+		Base: Base{
+			Kind:   TreeKind,
+			Branch: b,
+		},
+		Path: p,
 	}
 	lines := strings.Split(res.String(), "\n")
 	for i := 0; i < len(lines); i++ {
@@ -96,24 +92,28 @@ func (b *Branch) Tree(p string) (tree *Tree, err error) {
 			//tree
 			kind = TreeKind
 			returnValue.Children = append(returnValue.Children, Tree{
-				Kind:   kind,
-				ID:     sha,
-				Branch: b,
-				Path:   name,
-				Mode:   mode,
-				Size:   size,
+				Base: Base{
+					Kind:   kind,
+					ID:     sha,
+					Branch: b,
+					Mode:   mode,
+					Size:   size,
+				},
+				Path: name,
 			})
 			continue
 		}
 
 		// blob
 		returnValue.Children = append(returnValue.Children, Blob{
-			Kind:   kind,
-			ID:     sha,
-			Branch: b,
-			Mode:   mode,
-			Size:   size,
-			Name:   name,
+			Base: Base{
+				Kind:   kind,
+				ID:     sha,
+				Branch: b,
+				Mode:   mode,
+				Size:   size,
+			},
+			Name: name,
 		})
 	}
 

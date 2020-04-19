@@ -5,9 +5,11 @@ import "github.com/rs/zerolog/log"
 // Blob returns a blob object just for reading purpuses
 func (b *Branch) Blob(name string) Blob {
 	return Blob{
-		Kind:   BlobKind,
-		Branch: b,
-		Name:   name,
+		Base: Base{
+			Kind:   BlobKind,
+			Branch: b,
+		},
+		Name: name,
 	}
 }
 
