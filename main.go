@@ -14,6 +14,7 @@ import (
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes"
+	"github.com/lucat1/o2/routes/git"
 	"github.com/lucat1/quercia"
 
 	"github.com/rs/zerolog/log"
@@ -56,6 +57,12 @@ func main() {
 	mux.HandleFunc("/:username", routes.Profile)
 	mux.HandleFunc("/:username/:reponame", routes.Repository)
 	mux.HandleFunc("/:username/:reponame/tree/:branch/*path", routes.Tree)
+	//mux.HandleFunc("/:username/:reponame/blob/:branch/*path", routes.Blob)
+
+	// git smart http protocol
+	mux.HandleFunc("/:username/:reponame/info/refs", git.InfoRefs)
+	mux.HandleFunc("/:username/:reponame/git-upload-pack", git.RPC("upload-pack"))
+	mux.HandleFunc("/:username/:reponame/git-receive-pack", git.RPC("receive-pack"))
 	mux.HandleFunc("/*path", routes.NotFound)
 
 	log.Info().

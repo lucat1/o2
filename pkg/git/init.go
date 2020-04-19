@@ -9,7 +9,7 @@ import (
 
 // Init initializes a bare git repository at the given path
 func Init(username, reponame string) (*Repository, error) {
-	dir := getPath(username, reponame)
+	dir := GetPath(username, reponame)
 	_, err := Command("", "init", "--bare", dir)
 	if err != nil {
 		return nil, err
