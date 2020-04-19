@@ -1,15 +1,18 @@
 import * as React from 'react'
 import { Head, usePrerender } from '@quercia/quercia'
 
-import Layout from '../components/repository/layout'
-import { Repository } from '../types/data'
+import { Repository, Tree } from '../types/data'
 import Skeleton from '../components/skeleton'
+
+import Layout from '../components/repository/layout'
+import Empty from '../components/repository/empty'
 
 export interface RepositoryProps {
   repository: Repository
+  tree: Tree
 }
 
-export default ({ repository }: RepositoryProps) => {
+export default ({ repository, tree }: RepositoryProps) => {
   return (
     <>
       <Head>
@@ -27,6 +30,7 @@ export default ({ repository }: RepositoryProps) => {
         ) : (
           <code>{repository.description}</code>
         )}
+        {!tree && !usePrerender() && <Empty />}
       </Layout>
     </>
   )

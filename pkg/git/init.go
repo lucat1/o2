@@ -8,7 +8,8 @@ import (
 )
 
 // Init initializes a bare git repository at the given path
-func Init(dir string) (*Repository, error) {
+func Init(username, reponame string) (*Repository, error) {
+	dir := getPath(username, reponame)
 	_, err := Command("", "init", "--bare", dir)
 	if err != nil {
 		return nil, err
@@ -27,5 +28,5 @@ func Init(dir string) (*Repository, error) {
 		log.Error().Err(err).Msg("Error while removing description file in new repo")
 	}
 
-	return Get(dir)
+	return Get(username, reponame)
 }

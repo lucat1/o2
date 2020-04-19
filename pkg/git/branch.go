@@ -1,7 +1,5 @@
 package git
 
-import "github.com/rs/zerolog/log"
-
 // Branch is a object representing a git branch,
 // tough it doesn't guarantee that it exists
 type Branch struct {
@@ -27,12 +25,6 @@ func (b *Branch) Exists() bool {
 func (b *Branch) ID() (string, error) {
 	id, err := Command(b.repo.Path, "rev-parse", "--verify", b.name)
 	if err != nil {
-		log.Error().
-			Err(err).
-			Str("stdout", id.String()).
-			Str("branch", b.name).
-			Str("repo", b.repo.Path).
-			Msg("Could not get branch id")
 		return "", err
 	}
 

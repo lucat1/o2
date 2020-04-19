@@ -36,6 +36,9 @@ export const factory = <T extends Object = any>(
 export const H2 = factory(styled('h2')`
   margin: 0.5em 0;
 `)
+export const SpacedH2 = factory(styled('h4')`
+  margin: 0.5em 1em;
+`)
 
 export const H4 = factory(styled('h4')`
   margin: 0;
@@ -44,9 +47,16 @@ export const SpacedH4 = factory(styled('h4')`
   margin: 0 0.5em;
 `)
 
+// the <a> props
 type AP = React.DetailedHTMLProps<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   HTMLAnchorElement
+>
+
+// the <p> props
+type PP = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLParagraphElement>,
+  HTMLParagraphElement
 >
 
 const makeA = c => styled(c)`
@@ -61,14 +71,32 @@ export const SpacedA = factory<AP>(styled(_A)`
   margin: 0 0.5em;
 `)
 
+export const P = factory<PP>(props => <p {...props} />)
+export const SpacedP = factory<PP>(styled('p')`
+  margin: 0 0.5em;
+`)
+
 export const Link = factory<LinkProps>(_QLink)
 export const SpacedLink = factory<LinkProps>(styled(_QLink)`
   margin: 0 0.5em;
 `)
 
+export const Code = styled('code')`
+  display: flex;
+  border-radius: 0.25em;
+  background: var(--bg-3);
+  color: var(--fg-5);
+  padding: 0.5em 1em;
+  width: 100%;
+  overflow: auto;
+`
+
 if (process.env.NODE_ENV !== 'production') {
   A.displayName = 'Typography(a)'
   SpacedA.displayName = 'Spaced(a)'
+
+  P.displayName = 'Typography(p)'
+  SpacedP.displayName = 'Spaced(p)'
 
   H4.displayName = 'Typography(h4)'
   SpacedH4.displayName = 'Spaced(h4)'

@@ -37,11 +37,9 @@ const tabs: [Page, string][] = [
   ['Settings', '/settings']
 ]
 
-const Layout: React.FunctionComponent<{ page: Page } & RepositoryProps> = ({
-  page,
-  children,
-  repository
-}) => (
+const Layout: React.FunctionComponent<
+  { page: Page } & Partial<RepositoryProps>
+> = ({ page, children, repository }) => (
   <Container>
     <Head>
       <h2

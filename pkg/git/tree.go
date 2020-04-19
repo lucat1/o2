@@ -3,8 +3,6 @@ package git
 import (
 	"strconv"
 	"strings"
-
-	"github.com/rs/zerolog/log"
 )
 
 // EntryKind can be either blob or tree
@@ -57,12 +55,6 @@ func (b *Branch) Tree(p string) (tree *Tree, err error) {
 	// TODO: use branch id(sha) instead of name could be better
 	res, err := Command(b.repo.Path, "ls-tree", "-l", b.name, p)
 	if err != nil {
-		log.Error().
-			Err(err).
-			Str("stdout", res.String()).
-			Str("branch", b.name).
-			Str("repo", b.repo.Path).
-			Msg("Could not get branch tree")
 		return nil, err
 	}
 

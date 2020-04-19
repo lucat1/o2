@@ -2,7 +2,6 @@ package routes
 
 import (
 	"net/http"
-	"path"
 
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
@@ -72,12 +71,7 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	repos := store.GetConfig().Section("repositories").Key("directory").String()
-	if !path.IsAbs(repos) {
-		repos = path.Join(store.GetCwd(), repos)
-	}
-
-	if _, err := git.Init(path.Join(repos, username, reponame)); err != nil {
+	if _, err := git.Init(username, reponame); err != nil {
 		log.Error().
 			Str("owner", username).
 			Str("reponame", reponame).
@@ -91,6 +85,6 @@ func Add(w http.ResponseWriter, r *http.Request) {
 	quercia.Redirect(
 		w, r,
 		"/"+username+"/"+reponame, "repository",
-		data.Compose(r, data.Base, repositoryData(repo)),
+		data.Compose(r, data.Base, repositoryData(repo), treeData(nil)),
 	)
 }

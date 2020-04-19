@@ -14,6 +14,8 @@ export interface Repository {
   description: string
 }
 
+export interface Tree {}
+
 export interface LoggedUser {
   username: string
   email: string
