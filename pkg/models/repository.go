@@ -10,8 +10,8 @@ import (
 type Repository struct {
 	gorm.Model
 
-	Owner     User   `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"owner"`
-	OwnerName string `gorm:"type:varchar(36);primary_index" json:"-"`
+	Owner     User   `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"-"`
+	OwnerName string `gorm:"type:varchar(36);primary_index" json:"owner"`
 
 	Name        string `gorm:"primary_index" json:"name"`
 	Description string `gorm:"type:varchar(250)" json:"description"`

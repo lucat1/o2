@@ -33,11 +33,9 @@ export const factory = <T extends Object = any>(
   return <H {...props} />
 }
 
-export const H2 = factory(
-  styled('h2')`
-    margin: 0.5em 0;
-  `
-)
+export const H2 = factory(styled('h2')`
+  margin: 0.5em 0;
+`)
 
 export const H4 = factory(styled('h4')`
   margin: 0;

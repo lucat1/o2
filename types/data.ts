@@ -9,6 +9,7 @@ export interface User extends LoggedUser {
 }
 
 export interface Repository {
+  owner: string
   name: string
   description: string
 }

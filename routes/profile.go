@@ -26,8 +26,8 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := store.GetDB().
 		Preload("Repositories").
+		Where(&models.User{Username: username}).
 		First(&user).
-		Where("username = ?", username).
 		Error; err != nil {
 
 		log.Debug().

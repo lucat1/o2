@@ -8,6 +8,8 @@ import Body from '../components/body'
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   glob`
   :root {
+    --ff: Operator Mono;
+
     --bg-3: #f4f4f4;
     --bg-4: #f2f2f2;
     --bg-5: #ffffff;
@@ -32,7 +34,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   html {
     background: var(--bg-5);
     color: var(--fg-5);
-    font-family: Operator Mono;
+    font-family: var(--ff);
     transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
   }
 

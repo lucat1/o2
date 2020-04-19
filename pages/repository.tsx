@@ -1,30 +1,33 @@
 import * as React from 'react'
-import { Head } from '@quercia/quercia'
-import { styled } from 'goober'
+import { Head, usePrerender } from '@quercia/quercia'
 
-import { H2 } from '../components/typography'
+import Layout from '../components/repository/layout'
+import { Repository } from '../types/data'
+import Skeleton from '../components/skeleton'
 
-const Container = styled('main')`
-  display: flex;
-  flex-direction: row;
-  padding: 0 6em;
+export interface RepositoryProps {
+  repository: Repository
+}
 
-  @media only screen and (max-width: 960px) {
-    padding: 2em 0;
-    flex-direction: column;
-  }
-`
-
-export default () => {
+export default ({ repository }: RepositoryProps) => {
   return (
     <>
       <Head>
-        <title>repository - o2</title>
+        <title>
+          {typeof repository === 'object'
+            ? `${repository.owner}/${repository.name}`
+            : 'repository'}{' '}
+          - o2
+        </title>
         <meta name='description' content='a git repository on the o2 service' />
       </Head>
-      <Container>
-        <H2>Repository</H2>
-      </Container>
+      <Layout repository={repository} page='Overview'>
+        {usePrerender() ? (
+          <Skeleton width='100%' height='5em' />
+        ) : (
+          <code>{repository.description}</code>
+        )}
+      </Layout>
     </>
   )
 }

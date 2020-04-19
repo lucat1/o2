@@ -88,5 +88,9 @@ func Add(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	quercia.Redirect(w, r, "/"+username+"/"+reponame, "repository", data.Compose(r, data.Base))
+	quercia.Redirect(
+		w, r,
+		"/"+username+"/"+reponame, "repository",
+		data.Compose(r, data.Base, repositoryData(repo)),
+	)
 }
