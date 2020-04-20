@@ -3,8 +3,8 @@ package git
 // Branch is a object representing a git branch,
 // tough it doesn't guarantee that it exists
 type Branch struct {
-	repo *Repository `json:"-"`
-	Name string      `json:"name"`
+	repo *Repository
+	Name string `json:"name"`
 }
 
 // Branch returns the theoretical branch object
