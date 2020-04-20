@@ -50,7 +50,6 @@ const EmptyRepos = styled(Repos)`
 const Repositories = ({ user, account }: ProfileProps) => {
   // rener a placeholder pointing the user to create his/hers first repo
   if ((user?.repositories || []).length == 0 && !usePrerender()) {
-    console.log(user?.username, account?.username)
     return (
       <EmptyRepos>
         <h4>

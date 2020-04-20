@@ -26,7 +26,7 @@ export default ({ error }: LoginProps) => {
     }
   }, [error])
 
-  const onSubmit = async (data: Data) => {
+  const onSubmit = (data: Data) => {
     setLoading(true)
 
     // instantiate the POST form data

@@ -20,17 +20,17 @@ type Entry interface{}
 
 // Base is a struct wich holds all shared fields between trees and blobs
 type Base struct {
-	ID   string    `json:"id"`
+	ID   string    `json:"-"`
 	Kind EntryKind `json:"kind"`
 
-	Branch *Branch `json:"branch"`
-	Mode   string  `json:"id"`
+	Branch *Branch `json:"-"`
+	Mode   string  `json:"mode"`
 	Size   uint64  `json:"size"`
 }
 
 // Tree is a group of blobs and possibly other trees
 type Tree struct {
-	Entry
+	Entry `json:"-"`
 	Base
 
 	Path     string  `json:"path"`
@@ -39,7 +39,7 @@ type Tree struct {
 
 // Blob is a single file in git branch
 type Blob struct {
-	Entry
+	Entry `json:"-"`
 	Base
 
 	Name string `json:"name"`

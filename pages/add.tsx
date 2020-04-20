@@ -27,7 +27,7 @@ export default ({ error, account }: AddProps) => {
     }
   }, [error])
 
-  const onSubmit = async (data: Data) => {
+  const onSubmit = (data: Data) => {
     setLoading(true)
 
     // instantiate the POST form data

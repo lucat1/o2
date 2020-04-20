@@ -5,7 +5,6 @@ import { styled } from 'goober'
 import { H2, H4, SpacedH4, A } from '../typography'
 import Skeleton, { Base } from '../skeleton'
 
-import { User } from '../../types/data'
 import { ProfileProps } from '../../pages/profile'
 
 const User = styled('section')`
