@@ -9,7 +9,7 @@
     "dev": "rm -rf __quercia && quercia watch"
   },
   "dependencies": {
-    "goober": "lucat1/goober#compat",
+    "goober": "lucat1/goober#6407e46ff92dda60cfdad3435d505139514df233",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.3.1"

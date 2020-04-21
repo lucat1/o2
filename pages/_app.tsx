@@ -8,7 +8,7 @@ import Body from '../components/body'
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   glob`
   :root {
-    --ff: Operator Mono;
+    --ff: 'Operator Mono';
 
     --bg-3: #f4f4f4;
     --bg-4: #f2f2f2;
@@ -29,6 +29,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   * {
     box-sizing: border-box;
+    text-rendering:optimizeLegibility;
   }
 
   html {

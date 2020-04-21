@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { styled } from 'goober'
 
-import { SpacedH2, P, A, Code } from '../typography'
+import { SpacedH2, P, Code } from '../typography'
+import { RepositoryProps } from '../../pages/repository'
+import NoData from '../svgs/no-data'
 
 const Container = styled('div')`
   border-radius: 0.25em;
@@ -19,10 +21,20 @@ const Spaced = styled('div')`
   padding: 0.5em 1em;
 `
 
-const Empty: React.FunctionComponent = () => {
-  const url = `http://${window.location.host}${window.location.pathname}`
+const Center = styled('div')`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 
-  return (
+const Empty: React.FunctionComponent<Partial<RepositoryProps>> = ({
+  repository,
+  account
+}) => {
+  const url = `http://${window.location.host}/${repository.owner}/${repository.name}`
+
+  return account?.username === repository?.owner ? (
     <Container>
       <SpacedH2>Quickstart guide</SpacedH2>
       <Line />
@@ -45,6 +57,7 @@ const Empty: React.FunctionComponent = () => {
           git push -u origin master
         </Code>
       </Spaced>
+      <Line />
       <Spaced>
         <P>To upload an existing repository on your system:</P>
         <Code>
@@ -54,6 +67,12 @@ const Empty: React.FunctionComponent = () => {
         </Code>
       </Spaced>
     </Container>
+  ) : (
+    <Center>
+      <h2>This repository is empty</h2>
+
+      <NoData width='70%' />
+    </Center>
   )
 }
 
