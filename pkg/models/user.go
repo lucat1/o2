@@ -1,8 +1,12 @@
 package models
 
 import (
+	"crypto/md5"
 	"errors"
+	"fmt"
+	"strings"
 
+	"github.com/jinzhu/gorm"
 	"github.com/lucat1/o2/pkg/store"
 )
 
@@ -21,6 +25,13 @@ type User struct {
 	Picture     string `json:"picture"`
 
 	Repositories []Repository `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"repositories"`
+}
+
+// BeforeSave will generate the profile picture url from gravatar
+func (user *User) BeforeSave(scope *gorm.Scope) error {
+	hash := md5.Sum([]byte(strings.ToLower(user.Email)))
+	url := "https://www.gravatar.com/avatar/" + fmt.Sprintf("%x", hash)
+	return scope.SetColumn("Picture", url)
 }
 
 // ExistsUser checks if the requested user exists

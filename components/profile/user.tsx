@@ -3,7 +3,8 @@ import { usePrerender } from '@quercia/quercia'
 import { styled } from 'goober'
 
 import { H2, H4, SpacedH4, A } from '../typography'
-import Skeleton, { Base } from '../skeleton'
+import Skeleton from '../skeleton'
+import Image from '../image'
 
 import { ProfileProps } from '../../pages/profile'
 
@@ -20,7 +21,7 @@ const User = styled('section')`
   }
 `
 
-const Picture = styled(Base)`
+const Picture = styled(Image)`
   width: 10em;
   height: 10em;
   border-radius: 50%;
@@ -38,7 +39,7 @@ const Description = styled(Line)`
 
 const Profile = ({ user }: ProfileProps) => (
   <User>
-    <Picture />
+    <Picture src={user?.picture + '?s=300'} />
     <Line>
       <H2>{user?.username}</H2>
     </Line>
