@@ -4,13 +4,7 @@ import { styled } from 'goober'
 import { SpacedH2, P, Code } from '../typography'
 import { RepositoryProps } from '../../pages/repository'
 import NoData from '../svgs/no-data'
-
-const Container = styled('div')`
-  border-radius: 0.25em;
-  border: 1px solid var(--bg-3);
-  width: calc(100% - 2px);
-  margin-top: 2em;
-`
+import Container from './container'
 
 const Line = styled('div')`
   height: 1px;

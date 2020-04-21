@@ -14,7 +14,25 @@ export interface Repository {
   description: string
 }
 
-export interface Tree {}
+export enum EntryKind {
+  TREE = 0,
+  BLOB = 1
+}
+
+export interface Entry {
+  kind: EntryKind
+  mode: string
+  size: number
+}
+
+export interface Tree extends Entry {
+  path: string
+  children?: Entry[]
+}
+
+export interface Blob extends Entry {
+  name: string
+}
 
 export interface LoggedUser {
   username: string
