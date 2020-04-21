@@ -2,6 +2,7 @@ import * as React from 'react'
 import { AppProps } from '@quercia/runtime'
 import { glob } from 'goober'
 
+import Progress from '../components/progress'
 import Header from '../components/header'
 import Body from '../components/body'
 
@@ -23,7 +24,6 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       --bg-5: #191919;
       --bg-6: #161616;
       --fg-5: #ffffff;
-      --primary: #C792EA;
     }
   }
 
@@ -47,6 +47,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <>
+      <Progress />
       <Header />
       <Body>
         <Component {...pageProps} />

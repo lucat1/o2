@@ -27,7 +27,7 @@ const Button = styled('button')<{ sm?: boolean }>`
   &[disabled] {
     box-shadow: none;
     cursor: default;
-    background: var(--bg-6);
+    background: var(--bg-3);
   }
 `
 
