@@ -3,15 +3,11 @@ import { styled } from 'goober'
 import * as pretty from 'pretty-bytes'
 
 import Container from './container'
+import { key, url, basename } from './path'
+
 import Folder from '../svgs/folder'
 import File from '../svgs/file'
-import {
-  Tree as ITree,
-  EntryKind,
-  Blob,
-  Entry,
-  Repository
-} from '../../types/data'
+import { Tree as ITree, EntryKind, Repository } from '../../types/data'
 import { Link } from '../typography'
 
 const Grid = styled(Container)`
@@ -39,30 +35,15 @@ const Part = styled('div')`
   }
 `
 
-const key = (entry: Entry): string => {
-  return entry.kind === EntryKind.BLOB
-    ? (entry as Blob).name
-    : (entry as ITree).path
-}
-
-const url = (repo: Repository, tree: ITree, entry: Entry): string => {
-  return `/${repo.owner}/${repo.name}/${
-    entry.kind === EntryKind.BLOB ? 'blob' : 'tree'
-  }/${tree.branch.name}${tree.path.startsWith('/') ? tree.path : '/'}${key(
-    entry
-  )}`
-}
-
-const basename = (path: string): string => {
-  const splits = path.split('/')
-  return splits[splits.length - 1]
-}
-
 const Tree: React.FunctionComponent<{
   tree: ITree
   repository: Repository
 }> = ({ tree, repository }) => (
   <Grid>
+    <Part>/</Part>
+    <Part>Name</Part>
+    <Part>Size</Part>
+
     {(tree.children || [])
       .sort((a, b) => (key(a) > key(b) ? 1 : -1)) // sort alphetically
       .sort((a, b) => (a.kind > b.kind ? 1 : -1)) // sort by kind (folder, file)

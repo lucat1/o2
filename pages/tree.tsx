@@ -2,11 +2,10 @@ import * as React from 'react'
 import { Head, usePrerender } from '@quercia/quercia'
 
 import { Repository, Tree as ITree, User } from '../types/data'
-import Skeleton from '../components/skeleton'
 
 import Layout from '../components/repository/layout'
-import Empty from '../components/repository/empty'
 import Tree from '../components/repository/tree'
+import Path from '../components/repository/path'
 
 export interface RepositoryProps {
   account: User
@@ -20,7 +19,7 @@ export default ({ repository, tree, account }: RepositoryProps) => {
       <Head>
         <title>
           {typeof repository === 'object'
-            ? `${repository.name}@${tree.path}`
+            ? `${repository.name}/${tree.path}`
             : 'tree'}{' '}
           - o2
         </title>
@@ -30,6 +29,7 @@ export default ({ repository, tree, account }: RepositoryProps) => {
         />
       </Head>
       <Layout repository={repository} page='Tree'>
+        <Path repository={repository} entry={tree} />
         {tree && !usePrerender() && (
           <Tree repository={repository} tree={tree} />
         )}
