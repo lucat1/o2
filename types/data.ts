@@ -23,6 +23,7 @@ export interface Entry {
   kind: EntryKind
   mode: string
   size: number
+  branch: { name: string }
 }
 
 export interface Tree extends Entry {

@@ -20,21 +20,16 @@ export default ({ repository, tree, account }: RepositoryProps) => {
       <Head>
         <title>
           {typeof repository === 'object'
-            ? `${repository.owner}/${repository.name}`
-            : 'repository'}{' '}
+            ? `${repository.name}@${tree.path}`
+            : 'tree'}{' '}
           - o2
         </title>
-        <meta name='description' content='a git repository on the o2 service' />
+        <meta
+          name='description'
+          content='the tree of a git repository on the o2 service'
+        />
       </Head>
-      <Layout repository={repository} page='Overview'>
-        {usePrerender() ? (
-          <Skeleton width='100%' height='5em' />
-        ) : (
-          <code>{repository.description}</code>
-        )}
-        {!tree && !usePrerender() && (
-          <Empty repository={repository} account={account} />
-        )}
+      <Layout repository={repository} page='Tree'>
         {tree && !usePrerender() && (
           <Tree repository={repository} tree={tree} />
         )}

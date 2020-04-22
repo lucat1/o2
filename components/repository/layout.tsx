@@ -31,7 +31,7 @@ const Skeleton = styled(_Skeleton)`
 export type Page = 'Overview' | 'Tree' | 'Issues' | 'Pulls' | 'Settings'
 const tabs: [Page, string][] = [
   ['Overview', ''],
-  ['Tree', '/tree'],
+  ['Tree', '/tree/master'],
   ['Issues', '/issues'],
   ['Pulls', '/pulls'],
   ['Settings', '/settings']

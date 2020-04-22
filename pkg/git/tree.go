@@ -23,7 +23,7 @@ type Base struct {
 	ID   string    `json:"-"`
 	Kind EntryKind `json:"kind"`
 
-	Branch *Branch `json:"-"`
+	Branch *Branch `json:"branch"`
 	Mode   string  `json:"mode"`
 	Size   uint64  `json:"size"`
 }

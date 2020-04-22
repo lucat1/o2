@@ -56,6 +56,7 @@ func main() {
 	mux.HandleFunc("/add", auth.Required(routes.Add))
 	mux.HandleFunc("/:username", routes.Profile)
 	mux.HandleFunc("/:username/:reponame", routes.Repository)
+	mux.HandleFunc("/:username/:reponame/tree/:branch", routes.Tree)
 	mux.HandleFunc("/:username/:reponame/tree/:branch/*path", routes.Tree)
 	//mux.HandleFunc("/:username/:reponame/blob/:branch/*path", routes.Blob)
 
