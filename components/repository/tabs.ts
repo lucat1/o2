@@ -5,6 +5,7 @@ export const Tabs = styled('nav')`
   display: flex;
   flex-direction: row;
   flex: 1;
+  overflow: auto;
 
   height: 1.5em;
   align-items: center;

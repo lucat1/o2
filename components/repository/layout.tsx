@@ -15,7 +15,6 @@ const Container = styled('main')`
 
   @media only screen and (max-width: 960px) {
     padding: 2em 0;
-    flex-direction: column;
   }
 `
 

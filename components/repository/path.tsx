@@ -12,13 +12,15 @@ export const key = (entry: Entry): string => {
     : (entry as Tree).path
 }
 
-export const url = (repo: Repository, tree: Tree, entry: Entry): string => {
-  return `/${repo.owner}/${repo.name}/${
+const base = (repo: Repository, tree: Tree, entry: Entry): string =>
+  `/${repo.owner}/${repo.name}/${
     entry.kind === EntryKind.BLOB ? 'blob' : 'tree'
-  }/${tree.branch.name}${tree.path.startsWith('/') ? tree.path : '/'}${key(
-    entry
-  )}`
-}
+  }/${tree.branch.name}`
+
+export const url = (repo: Repository, tree: Tree, entry: Entry): string =>
+  `${base(repo, tree, entry)}${
+    tree.path.startsWith('/') ? tree.path : '/'
+  }${key(entry)}`
 
 export const basename = (path: string): string => {
   const splits = path.split('/')
@@ -35,7 +37,7 @@ const Line = styled('div')`
 `
 
 const Path: React.FunctionComponent<{
-  entry: Tree
+  entry: Entry
   repository: Repository
 }> = ({ entry, repository }) => {
   if (usePrerender()) {
@@ -53,14 +55,19 @@ const Path: React.FunctionComponent<{
     return parts.slice(0, parts.indexOf(k) + 1).join('/')
   }
 
-  const base = `/${repository.owner}/${repository.name}/tree/${entry.branch.name}`
+  const _base = base(repository, entry as any, { kind: 0 } as any)
 
   return (
     <Line>
-      <Link to={base}>{repository.name}</Link>
+      <Link to={_base}>{repository.name}</Link>
       {parts.map((path, i) => (
         <React.Fragment key={i}>
-          /<Link to={`${base}/${pathTo(path)}`}>{path}</Link>
+          /
+          {i !== parts.length - 1 ? (
+            <Link to={`${_base}/${pathTo(path)}`}>{path}</Link>
+          ) : (
+            path
+          )}
         </React.Fragment>
       ))}
     </Line>

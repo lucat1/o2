@@ -12,16 +12,17 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func treeData(tree *git.Tree) data.Composer {
+func blobData(blob git.Blob, data string) data.Composer {
 	return func(r *http.Request) quercia.Props {
 		return quercia.Props{
-			"tree": tree,
+			"blob": blob,
+			"data": data,
 		}
 	}
 }
 
-// Tree renders a folder inside a repository
-func Tree(w http.ResponseWriter, r *http.Request) {
+// Blob renders a file inside a repository
+func Blob(w http.ResponseWriter, r *http.Request) {
 	username := muxie.GetParam(w, "username")
 	reponame := muxie.GetParam(w, "reponame")
 	path := muxie.GetParam(w, "path")
@@ -52,25 +53,23 @@ func Tree(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if path == "" {
-		path = "."
-	}
-	tree, err := repo.Branch("master").Tree(path)
+	blob := repo.Branch("master").Blob(path)
+	d, err := blob.Read()
 	if err != nil {
 		log.Debug().
 			Str("username", username).
 			Str("reponame", reponame).
 			Str("path", path).
 			Err(err).
-			Msg("Error while getting git tree from the filesystem repository")
+			Msg("Error while reading git blob from the filesystem repository")
 		NotFound(w, r)
 		return
 	}
 
 	quercia.Render(
 		w, r,
-		"tree",
-		data.Compose(r, data.Base, repositoryData(dbRepo), treeData(tree)),
+		"blob",
+		data.Compose(r, data.Base, repositoryData(dbRepo), blobData(blob, d)),
 	)
 
 }
