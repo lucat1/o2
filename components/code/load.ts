@@ -7,7 +7,7 @@ export const lang = (l: string): string => aliases[l] || l
 
 const load = async (l: string) => {
   const language = lang(l)
-  if (language == undefined) {
+  if (language == undefined || loaded.has(language)) {
     return
   }
 
