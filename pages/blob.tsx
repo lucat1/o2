@@ -90,14 +90,15 @@ export default ({ repository, blob, data, ext }: RepositoryProps) => {
             <Line />
             <Code>
               <pre>{data.split('\n').map((_, i) => `${i + 1}\n`)}</pre>
-              <Pre
-                dangerouslySetInnerHTML={{
-                  __html:
-                    loaded && languages[language]
-                      ? highlight(data, languages[language], language)
-                      : data
-                }}
-              />
+              {loaded && languages[language] ? (
+                <Pre
+                  dangerouslySetInnerHTML={{
+                    __html: highlight(data, languages[language], language)
+                  }}
+                />
+              ) : (
+                <Pre>{data}</Pre>
+              )}
             </Code>
           </Container>
         )}
