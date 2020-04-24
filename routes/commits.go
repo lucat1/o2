@@ -12,16 +12,16 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func treeData(tree *git.Tree) data.Composer {
+func commitsData(commits []git.Commit) data.Composer {
 	return func(r *http.Request) quercia.Props {
 		return quercia.Props{
-			"tree": tree,
+			"commits": commits,
 		}
 	}
 }
 
-// Tree renders a folder inside a repository
-func Tree(w http.ResponseWriter, r *http.Request) {
+// Commits lists the latest 20 commits of a repository
+func Commits(w http.ResponseWriter, r *http.Request) {
 	username := muxie.GetParam(w, "username")
 	reponame := muxie.GetParam(w, "reponame")
 	path := muxie.GetParam(w, "path")
@@ -52,10 +52,7 @@ func Tree(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if path == "" {
-		path = "."
-	}
-	tree, err := repo.Branch("master").Tree(path)
+	commits, err := repo.Branch("master").Commits(0, 10)
 	if err != nil {
 		log.Debug().
 			Str("username", username).
@@ -67,9 +64,5 @@ func Tree(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	quercia.Render(
-		w, r,
-		"tree",
-		data.Compose(r, data.Base, repositoryData(dbRepo), treeData(tree)),
-	)
+	quercia.Render(w, r, "commits", data.Compose(r, data.Base, repositoryData(dbRepo), commitsData(commits)))
 }

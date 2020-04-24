@@ -35,6 +35,32 @@ export interface Blob extends Entry {
   name: string
 }
 
+export interface Commit {
+  commit: string
+  abbreviated_commit: string
+  tree: string
+  abbreviated_tree: string
+  parent: string
+  abbreviated_parent: string
+  refs: string
+  encoding: string
+  subject: string
+  sanitized_subject_line: string
+  body: string
+  commit_notes: string
+  verification_flag: string
+  signer: string
+  signer_key: string
+  author: Author
+  commiter: Author
+}
+
+export interface Author {
+  name: string
+  email: string
+  date: string
+}
+
 export interface LoggedUser {
   username: string
   email: string

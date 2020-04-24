@@ -59,7 +59,7 @@ func main() {
 	mux.HandleFunc("/:username/:reponame/tree/:branch", routes.Tree)
 	mux.HandleFunc("/:username/:reponame/tree/:branch/*path", routes.Tree)
 	mux.HandleFunc("/:username/:reponame/blob/:branch/*path", routes.Blob)
-	//mux.HandleFunc("/:username/:reponame/blob/:branch/*path", routes.Blob)
+	mux.HandleFunc("/:username/:reponame/commits/:branch", routes.Commits)
 
 	// git smart http protocol
 	mux.HandleFunc("/:username/:reponame/info/refs", git.InfoRefs)

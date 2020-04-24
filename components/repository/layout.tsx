@@ -27,10 +27,17 @@ const Skeleton = styled(_Skeleton)`
   margin: 0 0.5em;
 `
 
-export type Page = 'Overview' | 'Tree' | 'Issues' | 'Pulls' | 'Settings'
+export type Page =
+  | 'Overview'
+  | 'Tree'
+  | 'Commits'
+  | 'Issues'
+  | 'Pulls'
+  | 'Settings'
 const tabs: [Page, string][] = [
   ['Overview', ''],
   ['Tree', '/tree/master'],
+  ['Commits', '/commits/master'],
   ['Issues', '/issues'],
   ['Pulls', '/pulls'],
   ['Settings', '/settings']
