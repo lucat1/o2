@@ -11,7 +11,7 @@ const Bar = styled('div')`
   background: var(--primary);
   opacity: 0;
   transition: opacity 0.2s ease-in-out, width 0.2s ease-in-out;
-  z-index: 10;
+  z-index: 11;
 `
 
 const Progress: React.FunctionComponent = () => {
@@ -21,6 +21,7 @@ const Progress: React.FunctionComponent = () => {
 
   const { loading } = useRouter()
   const [val, setVal] = React.useState(10)
+  const [opacity, setOpacity] = React.useState(0)
 
   React.useEffect(() => {
     const bump = () => {
@@ -32,12 +33,23 @@ const Progress: React.FunctionComponent = () => {
       setVal(s => (s >= 85 ? s : s + 20))
     }
 
-    setVal(10)
+    // if the loading is done reset the value(200ms later)
+    if (!loading) {
+      setVal(100)
+      setTimeout(() => {
+        setVal(10)
+        setOpacity(0)
+      }, 200)
+    } else {
+      setVal(10)
+      setOpacity(1)
+    }
+
     const handle = setInterval(bump, 300)
     return () => clearInterval(handle)
   }, [loading])
 
-  return <Bar style={{ width: `${val}%`, opacity: loading ? 1 : 0 }} />
+  return <Bar style={{ width: `${val}%`, opacity: opacity }} />
 }
 
 export default Progress
