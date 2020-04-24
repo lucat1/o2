@@ -45,7 +45,7 @@ const Tree: React.FunctionComponent<{
     <Part>Size</Part>
 
     {(tree.children || [])
-      .sort((a, b) => (key(a) > key(b) ? 1 : -1)) // sort alphetically
+      .sort((a, b) => (key(a) > key(b) ? -1 : 1)) // sort alphetically
       .sort((a, b) => (a.kind > b.kind ? 1 : -1)) // sort by kind (folder, file)
       .map((entry, i) => (
         <React.Fragment key={i}>

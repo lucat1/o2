@@ -11,6 +11,7 @@
   "dependencies": {
     "goober": "lucat1/goober#6407e46ff92dda60cfdad3435d505139514df233",
     "pretty-bytes": "^5.3.0",
+    "prismjs": "^1.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.3.1"
@@ -18,6 +19,7 @@
   "devDependencies": {
     "@quercia/cli": "0.3",
     "@types/node": "^13.11.1",
+    "@types/prismjs": "^1.16.0",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
     "preact": "^10.4.0",

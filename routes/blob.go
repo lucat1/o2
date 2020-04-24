@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"path"
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/data"
@@ -14,9 +15,15 @@ import (
 
 func blobData(blob git.Blob, data string) data.Composer {
 	return func(r *http.Request) quercia.Props {
+		ext := path.Ext(blob.Name)
+		if len(ext) > 1 {
+			ext = ext[1:] // trim trailing .
+		}
+
 		return quercia.Props{
 			"blob": blob,
 			"data": data,
+			"ext":  ext,
 		}
 	}
 }

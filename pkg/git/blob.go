@@ -11,11 +11,12 @@ func (b *Branch) Blob(name string) Blob {
 	}
 }
 
-func (b Blob) Read() (string, error) {
+func (b *Blob) Read() (string, error) {
 	res, err := Command(b.Branch.repo.Path, "show", b.Branch.Name+":"+b.Name)
 	if err != nil {
 		return "", err
 	}
 
+	b.Size = uint64(res.Len())
 	return res.String(), nil
 }

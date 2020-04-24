@@ -6,7 +6,7 @@ import { RepositoryProps } from '../../pages/repository'
 import NoData from '../svgs/no-data'
 import Container from './container'
 
-const Line = styled('div')`
+export const Line = styled('div')`
   height: 1px;
   background: var(--bg-3);
 `
