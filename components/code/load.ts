@@ -19,7 +19,7 @@ const load = async (l: string) => {
   await Promise.all(deps.map(load))
 
   await reqScript(
-    `https://unpkg.com/prismjs@1.20.0/components/prism-${language}.js`
+    `https://unpkg.com/prismjs@1.20.0/components/prism-${language}.min.js`
   )
   loaded.add(language)
 }
