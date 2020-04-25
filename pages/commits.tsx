@@ -7,7 +7,7 @@ import Layout from '../components/repository/layout'
 import Container from '../components/repository/container'
 
 import { Repository, Commit } from '../types/data'
-import { SpacedP, Link } from '../components/typography'
+import { SpacedP, Link, SpacedLink } from '../components/typography'
 import _Image from '../components/image'
 import _Skeleton from '../components/skeleton'
 
@@ -30,6 +30,14 @@ const Image = styled(_Image)`
   border-radius: 50%;
 `
 
+const WhiteLink = styled(SpacedLink)`
+  color: var(--fg-5);
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
 const Skeleton = styled(_Skeleton)`
   margin: 0 0.5em;
 `
@@ -48,6 +56,8 @@ export default ({ repository, commits }: CommitsProps) => {
   if (usePrerender()) {
     commits = Array.from({ length: 10 })
   }
+
+  const base = `/${repository?.owner}/${repository?.name}`
 
   return (
     <>
@@ -68,7 +78,9 @@ export default ({ repository, commits }: CommitsProps) => {
           <CommitContainer key={commit?.commit}>
             <Image src={commit ? `${commit.author.picture}?s=75` : ''} />
             <div>
-              <SpacedP>{commit?.subject}</SpacedP>
+              <WhiteLink to={`${base}/commit/${commit?.commit}`}>
+                {commit?.subject}
+              </WhiteLink>
               {usePrerender() ? (
                 <Skeleton height={1} width={12} />
               ) : (
@@ -82,9 +94,7 @@ export default ({ repository, commits }: CommitsProps) => {
               )}
             </div>
             <Right>
-              <Link
-                to={`/${repository?.owner}/${repository?.name}/tree/${commit?.tree}`}
-              >
+              <Link to={`${base}/tree/${commit?.tree}`}>
                 {commit?.abbrv_tree}
               </Link>
             </Right>
