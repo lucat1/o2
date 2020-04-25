@@ -60,11 +60,14 @@ func main() {
 	mux.HandleFunc("/:username/:reponame/tree/:branch/*path", routes.Tree)
 	mux.HandleFunc("/:username/:reponame/blob/:branch/*path", routes.Blob)
 	mux.HandleFunc("/:username/:reponame/commits/:branch", routes.Commits)
+	mux.HandleFunc("/:username/:reponame/commit/:sha", routes.Commit)
 
 	// git smart http protocol
 	mux.HandleFunc("/:username/:reponame/info/refs", git.InfoRefs)
 	mux.HandleFunc("/:username/:reponame/git-upload-pack", git.RPC("upload-pack"))
 	mux.HandleFunc("/:username/:reponame/git-receive-pack", git.RPC("receive-pack"))
+
+	// 404 handler
 	mux.HandleFunc("/*path", routes.NotFound)
 
 	log.Info().

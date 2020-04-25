@@ -4,7 +4,7 @@ const Button = styled('button')<{ sm?: boolean }>`
   height: ${({ sm }) => (sm ? 2 : 2.5)}em;
   min-width: ${({ sm }) => (sm ? 5.5 : 8)}em;
   border-radius: 0.45em;
-  font-family: var(-ff);
+  font-family: var(--ff);
   font-size: 0.75em;
   background: var(--primary);
   color: var(--bg-5);

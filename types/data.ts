@@ -46,6 +46,10 @@ export interface Commit {
   commiter: Author
 }
 
+export interface DetailedCommit extends Commit {
+  diff: string
+}
+
 export interface Author {
   username: string
   email: string

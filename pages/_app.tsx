@@ -10,13 +10,17 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   glob`
   :root {
     --ff: 'Operator Mono';
+    --primary: #C792EA;
+    --error: #fd9726;
+
+    --red: rgba(254,119,52, .75);
+    --green: rgba(52,254,187, .35);
 
     --bg-3: #f4f4f4;
     --bg-4: #f2f2f2;
     --bg-5: #ffffff;
     --bg-6: #e5e5e5;
-    --fg-5: #000000;
-    --primary: #C792EA;
+    --fg-5: #000000;  
 
     @media (prefers-color-scheme: dark) {
       --bg-3: #303030;

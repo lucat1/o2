@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "goober": "lucat1/goober#6407e46ff92dda60cfdad3435d505139514df233",
+    "parse-diff": "^0.7.0",
     "pretty-bytes": "^5.3.0",
     "prismjs": "^1.20.0",
     "react": "^16.13.1",

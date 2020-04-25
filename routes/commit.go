@@ -12,20 +12,19 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func commitsData(commits []git.Commit) data.Composer {
+func commitData(commit git.DetailedCommit) data.Composer {
 	return func(r *http.Request) quercia.Props {
 		return quercia.Props{
-			"commits": commits,
+			"commit": commit,
 		}
 	}
 }
 
-// Commits lists the latest 20 commits of a repository
-func Commits(w http.ResponseWriter, r *http.Request) {
+// Commit renders the diff of a single commit
+func Commit(w http.ResponseWriter, r *http.Request) {
 	username := muxie.GetParam(w, "username")
 	reponame := muxie.GetParam(w, "reponame")
-	branch := muxie.GetParam(w, "branch")
-	path := muxie.GetParam(w, "path")
+	sha := muxie.GetParam(w, "sha")
 
 	var dbRepo models.Repository
 	if err := store.GetDB().
@@ -53,17 +52,17 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	commits, err := repo.Branch(branch).Commits(0, 20)
+	commit, err := repo.Commit(sha)
 	if err != nil {
 		log.Debug().
 			Str("username", username).
 			Str("reponame", reponame).
-			Str("path", path).
+			Str("sha", sha).
 			Err(err).
-			Msg("Error while getting git tree from the filesystem repository")
+			Msg("Error while looking for commit inside a git repository")
 		NotFound(w, r)
 		return
 	}
 
-	quercia.Render(w, r, "commits", data.Compose(r, data.Base, repositoryData(dbRepo), commitsData(commits)))
+	quercia.Render(w, r, "commit", data.Compose(r, data.Base, repositoryData(dbRepo), commitData(commit)))
 }
