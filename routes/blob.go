@@ -32,6 +32,7 @@ func blobData(blob git.Blob, data string) data.Composer {
 func Blob(w http.ResponseWriter, r *http.Request) {
 	username := muxie.GetParam(w, "username")
 	reponame := muxie.GetParam(w, "reponame")
+	branch := muxie.GetParam(w, "branch")
 	path := muxie.GetParam(w, "path")
 
 	var dbRepo models.Repository
@@ -60,7 +61,7 @@ func Blob(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	blob := repo.Branch("master").Blob(path)
+	blob := repo.Branch(branch).Blob(path)
 	d, err := blob.Read()
 	if err != nil {
 		log.Debug().

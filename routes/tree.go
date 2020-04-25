@@ -24,6 +24,7 @@ func treeData(tree *git.Tree) data.Composer {
 func Tree(w http.ResponseWriter, r *http.Request) {
 	username := muxie.GetParam(w, "username")
 	reponame := muxie.GetParam(w, "reponame")
+	branch := muxie.GetParam(w, "branch")
 	path := muxie.GetParam(w, "path")
 
 	var dbRepo models.Repository
@@ -55,7 +56,7 @@ func Tree(w http.ResponseWriter, r *http.Request) {
 	if path == "" {
 		path = "."
 	}
-	tree, err := repo.Branch("master").Tree(path)
+	tree, err := repo.Branch(branch).Tree(path)
 	if err != nil {
 		log.Debug().
 			Str("username", username).

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { styled } from 'goober'
 
-export const Base = styled('div')`
+export const Base = styled('span')`
   display: inline-block;
   background: var(--bg-3);
   border-radius: 0.25em;

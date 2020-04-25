@@ -14,7 +14,8 @@
     "prismjs": "^1.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^5.3.1"
+    "react-hook-form": "^5.3.1",
+    "tinydate": "^1.2.0"
   },
   "devDependencies": {
     "@quercia/cli": "0.3",
