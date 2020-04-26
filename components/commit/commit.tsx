@@ -38,7 +38,7 @@ const Data = styled('div')`
 `
 
 const WhiteLink = styled(SpacedLink)`
-  margin: 0.25em 0.5em;
+  margin: 0 0.5em;
   color: var(--fg-5);
 
   &:hover {
