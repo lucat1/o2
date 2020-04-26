@@ -1,5 +1,5 @@
 <p align="center">
-  <h2>o2 - self-hosted git ui</h2>
+  <strong>o2 - self-hosted git ui</strong>
 </p>
 
 ### demo
