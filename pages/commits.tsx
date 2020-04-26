@@ -13,7 +13,7 @@ export interface CommitsProps {
 
 export default ({ repository, commits }: CommitsProps) => {
   if (usePrerender()) {
-    commits = Array.from({ length: 10 })
+    commits = Array.from({ length: 20 })
   }
 
   return (
@@ -33,7 +33,7 @@ export default ({ repository, commits }: CommitsProps) => {
       <Layout repository={repository} page='Commits'>
         {(commits || []).map(commit => (
           <Commit
-            key={commit.commit}
+            key={commit?.commit}
             base={`/${repository?.owner}/${repository?.name}`}
             commit={commit}
           />

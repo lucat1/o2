@@ -72,11 +72,9 @@ export const SpacedA = factory<AP>(styled(_A)`
 `)
 
 export const P = factory<PP>(props => <p {...props} />)
-export const SpacedP = factory<PP>(
-  styled('p')`
-    margin: 0 0.5em;
-  `
-)
+export const SpacedP = factory<PP>(styled('p')`
+  margin: 0 0.5em;
+`)
 
 export const Link = factory<LinkProps>(_QLink)
 export const SpacedLink = factory<LinkProps>(styled(_QLink)`

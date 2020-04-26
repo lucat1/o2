@@ -13,7 +13,8 @@ import { Commit as ICommit } from '../../types/data'
 
 const CommitContainer = styled(Container)`
   margin: 0.5em 0;
-  padding: 0.5em;
+  padding: 0.35em 0.75em;
+  height: 3.5em;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -29,7 +30,15 @@ const Image = styled(_Image)`
   border-radius: 50%;
 `
 
+const Data = styled('div')`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+
 const WhiteLink = styled(SpacedLink)`
+  margin: 0.25em 0.5em;
   color: var(--fg-5);
 
   &:hover {
@@ -45,6 +54,11 @@ const TinyP = styled(SpacedP)`
   font-size: 0.85em;
 `
 
+const TinyPSkeleton = styled('p')`
+  margin: 0;
+  font-size: 0.85em;
+`
+
 const Right = styled('div')`
   flex: 1;
   display: flex;
@@ -57,12 +71,14 @@ const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
 }) => (
   <CommitContainer>
     <Image src={commit ? `${commit.author.picture}?s=75` : ''} />
-    <div>
+    <Data>
       <WhiteLink to={`${base}/commit/${commit?.commit}`}>
         {commit?.subject}
       </WhiteLink>
       {usePrerender() ? (
-        <Skeleton height={1} width={12} />
+        <TinyPSkeleton>
+          <Skeleton height={1.1} width={12} />
+        </TinyPSkeleton>
       ) : (
         <TinyP>
           <Link to={`/${commit?.author.username}`}>
@@ -72,7 +88,7 @@ const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
           {format('{DD} {MM} {YYYY}')(new Date(commit?.author?.date))}
         </TinyP>
       )}
-    </div>
+    </Data>
     <Right>
       <Link to={`${base}/tree/${commit?.tree}`}>{commit?.abbrv_tree}</Link>
     </Right>
