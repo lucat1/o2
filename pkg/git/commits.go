@@ -41,7 +41,6 @@ type Commit struct {
 	Tree              string       `json:"tree"`
 	AbbreviatedTree   string       `json:"abbrv_tree"`
 	Subject           string       `json:"subject"`
-	Body              string       `json:"body"`
 	Author            CommitAuthor `json:"author"`
 	Commiter          CommitAuthor `json:"commiter"`
 }
@@ -61,9 +60,10 @@ func (branch Branch) Commits(offset, amount int) ([]Commit, error) {
 	buf, err := Command(
 		branch.repo.Path,
 		"log",
+		branch.Name,
 		"--skip="+strconv.Itoa(offset),
 		"-n "+strconv.Itoa(amount),
-		"--pretty=format:{\"commit\": \"%H\",\"abbreviated_commit\": \"%h\",\"tree\": \"%T\",\"abbreviated_tree\": \"%t\",\"parent\": \"%P\",\"abbreviated_parent\": \"%p\",\"refs\": \"%D\",\"encoding\": \"%e\",\"subject\": \"%s\",\"sanitized_subject_line\": \"%f\",\"body\": \"%b\",\"commit_notes\": \"%N\",\"verification_flag\": \"%G?\",\"signer\": \"%GS\",\"signer_key\": \"%GK\",\"author\": {  \"name\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"name\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}},",
+		"--pretty=format:{\"commit\": \"%H\",\"abbreviated_commit\": \"%h\",\"tree\": \"%T\",\"abbreviated_tree\": \"%t\",\"parent\": \"%P\",\"abbreviated_parent\": \"%p\",\"refs\": \"%D\",\"encoding\": \"%e\",\"subject\": \"%s\",\"sanitized_subject_line\": \"%f\",\"commit_notes\": \"%N\",\"verification_flag\": \"%G?\",\"signer\": \"%GS\",\"signer_key\": \"%GK\",\"author\": {  \"name\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"name\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}},",
 	)
 	if err != nil {
 		return res, err
@@ -83,7 +83,6 @@ func (branch Branch) Commits(offset, amount int) ([]Commit, error) {
 			Tree:              ic.Tree,
 			AbbreviatedTree:   ic.AbbreviatedTree,
 			Subject:           ic.Subject,
-			Body:              ic.Body,
 			Author: CommitAuthor{
 				Username: ic.Author.Name,
 				Email:    ic.Author.Email,

@@ -41,7 +41,6 @@ export interface Commit {
   tree: string
   abbrv_tree: string
   subject: string
-  body: string
   author: Author
   commiter: Author
 }
