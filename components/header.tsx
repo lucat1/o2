@@ -65,7 +65,7 @@ const Header: React.FunctionComponent = () => {
               <SpacedLink known to='/login'>
                 Login
               </SpacedLink>
-              <Button sm onClick={() => navigate('/register')}>
+              <Button small onClick={() => navigate('/register')}>
                 Sign up
               </Button>
             </>

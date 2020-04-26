@@ -1,8 +1,8 @@
 import { styled } from 'goober'
 
-const Button = styled('button')<{ sm?: boolean }>`
-  height: ${({ sm }) => (sm ? 2 : 2.5)}em;
-  min-width: ${({ sm }) => (sm ? 5.5 : 8)}em;
+const Button = styled('button')<{ small?: boolean }>`
+  height: ${({ small }) => (small ? 2 : 2.5)}em;
+  min-width: ${({ small }) => (small ? 5.5 : 8)}em;
   border-radius: 0.45em;
   font-family: var(--ff);
   font-size: 0.75em;
@@ -16,7 +16,7 @@ const Button = styled('button')<{ sm?: boolean }>`
 
   border: none;
   outline: none;
-  margin: ${({ sm }) => (sm ? '0 1em' : '1.5em')};
+  margin: ${({ small }) => (small ? '0 1em' : '1.5em')};
   box-shadow: var(--box-shadow-small);
   transition: box-shadow 0.3s ease-in-out;
 
