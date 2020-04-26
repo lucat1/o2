@@ -15,7 +15,7 @@ jobs:
         with:
           name: __quercia
           path: __quercia
-  build:
+  bundlesize:
     runs-on: ubuntu-latest
     steps:
       - name: Download previous quercia build
