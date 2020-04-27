@@ -10,6 +10,7 @@ import Arrow from '../svgs/arrow'
 
 const Container = styled(_Container)`
   margin: 1em 0;
+  overflow: hidden;
 
   &:nth-child(4) {
     margin-top: 0.5em;
@@ -55,7 +56,7 @@ const LineNumbers = styled('div')`
 const FullLine = styled('div')<{ big: boolean }>`
   grid-column: 1 / 4;
   padding: 0 0.75em;
-  background: var(--bg-4);
+  background: var(--bg-6);
 
   ${({ big }) =>
     big &&
