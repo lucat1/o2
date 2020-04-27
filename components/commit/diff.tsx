@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { styled } from 'goober'
+import { styled, css } from 'goober'
 import { File } from 'parse-diff'
 
 import _Container from '../repository/container'
-import { Line } from '../repository/empty'
+import { Line as _Line } from '../repository/empty'
 import Button from '../button'
 import { SpacedA } from '../typography'
 import Arrow from '../svgs/arrow'
@@ -52,13 +52,31 @@ const LineNumbers = styled('div')`
   text-align: right;
 `
 
+const FullLine = styled('div')<{ big: boolean }>`
+  grid-column: 1 / 4;
+  padding: 0 0.75em;
+  background: var(--bg-4);
+
+  ${({ big }) =>
+    big &&
+    `
+  height: 3.5em;
+  display: flex;
+  align-items: center;
+  `}
+`
+
+const Line = styled(_Line)`
+  grid-column: 1 / 4;
+`
+
 const Pre = styled('pre')`
   margin: 0;
 `
 
 const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
   const [visible, setVisible] = React.useState(
-    !file.deleted && file.deletions < 1000 && file.additions < 1000
+    !file.deleted && file.deletions < 500 && file.additions < 500
   )
   const [collapsed, collapse] = React.useState(false)
 
@@ -72,6 +90,14 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
   } else {
     title = file.to
   }
+
+  const red = css`
+    background: var(--red);
+  `
+
+  const green = css`
+    background: var(--green);
+  `
 
   return (
     <Container>
@@ -103,24 +129,30 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
         !collapsed &&
         file.chunks.map((chunk, i) => (
           <Code key={i}>
+            {i !== 0 && <Line />}
+            <FullLine big={i !== 0}>{chunk.content}</FullLine>
+            {i !== 0 && <Line />}
             {chunk.changes.map((change, i) => {
-              const style = {
-                background:
-                  change.type === 'del'
-                    ? 'var(--red)'
-                    : change.type === 'add'
-                    ? 'var(--green)'
-                    : undefined
-              }
+              const csx =
+                change.type === 'del'
+                  ? red
+                  : change.type === 'add'
+                  ? green
+                  : undefined
 
               return (
                 <React.Fragment key={i}>
-                  <LineNumbers style={style}>
+                  <LineNumbers className={csx}>
                     {!file.new && !file.deleted && chunk.oldStart + i}
                   </LineNumbers>
-                  <LineNumbers style={style}>{chunk.newStart + i}</LineNumbers>
-                  <div style={style}>
-                    <Pre>{change.content}</Pre>
+                  <LineNumbers className={csx}>
+                    {chunk.newStart + i}
+                  </LineNumbers>
+                  <div className={csx}>
+                    <Pre>
+                      {change.type === 'normal' && ' '}
+                      {change.content}
+                    </Pre>
                   </div>
                 </React.Fragment>
               )
