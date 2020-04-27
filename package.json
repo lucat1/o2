@@ -16,7 +16,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.3.1",
-    "tinydate": "^1.2.0"
+    "tinydate": "^1.2.0",
+    "use-prefers-theme": "^0.1.2"
   },
   "devDependencies": {
     "@quercia/cli": "0.3.8",
