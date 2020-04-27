@@ -14,6 +14,7 @@ import (
 type Claims struct {
 	Email    string `json:"email"`
 	Username string `json:"username"`
+	Picture  string `json:"picture"`
 
 	jwt.StandardClaims
 }
@@ -26,6 +27,7 @@ func Token(user models.User) (string, error) {
 	claims := &Claims{
 		Email:    user.Email,
 		Username: user.Username,
+		Picture:  user.Picture,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(lifespan).Unix(),
 		},

@@ -14,7 +14,7 @@ const Grid = styled(Container)`
   display: grid;
   grid-template-columns: auto 1fr auto;
 
-  div:last-child,
+  & > div:last-child,
   div:nth-last-child(2),
   div:nth-last-child(3) {
     border-bottom: 0;

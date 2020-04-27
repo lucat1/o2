@@ -10,11 +10,14 @@ import { ProfileProps } from '../../pages/profile'
 import { H2, Link } from '../typography'
 
 const Repos = styled('section')`
+  padding: 0 2.25em;
   flex: 1;
-  padding: 0 2.5em;
+  flex-wrap: wrap;
+  flex-basis: 0;
+  min-width: 60%;
+  flex-grow: 999;
 
-  @media only screen and (max-width: 960px) {
-    width: 100%;
+  @media (max-width: 960px) {
     padding: 0 1em;
     padding-top: 2em;
   }
@@ -35,7 +38,7 @@ const Repo = styled('div')`
     margin-top: 0;
   }
 
-  @media only screen and (max-width: 960px) {
+  @media (max-width: 960px) {
     margin-top: calc(2em + 1vw);
   }
 `

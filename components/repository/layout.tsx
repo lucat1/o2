@@ -13,14 +13,15 @@ const Container = styled('main')`
   flex-direction: column;
   padding: 0 6em;
 
-  @media only screen and (max-width: 960px) {
-    padding: 2em 0;
+  @media (max-width: 960px) {
+    padding: 2em 0.5em;
   }
 `
 
 const Head = styled('div')`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 `
 
 const Skeleton = styled(_Skeleton)`
@@ -51,6 +52,7 @@ const Layout: React.FunctionComponent<
       <h2
         className={css`
           display: flex;
+          flex-grow: 1;
         `}
       >
         <Link to={`/${repository?.owner || ''}`}>{repository?.owner}</Link>/

@@ -2,13 +2,13 @@ import * as React from 'react'
 import { usePage, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
 
-import { SpacedH4, SpacedLink, Link } from './typography'
+import { SpacedH4, SpacedLink } from './typography'
 import Button from './button'
+import _Image from './image'
+import _Body from './body'
 import _Logo from './svgs/logo'
 
 import { BaseData } from '../types/data'
-import _Body from './body'
-
 const Container = styled('nav')`
   position: sticky;
   top: 0;
@@ -39,6 +39,13 @@ const Logo = styled(_Logo)`
   cursor: pointer;
 `
 
+const Image = styled(_Image)`
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  cursor: pointer;
+`
+
 const Header: React.FunctionComponent = () => {
   const props = usePage()[1] as BaseData
 
@@ -53,12 +60,13 @@ const Header: React.FunctionComponent = () => {
           {props.account ? (
             <>
               <SpacedLink to='/add'>+</SpacedLink>
-              <SpacedH4>
-                <Link known to={`/${props.account.username}`}>
-                  {props.account.username}
-                </Link>
-              </SpacedH4>
-              <SpacedLink to='/logout'>⟶</SpacedLink>
+              {/* TODO: find a more elegant way :( */}
+              <div style={{ padding: '0 0.85em' }}>
+                <Image
+                  onClick={() => navigate(`/${props.account.username}`)}
+                  src={props.account.picture}
+                />
+              </div>
             </>
           ) : (
             <>

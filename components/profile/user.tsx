@@ -11,21 +11,13 @@ import { ProfileProps } from '../../pages/profile'
 
 const User = styled('section')`
   width: 15em;
-  padding: 0 2.5em;
+  padding: 0 2.25em;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  @media (max-width: 960px) {
-    width: 100%;
-    padding: 0 1em;
-    flex-direction: row;
-  }
-
-  @media (max-width: 380px) {
-    flex-direction: column;
-  }
+  flex-wrap: wrap;
+  flex-grow: 1;
 `
 
 const Info = styled('div')`

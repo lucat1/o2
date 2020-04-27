@@ -59,6 +59,7 @@ export interface Author {
 export interface LoggedUser {
   username: string
   email: string
+  picture: string
 }
 
 export interface BaseData {

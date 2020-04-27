@@ -35,7 +35,10 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
     * {
       box-sizing: border-box;
-      text-rendering:optimizeLegibility;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "calt" 1;
+      font-variant-ligatures: contextual;
     }
 
     html {
@@ -43,6 +46,10 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       color: var(--fg-5);
       font-family: var(--ff);
       transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+    }
+
+    code, pre {
+      font-family: var(--ff);
     }
 
     body {
@@ -55,14 +62,15 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <>
-      {preference != 'none' && (
-        <Head>
+      <Head>
+        {preference != 'none' && (
           <meta
             name='theme-color'
             content={preference == 'light' ? '#ffffff' : '#191919'}
           />
-        </Head>
-      )}
+        )}
+      </Head>
+
       <Progress />
       <Header />
       <Body>

@@ -18,6 +18,7 @@ var Base Composer = func(r *http.Request) quercia.Props {
 		"account": quercia.Props{
 			"email":    data.Email,
 			"username": data.Username,
+			"picture":  data.Picture,
 		},
 	}
 }

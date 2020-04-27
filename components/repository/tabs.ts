@@ -4,12 +4,19 @@ import { styled } from 'goober'
 export const Tabs = styled('nav')`
   display: flex;
   flex-direction: row;
-  flex: 1;
   overflow: auto;
 
   height: 1.5em;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
+  overflow-y: hidden;
+  flex-basis: 0;
+  flex-grow: 999;
+  min-width: 85%;
+
+  @media (min-width: 600px) {
+    justify-content: flex-end;
+  }
 `
 
 export const Tab = styled(Link)<{ selected: boolean }>`

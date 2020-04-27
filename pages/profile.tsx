@@ -14,9 +14,10 @@ export interface ProfileProps {
 const Container = styled('main')`
   display: flex;
   flex-wrap: wrap;
+  overflow: hidden;
   padding: 2em 5em;
 
-  @media only screen and (max-width: 960px) {
+  @media (max-width: 960px) {
     padding: 2em 0;
   }
 `
