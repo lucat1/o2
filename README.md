@@ -8,7 +8,9 @@
 
 ### screenshots
 
-![diff/commit view](screens/8.png)
+![diff/commit view](screens/9.png)
+
+![commits pagination view](screens/8.png)
 
 ![commits view](screens/7.png)
 
