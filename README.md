@@ -1,3 +1,5 @@
+> The project is still in early development and is not ready to be deployed
+
 <p align="center">
   <strong>o2 - self-hosted git ui</strong>
 </p>
