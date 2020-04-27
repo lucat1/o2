@@ -43,6 +43,7 @@ const Empty = styled('div')`
 const IconButton = styled(Button)<{ flipped: boolean }>`
   margin-right: 0.5em;
   padding: 0;
+  color: var(--fg-5);
   background: var(--bg-3);
   transform: rotate(${({ flipped }) => (flipped ? '180' : '360')}deg);
 `
