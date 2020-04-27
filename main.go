@@ -60,6 +60,7 @@ func main() {
 	mux.HandleFunc("/:username/:reponame/tree/:branch/*path", routes.Tree)
 	mux.HandleFunc("/:username/:reponame/blob/:branch/*path", routes.Blob)
 	mux.HandleFunc("/:username/:reponame/commits/:branch", routes.Commits)
+	mux.HandleFunc("/:username/:reponame/commits/:branch/:page", routes.Commits)
 	mux.HandleFunc("/:username/:reponame/commit/:sha", routes.Commit)
 
 	// git smart http protocol

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/data"
@@ -12,10 +13,14 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func commitsData(commits []git.Commit) data.Composer {
+func commitsData(branch string, commits git.Commits) data.Composer {
 	return func(r *http.Request) quercia.Props {
 		return quercia.Props{
-			"commits": commits,
+			"branch":  branch,
+			"index":   commits.Index,
+			"prev":    commits.Prev,
+			"next":    commits.Next,
+			"commits": commits.Commits,
 		}
 	}
 }
@@ -25,7 +30,24 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 	username := muxie.GetParam(w, "username")
 	reponame := muxie.GetParam(w, "reponame")
 	branch := muxie.GetParam(w, "branch")
+	_page := muxie.GetParam(w, "page")
 	path := muxie.GetParam(w, "path")
+
+	page := 0
+	if _page != "" {
+		id, err := strconv.Atoi(_page)
+		if err != nil {
+			log.Debug().
+				Str("username", username).
+				Str("reponame", reponame).
+				Str("page", _page).
+				Err(err).
+				Msg("Invalid commits page")
+			NotFound(w, r)
+			return
+		}
+		page = id
+	}
 
 	var dbRepo models.Repository
 	if err := store.GetDB().
@@ -53,7 +75,7 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	commits, err := repo.Branch(branch).Commits(0, 20)
+	commits, err := repo.Branch(branch).Commits(page, 20)
 	if err != nil {
 		log.Debug().
 			Str("username", username).
@@ -65,5 +87,13 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	quercia.Render(w, r, "commits", data.Compose(r, data.Base, repositoryData(dbRepo), commitsData(commits)))
+	quercia.Render(
+		w, r,
+		"commits",
+		data.Compose(r,
+			data.Base,
+			repositoryData(dbRepo),
+			commitsData(branch, commits),
+		),
+	)
 }

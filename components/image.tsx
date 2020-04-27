@@ -15,6 +15,7 @@ const Img = styled('img')`
   width: 100%;
   height: 100%;
   transition: opacity 0.2s ease-in-out;
+  user-select: none;
 `
 
 const Image: React.FunctionComponent<ImageProps> = ({ src, ...props }) => {
