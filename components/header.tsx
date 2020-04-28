@@ -64,6 +64,7 @@ const Header: React.FunctionComponent = () => {
               <div style={{ padding: '0 0.85em' }}>
                 <Image
                   onClick={() => navigate(`/${props.account.username}`)}
+                  alt='Your profile picture'
                   src={props.account.picture}
                 />
               </div>

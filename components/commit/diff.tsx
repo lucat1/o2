@@ -76,6 +76,19 @@ const Pre = styled('pre')`
   margin: 0;
 `
 
+const red = css`
+  background: var(--red);
+`
+
+const green = css`
+  background: var(--green);
+`
+
+const Stat = styled(SpacedA)<{ new: boolean }>`
+  font-weight: bold;
+  color: var(--${props => (props.new ? 'green' : 'red')});
+`
+
 const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
   const [visible, setVisible] = React.useState(
     !file.deleted && file.deletions < 500 && file.additions < 500
@@ -93,14 +106,6 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
     title = file.to
   }
 
-  const red = css`
-    background: var(--red);
-  `
-
-  const green = css`
-    background: var(--green);
-  `
-
   return (
     <Container>
       <Title>
@@ -108,12 +113,13 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
           flipped={collapsed}
           tiny
           onClick={() => collapse(!collapsed)}
+          aria-label={collapsed ? 'Show diff' : 'Collpase diff'}
         >
           <Arrow height='1em' />
         </IconButton>
         <a>{title}</a>
-        {file.new && <SpacedA style={{ color: 'var(--green)' }}>NEW</SpacedA>}
-        {file.deleted && <SpacedA style={{ color: 'var(--red)' }}>DEL</SpacedA>}
+        {file.new && <Stat new>NEW</Stat>}
+        {file.deleted && <Stat new={false}>DEL</Stat>}
       </Title>
       {!collapsed && <Line />}
       {!visible && !collapsed && (

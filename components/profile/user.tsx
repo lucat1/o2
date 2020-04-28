@@ -46,7 +46,14 @@ const Description = styled(Line)`
 
 const Profile = ({ user }: ProfileProps) => (
   <User>
-    <Picture src={user?.picture + '?s=300'} />
+    <Picture
+      alt={
+        user
+          ? `${user.username}'s profile picture`
+          : "The user's profile picture"
+      }
+      src={user?.picture + '?s=300'}
+    />
     <Info>
       <Line>
         <H2>{user?.username}</H2>

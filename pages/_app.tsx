@@ -15,8 +15,8 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       --primary: #C792EA;
       --error: #fd9726;
 
-      --red: rgba(254,119,52, .75);
-      --green: rgba(52,254,187, .35);
+      --red: #e13023;
+      --green: #008845;
 
       --bg-3: #d9d9d9;
       --bg-4: #f2f2f2;

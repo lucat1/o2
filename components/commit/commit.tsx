@@ -70,7 +70,14 @@ const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
   base
 }) => (
   <CommitContainer>
-    <Image src={commit ? `${commit.author.picture}?s=75` : ''} />
+    <Image
+      alt={
+        commit
+          ? `${commit.author.username}'s profile picture`
+          : "commit author's profile picture"
+      }
+      src={commit ? `${commit.author.picture}?s=75` : ''}
+    />
     <Data>
       <WhiteLink to={`${base}/commit/${commit?.commit}`}>
         {commit?.subject}

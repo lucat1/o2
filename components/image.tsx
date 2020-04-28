@@ -3,11 +3,10 @@ import { usePrerender } from '@quercia/quercia'
 import { styled } from 'goober'
 import { Base } from './skeleton'
 
-interface ImageProps
-  extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  > {
+type ImageProps = React.DetailedHTMLProps<
+  React.ImgHTMLAttributes<HTMLImageElement>,
+  HTMLImageElement
+> & {
   src: string
 }
 
