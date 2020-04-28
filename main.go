@@ -9,7 +9,6 @@ import (
 
 	// initialize zerolog options
 	"github.com/kataras/muxie"
-	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
@@ -48,12 +47,13 @@ func main() {
 
 	// log requests during debug
 	mux.Use(middleware.DebugMiddleware)
+	mux.Use(middleware.WithAuth)
 
 	mux.HandleFunc("/", routes.Index)
 	mux.HandleFunc("/register", routes.Register)
 	mux.HandleFunc("/login", routes.Login)
-	mux.HandleFunc("/logout", auth.Required(routes.Logout))
-	mux.HandleFunc("/add", auth.Required(routes.Add))
+	mux.HandleFunc("/logout", middleware.MustAuth(routes.Logout))
+	mux.HandleFunc("/add", middleware.MustAuth(routes.Add))
 	mux.HandleFunc("/:username", routes.Profile)
 
 	repo := mux.Of("/:username/:reponame")

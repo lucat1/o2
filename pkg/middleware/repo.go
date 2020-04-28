@@ -14,14 +14,14 @@ import (
 type repoType string
 
 // DbRepo is the context key for the database repository value
-var DbRepo = repoType("db-repo")
+const DbRepo = repoType("db-repo")
 
 // GitRepo is the context key for the fs/git repository value
-var GitRepo = repoType("git-repo")
+const GitRepo = repoType("git-repo")
 
 // WithRepo checks for the existance of a repo both in the file system and in the database
 // and returns a 404 if they don't exist. Otherwhise these two values are available in the context
-func WithRepo(NotFound http.HandlerFunc) muxie.Wrapper {
+func WithRepo(fallback http.HandlerFunc) muxie.Wrapper {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			username := muxie.GetParam(w, "username")
@@ -38,7 +38,7 @@ func WithRepo(NotFound http.HandlerFunc) muxie.Wrapper {
 					Str("reponame", reponame).
 					Err(err).
 					Msg("Error while query the DB to render the repository page")
-				NotFound(w, r)
+				fallback(w, r)
 				return
 			}
 
@@ -49,7 +49,7 @@ func WithRepo(NotFound http.HandlerFunc) muxie.Wrapper {
 					Str("reponame", reponame).
 					Err(err).
 					Msg("Error while looking for repository on the filesystem")
-				NotFound(w, r)
+				fallback(w, r)
 				return
 			}
 
