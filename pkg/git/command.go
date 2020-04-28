@@ -19,7 +19,7 @@ func Command(pwd string, args ...string) (buf *bytes.Buffer, err error) {
 
 	log.Debug().
 		Str("pwd", cmd.Dir).
-		Strs("args", args).
+		Str("sub", args[0]).
 		Msg("Running git command")
 
 	err = cmd.Run()
