@@ -7,11 +7,11 @@ const Pre = styled('pre')`
   .prolog,
   .doctype,
   .cdata {
-    color: hsl(30, 20%, 50%);
+    color: #2d00f7ff;
   }
 
   .function {
-    color: red;
+    color: #8900f2ff;
   }
 
   .punctuation {
@@ -28,7 +28,7 @@ const Pre = styled('pre')`
   .number,
   .constant,
   .symbol {
-    color: hsl(350, 40%, 70%);
+    color: #bc00ddff;
   }
 
   .selector,
@@ -52,7 +52,8 @@ const Pre = styled('pre')`
   .atrule,
   .attr-value,
   .keyword {
-    color: hsl(350, 40%, 70%);
+    color: #f20089ff;
+    font-weight: bold;
   }
 
   .regex,

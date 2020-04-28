@@ -157,10 +157,7 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
                     {chunk.newStart + i}
                   </LineNumbers>
                   <div className={csx}>
-                    <Pre>
-                      {change.type === 'normal' && ' '}
-                      {change.content}
-                    </Pre>
+                    <Pre>{change.content}</Pre>
                   </div>
                 </React.Fragment>
               )
