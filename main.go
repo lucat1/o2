@@ -55,18 +55,22 @@ func main() {
 	mux.HandleFunc("/logout", auth.Required(routes.Logout))
 	mux.HandleFunc("/add", auth.Required(routes.Add))
 	mux.HandleFunc("/:username", routes.Profile)
-	mux.HandleFunc("/:username/:reponame", routes.Repository)
-	mux.HandleFunc("/:username/:reponame/tree/:branch", routes.Tree)
-	mux.HandleFunc("/:username/:reponame/tree/:branch/*path", routes.Tree)
-	mux.HandleFunc("/:username/:reponame/blob/:branch/*path", routes.Blob)
-	mux.HandleFunc("/:username/:reponame/commits/:branch", routes.Commits)
-	mux.HandleFunc("/:username/:reponame/commits/:branch/:page", routes.Commits)
-	mux.HandleFunc("/:username/:reponame/commit/:sha", routes.Commit)
+
+	repo := mux.Of("/:username/:reponame")
+	repo.Use(middleware.WithRepo(routes.NotFound))
+
+	repo.HandleFunc("/", routes.Repository)
+	repo.HandleFunc("/tree/:branch", routes.Tree)
+	repo.HandleFunc("/tree/:branch/*path", routes.Tree)
+	repo.HandleFunc("/blob/:branch/*path", routes.Blob)
+	repo.HandleFunc("/commits/:branch", routes.Commits)
+	repo.HandleFunc("/commits/:branch/:page", routes.Commits)
+	repo.HandleFunc("/commit/:sha", routes.Commit)
 
 	// git smart http protocol
-	mux.HandleFunc("/:username/:reponame/info/refs", git.InfoRefs)
-	mux.HandleFunc("/:username/:reponame/git-upload-pack", git.RPC("upload-pack"))
-	mux.HandleFunc("/:username/:reponame/git-receive-pack", git.RPC("receive-pack"))
+	repo.HandleFunc("/info/refs", git.InfoRefs)
+	repo.HandleFunc("/git-upload-pack", git.RPC("upload-pack"))
+	repo.HandleFunc("/git-receive-pack", git.RPC("receive-pack"))
 
 	// 404 handler
 	mux.HandleFunc("/*path", routes.NotFound)
