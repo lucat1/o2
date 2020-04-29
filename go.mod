@@ -7,7 +7,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/kataras/muxie v1.0.8
-	github.com/lucat1/quercia v0.1.3
+	github.com/lucat1/quercia v0.4.0-next.2
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/rs/zerolog v1.18.0
 	github.com/satori/go.uuid v1.2.0

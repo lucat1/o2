@@ -10,10 +10,12 @@ import (
 
 // Base generates the basic data contained in each respose, such as the login status
 var Base Composer = func(r *http.Request) quercia.Props {
-	claims := r.Context().Value(middleware.Claims).(*auth.Claims)
-	if claims == nil {
+	rawClaims := r.Context().Value(middleware.Claims)
+	if rawClaims == nil {
 		return quercia.Props{}
 	}
+
+	claims := rawClaims.(*auth.Claims)
 
 	return quercia.Props{
 		"account": quercia.Props{

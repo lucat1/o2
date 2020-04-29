@@ -867,10 +867,10 @@
     prop-types "^15.6.2"
     scheduler "^0.19.0"
 
-"@quercia/cli@0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@quercia/cli/-/cli-0.3.8.tgz#0673f2b4663b4c740ea702f30ce5b069c0a47398"
-  integrity sha512-U8vr310vSoIKiuUW5vphOvV9u35jLkX6D2ayLovlc8bopwYU07xqpxgRdEc2VlpmA0kIDhumQEobOTZ5Mvyyrg==
+"@quercia/cli@^0.4.0-next.3":
+  version "0.4.0-next.3"
+  resolved "https://registry.yarnpkg.com/@quercia/cli/-/cli-0.4.0-next.3.tgz#1fb2352133e69c515b94376a6d9ff7bc2eb8530f"
+  integrity sha512-DvvA0cbyH4O2FxYd3ImopJ/pByuAyCfh10PolGAIOu6oacHasycuoQyT4wgKfd6Me1maTC5vQa8/DXew/btMNg==
   dependencies:
     uid "^1.0.0"
     "@babel/core" "^7.9.0"
@@ -878,40 +878,47 @@
     "@babel/preset-react" "^7.9.4"
     "@babel/preset-typescript" "^7.9.0"
     "@hot-loader/react-dom" "^16.13.0"
-    "@quercia/runtime" "^0.2.4"
+    "@quercia/runtime" "^0.2.5-next.1"
     astring "^1.4.3"
     babel-loader "^8.1.0"
     babel-plugin-transform-async-to-promises "^0.8.15"
+    core-js "^3.6.5"
+    escape-html "^1.0.3"
     estree-walker "^2.0.1"
     fork-ts-checker-webpack-plugin "^4.1.3"
     get-port "^5.1.1"
     is-ci "^2.0.0"
     kleur "^3.0.3"
     loader-utils "^2.0.0"
+    object-assign "^4.1.1"
     react-hot-loader "^4.12.20"
     sade "^1.7.3"
     tapable "^1.1.3"
     terser-webpack-plugin "^2.3.5"
+    unfetch "^4.1.0"
+    url-polyfill "^1.1.8"
     webpack "^4.42.1"
     webpack-hot-middleware "^2.25.0"
     webpack-node-externals "^1.7.2"
 
-"@quercia/quercia@0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@quercia/quercia/-/quercia-0.1.9.tgz#9c4f336173a20efcdecc6dbf1a1385fccc31515f"
-  integrity sha512-yhf2xM/VXsU/9Cd2GBPUaC2FEXNpqZxtTwSAbRG/Zen0IY0U3jDttE0ksR2H+g/Rwdw7qSwOND/qDdVLNAd00g==
+"@quercia/quercia@0.2.0-next.1":
+  version "0.2.0-next.1"
+  resolved "https://registry.yarnpkg.com/@quercia/quercia/-/quercia-0.2.0-next.1.tgz#a9f03f4891b693bcabcc6557ea614ba8e9d25a54"
+  integrity sha512-sjZUojlHvNDVQEhwEMLwQOVyS/PEpBi2c16etRn4AvZ9NnNDYjnk4czN6VQGjCUNgM8biKNLOSj53G/wBUxexg==
   dependencies:
     babel-plugin-transform-async-to-promises "^0.8.15"
+    core-js "^3.6.5"
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
 
-"@quercia/runtime@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@quercia/runtime/-/runtime-0.2.4.tgz#0192f4de0fa72750ac2a211e0b8c453905e26b9c"
-  integrity sha512-cHhn5AMtH0A0J9LhdmHV30JYcYpCRJVgcbLRoJgFCYc0NRmdzqQOSK8ZruBzLJDsmArR5XbU4dDFTZJYzk0XAQ==
+"@quercia/runtime@^0.2.5-next.1":
+  version "0.2.5-next.1"
+  resolved "https://registry.yarnpkg.com/@quercia/runtime/-/runtime-0.2.5-next.1.tgz#5e65e10b7d9a317c7f1081f30c3b80b7453a4626"
+  integrity sha512-4HWM3WsCSN+5Ms2CwQrI3wJmrs3TU6AK4YsOGRtMKq3hHUySjAsWjKtRqWuW3IUUGAc7bgJHdA5grQV+LMW9MQ==
   dependencies:
-    "@quercia/quercia" "0.1.9"
+    "@quercia/quercia" "0.2.0-next.1"
     babel-plugin-transform-async-to-promises "^0.8.15"
+    core-js "^3.6.5"
     tiny-invariant "^1.1.0"
     tiny-warning "^1.0.3"
 
@@ -1706,6 +1713,11 @@ core-js-compat@^3.6.2:
     browserslist "^4.8.5"
     semver "7.0.0"
 
+core-js@^3.6.5:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
+  integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
+
 core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -1923,6 +1935,11 @@ error-ex@^1.3.1:
   integrity sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==
   dependencies:
     is-arrayish "^0.2.1"
+
+escape-html@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
+  integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
 escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
@@ -4014,6 +4031,11 @@ uid@^1.0.0:
   resolved "https://registry.yarnpkg.com/uid/-/uid-1.0.0.tgz#40a64108ebdf765b3945c286b77c83c168687170"
   integrity sha512-DYp36HDIRECMW0xmeyGSDSheURMbL7gy4DqINDUW5OSw7cot0pNRNvEtEji9nk1XVDZN/0lJ7myxacoTeU9oow==
 
+unfetch@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/unfetch/-/unfetch-4.1.0.tgz#6ec2dd0de887e58a4dee83a050ded80ffc4137db"
+  integrity sha512-crP/n3eAPUJxZXM9T80/yv0YhkTEx2K1D3h7D1AJM6fzsWZrxdyRuLN0JH/dkZh1LNH8LxCnBzoPFCPbb2iGpg==
+
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-1.0.4.tgz#2619800c4c825800efdd8343af7dd9933cbe2818"
@@ -4085,6 +4107,11 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+
+url-polyfill@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.8.tgz#21eb58ad61192f52b77dcac8ab5293ae7bc67060"
+  integrity sha512-Ey61F4FEqhcu1vHSOMmjl0Vd/RPRLEjMj402qszD/dhMBrVfoUsnIj8KSZo2yj+eIlxJGKFdnm6ES+7UzMgZ3Q==
 
 url@^0.11.0:
   version "0.11.0"

@@ -1,7 +1,7 @@
-module.exports = function ({ config, isServer, mode }) {
+module.exports = function ({ config, target, mode }) {
   // for production use `preact` instead of `react` to save bytes
 
-  if (!isServer && mode === 'production') {
+  if (target === 'client' && mode === 'production') {
     config.resolve = {
       ...config.resolve,
       alias: {
