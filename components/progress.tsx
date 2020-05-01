@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useRouter, usePrerender } from '@quercia/quercia'
+import { useRouter, SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 
 const Bar = styled('div')`
@@ -15,7 +15,7 @@ const Bar = styled('div')`
 `
 
 const Progress: React.FunctionComponent = () => {
-  if (usePrerender()) {
+  if (SSG) {
     return null
   }
 

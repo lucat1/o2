@@ -26,7 +26,7 @@ const ErrorLabel = styled('label')`
   user-select: none;
 `
 
-const InputBase = styled('input')`
+const InputBase = React.forwardRef(styled('input')<{ ref: any }>`
   height: 1.5em;
   width: 100%;
   font-size: 1em;
@@ -49,7 +49,7 @@ const InputBase = styled('input')`
       font-size: inherit;
     }
   }
-`
+`)
 
 const InlineContainer = styled('div')`
   display: flex;
@@ -80,13 +80,11 @@ interface InputProps {
   inline?: string
 }
 
-const Input: React.FunctionComponent<
-  React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > &
-    InputProps
-> = React.forwardRef(({ label, error, inline, ...props }, ref) => {
+const Input: React.FunctionComponent<React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+> &
+  InputProps> = React.forwardRef(({ label, error, inline, ...props }, ref) => {
   return (
     <Container>
       {label && <Label htmlFor={props.id}>{label}</Label>}

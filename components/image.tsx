@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { usePrerender } from '@quercia/quercia'
+import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 import { Base } from './skeleton'
 
@@ -18,7 +18,7 @@ const Img = styled('img')`
 `
 
 const Image: React.FunctionComponent<ImageProps> = ({ src, ...props }) => {
-  if (usePrerender()) {
+  if (SSG) {
     return <Base {...props} />
   }
 

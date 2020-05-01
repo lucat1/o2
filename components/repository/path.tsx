@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { usePrerender } from '@quercia/quercia'
+import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 
 import { Entry, EntryKind, Blob, Tree, Repository } from '../../types/data'
@@ -40,7 +40,7 @@ const Path: React.FunctionComponent<{
   entry: Entry
   repository: Repository
 }> = ({ entry, repository }) => {
-  if (usePrerender()) {
+  if (SSG) {
     return <Skeleton height='1.5em' width='14em' />
   }
 

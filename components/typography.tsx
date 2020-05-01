@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { usePrerender, Link as QLink, LinkProps } from '@quercia/quercia'
+import { SSG, Link as QLink, LinkProps } from '@quercia/quercia'
 import { styled } from 'goober'
 
 import Skeleton from './skeleton'
@@ -13,7 +13,7 @@ export const factory = <T extends Object = any>(
   height: number = 1.2,
   defaultLength: number = 6
 ): React.FunctionComponent<TypographyProps & T> => ({ known, ...props }) => {
-  if (usePrerender() && !known) {
+  if (SSG && !known) {
     // make the width resemble more the size of the text
     let width = props.children?.toString().length || defaultLength
     if (typeof props.children === 'object') {

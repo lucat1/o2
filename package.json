@@ -9,7 +9,7 @@
     "dev": "rm -rf __quercia && quercia watch"
   },
   "dependencies": {
-    "goober": "lucat1/goober#6407e46ff92dda60cfdad3435d505139514df233",
+    "goober": "lucat1/goober#6a0adc4e0ce92cac5deebdcde81d282837ae2af4",
     "parse-diff": "^0.7.0",
     "pretty-bytes": "^5.3.0",
     "prismjs": "^1.20.0",
@@ -20,7 +20,7 @@
     "use-prefers-theme": "^0.1.2"
   },
   "devDependencies": {
-    "@quercia/cli": "^0.4.0-next.3",
+    "@quercia/cli": "^0.4.0-next.11",
     "@types/node": "^13.11.1",
     "@types/prismjs": "^1.16.0",
     "@types/react": "^16.9.32",

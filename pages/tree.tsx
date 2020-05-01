@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head, usePrerender } from '@quercia/quercia'
+import { Head, SSG } from '@quercia/quercia'
 
 import { Repository, Tree as ITree, User } from '../types/data'
 
@@ -30,9 +30,7 @@ export default ({ repository, tree, account }: RepositoryProps) => {
       </Head>
       <Layout repository={repository} page='Tree'>
         <Path repository={repository} entry={tree} />
-        {tree && !usePrerender() && (
-          <Tree repository={repository} tree={tree} />
-        )}
+        {tree && !SSG && <Tree repository={repository} tree={tree} />}
       </Layout>
     </>
   )

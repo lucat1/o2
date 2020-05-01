@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head, usePrerender } from '@quercia/quercia'
+import { Head, SSG } from '@quercia/quercia'
 
 import { Repository, Tree as ITree, User } from '../types/data'
 import Skeleton from '../components/skeleton'
@@ -27,17 +27,13 @@ export default ({ repository, tree, account }: RepositoryProps) => {
         <meta name='description' content='a git repository on the o2 service' />
       </Head>
       <Layout repository={repository} page='Overview'>
-        {usePrerender() ? (
+        {SSG ? (
           <Skeleton width='100%' height='5em' />
         ) : (
           <code>{repository.description}</code>
         )}
-        {!tree && !usePrerender() && (
-          <Empty repository={repository} account={account} />
-        )}
-        {tree && !usePrerender() && (
-          <Tree repository={repository} tree={tree} />
-        )}
+        {!tree && !SSG && <Empty repository={repository} account={account} />}
+        {tree && !SSG && <Tree repository={repository} tree={tree} />}
       </Layout>
     </>
   )

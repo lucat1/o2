@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head, usePrerender } from '@quercia/quercia'
+import { Head, SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 import * as diff from 'parse-diff'
 
@@ -17,7 +17,7 @@ export interface CommitProps {
 }
 
 export default ({ repository, commit }: CommitProps) => {
-  if (usePrerender()) {
+  if (SSG) {
     // TODO: diff prerender
     return null
   }

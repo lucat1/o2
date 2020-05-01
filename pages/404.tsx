@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { usePrerender, Head } from '@quercia/quercia'
+import { SSG, Head } from '@quercia/quercia'
 import { styled } from 'goober'
 
 import { H4 } from '../components/typography'
@@ -20,7 +20,7 @@ interface NotFoundProps {
 export default ({ path }: NotFoundProps) => (
   <>
     <Head>
-      <title>not found {!usePrerender() && path} - o2</title>
+      <title>not found {!SSG && path} - o2</title>
     </Head>
     <Container>
       <h1>Page not found:</h1>

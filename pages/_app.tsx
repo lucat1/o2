@@ -1,12 +1,14 @@
 import * as React from 'react'
 import { AppProps } from '@quercia/runtime'
 import { Head } from '@quercia/quercia'
-import { glob } from 'goober'
+import { glob, setup } from 'goober'
 import usePrefersTheme from 'use-prefers-theme'
 
 import Progress from '../components/progress'
 import Header from '../components/header'
 import Body from '../components/body'
+
+setup(React.createElement)
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   glob`

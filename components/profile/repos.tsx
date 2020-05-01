@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { usePrerender, navigate } from '@quercia/quercia'
+import { SSG, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
 
 import Skeleton from '../skeleton'
@@ -52,7 +52,7 @@ const EmptyRepos = styled(Repos)`
 
 const Repositories = ({ user, account }: ProfileProps) => {
   // rener a placeholder pointing the user to create his/hers first repo
-  if ((user?.repositories || []).length == 0 && !usePrerender()) {
+  if ((user?.repositories || []).length == 0 && !SSG) {
     return (
       <EmptyRepos>
         <h4>
@@ -74,7 +74,7 @@ const Repositories = ({ user, account }: ProfileProps) => {
     )
   }
 
-  if (usePrerender()) {
+  if (SSG) {
     user = {} as any
     user.repositories = Array.from({ length: 3 })
   }
@@ -88,7 +88,7 @@ const Repositories = ({ user, account }: ProfileProps) => {
               {repository?.name}
             </Link>
           </H2>
-          {usePrerender() ? (
+          {SSG ? (
             <Skeleton width='100%' height='3.5em' />
           ) : (
             <code>{repository.description}</code>

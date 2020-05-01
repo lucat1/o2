@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { usePrerender } from '@quercia/quercia'
+import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 import format from 'tinydate'
 
@@ -82,7 +82,7 @@ const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
       <WhiteLink to={`${base}/commit/${commit?.commit}`}>
         {commit?.subject}
       </WhiteLink>
-      {usePrerender() ? (
+      {SSG ? (
         <TinyPSkeleton>
           <Skeleton height={1.1} width={12} />
         </TinyPSkeleton>

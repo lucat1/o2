@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head, usePrerender } from '@quercia/quercia'
+import { Head, SSG } from '@quercia/quercia'
 import { styled, css } from 'goober'
 import { highlight, languages } from 'prismjs/components/prism-core'
 import * as pretty from 'pretty-bytes'
@@ -73,7 +73,7 @@ export default ({ repository, blob, data, ext }: RepositoryProps) => {
       </Head>
       <Layout repository={repository} page='Tree'>
         <Path repository={repository} entry={blob} />
-        {blob && data && !usePrerender() && (
+        {blob && data && !SSG && (
           <Container>
             <Title>
               {basename(blob.name)}

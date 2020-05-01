@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { usePrerender } from '@quercia/quercia'
+import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 import format from 'tinydate'
 
@@ -67,7 +67,7 @@ const Profile = ({ user }: ProfileProps) => (
         <A>{user?.location}</A>
       </Description>
       <Description>
-        {usePrerender() ? (
+        {SSG ? (
           <Skeleton width='100%' height='5em' />
         ) : (
           <code>{user.description}</code>

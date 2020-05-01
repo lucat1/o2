@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head, usePrerender, navigate } from '@quercia/quercia'
+import { Head, SSG, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
 
 import Layout from '../components/repository/layout'
@@ -35,7 +35,7 @@ export default ({
   index,
   branch
 }: CommitsProps) => {
-  if (usePrerender()) {
+  if (SSG) {
     commits = Array.from({ length: 20 })
   }
 

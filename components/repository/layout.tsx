@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { usePrerender } from '@quercia/quercia'
+import { SSG } from '@quercia/quercia'
 import { styled, css } from 'goober'
 
 import { Tabs, Tab } from './tabs'
@@ -44,9 +44,9 @@ const tabs: [Page, string][] = [
   ['Settings', '/settings']
 ]
 
-const Layout: React.FunctionComponent<
-  { page: Page } & Partial<RepositoryProps>
-> = ({ page, children, repository }) => (
+const Layout: React.FunctionComponent<{ page: Page } & Partial<
+  RepositoryProps
+>> = ({ page, children, repository }) => (
   <Container>
     <Head>
       <h2
@@ -60,7 +60,7 @@ const Layout: React.FunctionComponent<
       </h2>
       <Tabs>
         {tabs.map(([tab, url]) =>
-          usePrerender() ? (
+          SSG ? (
             <Skeleton key={tab} width={`${tab.length / 2}em`} height='1em' />
           ) : (
             <Tab
