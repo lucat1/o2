@@ -20,9 +20,9 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 				Str("resource", resource).
 				Msg("Checking the user's permission for the required scopes")
 
-			MustAuth(func(w http.ResponseWriter, r *http.Request) {
+			auth.Must(func(w http.ResponseWriter, r *http.Request) {
 				// we have authentication inside of here
-				claims := r.Context().Value(Claims).(*auth.Claims)
+				claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
 				has := models.HasPex(claims.Username, resource, scopes)
 
 				if has {

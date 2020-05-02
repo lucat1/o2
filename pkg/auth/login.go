@@ -2,7 +2,6 @@ package auth
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
@@ -12,7 +11,6 @@ import (
 
 // Login checks the given email/password and authenticates a user
 func Login(user models.User) (string, error) {
-	fmt.Print(user.Email)
 	if !models.ExistsUser(models.User{Email: user.Email}) {
 		return "", errors.New("Invalid email address")
 	}

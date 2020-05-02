@@ -8,8 +8,8 @@ import (
 	"github.com/lucat1/o2/pkg/store"
 )
 
-// IsAuthenticated checks if the incoming request is properly authenticated
-func IsAuthenticated(r *http.Request) (*Claims, bool) {
+// isAuthenticated checks if the incoming request is properly authenticated
+func isAuthenticated(r *http.Request) (*Claims, bool) {
 	cookie, err := r.Cookie("token")
 	if err != nil {
 		return nil, false
@@ -21,10 +21,15 @@ func IsAuthenticated(r *http.Request) (*Claims, bool) {
 		return nil, false
 	}
 
+	return _isAuthenticated(cookie.Value)
+}
+
+// internal method used to check the token string
+func _isAuthenticated(value string) (*Claims, bool) {
 	claims := &Claims{}
 
 	key := store.GetConfig().Section("").Key("jwt_key").String()
-	token, err := jwt.ParseWithClaims(cookie.Value, claims, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(value, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(key), nil
 	})
 

@@ -5,7 +5,6 @@ import (
 
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
-	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/quercia"
 )
@@ -25,7 +24,7 @@ func loginErr(w http.ResponseWriter, r *http.Request, msg string) {
 // Login renders the login page and handles authentication
 func Login(w http.ResponseWriter, r *http.Request) {
 	// ignore already logged-in users
-	if middleware.IsAuthenticated(r) {
+	if auth.IsAuthenticated(r) {
 		quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
 		return
 	}
@@ -53,6 +52,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	auth.SetCookie(w, r, token)
+	r = auth.SetCookie(w, r, token)
 	quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
 }

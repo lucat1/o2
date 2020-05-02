@@ -6,7 +6,6 @@ import (
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/git"
-	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/quercia"
@@ -36,7 +35,7 @@ func Add(w http.ResponseWriter, r *http.Request) {
 
 	// get all the mandatory data
 	reponame := r.Form.Get("name")
-	claims := r.Context().Value(middleware.Claims).(*auth.Claims)
+	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
 	username := claims.Username
 
 	// find the logged in user

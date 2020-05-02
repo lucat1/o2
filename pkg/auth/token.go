@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"errors"
 	"net/http"
 	"time"
@@ -44,7 +45,7 @@ func Token(user models.User) (string, error) {
 }
 
 // SetCookie sets the cookie on the connection
-func SetCookie(w http.ResponseWriter, r *http.Request, token string) {
+func SetCookie(w http.ResponseWriter, r *http.Request, token string) *http.Request {
 	cookie := &http.Cookie{
 		Name:    "token",
 		Value:   token,
@@ -52,8 +53,9 @@ func SetCookie(w http.ResponseWriter, r *http.Request, token string) {
 		Expires: time.Now().Add(lifespan),
 	}
 
-	// set the cookie both in the client response and also in the reuqest as it
-	// will be used by the `data.Base` function to get the authentication state later
+	// set the cookie and then add the data to the context
 	http.SetCookie(w, cookie)
-	r.AddCookie(cookie)
+
+	claims, _ := _isAuthenticated(token)
+	return r.WithContext(context.WithValue(r.Context(), ClaimsKey, claims))
 }
