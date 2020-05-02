@@ -11,12 +11,13 @@ import (
 
 // Login checks the given email/password and authenticates a user
 func Login(user models.User) (string, error) {
-	if !models.ExistsUser(models.User{Email: user.Email}) {
+	find := models.User{Username: user.Username, Email: user.Email}
+	if !exists(find) {
 		return "", errors.New("Invalid email address")
 	}
 
 	var dbUser models.User
-	if err := store.GetDB().Where("email = ?", user.Email).First(&dbUser).Error; err != nil {
+	if err := store.GetDB().Where(find).First(&dbUser).Error; err != nil {
 		log.Error().Err(err).Msg("Could not find user during login, but the email seems to exist")
 		return "", errors.New("Internal error. Please try again later")
 	}

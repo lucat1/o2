@@ -39,8 +39,10 @@ func Add(w http.ResponseWriter, r *http.Request) {
 	username := claims.Username
 
 	// find the logged in user
-	user, err := models.FindUser(models.User{Username: username})
-	if err != nil {
+	var user models.User
+	if err := store.GetDB().
+		Where(&models.User{Username: username}).
+		First(&user).Error; err != nil {
 		log.Error().
 			Str("username", username).
 			Err(err).

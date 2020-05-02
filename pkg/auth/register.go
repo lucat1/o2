@@ -9,13 +9,22 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+func exists(user models.User) bool {
+	var dummy models.User
+	if err := store.GetDB().Where(&user).First(&dummy).Error; err != nil {
+		return false
+	}
+
+	return true
+}
+
 // Register creates a new database instance of the given user
 func Register(user models.User, password string) (string, error) {
-	if models.ExistsUser(models.User{Username: user.Username}) {
+	if exists(models.User{Username: user.Username}) {
 		return "", errors.New("The username is taken")
 	}
 
-	if models.ExistsUser(models.User{Email: user.Email}) {
+	if exists(models.User{Email: user.Email}) {
 		return "", errors.New("The email is already in use for another account")
 	}
 

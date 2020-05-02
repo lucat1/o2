@@ -2,9 +2,10 @@ package auth
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/lucat1/o2/pkg/models"
 )
 
 type authType string
@@ -44,7 +45,18 @@ func Must(f http.HandlerFunc) http.HandlerFunc {
 					w.WriteHeader(http.StatusBadRequest)
 					return
 				}
-				fmt.Println("basic auth", username, password)
+
+				token, err := Login(models.User{
+					Username: username,
+					Password: password,
+				})
+				if err != nil {
+					w.WriteHeader(http.StatusUnauthorized)
+					return
+				}
+
+				r = SetCookie(w, r, token)
+				f.ServeHTTP(w, r)
 				return
 			}
 

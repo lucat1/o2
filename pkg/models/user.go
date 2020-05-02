@@ -2,12 +2,10 @@ package models
 
 import (
 	"crypto/md5"
-	"errors"
 	"fmt"
 	"strings"
 
 	"github.com/jinzhu/gorm"
-	"github.com/lucat1/o2/pkg/store"
 )
 
 // User is the database model for a user
@@ -36,44 +34,4 @@ func Picture(email string) string {
 // BeforeSave will generate the profile picture url from gravatar
 func (user *User) BeforeSave(scope *gorm.Scope) error {
 	return scope.SetColumn("Picture", Picture(user.Email))
-}
-
-// ExistsUser checks if the requested user exists
-// it checks for these parameters in the object in order:
-// - UUID
-// - Username
-// otherwhise return false
-func ExistsUser(user User) bool {
-	_, err := FindUser(user)
-	return err == nil
-}
-
-// FindUser finds the requested user from these three struct properties:
-// - UUID
-// - Username
-// otherwhise return false
-func FindUser(user User) (User, error) {
-	var dummy User
-	if username := user.Username; username != "" {
-		// we have the username, query the database to search for the user
-		if store.GetDB().Where("username = ?", username).Find(&dummy, "").Error == nil {
-			return dummy, nil
-		}
-	}
-
-	if email := user.Email; email != "" {
-		// we have the email, query the database to search for the user ('cause email is unique too)
-		if store.GetDB().Where("email = ?", email).Find(&dummy, "").Error == nil {
-			return dummy, nil
-		}
-	}
-
-	if uuid := user.Base.UUID.String(); uuid != "" {
-		// we have a uuid, we wanna use it as it's more "precise"
-		if store.GetDB().Where("uuid = ?", uuid).Find(&dummy, "").Error == nil {
-			return dummy, nil
-		}
-	}
-
-	return dummy, errors.New("The requested user does not exist")
 }

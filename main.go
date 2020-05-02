@@ -78,7 +78,13 @@ func main() {
 	// git smart http protocol
 	repo.HandleFunc("/info/refs", git.InfoRefs)
 	repo.HandleFunc("/git-upload-pack", git.RPC("upload-pack"))
-	repo.HandleFunc("/git-receive-pack", git.RPC("receive-pack"))
+	repo.Handle(
+		"/git-receive-pack",
+		middleware.MustPex(
+			[]string{"repo:push"},
+			routes.NotFound,
+		)(http.HandlerFunc(git.RPC("receive-pack"))),
+	)
 
 	// 404 handler
 	mux.HandleFunc("/*path", routes.NotFound)

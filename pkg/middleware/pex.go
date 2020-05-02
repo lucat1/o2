@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/auth"
@@ -27,6 +28,9 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 
 				if has {
 					f.ServeHTTP(w, r)
+				} else if strings.Contains(r.Header.Get("User-Agent"), "git") {
+					// send a forbidden status to git clients
+					w.WriteHeader(http.StatusForbidden)
 				} else {
 					fallback(w, r)
 				}
