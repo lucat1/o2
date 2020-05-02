@@ -2,13 +2,16 @@ import * as React from 'react'
 import { usePage, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
 
-import { SpacedH4, SpacedLink } from './typography'
+import { SpacedH4, SpacedLink, SpacedA } from './typography'
 import Button from './button'
 import _Image from './image'
 import _Body from './body'
 import _Logo from './svgs/logo'
 
 import { BaseData } from '../types/data'
+import Dropdown from './dropdown'
+import { Line } from './repository/empty'
+
 const Container = styled('nav')`
   position: sticky;
   top: 0;
@@ -48,6 +51,7 @@ const Image = styled(_Image)`
 
 const Header: React.FunctionComponent = () => {
   const props = usePage()[1] as BaseData
+  const [open, setOpen] = React.useState(false)
 
   return (
     <Container>
@@ -63,10 +67,17 @@ const Header: React.FunctionComponent = () => {
               {/* TODO: find a more elegant way :( */}
               <div style={{ padding: '0 0.85em' }}>
                 <Image
-                  onClick={() => navigate(`/${props.account.username}`)}
+                  onClick={() => setOpen(true)}
                   alt='Your profile picture'
                   src={props.account.picture}
                 />
+                <Dropdown open={open} onClose={() => setOpen(false)}>
+                  <SpacedLink to={`/${props.account.username}`}>
+                    your profile
+                  </SpacedLink>
+                  <Line />
+                  <SpacedLink to='/logout'>logout</SpacedLink>
+                </Dropdown>
               </div>
             </>
           ) : (

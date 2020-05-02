@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { Head } from '@quercia/quercia'
 
-import { BaseData } from '../types/data'
-
 export default () => {
   return (
     <>
