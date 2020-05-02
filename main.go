@@ -59,6 +59,13 @@ func main() {
 	repo := mux.Of("/:username/:reponame")
 	repo.Use(middleware.WithRepo(routes.NotFound))
 
+	// generate the resource value based on the :username/:reponame
+	repo.Use(middleware.WithResource(func(w http.ResponseWriter, _ http.Request) string {
+		return muxie.GetParam(w, "username") + "/" + muxie.GetParam(w, "reponame")
+	}))
+
+	repo.Use(middleware.MustPex([]string{"repo:pull"}, routes.NotFound))
+
 	repo.HandleFunc("/", routes.Repository)
 	repo.HandleFunc("/tree/:branch", routes.Tree)
 	repo.HandleFunc("/tree/:branch/*path", routes.Tree)
@@ -80,5 +87,7 @@ func main() {
 		Int("port", *port).
 		Msg("Starting web server")
 
-	log.Fatal().Err(http.ListenAndServe(*host+":"+strconv.Itoa(*port), mux)).Msg("Could not listen on given port")
+	log.Fatal().
+		Err(http.ListenAndServe(*host+":"+strconv.Itoa(*port), mux)).
+		Msg("Could not listen on given port")
 }

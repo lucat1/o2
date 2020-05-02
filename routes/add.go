@@ -59,6 +59,13 @@ func Add(w http.ResponseWriter, r *http.Request) {
 	repo := models.Repository{
 		Owner: user,
 		Name:  reponame,
+		Permissions: []models.Permission{{
+			For:   "*",
+			Scope: "repo:pull",
+		}, {
+			For:   user.Username,
+			Scope: "repo:push",
+		}},
 	}
 
 	if err := store.GetDB().Save(&repo).Error; err != nil {

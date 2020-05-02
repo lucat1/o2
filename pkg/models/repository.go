@@ -9,7 +9,7 @@ import (
 // Repository is the database model for a git repository
 type Repository struct {
 	gorm.Model
-	CompuedName string `gorm:"unique_index" json:"-"`
+	ComputedName string `gorm:"unique_index" json:"-"`
 
 	Owner     User   `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"-"`
 	OwnerName string `gorm:"type:varchar(36);primary_index" json:"owner"`
@@ -17,7 +17,7 @@ type Repository struct {
 	Name        string `gorm:"primary_index" json:"name"`
 	Description string `gorm:"type:varchar(250)" json:"description"`
 
-	Permissions []Permission `gorm:"foreignkey:OwnerName;association_foreignkey:ComputedName" json:"-"`
+	Permissions []Permission `gorm:"foreignkey:Resource;association_foreignkey:ComputedName" json:"-"`
 }
 
 // BeforeSave updates the `ComputedName` value of the repository
