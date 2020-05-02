@@ -21,20 +21,44 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 				Str("resource", resource).
 				Msg("Checking the user's permission for the required scopes")
 
+			pexes, ok := models.FetchPexes(resource)
+			if !ok {
+				fallback.ServeHTTP(w, r)
+				return
+			}
+
+			authRequired := false
+			for _, pex := range pexes {
+				if pex.RequiresAuth {
+					authRequired = true
+					break
+				}
+			}
+
+			if !authRequired {
+				has := models.HasAll(pexes, scopes)
+				handle(w, r, has, f, fallback)
+				return
+			}
+
 			auth.Must(func(w http.ResponseWriter, r *http.Request) {
 				// we have authentication inside of here
 				claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-				has := models.HasPex(claims.Username, resource, scopes)
+				has := models.HasPex(pexes, claims.Username, scopes)
 
-				if has {
-					f.ServeHTTP(w, r)
-				} else if strings.Contains(r.Header.Get("User-Agent"), "git") {
-					// send a forbidden status to git clients
-					w.WriteHeader(http.StatusForbidden)
-				} else {
-					fallback(w, r)
-				}
+				handle(w, r, has, f, fallback)
 			})(w, r)
 		})
+	}
+}
+
+func handle(w http.ResponseWriter, r *http.Request, has bool, f http.Handler, fallback http.HandlerFunc) {
+	if has {
+		f.ServeHTTP(w, r)
+	} else if strings.Contains(r.Header.Get("User-Agent"), "git") {
+		// send a forbidden status to git clients
+		w.WriteHeader(http.StatusForbidden)
+	} else {
+		fallback(w, r)
 	}
 }

@@ -14,8 +14,18 @@ type Permission struct {
 	Resource string     `gorm:"primary_index" json:"owner"`
 }
 
-// HasPex checks if the user (`who`) has access to the requested scopes on the resource
-func HasPex(who string, resource string, scopes []string) bool {
+// Pex is a struct that holds the data fetched from the db so we can
+// compute if authentication is required and if the user has acces to a scope
+type Pex struct {
+	RequiresAuth bool
+	Permission   Permission
+}
+
+// FetchPexes queries the database and produces an array of permissions for the
+// requested resource
+func FetchPexes(resource string) ([]Pex, bool) {
+	res := []Pex{}
+
 	permissions := []Permission{}
 	if err := store.GetDB().
 		Where(&Permission{Resource: resource}).
@@ -27,13 +37,41 @@ func HasPex(who string, resource string, scopes []string) bool {
 
 		// we return false cause we cannot guarantee that
 		//the user has the requested permissions
-		return false
+		return res, false
 	}
 
+	for _, permission := range permissions {
+		res = append(res, Pex{
+			RequiresAuth: permission.For != "*",
+			Permission:   permission,
+		})
+	}
+
+	return res, true
+}
+
+// HasAll checks if the permissions array contains all the required scopes
+func HasAll(permissions []Pex, scopes []string) bool {
 	matching := 0
-	for _, pex := range permissions {
+	for _, permission := range permissions {
 		for _, scope := range scopes {
-			if pex.Scope == scope && (pex.For == who || pex.For == "*") {
+			if permission.Permission.Scope == scope {
+				matching++
+				break
+			}
+		}
+	}
+
+	return matching == len(scopes)
+}
+
+// HasPex checks if the user (`who`) has access to the requested scopes on the resource
+func HasPex(permissions []Pex, who string, scopes []string) bool {
+	matching := 0
+	for _, permission := range permissions {
+		pex := permission.Permission
+		for _, scope := range scopes {
+			if pex.Scope == scope && (pex.For == who || !permission.RequiresAuth) {
 				matching++
 				break
 			}
