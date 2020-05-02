@@ -4546,9 +4546,9 @@ globby@^9.2.0:
     pify "^4.0.1"
     slash "^2.0.0"
 
-goober@lucat1/goober#6a0adc4e0ce92cac5deebdcde81d282837ae2af4:
+goober@lucat1/goober#3e461b726776698fa10b3c80c0f095444b16a41d:
   version "1.8.0"
-  resolved "https://codeload.github.com/lucat1/goober/tar.gz/6a0adc4e0ce92cac5deebdcde81d282837ae2af4"
+  resolved "https://codeload.github.com/lucat1/goober/tar.gz/3e461b726776698fa10b3c80c0f095444b16a41d"
   dependencies:
     tiny-css-prefixer "^1.1.4"
 

@@ -26,7 +26,7 @@ const ErrorLabel = styled('label')`
   user-select: none;
 `
 
-const InputBase = React.forwardRef(styled('input')<{ ref: any }>`
+const InputBase = styled('input', React.forwardRef)<{ ref: any }>`
   height: 1.5em;
   width: 100%;
   font-size: 1em;
@@ -49,7 +49,7 @@ const InputBase = React.forwardRef(styled('input')<{ ref: any }>`
       font-size: inherit;
     }
   }
-`)
+`
 
 const InlineContainer = styled('div')`
   display: flex;
