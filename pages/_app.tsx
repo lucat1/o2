@@ -82,6 +82,8 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   )
 }
 
-App.displayName = 'App<o2>'
+if (process.env.NODE_ENV === 'development') {
+  App.displayName = 'App<o2>'
+}
 
 export default App
