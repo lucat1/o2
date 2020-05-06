@@ -37,8 +37,8 @@ jobs:
 
       - name: Build pkger asset file
         run: |
-          export PATH="$GOPATH/bin:$PATH"
-          go get github.com/markbates/pkger
+          export PATH=${PATH}:`go env GOPATH`/bin
+          go get -u github.com/markbates/pkger
           rm -rf __quercia/*/server
           pkger
 
