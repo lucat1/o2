@@ -2,6 +2,7 @@ package git
 
 import (
 	"encoding/json"
+	"errors"
 	"strings"
 
 	"github.com/lucat1/o2/pkg/models"
@@ -29,24 +30,17 @@ func (r Repository) Commit(sha string) (DetailedCommit, error) {
 	}
 
 	// parse the output
-	parts := strings.Split(buf.String(), "\n")
-	data, diff, after := "", "", false
-	for _, part := range parts {
-		if len(part) > 9 && part[0:10] == "diff --git" {
-			after = true
-		}
-
-		if after {
-			diff += part + "\n"
-		} else {
-			data += part + "\n"
-		}
+	parts := strings.Split(buf.String(), sep)
+	if len(parts) != 3 {
+		return DetailedCommit{}, errors.New("Corrupted git show output")
 	}
+	data, body, diff := parts[0], parts[1], parts[2]
 
 	var out DetailedCommit
 	if err = json.Unmarshal([]byte(data), &out); err != nil {
 		return out, nil
 	}
+	out.Body = body
 
 	// generate profile pictures for authros/commiters
 	out.Author.Picture = models.Picture(out.Author.Email)
