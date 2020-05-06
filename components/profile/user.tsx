@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
-import format from 'tinydate'
 
 import { H2, H4, SpacedH4, A } from '../typography'
 import Skeleton from '../skeleton'
 import Image from '../image'
 
 import { ProfileProps } from '../../pages/profile'
+import _Button from '../button'
 
 const User = styled('section')`
   width: 15em;
@@ -44,41 +44,73 @@ const Description = styled(Line)`
   margin-top: 1em;
 `
 
-const Profile = ({ user }: ProfileProps) => (
-  <User>
-    <Picture
-      alt={
-        user
-          ? `${user.username}'s profile picture`
-          : "The user's profile picture"
-      }
-      src={user?.picture + '?s=300'}
-    />
-    <Info>
-      <Line>
-        <H2>{user?.username}</H2>
-      </Line>
-      <Line>
-        <H4>{user?.firstname}</H4>
-        <SpacedH4>{user?.lastname}</SpacedH4>
-      </Line>
-      <Description>
-        <A known>📍</A>
-        <A>{user?.location}</A>
-      </Description>
-      <Description>
-        {SSG ? (
-          <Skeleton width='100%' height='5em' />
-        ) : (
-          <code>{user.description}</code>
-        )}
-      </Description>
-    </Info>
-  </User>
-)
+const ButtonContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  margin: 2em 0;
+`
 
-if (process.env.NODE_ENV !== 'production') {
-  ;(User as any).displayName = 'User'
+const Button = styled(_Button)`
+  margin: 0;
+`
+
+const SmButton = styled(Button)`
+  min-width: 2.5em;
+  margin-left: 1em;
+`
+
+const Profile = ({ user, account }: ProfileProps) => {
+  const [editing, setEditing] = React.useState(false)
+  const [changed, setChanged] = React.useState(false)
+
+  return (
+    <User>
+      <Picture
+        alt={
+          user
+            ? `${user.username}'s profile picture`
+            : "The user's profile picture"
+        }
+        src={user?.picture + '?s=300'}
+      />
+      <Info>
+        <Line>
+          <H2>{user?.username}</H2>
+        </Line>
+        <Line>
+          <H4>{user?.firstname}</H4>
+          <SpacedH4>{user?.lastname}</SpacedH4>
+        </Line>
+        <Description>
+          <A known>📍</A>
+          <A>{user?.location}</A>
+        </Description>
+        <Description>
+          {SSG ? (
+            <Skeleton width='100%' height='5em' />
+          ) : (
+            <code>{user.description}</code>
+          )}
+        </Description>
+      </Info>
+      <div>
+        {user?.username == account?.username && !SSG && (
+          <ButtonContainer>
+            <Button
+              style={{ width: !editing ? '12em' : '8.5em' }}
+              disabled={editing && !changed}
+              onClick={() => setEditing(true)}
+            >
+              {editing ? 'Save' : 'Edit your profile'}
+            </Button>
+            {editing && (
+              <SmButton onClick={() => setEditing(false)}>x</SmButton>
+            )}
+          </ButtonContainer>
+        )}
+      </div>
+    </User>
+  )
 }
 
 export default Profile

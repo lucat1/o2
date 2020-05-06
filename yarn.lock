@@ -1203,10 +1203,10 @@
     pirates "^4.0.1"
     source-map-support "^0.5.13"
 
-"@quercia/cli@^0.4.0-next.13":
-  version "0.4.0-next.15"
-  resolved "https://registry.yarnpkg.com/@quercia/cli/-/cli-0.4.0-next.15.tgz#5cd5c6f55454f4f543f72f82c2ce137c140feaa4"
-  integrity sha512-RAtrn+He+qKQ6nyFQdiWfYShBjTLkkRnyhMa1NmF3ueUrFhLkljqC+SEaezmtq4PQIIKX+jijo62107ptGPwhA==
+"@quercia/cli@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@quercia/cli/-/cli-0.4.0.tgz#75a5f4800ffe6494e899b912d2c809318dd255af"
+  integrity sha512-UuzPl0K/1UBKmRgu3gbInnskObEAaYIGPNG6B+4eXWnIYOyMp94fP46lsS14EO/EicO8LkCPB2yvwTE+dFQr6w==
   dependencies:
     uid "^1.0.0"
     "@babel/core" "^7.9.0"
@@ -1218,8 +1218,8 @@
     "@changesets/cli" "^2.6.2"
     "@hot-loader/react-dom" "^16.13.0"
     "@preconstruct/cli" "^1.1.12"
-    "@quercia/logger" "0.0.1"
-    "@quercia/runtime" "^0.2.5-next.5"
+    "@quercia/logger" "0.0.2"
+    "@quercia/runtime" "^0.3.0"
     "@types/babel__core" "^7.1.7"
     "@types/react" "^16.9.25"
     babel-loader "^8.1.0"
@@ -1242,24 +1242,24 @@
     webpack-hot-middleware "^2.25.0"
     webpack-node-externals "^1.7.2"
 
-"@quercia/logger@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@quercia/logger/-/logger-0.0.1.tgz#27f2061857fdf8ce23d3d3b2b3310f0ef79c5822"
-  integrity sha512-iTY3BZM6S72r/cxiD3jCVAiWpIIJQ7ibQRv4fYuH0tbQt/qPSx1YMBNpSC6qe5Tv8P+qu8Ff7U8qEeOaaOlbtQ==
+"@quercia/logger@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@quercia/logger/-/logger-0.0.2.tgz#a70323be51ddabafca8637e80e06762cac250859"
+  integrity sha512-JOFi2N9/0qdhqF2+qSC9glqcp2yC4HqMza77BSiL93e5sH8E7FR/vZ86q+kFo1wo7GBdj7kh0reIbeZDVgmz9Q==
   dependencies:
     kleur "^3.0.3"
 
-"@quercia/quercia@0.2.0-next.6":
-  version "0.2.0-next.6"
-  resolved "https://registry.yarnpkg.com/@quercia/quercia/-/quercia-0.2.0-next.6.tgz#da550277bde8c1b6b6d7e15f0eb718d277c0c321"
-  integrity sha512-f4n/FoODWWPaVjrp/b/NhHEk3Yx2FND4pxGE3qg8fd6yLA4vj4ZQugei61t59WlSln0lH365S+miVkBeFBtKaw==
+"@quercia/quercia@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@quercia/quercia/-/quercia-0.2.0.tgz#945237b54d086de53ba9af0233100733b6f86c54"
+  integrity sha512-uYk2iV5EDxqh25HoNrtsjmWFbJ/Vm1d+adJIpj2jSHbCfkWXCBpdI05foVmxfHPDDaymTaoNJZ0f91F9vYWgiQ==
 
-"@quercia/runtime@^0.2.5-next.5":
-  version "0.2.5-next.6"
-  resolved "https://registry.yarnpkg.com/@quercia/runtime/-/runtime-0.2.5-next.6.tgz#f7e8808e5bc5f2e3e6757d48cd0d12b770586e8c"
-  integrity sha512-4UC95/VLIy1Sf7y35CDpKFQQh0VRhKg743J5eWtVwoihroH6/fU10rGHb8xdr+xnNJ+4ovbTrGOT9Yf7Y+qm6w==
+"@quercia/runtime@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@quercia/runtime/-/runtime-0.3.0.tgz#351dd776a56ca2f3b61ae4ac1480835c1706af0a"
+  integrity sha512-ujBTwEG/zxVy/O7V06iV0SocQsHzKJvZHFazOlpCzRvLLJPSNwJAqCBUh6EZVmI4EGdG5v2TUpDLt3ZPfFIiiA==
   dependencies:
-    "@quercia/quercia" "0.2.0-next.6"
+    "@quercia/quercia" "0.2.0"
 
 "@rollup/plugin-alias@^3.0.1":
   version "3.1.0"

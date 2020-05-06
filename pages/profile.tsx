@@ -22,16 +22,18 @@ const Container = styled('main')`
   }
 `
 
-export default ({ user, account }: ProfileProps) => (
+export default (props: ProfileProps) => (
   <Container>
     <Head>
-      <title>{user?.username || 'profile'} - o2</title>
+      <title>{props.user?.username || 'profile'} - o2</title>
       <meta
         name='description'
-        content={'the user profile page' + SSG ? `of ${user?.username}` : ''}
+        content={
+          'the user profile page' + SSG ? `of ${props.user?.username}` : ''
+        }
       />
     </Head>
-    <User user={user} />
-    <Repos user={user} account={account} />
+    <User {...props} />
+    <Repos {...props} />
   </Container>
 )
