@@ -7,12 +7,13 @@ export const Tabs = styled('nav')`
   overflow: auto;
 
   height: 1.5em;
+  margin: 0.5em 0;
   align-items: center;
-  justify-content: center;
   overflow-y: hidden;
+  overflow-x: scroll;
   flex-basis: 0;
   flex-grow: 999;
-  min-width: 85%;
+  min-width: 24em;
 
   @media (min-width: 600px) {
     justify-content: flex-end;
@@ -27,5 +28,5 @@ export const Tab = styled(Link)<{ selected: boolean }>`
   color: var(--fg-5);
 
   border-radius: 0.45em;
-  background: var(--${({ selected }) => (selected ? 'bg-3' : 'bg-5')});
+  background: var(${({ selected }) => (selected ? '--bg-3' : '--bg-5')});
 `

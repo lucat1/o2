@@ -22,6 +22,12 @@ const Head = styled('div')`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  overflow: auto;
+`
+
+const H2 = styled('h2')`
+  display: flex;
+  flex-grow: 1;
 `
 
 const Skeleton = styled(_Skeleton)`
@@ -49,15 +55,10 @@ const Layout: React.FunctionComponent<{ page: Page } & Partial<
 >> = ({ page, children, repository }) => (
   <Container>
     <Head>
-      <h2
-        className={css`
-          display: flex;
-          flex-grow: 1;
-        `}
-      >
+      <H2>
         <Link to={`/${repository?.owner || ''}`}>{repository?.owner}</Link>/
         <A>{repository?.name}</A>
-      </h2>
+      </H2>
       <Tabs>
         {tabs.map(([tab, url]) =>
           SSG ? (
