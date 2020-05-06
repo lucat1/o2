@@ -4,7 +4,6 @@ import (
 	// initialize zerolog
 	"flag"
 	"net/http"
-	"path"
 	"strconv"
 
 	// initialize zerolog options
@@ -16,6 +15,7 @@ import (
 	"github.com/lucat1/o2/routes"
 	"github.com/lucat1/o2/routes/git"
 	"github.com/lucat1/quercia"
+	"github.com/markbates/pkger"
 
 	"github.com/rs/zerolog/log"
 )
@@ -25,7 +25,7 @@ var (
 	host *string
 )
 
-var dir http.Dir
+var dir pkger.Dir
 
 func init() {
 	port = flag.Int("port", 3000, "Sets the web server port")
@@ -37,7 +37,7 @@ func init() {
 	models.Init()
 
 	// instantiate the http directory for the static files
-	dir = http.Dir(path.Join(store.GetCwd(), "__quercia"))
+	dir = pkger.Dir("/__quercia")
 	quercia.SetDir(dir)
 }
 
