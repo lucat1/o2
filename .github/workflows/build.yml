@@ -23,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.13'
 
       - name: Download previous quercia build
         uses: actions/download-artifact@v1
@@ -31,7 +33,6 @@ jobs:
 
       - name: Build pkger asset file
         run: |
-          export GOBIN="$GOPATH/bin"
           go get -u github.com/markbates/pkger
           rm -rf __quercia/*/server
           $GOBIN/pkger
