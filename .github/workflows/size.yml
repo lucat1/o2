@@ -1,4 +1,4 @@
-name: build
+name: size
 on: [push]
 jobs:
   build:
