@@ -11,6 +11,7 @@ import _Logo from './svgs/logo'
 import { BaseData } from '../types/data'
 import Dropdown from './dropdown'
 import { Line } from './repository/empty'
+import _Add from './svgs/add'
 
 const Container = styled('nav')`
   position: sticky;
@@ -49,6 +50,11 @@ const Image = styled(_Image)`
   cursor: pointer;
 `
 
+const Add = styled(_Add)`
+  height: 1em;
+  cursor: pointer;
+`
+
 const Header: React.FunctionComponent = () => {
   const props = usePage()[1] as BaseData
   const [open, setOpen] = React.useState(false)
@@ -63,7 +69,7 @@ const Header: React.FunctionComponent = () => {
         <div>
           {props.account ? (
             <>
-              <SpacedLink to='/add'>+</SpacedLink>
+              <Add onClick={() => navigate('/add')} />
               {/* TODO: find a more elegant way :( */}
               <div style={{ padding: '0 0.85em' }}>
                 <Image

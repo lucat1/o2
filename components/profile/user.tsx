@@ -8,6 +8,7 @@ import Image from '../image'
 
 import { ProfileProps } from '../../pages/profile'
 import _Button from '../button'
+import _Add from '../svgs/add'
 
 const User = styled('section')`
   width: 15em;
@@ -59,6 +60,11 @@ const SmButton = styled(Button)`
   margin-left: 1em;
 `
 
+const Add = styled(_Add)`
+  transform: rotate(45deg);
+  width: 1.25em;
+`
+
 const Profile = ({ user, account }: ProfileProps) => {
   const [editing, setEditing] = React.useState(false)
   const [changed, setChanged] = React.useState(false)
@@ -104,7 +110,9 @@ const Profile = ({ user, account }: ProfileProps) => {
               {editing ? 'Save' : 'Edit your profile'}
             </Button>
             {editing && (
-              <SmButton onClick={() => setEditing(false)}>x</SmButton>
+              <SmButton onClick={() => setEditing(false)}>
+                <Add />
+              </SmButton>
             )}
           </ButtonContainer>
         )}
