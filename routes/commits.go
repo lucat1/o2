@@ -55,7 +55,7 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 			Str("reponame", dbRepo.Name).
 			Int("page", page).
 			Err(err).
-			Msg("Error while getting git tree from the filesystem repository")
+			Msg("Error while getting git commits from the filesystem repository")
 		NotFound(w, r)
 		return
 	}

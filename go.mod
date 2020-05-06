@@ -8,6 +8,7 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/kataras/muxie v1.0.8
 	github.com/lucat1/quercia v0.4.0-next.2
+	github.com/m1ome/randstr v0.0.0-20170328115817-50e7f2dc0288
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/rs/zerolog v1.18.0
 	github.com/satori/go.uuid v1.2.0

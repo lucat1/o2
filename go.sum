@@ -87,6 +87,8 @@ github.com/lucat1/quercia v0.4.0-next.0 h1:sCCjub/uTWCTIcb0rs5px6oiBFT5drl1SdeHF
 github.com/lucat1/quercia v0.4.0-next.0/go.mod h1:x9/uSK7j5XD2+UqDQV17EgutijYKyoCziM1qCf6CnLQ=
 github.com/lucat1/quercia v0.4.0-next.2 h1:nddm2y8rSdyxq+Sbx0n5z5NZuCsqdUSvh9JxSrW8bdQ=
 github.com/lucat1/quercia v0.4.0-next.2/go.mod h1:x9/uSK7j5XD2+UqDQV17EgutijYKyoCziM1qCf6CnLQ=
+github.com/m1ome/randstr v0.0.0-20170328115817-50e7f2dc0288 h1:DOrMBJuHExFrY5UjHTgWPuEpTZcGvlqQ1IF7hSzjKQs=
+github.com/m1ome/randstr v0.0.0-20170328115817-50e7f2dc0288/go.mod h1:8OwJXxE6+gdUVI2U9l57q1HZaz+haD18PTSSyGqRb6I=
 github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
 github.com/mattn/go-runewidth v0.0.9 h1:Lm995f3rfxdpd6TSmuVCHVb/QhupuXlYr8sCI/QdE+0=
 github.com/mattn/go-runewidth v0.0.9/go.mod h1:H031xJmbD/WCDINGzjvQ9THkh0rPKHF+m2gUSrubnMI=

@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"strconv"
+	"strings"
 
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/m1ome/randstr"
 )
 
 // GitAuthor is the author of a git commit
@@ -23,6 +25,7 @@ type Commit struct {
 	Tree              string        `json:"tree"`
 	AbbreviatedTree   string        `json:"abbrv_tree"`
 	Subject           string        `json:"subject"`
+	Body              string        `json:"body"`
 	Author            *CommitAuthor `json:"author"`
 	Commiter          *CommitAuthor `json:"commiter"`
 }
@@ -51,6 +54,7 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 		Prev:    offset != 0,
 		Commits: []Commit{},
 	}
+	sep := randstr.GetString(10) + "\n"
 	// git log --pretty=format:'{%n  "commit": "%H",%n  "abbreviated_commit": "%h",%n  "tree": "%T",%n  "abbreviated_tree": "%t",%n  "parent": "%P",%n  "abbreviated_parent": "%p",%n  "refs": "%D",%n  "encoding": "%e",%n  "subject": "%s",%n  "sanitized_subject_line": "%f",%n  "body": "%b",%n  "commit_notes": "%N",%n  "verification_flag": "%G?",%n  "signer": "%GS",%n  "signer_key": "%GK",%n  "author": {%n    "name": "%aN",%n    "email": "%aE",%n    "date": "%aD"%n  },%n  "commiter": {%n    "name": "%cN",%n    "email": "%cE",%n    "date": "%cD"%n  }%n},'
 	buf, err := Command(
 		branch.repo.Path,
@@ -58,7 +62,8 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 		branch.Name,
 		"--skip="+strconv.Itoa(offset*amount),
 		"-n "+strconv.Itoa(amount),
-		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"parent\": \"%P\",\"subject\": \"%s\",\"body\": \"%b\",\"author\": {  \"username\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"username\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}},",
+		// the `body` is appended at the end of the json to allor for newlines
+		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"parent\": \"%P\",\"subject\": \"%s\",\"author\": {  \"username\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"username\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%b"+sep,
 	)
 	if err != nil {
 		return res, err
@@ -70,22 +75,35 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 
 	// build the JSON string from the command output
 	raw := buf.String()
-	str := "[" + raw[:len(raw)-1] + "]"
+	parts := strings.Split(raw, sep)
+	for i, part := range parts {
+		// ignore the last element which will always be empty
+		if i == len(parts)-1 {
+			continue
+		}
 
-	var out []Commit
-	err = json.Unmarshal([]byte(str), &out)
+		if i%2 == 0 {
+			// json data
+			var commit Commit
+			if err := json.Unmarshal([]byte(part), &commit); err != nil {
+				return res, err
+			}
 
-	for i, commit := range out {
-		commit.Author.Picture = models.Picture(commit.Author.Email)
-		commit.Commiter.Picture = models.Picture(commit.Commiter.Email)
+			commit.Author.Picture = models.Picture(commit.Author.Email)
+			commit.Commiter.Picture = models.Picture(commit.Commiter.Email)
+			res.Commits = append(res.Commits, commit)
 
-		// if we have a parent it means that we have more commits
-		// in the history to show, so we can enable the next page button
-		if i == amount-1 && commit.Parent != "" {
-			res.Next = true
+			// if we have a parent it means that we have more commits
+			// in the history to show, so we can enable the next page button
+			if i == len(parts)-3 && commit.Parent != "" {
+				res.Next = true
+			}
+
+		} else {
+			// body message
+			res.Commits[len(res.Commits)-1].Body = part
 		}
 	}
 
-	res.Commits = out
 	return res, err
 }
