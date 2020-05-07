@@ -20,6 +20,7 @@ export interface RepositoryProps {
 
 const Container = styled(_Container)`
   padding: 1.5em;
+  overflow: auto;
 `
 
 export default ({ repository, tree, account, readme }: RepositoryProps) => {
@@ -36,12 +37,12 @@ export default ({ repository, tree, account, readme }: RepositoryProps) => {
       </Head>
       <Layout repository={repository} page='Overview'>
         {SSG ? (
-          <Skeleton width='100%' height='5em' />
+          <Skeleton width='100%' height='2em' />
         ) : (
           <code>{repository.description}</code>
         )}
         {!tree && !SSG && <Empty repository={repository} account={account} />}
-        {tree && !SSG && <Tree repository={repository} tree={tree} />}
+        {(tree || SSG) && <Tree repository={repository} tree={tree} />}
         {readme && (
           <Container dangerouslySetInnerHTML={{ __html: snarkdown(readme) }} />
         )}

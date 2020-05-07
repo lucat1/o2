@@ -30,7 +30,7 @@ export default ({ repository, tree, account }: RepositoryProps) => {
       </Head>
       <Layout repository={repository} page='Tree'>
         <Path repository={repository} entry={tree} />
-        {tree && !SSG && <Tree repository={repository} tree={tree} />}
+        {(tree || SSG) && <Tree repository={repository} tree={tree} />}
       </Layout>
     </>
   )

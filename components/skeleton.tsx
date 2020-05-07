@@ -7,7 +7,7 @@ export const Base = styled('span')`
   border-radius: 0.25em;
 `
 
-export interface SkeletonProps {
+export interface SkeletonProps extends React.HTMLAttributes<HTMLSpanElement> {
   width: number | string
   height: number | string
 }
@@ -15,6 +15,7 @@ export interface SkeletonProps {
 const Skeleton: React.FunctionComponent<SkeletonProps> = ({
   width,
   height,
+  style,
   ...props
 }) => {
   const w =
@@ -22,7 +23,7 @@ const Skeleton: React.FunctionComponent<SkeletonProps> = ({
   const h =
     typeof height === 'string' ? height : height.toString().substr(0, 3) + 'em'
 
-  return <Base style={{ width: w, height: h }} {...props} />
+  return <Base style={{ width: w, height: h, ...style }} {...props} />
 }
 
 if (process.env.NODE_ENV !== 'production') {

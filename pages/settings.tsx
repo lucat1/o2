@@ -1,7 +1,33 @@
 import * as React from 'react'
-import { Head } from '@quercia/quercia'
+import { Head, navigate } from '@quercia/quercia'
+import { useForm } from 'react-hook-form'
+
+import Layout from '../components/repository/layout'
+import Input from '../components/input'
+import Button from '../components/button'
 
 export default ({ repository }) => {
+  const {
+    handleSubmit,
+    register,
+    errors,
+    formState: { dirty }
+  } = useForm()
+  const [loading, setLoading] = React.useState(false)
+
+  const onSubmit = (data: { name: string }) => {
+    setLoading(true)
+
+    // instantiate the POST form data
+    const body = new FormData()
+    body.set('name', data.name)
+
+    navigate(window.location.pathname, 'POST', {
+      body,
+      credentials: 'same-origin'
+    })
+  }
+
   return (
     <>
       <Head>
@@ -16,7 +42,23 @@ export default ({ repository }) => {
           content='the settings of a git repository on the o2 service'
         />
       </Head>
-      <h1>Settings page</h1>
+      <Layout repository={repository} page='Settings'>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            name='name'
+            label='Name'
+            disabled={loading}
+            error={errors.name?.message.toString()}
+            ref={register({
+              required: 'Required'
+            })}
+          />
+
+          <Button type='submit' disabled={!dirty || loading}>
+            Save
+          </Button>
+        </form>
+      </Layout>
     </>
   )
 }
