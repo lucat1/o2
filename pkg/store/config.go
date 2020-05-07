@@ -15,7 +15,7 @@ var (
 
 // load the configuration file
 func init() {
-	configPath = flag.String("config", "o2.ini", "The path to the configuration file")
+	configPath = flag.String("config", "data/o2.ini", "The path to the configuration file")
 }
 
 // Init loads the configuration file and saves it into memory
