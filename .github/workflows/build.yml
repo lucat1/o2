@@ -52,7 +52,7 @@ jobs:
           echo $PATH
           export GOPATH=/home/runner/go
           GOBIN=$GOPATH/bin go install -v github.com/markbates/pkger
-          go list -f github.com/markbates/pkger
+          ls -al $GOPATH/bin
           rm -rf __quercia/*/server
           pkger
 
