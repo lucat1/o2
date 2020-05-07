@@ -50,7 +50,7 @@ jobs:
       - name: Build pkger asset file
         run: |
           echo $PATH
-          echo $GOPATH
+          export GOPATH=/home/runner/go
           GOBIN=$GOPATH/bin go install -v github.com/markbates/pkger
           go list -f github.com/markbates/pkger
           rm -rf __quercia/*/server
