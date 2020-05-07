@@ -1,10 +1,13 @@
 import * as React from 'react'
 import { Head, SSG } from '@quercia/quercia'
+import { styled } from 'goober'
+import snarkdown from 'snarkdown'
 
 import { Repository, Tree as ITree, User } from '../types/data'
 import Skeleton from '../components/skeleton'
 
 import Layout from '../components/repository/layout'
+import _Container from '../components/repository/container'
 import Empty from '../components/repository/empty'
 import Tree from '../components/repository/tree'
 
@@ -12,9 +15,14 @@ export interface RepositoryProps {
   account: User
   repository: Repository
   tree: ITree
+  readme: string
 }
 
-export default ({ repository, tree, account }: RepositoryProps) => {
+const Container = styled(_Container)`
+  padding: 1.5em;
+`
+
+export default ({ repository, tree, account, readme }: RepositoryProps) => {
   return (
     <>
       <Head>
@@ -34,6 +42,9 @@ export default ({ repository, tree, account }: RepositoryProps) => {
         )}
         {!tree && !SSG && <Empty repository={repository} account={account} />}
         {tree && !SSG && <Tree repository={repository} tree={tree} />}
+        {readme && (
+          <Container dangerouslySetInnerHTML={{ __html: snarkdown(readme) }} />
+        )}
       </Layout>
     </>
   )

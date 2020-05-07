@@ -68,6 +68,7 @@ func main() {
 	repo.Use(middleware.MustPex([]string{"repo:pull"}, routes.NotFound))
 
 	repo.HandleFunc("/", routes.Repository)
+	repo.HandleFunc("/settings", routes.Settings)
 	repo.HandleFunc("/tree/:branch", routes.Tree)
 	repo.HandleFunc("/tree/:branch/*path", routes.Tree)
 	repo.HandleFunc("/blob/:branch/*path", routes.Blob)
