@@ -49,10 +49,9 @@ jobs:
 
       - name: Build pkger asset file
         run: |
-          go build -o pkger -- github.com/markbates/pkger
-          chmod +x pkger
+          go get github.com/markbates/pkger/cmd/pkger
           rm -rf __quercia/*/server
-          ./pkger
+          pkger
 
       - name: Build the go binary
         run: go build -ldflags="-s -w" -o o2
