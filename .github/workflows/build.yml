@@ -49,12 +49,9 @@ jobs:
 
       - name: Build pkger asset file
         run: |
-          echo $PATH
-          export GOPATH=/home/runner/go
-          GOBIN=$GOPATH/bin go install -v github.com/markbates/pkger
-          ls -al $GOPATH/bin
+          GOBIN=$PWD/bin go install -v github.com/markbates/pkger
           rm -rf __quercia/*/server
-          pkger
+          ./bin/pkger
 
       - name: Build the go binary
         run: go build -ldflags="-s -w" -o o2
