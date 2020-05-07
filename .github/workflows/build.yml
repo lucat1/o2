@@ -17,6 +17,22 @@ jobs:
           name: __quercia
           path: __quercia
 
+  bundlesize:
+    needs: frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: volta-cli/action@v1
+      - name: Download previous quercia build
+        uses: actions/download-artifact@v1
+        with:
+          name: __quercia
+      - run: yarn install
+      - name: Check bundlesize
+        env:
+          BUNDLEWATCH_GITHUB_TOKEN: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
+        run: yarn bundlewatch
+
   build:
     needs: frontend
     runs-on: ubuntu-latest
@@ -34,7 +50,8 @@ jobs:
       - name: Build pkger asset file
         run: |
           echo $PATH
-          go install github.com/markbates/pkger
+          go install -v github.com/markbates/pkger
+          go list -f github.com/markbates/pkger
           rm -rf __quercia/*/server
           pkger
 
