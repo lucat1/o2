@@ -65,13 +65,13 @@ const Profile = ({ user, account }: ProfileProps) => (
       </Line>
       <Description>
         <A known>📍</A>
-        <A>{user?.location}</A>
+        <A>{user?.location || (!SSG && 'Earth')}</A>
       </Description>
       <Description>
         {SSG ? (
           <Skeleton width='100%' height='5em' />
         ) : (
-          <code>{user.description}</code>
+          <code>{user.description || (!SSG && 'Empty description')}</code>
         )}
       </Description>
     </Info>
