@@ -49,9 +49,10 @@ jobs:
 
       - name: Build pkger asset file
         run: |
-          GOBIN=$PWD/bin go install -v github.com/markbates/pkger
+          go build -o pkger -- github.com/markbates/pkger
+          chmod +x pkger
           rm -rf __quercia/*/server
-          ./bin/pkger
+          ./pkger
 
       - name: Build the go binary
         run: go build -ldflags="-s -w" -o o2
