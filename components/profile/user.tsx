@@ -45,80 +45,37 @@ const Description = styled(Line)`
   margin-top: 1em;
 `
 
-const ButtonContainer = styled('div')`
-  display: flex;
-  flex-direction: row;
-  margin: 2em 0;
-`
-
-const Button = styled(_Button)`
-  margin: 0;
-`
-
-const SmButton = styled(Button)`
-  min-width: 2.5em;
-  margin-left: 1em;
-`
-
-const Add = styled(_Add)`
-  transform: rotate(45deg);
-  width: 1.25em;
-`
-
-const Profile = ({ user, account }: ProfileProps) => {
-  const [editing, setEditing] = React.useState(false)
-  const [changed, setChanged] = React.useState(false)
-
-  return (
-    <User>
-      <Picture
-        alt={
-          user
-            ? `${user.username}'s profile picture`
-            : "The user's profile picture"
-        }
-        src={user?.picture + '?s=300'}
-      />
-      <Info>
-        <Line>
-          <H2>{user?.username}</H2>
-        </Line>
-        <Line>
-          <H4>{user?.firstname}</H4>
-          <SpacedH4>{user?.lastname}</SpacedH4>
-        </Line>
-        <Description>
-          <A known>📍</A>
-          <A>{user?.location}</A>
-        </Description>
-        <Description>
-          {SSG ? (
-            <Skeleton width='100%' height='5em' />
-          ) : (
-            <code>{user.description}</code>
-          )}
-        </Description>
-      </Info>
-      <div>
-        {user?.username == account?.username && !SSG && (
-          <ButtonContainer>
-            <Button
-              style={{ width: !editing ? '12em' : '8.5em' }}
-              disabled={editing && !changed}
-              onClick={() => setEditing(true)}
-            >
-              {editing ? 'Save' : 'Edit your profile'}
-            </Button>
-            {editing && (
-              <SmButton onClick={() => setEditing(false)}>
-                <Add />
-              </SmButton>
-            )}
-          </ButtonContainer>
+const Profile = ({ user, account }: ProfileProps) => (
+  <User>
+    <Picture
+      alt={
+        user
+          ? `${user.username}'s profile picture`
+          : "The user's profile picture"
+      }
+      src={user?.picture + '?s=300'}
+    />
+    <Info>
+      <Line>
+        <H2>{user?.username}</H2>
+      </Line>
+      <Line>
+        <H4>{user?.firstname}</H4>
+        <SpacedH4>{user?.lastname}</SpacedH4>
+      </Line>
+      <Description>
+        <A known>📍</A>
+        <A>{user?.location}</A>
+      </Description>
+      <Description>
+        {SSG ? (
+          <Skeleton width='100%' height='5em' />
+        ) : (
+          <code>{user.description}</code>
         )}
-      </div>
-    </User>
-  )
-}
+      </Description>
+    </Info>
+  </User>
+)
 
 export default Profile
