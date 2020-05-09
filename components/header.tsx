@@ -85,8 +85,7 @@ const Header: React.FunctionComponent = () => {
                 <Image
                   tabIndex={0}
                   onClick={() => setOpen(true)}
-                  onFocus={() => setOpen(true)}
-                  onBlur={() => setOpen(false)}
+                  onKeyUp={e => e.keyCode == 13 && setOpen(!open)}
                   alt='Your profile picture'
                   src={props.account.picture}
                 />
