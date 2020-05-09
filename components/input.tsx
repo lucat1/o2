@@ -13,12 +13,6 @@ const Container = styled('div')`
   }
 `
 
-const Label = styled('label')<{ error?: boolean }>`
-  font-size: 0.75em;
-  margin: 0.25em 0;
-  color: var(--fg-5);
-`
-
 const ErrorLabel = styled('label')`
   font-size: 0.65em;
   margin-top: 0.25em;

@@ -4,7 +4,7 @@ import { styled } from 'goober'
 export const Base = styled('span')`
   display: inline-block;
   background: var(--bg-3);
-  border-radius: 0.25em;
+  border-radius: 0.5em;
 `
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLSpanElement> {

@@ -21,6 +21,22 @@ const Grid = styled(Container)`
   & > div:nth-last-child(3) {
     border-bottom: 0;
   }
+
+  & > div:last-child {
+    border-bottom-right-radius: 0.5em;
+  }
+
+  & > div:nth-last-child(3) {
+    border-bottom-left-radius: 0.5em;
+  }
+
+  & > div:nth-child(3) {
+    border-top-right-radius: 0.5em;
+  }
+
+  & > div:first-child {
+    border-top-left-radius: 0.5em;
+  }
 `
 
 const Part = styled('div')`

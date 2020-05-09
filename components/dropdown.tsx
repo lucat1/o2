@@ -11,7 +11,7 @@ const Menu = styled('div', React.forwardRef)`
   width: calc(8em - 2px);
 
   border: 1px solid var(--bg-3);
-  border-radius: 0.25em;
+  border-radius: 0.5em;
   background: var(--bg-5);
 
   a {

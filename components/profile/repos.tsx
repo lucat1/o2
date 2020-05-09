@@ -4,6 +4,7 @@ import { styled } from 'goober'
 
 import Skeleton from '../skeleton'
 import Button from '../button'
+import Container from '../repository/container'
 
 import VCS from '../svgs/git'
 import { ProfileProps } from '../../pages/profile'
@@ -23,10 +24,7 @@ const Repos = styled('section')`
   }
 `
 
-const Repo = styled('div')`
-  border-radius: 0.25em;
-  border: 1px solid var(--bg-3);
-  width: calc(100% - 2px);
+const Repo = styled(Container)`
   height: calc(8em - 2px);
 
   padding: 0 2em;
