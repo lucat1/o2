@@ -61,7 +61,7 @@ func Must(f http.HandlerFunc) http.HandlerFunc {
 				return
 			}
 
-			quercia.Redirect(w, r, "/login", "login", quercia.Props{})
+			quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", quercia.Props{})
 			return
 		}
 

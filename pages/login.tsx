@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { useForm } from 'react-hook-form'
 import { Head, navigate } from '@quercia/quercia'
+import { useForm } from 'react-hook-form'
 
 import Form from '../components/form'
 import Input from '../components/input'
@@ -34,7 +34,10 @@ export default ({ error }: LoginProps) => {
     body.set('email', data.email)
     body.set('password', data.password)
 
-    navigate('/login', 'POST', { body, credentials: 'same-origin' })
+    navigate(`/login${window.location.search}`, 'POST', {
+      body,
+      credentials: 'same-origin'
+    })
   }
 
   return (

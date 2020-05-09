@@ -52,6 +52,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	to := r.URL.Query().Get("to")
+	page := ""
+	if to == "" {
+		to = "/"
+		page = "index"
+	}
+
 	r = auth.SetCookie(w, r, token)
-	quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
+	quercia.Redirect(w, r, to, page, data.Compose(r, data.Base))
 }
