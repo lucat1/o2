@@ -24,8 +24,6 @@ type Pex struct {
 // FetchPexes queries the database and produces an array of permissions for the
 // requested resource
 func FetchPexes(resource string) ([]Pex, bool) {
-	res := []Pex{}
-
 	permissions := []Permission{}
 	if err := store.GetDB().
 		Where(&Permission{Resource: resource}).
@@ -37,17 +35,21 @@ func FetchPexes(resource string) ([]Pex, bool) {
 
 		// we return false cause we cannot guarantee that
 		//the user has the requested permissions
-		return res, false
+		return []Pex{}, false
 	}
 
+	return ToPex(permissions), true
+}
+
+// ToPex transforms an array of Permissions in to Pexes
+func ToPex(permissions []Permission) (res []Pex) {
 	for _, permission := range permissions {
 		res = append(res, Pex{
 			RequiresAuth: permission.For != "*",
 			Permission:   permission,
 		})
 	}
-
-	return res, true
+	return
 }
 
 // HasAll checks if the permissions array contains all the required scopes

@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/kataras/muxie"
+	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
@@ -26,6 +27,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := store.GetDB().
 		Preload("Repositories").
+		Preload("Repositories.Permissions").
 		Where(&models.User{Username: username}).
 		First(&user).
 		Error; err != nil {
@@ -38,5 +40,19 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// filter public repositories
+	repos := []models.Repository{}
+	account := ""
+	if auth.IsAuthenticated(r) {
+		claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
+		account = claims.Username
+	}
+	for _, repo := range user.Repositories {
+		if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {
+			repos = append(repos, repo)
+		}
+	}
+
+	user.Repositories = repos
 	quercia.Render(w, r, "profile", data.Compose(r, data.Base, profileData(&user)))
 }
