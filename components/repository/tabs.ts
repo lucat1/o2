@@ -9,7 +9,7 @@ export const Tabs = styled('nav')`
   padding: 0.5em 0;
   align-items: center;
   overflow-y: hidden;
-  overflow-x: scroll;
+  overflow-x: auto;
   flex-basis: 0;
   flex-grow: 999;
   min-width: 24em;

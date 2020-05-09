@@ -13,7 +13,7 @@ setup(React.createElement)
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   glob`
     :root {
-      --ff: 'Operator Mono';
+      --ff: 'Operator Mono', monospace;
       --primary: #8325C1;
       --primary-rgb: 199, 146, 234;
       --error: #fd9726;

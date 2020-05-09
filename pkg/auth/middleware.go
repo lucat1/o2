@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/quercia"
 )
 
 type authType string
@@ -60,7 +61,7 @@ func Must(f http.HandlerFunc) http.HandlerFunc {
 				return
 			}
 
-			http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+			quercia.Redirect(w, r, "/login", "login", quercia.Props{})
 			return
 		}
 
