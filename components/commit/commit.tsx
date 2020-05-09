@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { SSG } from '@quercia/quercia'
+import { SSG, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
 import format from 'tinydate'
 
@@ -28,6 +28,18 @@ const Image = styled(_Image)`
   width: 2em;
   height: 2em;
   border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 200ms ease-in-out;
+
+  img {
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.4);
+  }
 `
 
 const Data = styled('div')`
@@ -77,6 +89,9 @@ const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
           : "commit author's profile picture"
       }
       src={commit ? `${commit.author.picture}?s=75` : ''}
+      tabIndex={0}
+      onClick={() => navigate(`/${commit.author.username}`)}
+      onKeyUp={e => e.keyCode === 13 && navigate(`/${commit.author.username}`)}
     />
     <Data>
       <WhiteLink to={`${base}/commit/${commit?.commit}`}>
