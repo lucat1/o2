@@ -2,16 +2,18 @@ import * as React from 'react'
 import { usePage, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
 
-import { SpacedH4, SpacedLink, SpacedA } from './typography'
+import { SpacedH4, SpacedLink } from './typography'
 import Button from './button'
 import _Image from './image'
 import _Body from './body'
+
+import _Dropdown from './dropdown'
+import { Line } from './repository/empty'
+
 import _Logo from './svgs/logo'
+import _Add from './svgs/add'
 
 import { BaseData } from '../types/data'
-import Dropdown from './dropdown'
-import { Line } from './repository/empty'
-import _Add from './svgs/add'
 
 const Container = styled('nav')`
   position: sticky;
@@ -63,6 +65,19 @@ const Image = styled(_Image)`
 const Add = styled(_Add)`
   height: 1em;
   cursor: pointer;
+`
+
+const Dropdown = styled(_Dropdown)`
+  font-size: 0.75em;
+  position: absolute;
+  top: 3em;
+  margin-left: -5.5em;
+  width: calc(8em - 2px);
+
+  a {
+    display: block;
+    margin: 0.75em 0.5em;
+  }
 `
 
 const Header: React.FunctionComponent = () => {

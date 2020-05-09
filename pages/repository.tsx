@@ -6,10 +6,11 @@ import snarkdown from 'snarkdown'
 import { Repository, Tree as ITree, User } from '../types/data'
 import Skeleton from '../components/skeleton'
 
-import Layout from '../components/repository/layout'
 import _Container from '../components/repository/container'
+import Layout from '../components/repository/layout'
 import Empty from '../components/repository/empty'
 import Tree from '../components/repository/tree'
+import Branch from '../components/repository/branch'
 
 export interface RepositoryProps {
   account: User
@@ -21,6 +22,12 @@ export interface RepositoryProps {
 const Container = styled(_Container)`
   padding: 1.5em;
   overflow: auto;
+`
+
+const Description = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  text-overflow: ellipsis;
 `
 
 export default ({ repository, tree, account, readme }: RepositoryProps) => {
@@ -39,7 +46,10 @@ export default ({ repository, tree, account, readme }: RepositoryProps) => {
         {SSG ? (
           <Skeleton width='100%' height='2em' />
         ) : (
-          <code>{repository.description}</code>
+          <Description>
+            <code>{repository.description}</code>
+            <Branch current='master' branches={['master', 'test']} />
+          </Description>
         )}
         {!tree && !SSG && <Empty repository={repository} account={account} />}
         {(tree || SSG) && <Tree repository={repository} tree={tree} />}

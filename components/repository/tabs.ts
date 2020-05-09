@@ -14,7 +14,7 @@ export const Tabs = styled('nav')`
   flex-grow: 999;
   min-width: 24em;
 
-  @media (min-width: 600px) {
+  @media (min-width: 500px) {
     justify-content: flex-end;
   }
 `
