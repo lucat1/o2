@@ -5,8 +5,13 @@ import { useForm } from 'react-hook-form'
 import Layout from '../components/repository/layout'
 import Input from '../components/input'
 import Button from '../components/button'
+import { Repository } from '../types/data'
 
-export default ({ repository }) => {
+export interface SettingsProps {
+  repository: Repository
+}
+
+export default ({ repository }: SettingsProps) => {
   const {
     handleSubmit,
     register,
@@ -47,6 +52,7 @@ export default ({ repository }) => {
           <Input
             name='name'
             label='Name'
+            defaultValue={repository?.name}
             disabled={loading}
             error={errors.name?.message.toString()}
             ref={register({
