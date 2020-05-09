@@ -1,10 +1,9 @@
 import * as React from 'react'
-import { Head, navigate } from '@quercia/quercia'
-import { useForm } from 'react-hook-form'
+import { Head } from '@quercia/quercia'
+import { styled } from 'goober'
 
 import Layout from '../components/repository/layout'
-import Input from '../components/input'
-import Button from '../components/button'
+import { Left, Right, Parent } from '../components/split'
 import { Repository } from '../types/data'
 
 export interface SettingsProps {
@@ -12,27 +11,6 @@ export interface SettingsProps {
 }
 
 export default ({ repository }: SettingsProps) => {
-  const {
-    handleSubmit,
-    register,
-    errors,
-    formState: { dirty }
-  } = useForm()
-  const [loading, setLoading] = React.useState(false)
-
-  const onSubmit = (data: { name: string }) => {
-    setLoading(true)
-
-    // instantiate the POST form data
-    const body = new FormData()
-    body.set('name', data.name)
-
-    navigate(window.location.pathname, 'POST', {
-      body,
-      credentials: 'same-origin'
-    })
-  }
-
   return (
     <>
       <Head>
@@ -48,23 +26,36 @@ export default ({ repository }: SettingsProps) => {
         />
       </Head>
       <Layout repository={repository} page='Settings'>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            name='name'
-            label='Name'
-            defaultValue={repository?.name}
-            disabled={loading}
-            error={errors.name?.message.toString()}
-            ref={register({
-              required: 'Required'
-            })}
-          />
-
-          <Button type='submit' disabled={!dirty || loading}>
-            Save
-          </Button>
-        </form>
+        <Parent>
+          <Left>leftbar</Left>
+          <Right>right hand side</Right>
+        </Parent>
       </Layout>
     </>
   )
 }
+
+/*   const {
+    handleSubmit,
+    register,
+    errors,
+    formState: { dirty }
+  } = useForm()
+  
+  <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          name='name'
+          label='Name'
+          defaultValue={repository?.name}
+          disabled={loading}
+          error={errors.name?.message.toString()}
+          ref={register({
+            required: 'Required'
+          })}
+        />
+
+        <Button type='submit' disabled={!dirty || loading}>
+          Save
+        </Button>
+      </form>
+*/

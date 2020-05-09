@@ -5,20 +5,15 @@ import { styled } from 'goober'
 import { H2, H4, SpacedH4, A } from '../typography'
 import Skeleton from '../skeleton'
 import Image from '../image'
-
+import { Left } from '../split'
 import { ProfileProps } from '../../pages/profile'
 import _Button from '../button'
 import _Add from '../svgs/add'
 
-const User = styled('section')`
-  width: 15em;
-  padding: 0 2.25em;
-
+const User = styled(Left)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  flex-grow: 1;
 `
 
 const Info = styled('div')`

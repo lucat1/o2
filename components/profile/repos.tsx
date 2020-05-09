@@ -5,18 +5,13 @@ import { styled } from 'goober'
 import Skeleton from '../skeleton'
 import Button from '../button'
 import Container from '../repository/container'
-
+import { Right } from '../split'
 import VCS from '../svgs/git'
 import { ProfileProps } from '../../pages/profile'
 import { H2, Link } from '../typography'
 
-const Repos = styled('section')`
+const Repos = styled(Right)`
   padding: 0 2.25em;
-  flex: 1;
-  flex-wrap: wrap;
-  flex-basis: 0;
-  min-width: 60%;
-  flex-grow: 999;
 
   @media (max-width: 960px) {
     padding: 0 1em;
