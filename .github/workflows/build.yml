@@ -98,3 +98,30 @@ jobs:
         with:
           path: ./o2
           name: o2-${{ matrix.platform }}
+          uses: docker/build-push-action@v1
+
+  docker:
+    needs: frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Download previous quercia build
+        uses: actions/download-artifact@v1
+        with:
+          name: __quercia
+
+      - name: Build docker image
+        uses: docker/build-push-action@v1
+        with:
+          username: lucat1
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: docker.pkg.github.com
+          repository: lucat1/o2/o2
+          tags: latest
