@@ -39,18 +39,20 @@ func Repository(w http.ResponseWriter, r *http.Request) {
 
 	// find a readme and read it if available
 	readme, valid := "", []string{"readme.md", "readme"}
-	for _, child := range tree.Children {
-		stop := false
-		if stop {
-			break
-		}
+	if tree != nil {
+		for _, child := range tree.Children {
+			stop := false
+			if stop {
+				break
+			}
 
-		if blob, ok := child.(git.Blob); ok {
-			for _, name := range valid {
-				if strings.ToLower(blob.Name) == name {
-					readme = blob.Name
-					stop = true
-					break
+			if blob, ok := child.(git.Blob); ok {
+				for _, name := range valid {
+					if strings.ToLower(blob.Name) == name {
+						readme = blob.Name
+						stop = true
+						break
+					}
 				}
 			}
 		}
