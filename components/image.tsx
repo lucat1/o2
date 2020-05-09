@@ -17,7 +17,7 @@ const Img = styled('img')`
   user-select: none;
 `
 
-const Image: React.FunctionComponent<ImageProps> = ({ src, ...props }) => {
+const Image: React.FunctionComponent<ImageProps> = ({ src, alt, ...props }) => {
   if (SSG) {
     return <Base {...props} />
   }
@@ -29,6 +29,7 @@ const Image: React.FunctionComponent<ImageProps> = ({ src, ...props }) => {
       <Img
         style={{ opacity: loaded ? 1 : 0 }}
         onLoad={() => setLoaded(true)}
+        alt={alt}
         src={src}
       />
     </Base>

@@ -14,7 +14,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
   glob`
     :root {
       --ff: 'Operator Mono';
-      --primary: #C792EA;
+      --primary: #8325C1;
       --primary-rgb: 199, 146, 234;
       --error: #fd9726;
 
@@ -28,6 +28,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       --fg-5: #000000;  
 
       @media (prefers-color-scheme: dark) {
+        --primary: #C792EA;
         --bg-3: #303030;
         --bg-4: #2b2b2b;
         --bg-5: #191919;
