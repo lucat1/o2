@@ -121,7 +121,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           username: lucat1
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
           repository: lucat1/o2/o2
           tags: latest
