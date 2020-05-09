@@ -122,6 +122,6 @@ jobs:
         with:
           username: lucat1
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: lucat1/o2/o2
+          registry: hub.docker.com
+          repository: lucat1/o2
           tags: latest
