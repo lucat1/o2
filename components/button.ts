@@ -1,13 +1,14 @@
 import { styled } from 'goober'
 
 const Button = styled('button')<{ small?: boolean; tiny?: boolean }>`
-  height: ${({ small, tiny }) => (tiny ? 1.25 : small ? 2 : 2.5)}em;
+  min-height: ${({ small, tiny }) => (tiny ? 1.25 : small ? 2.3 : 2.6)}em;
   min-width: ${({ small, tiny }) => (tiny ? 1.25 : small ? 5.5 : 8)}em;
-  border-radius: 0.45em;
+  border-radius: 0.5em;
   font-family: var(--ff);
   font-size: 0.75em;
   background: var(--primary);
   color: var(--bg-5);
+  padding: 0.5em 1em;
 
   display: inline-flex;
   justify-content: center;
@@ -17,11 +18,10 @@ const Button = styled('button')<{ small?: boolean; tiny?: boolean }>`
   border: none;
   outline: none;
   margin: ${({ small, tiny }) => (tiny ? 0 : small ? '0 1em' : '1.5em')};
-  box-shadow: var(--box-shadow-small);
-  transition: box-shadow 0.3s ease-in-out;
+  transition: box-shadow 200ms ease-in-out;
 
-  &:hover {
-    box-shadow: var(--box-shadow-medium);
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.4);
   }
 
   &[disabled] {

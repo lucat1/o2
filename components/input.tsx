@@ -27,16 +27,20 @@ const ErrorLabel = styled('label')`
 `
 
 const InputBase = styled('input', React.forwardRef)<{ ref: any }>`
-  height: 1.5em;
   width: 100%;
-  font-size: 1em;
-  padding: 0 0.75em;
-  border-radius: 1.5em;
+  font-size: 0.85em;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
   color: var(--fg-5);
   background: var(--bg-5);
   outline: none;
-  transition: border-width, height 0.3s ease-in-out;
+  transition: box-shadow 200ms ease-in-out;
   border: 1px solid var(--bg-3);
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.2);
+    border-color: rgba(var(--primary-rgb), 0.4);
+  }
 
   &:-webkit-autofill {
     animation: autofill 0s forwards;
@@ -46,32 +50,8 @@ const InputBase = styled('input', React.forwardRef)<{ ref: any }>`
     100% {
       background: transparent;
       color: inherit;
-      font-size: inherit;
     }
   }
-`
-
-const InlineContainer = styled('div')`
-  display: flex;
-  margin-bottom: 1.5em;
-
-  input {
-    margin: 0;
-  }
-`
-
-const Inline = styled('div')`
-  height: 1.5em;
-  line-height: 1.5em;
-  border-radius: 1.5em;
-  padding: 0 0.75em;
-
-  padding-right: 2em;
-  margin-right: -1.75em;
-
-  background: var(--primary);
-  color: var(--bg-5);
-  border: 1px solid var(--bg-5);
 `
 
 interface InputProps {
@@ -80,6 +60,8 @@ interface InputProps {
   inline?: string
 }
 
+// TODO: reimplement inline
+
 const Input: React.FunctionComponent<React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
@@ -87,15 +69,7 @@ const Input: React.FunctionComponent<React.DetailedHTMLProps<
   InputProps> = React.forwardRef(({ label, error, inline, ...props }, ref) => {
   return (
     <Container>
-      {label && <Label htmlFor={props.id}>{label}</Label>}
-      {inline ? (
-        <InlineContainer>
-          <Inline>{inline}</Inline>
-          <InputBase {...props} ref={ref} />
-        </InlineContainer>
-      ) : (
-        <InputBase {...props} ref={ref} />
-      )}
+      <InputBase placeholder={label || inline} {...props} ref={ref} />
 
       {error && <ErrorLabel htmlFor={props.id}>{error}</ErrorLabel>}
     </Container>

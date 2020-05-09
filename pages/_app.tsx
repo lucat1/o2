@@ -15,6 +15,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     :root {
       --ff: 'Operator Mono';
       --primary: #C792EA;
+      --primary-rgb: 199, 146, 234;
       --error: #fd9726;
 
       --red: #e13023;
