@@ -6,7 +6,6 @@ export const Tabs = styled('nav')`
   flex-direction: row;
   overflow: auto;
 
-  height: 1.5em;
   margin: 0.5em 0;
   align-items: center;
   overflow-y: hidden;
@@ -21,12 +20,13 @@ export const Tabs = styled('nav')`
 `
 
 export const Tab = styled(Link)<{ selected: boolean }>`
-  font-size: 0.85em;
-  padding: 0.25em 0.6em;
+  font-size: 0.75em;
+  font-weight: ${({ selected }) => (selected ? 'bold' : 'inherit')};
+  padding: 0.45em 1em;
 
   text-decoration: none;
-  color: var(--fg-5);
+  color: var(--fg-4);
 
-  border-radius: 0.45em;
-  background: var(${({ selected }) => (selected ? '--bg-3' : '--bg-5')});
+  border-radius: 0.75em;
+  background: ${({ selected }) => (selected ? 'var(--bg-4)' : 'inherit')};
 `

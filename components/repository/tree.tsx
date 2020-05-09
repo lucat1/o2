@@ -35,7 +35,7 @@ const Part = styled('div')`
   &:nth-child(6n + 1),
   &:nth-child(6n + 2),
   &:nth-child(6n + 3) {
-    background: var(--bg-4);
+    background: var(--bg-6);
   }
 
   svg {

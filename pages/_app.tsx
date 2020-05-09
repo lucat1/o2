@@ -24,12 +24,12 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       --bg-3: #d9d9d9;
       --bg-4: #f2f2f2;
       --bg-5: #ffffff;
-      --bg-6: #e5e5e5;
+      --bg-6: #f9f9f9;
       --fg-5: #000000;  
 
       @media (prefers-color-scheme: dark) {
         --bg-3: #303030;
-        --bg-4: #171717;
+        --bg-4: #2b2b2b;
         --bg-5: #191919;
         --bg-6: #161616;
         --fg-5: #ffffff;

@@ -21,7 +21,7 @@ const Container = styled('nav')`
 
   height: calc(2.5em - 1px);
 
-  background: var(--bg-4);
+  background: var(--bg-6);
   border-bottom: 1px solid var(--bg-3);
   z-index: 10;
 `
