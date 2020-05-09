@@ -18,9 +18,9 @@ const (
 
 // Ref is a struct which holds the git ref basic data
 type Ref struct {
-	Kind RefType
-	Name string
-	SHA  string
+	Kind RefType `json:"kind"`
+	Name string  `json:"name"`
+	SHA  string  `json:"sha"`
 }
 
 // Refs returns all the brances and tags available in the repo (refs)

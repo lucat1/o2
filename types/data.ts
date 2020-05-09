@@ -35,6 +35,12 @@ export interface Blob extends Entry {
   name: string
 }
 
+export interface Ref {
+  kind: 'branch' | 'tag'
+  name: string
+  sha: string
+}
+
 export interface Commit {
   commit: string
   abbrv: string

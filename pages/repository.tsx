@@ -3,7 +3,7 @@ import { Head, SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 import snarkdown from 'snarkdown'
 
-import { Repository, Tree as ITree, User } from '../types/data'
+import { Repository, Tree as ITree, User, Ref } from '../types/data'
 import Skeleton from '../components/skeleton'
 
 import _Container from '../components/repository/container'
@@ -16,6 +16,7 @@ export interface RepositoryProps {
   account: User
   repository: Repository
   tree: ITree
+  refs: Ref[]
   readme: string
 }
 
@@ -30,7 +31,13 @@ const Description = styled('div')`
   text-overflow: ellipsis;
 `
 
-export default ({ repository, tree, account, readme }: RepositoryProps) => {
+export default ({
+  repository,
+  tree,
+  account,
+  readme,
+  refs
+}: RepositoryProps) => {
   return (
     <>
       <Head>
@@ -48,7 +55,7 @@ export default ({ repository, tree, account, readme }: RepositoryProps) => {
         ) : (
           <Description>
             <code>{repository.description}</code>
-            <Branch current='master' branches={['master', 'test']} />
+            <Branch repository={repository} current='master' refs={refs} />
           </Description>
         )}
         {!tree && !SSG && <Empty repository={repository} account={account} />}

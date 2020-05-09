@@ -21,13 +21,15 @@ const Container = styled('main')`
 const Head = styled('div')`
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  overflow: auto;
+  justify-content: space-between;
+
+  @media (max-width: 800px) {
+    display: block;
+  }
 `
 
 const H2 = styled('h2')`
   display: flex;
-  flex-grow: 1;
 `
 
 const Skeleton = styled(_Skeleton)`
