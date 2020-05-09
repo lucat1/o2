@@ -21,7 +21,7 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 				Str("resource", resource).
 				Msg("Checking the user's permission for the required scopes")
 
-			pexes, ok := models.FetchPexes(resource)
+			pexes, ok := models.FetchPexes(resource, scopes)
 			if !ok {
 				fallback.ServeHTTP(w, r)
 				return

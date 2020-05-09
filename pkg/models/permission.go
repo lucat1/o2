@@ -21,9 +21,19 @@ type Pex struct {
 	Permission   Permission
 }
 
+// from https://stackoverflow.com/a/10485970
+func includes(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
 // FetchPexes queries the database and produces an array of permissions for the
 // requested resource
-func FetchPexes(resource string) ([]Pex, bool) {
+func FetchPexes(resource string, scopes []string) ([]Pex, bool) {
 	permissions := []Permission{}
 	if err := store.GetDB().
 		Where(&Permission{Resource: resource}).
@@ -38,7 +48,14 @@ func FetchPexes(resource string) ([]Pex, bool) {
 		return []Pex{}, false
 	}
 
-	return ToPex(permissions), true
+	perms := []Permission{}
+	for _, permission := range permissions {
+		if includes(scopes, permission.Scope) {
+			perms = append(perms, permission)
+		}
+	}
+
+	return ToPex(perms), true
 }
 
 // ToPex transforms an array of Permissions in to Pexes
