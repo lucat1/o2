@@ -1,7 +1,7 @@
 package git
 
 // Blob returns a blob object just for reading purpuses
-func (b *Branch) Blob(name string) Blob {
+func (b Branch) Blob(name string) Blob {
 	return Blob{
 		Base: Base{
 			Kind:   BlobKind,

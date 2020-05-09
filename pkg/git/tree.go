@@ -23,9 +23,9 @@ type Base struct {
 	ID   string    `json:"-"`
 	Kind EntryKind `json:"kind"`
 
-	Branch *Branch `json:"branch"`
-	Mode   string  `json:"mode"`
-	Size   uint64  `json:"size"`
+	Branch Branch `json:"branch"`
+	Mode   string `json:"mode"`
+	Size   uint64 `json:"size"`
 }
 
 // Tree is a group of blobs and possibly other trees
@@ -46,7 +46,7 @@ type Blob struct {
 }
 
 // Tree returns a tree of files and folders
-func (b *Branch) Tree(p string) (tree *Tree, err error) {
+func (b Branch) Tree(p string) (tree *Tree, err error) {
 	// Fix path, must end with a / if it's not empty
 	if len(p) > 1 && p[len(p)-1] != '/' {
 		p += "/"

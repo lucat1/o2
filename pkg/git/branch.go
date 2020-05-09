@@ -8,8 +8,8 @@ type Branch struct {
 }
 
 // Branch returns the theoretical branch object
-func (r *Repository) Branch(branch string) *Branch {
-	return &Branch{
+func (r *Repository) Branch(branch string) Branch {
+	return Branch{
 		repo: r,
 		Name: branch,
 	}

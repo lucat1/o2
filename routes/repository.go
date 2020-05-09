@@ -28,6 +28,14 @@ func readmeData(data string) data.Composer {
 	}
 }
 
+func refsData(refs []git.Ref) data.Composer {
+	return func(r *http.Request) quercia.Props {
+		return quercia.Props{
+			"refs": refs,
+		}
+	}
+}
+
 // Repository renders the view of a git repository
 func Repository(w http.ResponseWriter, r *http.Request) {
 	dbRepo := r.Context().Value(middleware.DbRepo).(models.Repository)
@@ -71,6 +79,9 @@ func Repository(w http.ResponseWriter, r *http.Request) {
 		readmeContent = data
 	}
 
+	// also provide all refs(branches/tags)
+	refs, _ := repo.Refs()
+
 	quercia.Render(
 		w, r,
 		"repository",
@@ -79,6 +90,7 @@ func Repository(w http.ResponseWriter, r *http.Request) {
 			repositoryData(dbRepo),
 			treeData(tree),
 			readmeData(readmeContent),
+			refsData(refs),
 		),
 	)
 }
