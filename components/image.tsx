@@ -30,7 +30,6 @@ const Image: React.FunctionComponent<ImageProps> = ({ src, ...props }) => {
         style={{ opacity: loaded ? 1 : 0 }}
         onLoad={() => setLoaded(true)}
         src={src}
-        {...props}
       />
     </Base>
   )

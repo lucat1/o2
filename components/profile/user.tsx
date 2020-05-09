@@ -33,6 +33,10 @@ const Picture = styled(Image)`
   width: 10em;
   height: 10em;
   border-radius: 50%;
+
+  img {
+    border-radius: 50%;
+  }
 `
 
 const Line = styled('div')`

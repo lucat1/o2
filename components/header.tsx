@@ -51,6 +51,10 @@ const Image = styled(_Image)`
   outline: none;
   transition: box-shadow 200ms ease-in-out;
 
+  img {
+    border-radius: 50%;
+  }
+
   &:focus {
     box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
   }
@@ -81,6 +85,8 @@ const Header: React.FunctionComponent = () => {
                 <Image
                   tabIndex={0}
                   onClick={() => setOpen(true)}
+                  onFocus={() => setOpen(true)}
+                  onBlur={() => setOpen(false)}
                   alt='Your profile picture'
                   src={props.account.picture}
                 />
