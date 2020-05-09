@@ -48,6 +48,12 @@ const Image = styled(_Image)`
   width: 1.5em;
   height: 1.5em;
   cursor: pointer;
+  outline: none;
+  transition: box-shadow 200ms ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
+  }
 `
 
 const Add = styled(_Add)`
@@ -73,6 +79,7 @@ const Header: React.FunctionComponent = () => {
               {/* TODO: find a more elegant way :( */}
               <div style={{ padding: '0 0.85em' }}>
                 <Image
+                  tabIndex={0}
                   onClick={() => setOpen(true)}
                   alt='Your profile picture'
                   src={props.account.picture}
