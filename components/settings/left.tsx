@@ -14,6 +14,10 @@ const Container = styled(L)`
   padding: 1em 0;
   border-right: 1px solid var(--bg-3);
   height: 100%;
+
+  @media (max-width: 680px) {
+    border: none;
+  }
 `
 
 const Tab = styled(T)`
