@@ -54,7 +54,7 @@ func main() {
 	mux.HandleFunc("/register", routes.Register)
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", auth.Must(routes.Logout))
-	mux.HandleFunc("/add", auth.Must(routes.Add))
+	mux.HandleFunc("/new", auth.Must(routes.New))
 	mux.HandleFunc("/:username", routes.Profile)
 
 	repo := mux.Of("/:username/:reponame")

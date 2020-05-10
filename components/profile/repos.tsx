@@ -62,7 +62,7 @@ const Repositories = ({ user, account }: ProfileProps) => {
         <VCS style={{ width: '70%' }} />
 
         {user?.username == account?.username && (
-          <Button onClick={() => navigate('/add')}>Create</Button>
+          <Button onClick={() => navigate('/new')}>Create</Button>
         )}
       </EmptyRepos>
     )

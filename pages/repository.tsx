@@ -59,7 +59,8 @@ export default ({
           <Branch
             repository={repository}
             current={tree?.branch.name}
-            refs={refs}
+            refs={refs || []}
+            disabled={!!refs}
           />
         </Description>
         {!tree && !SSG && <Empty repository={repository} account={account} />}

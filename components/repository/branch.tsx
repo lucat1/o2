@@ -62,11 +62,8 @@ const Branch: React.FunctionComponent<{
   current: string
   refs: Ref[]
   repository: Repository
-}> = ({ current, refs, repository }) => {
-  if (SSG) {
-    refs = []
-  }
-
+  disabled?: boolean
+}> = ({ current, refs, repository, disabled }) => {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -75,7 +72,12 @@ const Branch: React.FunctionComponent<{
         position: relative;
       `}
     >
-      <Dropbox small secondary onClick={() => !open && setOpen(true)}>
+      <Dropbox
+        small
+        secondary
+        onClick={() => !open && setOpen(true)}
+        disabled={disabled}
+      >
         Branch
         <HideOnSmall>
           : <strong>{current}</strong>

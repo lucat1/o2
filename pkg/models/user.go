@@ -22,7 +22,8 @@ type User struct {
 	Location    string `gorm:"type:varchar(100)" json:"location"`
 	Picture     string `json:"picture"`
 
-	Repositories []Repository `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"repositories"`
+	Organizations []Organization `gorm:"many2many:user_orgs;"`
+	Repositories  []Repository   `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"repositories"`
 }
 
 // Picture generates the picture url of a profile picture

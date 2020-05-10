@@ -92,7 +92,7 @@ const Header: React.FunctionComponent = () => {
         <div>
           {props.account ? (
             <>
-              <Add onClick={() => navigate('/add')} />
+              <Add onClick={() => navigate('/new')} />
               {/* TODO: find a more elegant way :( */}
               <div style={{ padding: '0 0.85em' }}>
                 <Image

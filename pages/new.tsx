@@ -34,7 +34,7 @@ export default ({ error, account }: AddProps) => {
     const body = new FormData()
     body.set('name', data.name)
 
-    navigate('/add', 'POST', { body, credentials: 'same-origin' })
+    navigate('/new', 'POST', { body, credentials: 'same-origin' })
   }
 
   return (

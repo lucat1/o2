@@ -24,10 +24,10 @@ func addErr(w http.ResponseWriter, r *http.Request, msg string) {
 	))
 }
 
-// Add prompts the user to create a new repository
-func Add(w http.ResponseWriter, r *http.Request) {
+// New prompts the user to create a new repository or an organization
+func New(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		quercia.Render(w, r, "add", data.Compose(r, data.Base))
+		quercia.Render(w, r, "new", data.Compose(r, data.Base))
 		return
 	}
 
