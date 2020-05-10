@@ -4,13 +4,13 @@ import * as React from 'react'
 import { navigate, usePage } from '@quercia/quercia'
 
 import { BaseData } from '../types/data'
-import _Body from './body'
+import B from './body'
 import Button from './button'
-import _Dropdown from './dropdown'
-import _Image from './image'
+import D from './dropdown'
+import I from './image'
 import { Line } from './base'
-import _Add from './svgs/add'
-import _Logo from './svgs/logo'
+import A from './svgs/add'
+import L from './svgs/logo'
 import { SpacedH4, SpacedLink } from './typography'
 
 const Container = styled('nav')`
@@ -26,7 +26,7 @@ const Container = styled('nav')`
   z-index: 10;
 `
 
-const Body = styled(_Body)`
+const Body = styled(B)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -37,13 +37,13 @@ const Body = styled(_Body)`
   }
 `
 
-const Logo = styled(_Logo)`
+const Logo = styled(L)`
   height: 0.75em;
   margin: 0.85em;
   cursor: pointer;
 `
 
-const Image = styled(_Image)`
+const Image = styled(I)`
   border-radius: 50%;
   width: 1.5em;
   height: 1.5em;
@@ -60,12 +60,12 @@ const Image = styled(_Image)`
   }
 `
 
-const Add = styled(_Add)`
+const Add = styled(A)`
   height: 1em;
   cursor: pointer;
 `
 
-const Dropdown = styled(_Dropdown)`
+const Dropdown = styled(D)`
   font-size: 0.75em;
   position: absolute;
   top: 3em;

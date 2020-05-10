@@ -5,9 +5,9 @@ import format from 'tinydate'
 import { navigate, SSG } from '@quercia/quercia'
 
 import { Commit as ICommit } from '../../types/data'
-import _Image from '../image'
+import I from '../image'
 import Container from '../base'
-import _Skeleton from '../skeleton'
+import S from '../skeleton'
 import { Link, SpacedLink, SpacedP } from '../typography'
 
 const CommitContainer = styled(Container)`
@@ -23,7 +23,7 @@ const CommitContainer = styled(Container)`
   align-items: center;
 `
 
-const Image = styled(_Image)`
+const Image = styled(I)`
   width: 2em;
   height: 2em;
   border-radius: 50%;
@@ -57,7 +57,7 @@ const WhiteLink = styled(SpacedLink)`
   }
 `
 
-const Skeleton = styled(_Skeleton)`
+const Skeleton = styled(S)`
   margin: 0 0.5em;
 `
 

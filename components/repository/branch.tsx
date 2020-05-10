@@ -5,11 +5,11 @@ import { navigate } from '@quercia/quercia'
 
 import { Ref, Repository } from '../../types/data'
 import Button from '../button'
-import _Dropdown from '../dropdown'
+import D from '../dropdown'
 import { Item, List } from '../list'
-import _Arrow from '../svgs/arrow'
+import A from '../svgs/arrow'
 
-const Arrow = styled(_Arrow)`
+const Arrow = styled(A)`
   margin-left: 0.5em;
 `
 
@@ -20,7 +20,7 @@ const Dropbox = styled(Button)`
   height: 2.35em;
 `
 
-const Dropdown = styled(_Dropdown)`
+const Dropdown = styled(D)`
   font-size: 0.75em;
   position: absolute;
   right: 0;

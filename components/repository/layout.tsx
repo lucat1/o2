@@ -4,7 +4,7 @@ import * as React from 'react'
 import { SSG } from '@quercia/quercia'
 
 import { RepositoryProps } from '../../pages/repository'
-import _Skeleton from '../skeleton'
+import S from '../skeleton'
 import { A, Link } from '../typography'
 import { Tab, Tabs } from '../tabs'
 
@@ -32,7 +32,7 @@ const H2 = styled('h2')`
   display: flex;
 `
 
-const Skeleton = styled(_Skeleton)`
+const Skeleton = styled(S)`
   margin: 0 0.5em;
 `
 
