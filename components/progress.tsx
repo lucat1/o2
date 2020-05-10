@@ -36,6 +36,10 @@ const Progress: React.FunctionComponent = () => {
 
     // if the loading is done reset the value(200ms later)
     if (!loading) {
+      // scroll the page back to the top
+      window.scrollTo({ top: 0 })
+
+      // reset the progress value
       setVal(100)
       setTimeout(() => {
         setVal(10)
