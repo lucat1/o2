@@ -5,7 +5,7 @@ import snarkdown from 'snarkdown'
 import { Head, SSG } from '@quercia/quercia'
 
 import Branch from '../components/repository/branch'
-import _Container from '../components/repository/container'
+import C from '../components/base'
 import Empty from '../components/repository/empty'
 import Layout from '../components/repository/layout'
 import Tree from '../components/repository/tree'
@@ -20,7 +20,7 @@ export interface RepositoryProps {
   readme: string
 }
 
-const Container = styled(_Container)`
+const Container = styled(C)`
   padding: 1.5em;
   overflow: auto;
 `

@@ -6,7 +6,7 @@ import { navigate, SSG } from '@quercia/quercia'
 
 import { Commit as ICommit } from '../../types/data'
 import _Image from '../image'
-import Container from '../repository/container'
+import Container from '../base'
 import _Skeleton from '../skeleton'
 import { Link, SpacedLink, SpacedP } from '../typography'
 

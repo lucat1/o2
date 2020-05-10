@@ -5,7 +5,7 @@ import { navigate, SSG } from '@quercia/quercia'
 
 import { ProfileProps } from '../../pages/profile'
 import Button from '../button'
-import Container from '../repository/container'
+import Container from '../base'
 import Skeleton from '../skeleton'
 import { Right } from '../split'
 import VCS from '../svgs/git'

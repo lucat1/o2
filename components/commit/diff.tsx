@@ -3,12 +3,11 @@ import { File } from 'parse-diff'
 import * as React from 'react'
 
 import Button from '../button'
-import _Container from '../repository/container'
-import { Line as _Line } from '../repository/empty'
+import C, { Line as L } from '../base'
 import Arrow from '../svgs/arrow'
 import { SpacedA } from '../typography'
 
-const Container = styled(_Container)`
+const Container = styled(C)`
   margin: 1em 0;
   overflow: hidden;
 
@@ -68,7 +67,7 @@ const FullLine = styled('div')<{ big: boolean }>`
   `}
 `
 
-const Line = styled(_Line)`
+const Line = styled(L)`
   grid-column: 1 / 4;
 `
 
@@ -86,7 +85,7 @@ const green = css`
 
 const Stat = styled(SpacedA)<{ new: boolean }>`
   font-weight: bold;
-  color: var(-- ${props => (props.new ? 'green' : 'red')});
+  color: ${props => `var(--${props.new ? 'green' : 'red'})`};
 `
 
 const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {

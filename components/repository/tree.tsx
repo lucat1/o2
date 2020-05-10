@@ -9,7 +9,7 @@ import Skeleton from '../skeleton'
 import File from '../svgs/file'
 import Folder from '../svgs/folder'
 import { Link } from '../typography'
-import Container from './container'
+import Container from '../base'
 import { basename, key, url } from './path'
 
 const Grid = styled(Container)`

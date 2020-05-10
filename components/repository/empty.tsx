@@ -4,12 +4,7 @@ import * as React from 'react'
 import { RepositoryProps } from '../../pages/repository'
 import NoData from '../svgs/no-data'
 import { Code, P, SpacedH2 } from '../typography'
-import Container from './container'
-
-export const Line = styled('div')`
-  height: 1px;
-  background: var(--bg-3);
-`
+import Container, { Line } from '../base'
 
 const Spaced = styled('div')`
   padding: 0.5em 1em;
