@@ -6,7 +6,7 @@ import { SSG } from '@quercia/quercia'
 import { RepositoryProps } from '../../pages/repository'
 import _Skeleton from '../skeleton'
 import { A, Link } from '../typography'
-import { Tab, Tabs } from './tabs'
+import { Tab, Tabs } from '../tabs'
 
 const Container = styled('main')`
   display: flex;

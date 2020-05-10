@@ -4,7 +4,7 @@ import * as React from 'react'
 import { SSG } from '@quercia/quercia'
 
 import { Repository } from '../../types/data'
-import { Tab as T } from '../repository/tabs'
+import { Tab as T } from '../tabs'
 import { Left as L } from '../split'
 
 const Container = styled(L)`
