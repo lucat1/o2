@@ -8,7 +8,7 @@ import (
 
 // Repository is the database model for a git repository
 type Repository struct {
-	gorm.Model
+	Model
 	ComputedName string `gorm:"unique_index" json:"-"`
 
 	Owner     User   `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"-"`

@@ -1,7 +1,7 @@
 import { css, styled } from 'goober'
 import * as React from 'react'
 
-import { navigate } from '@quercia/quercia'
+import { SSG, navigate } from '@quercia/quercia'
 
 import { Ref, Repository } from '../../types/data'
 import Button from '../button'
@@ -63,6 +63,10 @@ const Branch: React.FunctionComponent<{
   refs: Ref[]
   repository: Repository
 }> = ({ current, refs, repository }) => {
+  if (SSG) {
+    refs = []
+  }
+
   const [open, setOpen] = React.useState(false)
 
   return (

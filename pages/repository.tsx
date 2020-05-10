@@ -50,14 +50,18 @@ export default ({
         <meta name='description' content='a git repository on the o2 service' />
       </Head>
       <Layout repository={repository} page='Overview'>
-        {SSG ? (
-          <Skeleton width='100%' height='2em' />
-        ) : (
-          <Description>
+        <Description>
+          {SSG ? (
+            <Skeleton width='70%' height='1.5em' />
+          ) : (
             <code>{repository.description}</code>
-            <Branch repository={repository} current='master' refs={refs} />
-          </Description>
-        )}
+          )}
+          <Branch
+            repository={repository}
+            current={tree?.branch.name}
+            refs={refs}
+          />
+        </Description>
         {!tree && !SSG && <Empty repository={repository} account={account} />}
         {(tree || SSG) && <Tree repository={repository} tree={tree} />}
         {readme && (
