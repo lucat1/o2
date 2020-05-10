@@ -11,6 +11,7 @@ import A from '../svgs/arrow'
 
 const Arrow = styled(A)`
   margin-left: 0.5em;
+  transition: transform 200ms ease-in-out;
 `
 
 const Dropbox = styled(Button)`
@@ -70,12 +71,15 @@ const Branch: React.FunctionComponent<{
         position: relative;
       `}
     >
-      <Dropbox small secondary onClick={() => setOpen(true)}>
+      <Dropbox small secondary onClick={() => !open && setOpen(true)}>
         Branch
         <HideOnSmall>
           : <strong>{current}</strong>
         </HideOnSmall>
-        <Arrow height='1em' />
+        <Arrow
+          style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
+          height='1em'
+        />
       </Dropbox>
       <Dropdown open={open} onClose={() => setOpen(false)}>
         <List>
