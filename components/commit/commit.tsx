@@ -8,14 +8,13 @@ import { Commit as ICommit } from '../../types/data'
 import I from '../image'
 import Container from '../base'
 import S from '../skeleton'
-import { Link, SpacedLink, SpacedP } from '../typography'
+import { Link, P } from '../typography'
 
 const CommitContainer = styled(Container)`
   margin: 0.5em 0;
   padding: 0.35em 0.75em;
   height: 3.5em;
 
-  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 
@@ -24,6 +23,7 @@ const CommitContainer = styled(Container)`
 `
 
 const Image = styled(I)`
+  flex-shrink: 0;
   width: 2em;
   height: 2em;
   border-radius: 50%;
@@ -46,22 +46,27 @@ const Data = styled('div')`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  flex-shrink: 1;
+  margin: 0 0.5em;
+
+  overflow: hidden;
 `
 
-const WhiteLink = styled(SpacedLink)`
-  margin: 0 0.5em;
+const WhiteLink = styled(Link)`
   color: var(--fg-5);
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover {
     text-decoration: underline;
   }
 `
 
-const Skeleton = styled(S)`
-  margin: 0 0.5em;
-`
+const Skeleton = S
 
-const TinyP = styled(SpacedP)`
+const TinyP = styled(P)`
+  margin: 0;
   font-size: 0.85em;
 `
 
