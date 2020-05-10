@@ -1,6 +1,8 @@
-import * as React from 'react'
-import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
+
+import { SSG } from '@quercia/quercia'
+
 import { Base } from './skeleton'
 
 type ImageProps = React.DetailedHTMLProps<

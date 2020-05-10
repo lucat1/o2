@@ -1,5 +1,6 @@
-import { Link } from '@quercia/quercia'
 import { styled } from 'goober'
+
+import { Link } from '@quercia/quercia'
 
 export const Tabs = styled('nav')`
   display: flex;
@@ -10,7 +11,7 @@ export const Tabs = styled('nav')`
   margin-bottom: 1em;
 `
 
-export const Tab = styled(Link)<{ selected: boolean }>`
+export const Tab = styled(Link)<{ selected?: boolean }>`
   font-size: 0.75em;
   font-weight: ${({ selected }) => (selected ? 'bold' : 'inherit')};
   padding: 0.45em 0.75em;

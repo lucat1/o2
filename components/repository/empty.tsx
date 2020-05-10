@@ -1,9 +1,9 @@
-import * as React from 'react'
 import { styled } from 'goober'
+import * as React from 'react'
 
-import { SpacedH2, P, Code } from '../typography'
 import { RepositoryProps } from '../../pages/repository'
 import NoData from '../svgs/no-data'
+import { Code, P, SpacedH2 } from '../typography'
 import Container from './container'
 
 export const Line = styled('div')`

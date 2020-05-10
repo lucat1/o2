@@ -1,9 +1,10 @@
-import * as React from 'react'
-import { SSG, Head } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
 
-import { H4 } from '../components/typography'
+import { Head, SSG } from '@quercia/quercia'
+
 import NotFound from '../components/svgs/notfound'
+import { H4 } from '../components/typography'
 
 const Container = styled('div')`
   height: calc(100% - 2.5em);

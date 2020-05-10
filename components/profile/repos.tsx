@@ -1,13 +1,14 @@
-import * as React from 'react'
-import { SSG, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
 
-import Skeleton from '../skeleton'
+import { navigate, SSG } from '@quercia/quercia'
+
+import { ProfileProps } from '../../pages/profile'
 import Button from '../button'
 import Container from '../repository/container'
+import Skeleton from '../skeleton'
 import { Right } from '../split'
 import VCS from '../svgs/git'
-import { ProfileProps } from '../../pages/profile'
 import { H2, Link } from '../typography'
 
 const Repos = styled(Right)`

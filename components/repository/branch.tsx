@@ -1,13 +1,13 @@
+import { css, styled } from 'goober'
 import * as React from 'react'
-import { navigate } from '@quercia/quercia'
-import { styled, css } from 'goober'
 
-import Button from '../button'
-import _Dropdown from '../dropdown'
-import _Arrow from '../svgs/arrow'
-import { List, Item } from '../list'
+import { navigate } from '@quercia/quercia'
 
 import { Ref, Repository } from '../../types/data'
+import Button from '../button'
+import _Dropdown from '../dropdown'
+import { Item, List } from '../list'
+import _Arrow from '../svgs/arrow'
 
 const Arrow = styled(_Arrow)`
   margin-left: 0.5em;

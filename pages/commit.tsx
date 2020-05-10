@@ -1,15 +1,14 @@
-import * as React from 'react'
-import { Head, SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 import * as diff from 'parse-diff'
+import * as React from 'react'
 
-import Layout from '../components/repository/layout'
+import { Head, SSG } from '@quercia/quercia'
+
 import Commit from '../components/commit/commit'
 import Diff from '../components/commit/diff'
-
-import { Repository, DetailedCommit } from '../types/data'
-
+import Layout from '../components/repository/layout'
 import { P } from '../components/typography'
+import { DetailedCommit, Repository } from '../types/data'
 
 export interface CommitProps {
   repository: Repository

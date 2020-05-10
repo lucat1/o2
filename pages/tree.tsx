@@ -1,11 +1,11 @@
 import * as React from 'react'
+
 import { Head, SSG } from '@quercia/quercia'
 
-import { Repository, Tree as ITree, User } from '../types/data'
-
 import Layout from '../components/repository/layout'
-import Tree from '../components/repository/tree'
 import Path from '../components/repository/path'
+import Tree from '../components/repository/tree'
+import { Repository, Tree as ITree, User } from '../types/data'
 
 export interface RepositoryProps {
   account: User

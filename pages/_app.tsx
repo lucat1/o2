@@ -1,12 +1,13 @@
-import * as React from 'react'
-import { AppProps } from '@quercia/runtime'
-import { Head } from '@quercia/quercia'
 import { glob, setup } from 'goober'
+import * as React from 'react'
 import usePrefersTheme from 'use-prefers-theme'
 
-import Progress from '../components/progress'
-import Header from '../components/header'
+import { Head } from '@quercia/quercia'
+import { AppProps } from '@quercia/runtime'
+
 import Body from '../components/body'
+import Header from '../components/header'
+import Progress from '../components/progress'
 
 setup(React.createElement)
 

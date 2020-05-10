@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { styled } from 'goober'
+import * as React from 'react'
 
 export const Base = styled('span')`
   display: inline-block;

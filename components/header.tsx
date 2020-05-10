@@ -1,19 +1,17 @@
-import * as React from 'react'
-import { usePage, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
 
-import { SpacedH4, SpacedLink } from './typography'
-import Button from './button'
-import _Image from './image'
-import _Body from './body'
-
-import _Dropdown from './dropdown'
-import { Line } from './repository/empty'
-
-import _Logo from './svgs/logo'
-import _Add from './svgs/add'
+import { navigate, usePage } from '@quercia/quercia'
 
 import { BaseData } from '../types/data'
+import _Body from './body'
+import Button from './button'
+import _Dropdown from './dropdown'
+import _Image from './image'
+import { Line } from './repository/empty'
+import _Add from './svgs/add'
+import _Logo from './svgs/logo'
+import { SpacedH4, SpacedLink } from './typography'
 
 const Container = styled('nav')`
   position: sticky;

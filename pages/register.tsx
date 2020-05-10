@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
+
 import { Head, navigate } from '@quercia/quercia'
 
+import Button from '../components/button'
 import Form from '../components/form'
 import Input from '../components/input'
-import Button from '../components/button'
 
 interface Data {
   email: string

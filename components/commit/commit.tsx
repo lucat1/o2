@@ -1,15 +1,14 @@
-import * as React from 'react'
-import { SSG, navigate } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
 import format from 'tinydate'
 
-import Container from '../repository/container'
-
-import { SpacedP, Link, SpacedLink } from '../typography'
-import _Image from '../image'
-import _Skeleton from '../skeleton'
+import { navigate, SSG } from '@quercia/quercia'
 
 import { Commit as ICommit } from '../../types/data'
+import _Image from '../image'
+import Container from '../repository/container'
+import _Skeleton from '../skeleton'
+import { Link, SpacedLink, SpacedP } from '../typography'
 
 const CommitContainer = styled(Container)`
   margin: 0.5em 0;

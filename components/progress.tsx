@@ -1,6 +1,7 @@
-import * as React from 'react'
-import { useRouter, SSG } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
+
+import { SSG, useRouter } from '@quercia/quercia'
 
 const Bar = styled('div')`
   position: fixed;

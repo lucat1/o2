@@ -1,8 +1,9 @@
-import * as React from 'react'
-import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
 
-import { Entry, EntryKind, Blob, Tree, Repository } from '../../types/data'
+import { SSG } from '@quercia/quercia'
+
+import { Blob, Entry, EntryKind, Repository, Tree } from '../../types/data'
 import Skeleton from '../skeleton'
 import { Link } from '../typography'
 

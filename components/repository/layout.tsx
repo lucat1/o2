@@ -1,12 +1,12 @@
+import { css, styled } from 'goober'
 import * as React from 'react'
-import { SSG } from '@quercia/quercia'
-import { styled, css } from 'goober'
 
-import { Tabs, Tab } from './tabs'
-import _Skeleton from '../skeleton'
-import { A, Link } from '../typography'
+import { SSG } from '@quercia/quercia'
 
 import { RepositoryProps } from '../../pages/repository'
+import _Skeleton from '../skeleton'
+import { A, Link } from '../typography'
+import { Tab, Tabs } from './tabs'
 
 const Container = styled('main')`
   display: flex;

@@ -1,16 +1,16 @@
-import * as React from 'react'
-import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
 import * as pretty from 'pretty-bytes'
+import * as React from 'react'
 
-import Container from './container'
-import { key, url, basename } from './path'
+import { SSG } from '@quercia/quercia'
 
-import Folder from '../svgs/folder'
-import File from '../svgs/file'
-import { Tree as ITree, EntryKind, Repository } from '../../types/data'
-import { Link } from '../typography'
+import { EntryKind, Repository, Tree as ITree } from '../../types/data'
 import Skeleton from '../skeleton'
+import File from '../svgs/file'
+import Folder from '../svgs/folder'
+import { Link } from '../typography'
+import Container from './container'
+import { basename, key, url } from './path'
 
 const Grid = styled(Container)`
   display: grid;

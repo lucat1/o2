@@ -1,12 +1,7 @@
-import * as React from 'react'
-import {
-  QuerciaHead,
-  QuerciaScripts,
-  QuerciaMount,
-  DocumentProps
-} from '@quercia/runtime'
-
 import { extractCss } from 'goober'
+import * as React from 'react'
+
+import { DocumentProps, QuerciaHead, QuerciaMount, QuerciaScripts } from '@quercia/runtime'
 
 export default ({ css }: DocumentProps & { css: string }) => (
   <html lang='en'>

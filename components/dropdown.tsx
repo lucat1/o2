@@ -1,6 +1,6 @@
+import { styled } from 'goober'
 import * as React from 'react'
 import useOnClickOutside from 'use-onclickoutside'
-import { styled } from 'goober'
 
 const Base = styled('div', React.forwardRef)`
   border: 1px solid var(--bg-3);

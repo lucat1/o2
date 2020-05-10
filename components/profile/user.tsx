@@ -1,14 +1,15 @@
-import * as React from 'react'
-import { SSG } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
 
-import { H2, H4, SpacedH4, A } from '../typography'
-import Skeleton from '../skeleton'
-import Image from '../image'
-import { Left } from '../split'
+import { SSG } from '@quercia/quercia'
+
 import { ProfileProps } from '../../pages/profile'
 import _Button from '../button'
+import Image from '../image'
+import Skeleton from '../skeleton'
+import { Left } from '../split'
 import _Add from '../svgs/add'
+import { A, H2, H4, SpacedH4 } from '../typography'
 
 const User = styled(Left)`
   display: flex;

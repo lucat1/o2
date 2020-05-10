@@ -1,10 +1,11 @@
-import * as React from 'react'
-import { Head, SSG } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
 
-import { Parent } from '../components/split'
-import User from '../components/profile/user'
+import { Head, SSG } from '@quercia/quercia'
+
 import Repos from '../components/profile/repos'
+import User from '../components/profile/user'
+import { Parent } from '../components/split'
 import { User as IUser } from '../types/data'
 
 export interface ProfileProps {

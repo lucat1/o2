@@ -1,19 +1,18 @@
-import * as React from 'react'
-import { Head, SSG } from '@quercia/quercia'
-import { styled, css } from 'goober'
-import { highlight, languages } from 'prismjs/components/prism-core'
+import { css, styled } from 'goober'
 import * as pretty from 'pretty-bytes'
+import { highlight, languages } from 'prismjs/components/prism-core'
+import * as React from 'react'
 
-import { Repository, Blob } from '../types/data'
-
-import Layout from '../components/repository/layout'
-import Path, { basename } from '../components/repository/path'
-import Container from '../components/repository/container'
-import { Line } from '../components/repository/empty'
-import { SpacedA } from '../components/typography'
-import Pre from '../components/code/pre'
+import { Head, SSG } from '@quercia/quercia'
 
 import load, { lang } from '../components/code/load'
+import Pre from '../components/code/pre'
+import Container from '../components/repository/container'
+import { Line } from '../components/repository/empty'
+import Layout from '../components/repository/layout'
+import Path, { basename } from '../components/repository/path'
+import { SpacedA } from '../components/typography'
+import { Blob, Repository } from '../types/data'
 
 export interface RepositoryProps {
   repository: Repository

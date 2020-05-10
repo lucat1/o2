@@ -1,6 +1,7 @@
-import * as React from 'react'
-import { SSG, Link as QLink, LinkProps } from '@quercia/quercia'
 import { styled } from 'goober'
+import * as React from 'react'
+
+import { Link as QLink, LinkProps, SSG } from '@quercia/quercia'
 
 import Skeleton from './skeleton'
 

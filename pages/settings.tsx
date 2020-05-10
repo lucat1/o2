@@ -1,9 +1,10 @@
 import * as React from 'react'
+
 import { Head } from '@quercia/quercia'
-import { styled } from 'goober'
 
 import Layout from '../components/repository/layout'
-import { Left, Right, Parent } from '../components/split'
+import Left from '../components/settings/left'
+import { Parent, Right } from '../components/split'
 import { Repository } from '../types/data'
 
 export interface SettingsProps {
@@ -27,7 +28,7 @@ export default ({ repository }: SettingsProps) => {
       </Head>
       <Layout repository={repository} page='Settings'>
         <Parent>
-          <Left>leftbar</Left>
+          <Left repository={repository} current='General' />
           <Right>right hand side</Right>
         </Parent>
       </Layout>

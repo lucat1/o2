@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import { Head } from '@quercia/quercia'
 
 export default () => {

@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { styled, css } from 'goober'
+import { css, styled } from 'goober'
 import { File } from 'parse-diff'
+import * as React from 'react'
 
+import Button from '../button'
 import _Container from '../repository/container'
 import { Line as _Line } from '../repository/empty'
-import Button from '../button'
-import { SpacedA } from '../typography'
 import Arrow from '../svgs/arrow'
+import { SpacedA } from '../typography'
 
 const Container = styled(_Container)`
   margin: 1em 0;
@@ -86,7 +86,7 @@ const green = css`
 
 const Stat = styled(SpacedA)<{ new: boolean }>`
   font-weight: bold;
-  color: var(--${props => (props.new ? 'green' : 'red')});
+  color: var(-- ${props => (props.new ? 'green' : 'red')});
 `
 
 const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {

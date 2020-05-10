@@ -1,4 +1,5 @@
 import { reqScript } from '@quercia/quercia'
+
 import { aliases, dependencies } from './maps'
 
 const loaded: Set<string> = new Set()
