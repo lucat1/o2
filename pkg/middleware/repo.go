@@ -53,7 +53,7 @@ func WithRepo(fallback http.HandlerFunc) muxie.Wrapper {
 				return
 			}
 
-			// save the values in the database
+			// save the values in the context
 			ctx := context.WithValue(r.Context(), DbRepo, dbRepo)
 			ctx = context.WithValue(ctx, GitRepo, repo)
 

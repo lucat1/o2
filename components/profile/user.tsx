@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { SSG } from '@quercia/quercia'
 
-import { ProfileProps } from '../../pages/profile'
+import { ProfileProps } from '../../pages/user'
 import _Button from '../button'
 import Image from '../image'
 import Skeleton from '../skeleton'
@@ -45,33 +45,33 @@ const Description = styled(Line)`
   margin-top: 1em;
 `
 
-const Profile = ({ user, account }: ProfileProps) => (
+const Profile = ({ profile }: ProfileProps) => (
   <User>
     <Picture
       alt={
-        user
-          ? `${user.username}'s profile picture`
+        profile
+          ? `${profile.username}'s profile picture`
           : "The user's profile picture"
       }
-      src={user?.picture + '?s=300'}
+      src={profile?.picture + '?s=300'}
     />
     <Info>
       <Line>
-        <H2>{user?.username}</H2>
+        <H2>{profile?.username}</H2>
       </Line>
       <Line>
-        <H4>{user?.firstname}</H4>
-        <SpacedH4>{user?.lastname}</SpacedH4>
+        <H4>{profile?.firstname}</H4>
+        <SpacedH4>{profile?.lastname}</SpacedH4>
       </Line>
       <Description>
         <A known>📍</A>
-        <A>{user?.location || (!SSG && 'Earth')}</A>
+        <A>{profile?.location || (!SSG && 'Earth')}</A>
       </Description>
       <Description>
         {SSG ? (
           <Skeleton width='100%' height='5em' />
         ) : (
-          <code>{user.description || (!SSG && 'Empty description')}</code>
+          <code>{profile.description || (!SSG && 'Empty description')}</code>
         )}
       </Description>
     </Info>

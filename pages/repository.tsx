@@ -38,6 +38,10 @@ export default ({
   readme,
   refs
 }: RepositoryProps) => {
+  if (!refs) {
+    refs = []
+  }
+
   return (
     <>
       <Head>
@@ -59,8 +63,8 @@ export default ({
           <Branch
             repository={repository}
             current={tree?.branch.name}
-            refs={refs || []}
-            disabled={!!refs}
+            refs={refs}
+            disabled={refs.length === 0}
           />
         </Description>
         {!tree && !SSG && <Empty repository={repository} account={account} />}

@@ -55,7 +55,10 @@ func main() {
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", auth.Must(routes.Logout))
 	mux.HandleFunc("/new", auth.Must(routes.New))
-	mux.HandleFunc("/:username", routes.Profile)
+
+	profile := mux.Of("/:username")
+	profile.Use(middleware.WithProfile(routes.NotFound))
+	profile.HandleFunc("/", routes.Profile)
 
 	repo := mux.Of("/:username/:reponame")
 	repo.Use(middleware.WithRepo(routes.NotFound))

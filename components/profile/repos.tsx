@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { navigate, SSG } from '@quercia/quercia'
 
-import { ProfileProps } from '../../pages/profile'
+import { ProfileProps } from '../../pages/user'
 import Button from '../button'
 import Container from '../base'
 import Skeleton from '../skeleton'
@@ -44,24 +44,24 @@ const EmptyRepos = styled(Repos)`
   flex-direction: column;
 `
 
-const Repositories = ({ user, account }: ProfileProps) => {
+const Repositories = ({ profile, account }: ProfileProps) => {
   // rener a placeholder pointing the user to create his/hers first repo
-  if ((user?.repositories || []).length == 0 && !SSG) {
+  if ((profile?.repositories || []).length == 0 && !SSG) {
     return (
       <EmptyRepos>
         <h4>
-          {user?.username == account?.username ? (
+          {profile?.username == account?.username ? (
             "You don't"
           ) : (
             <>
-              <code>{user.username}</code> doesn't
+              <code>{profile.username}</code> doesn't
             </>
           )}{' '}
           have any repositories yet
         </h4>
         <VCS style={{ width: '70%' }} />
 
-        {user?.username == account?.username && (
+        {profile?.username == account?.username && (
           <Button onClick={() => navigate('/new')}>Create</Button>
         )}
       </EmptyRepos>
@@ -69,16 +69,16 @@ const Repositories = ({ user, account }: ProfileProps) => {
   }
 
   if (SSG) {
-    user = {} as any
-    user.repositories = Array.from({ length: 3 })
+    profile = {} as any
+    profile.repositories = Array.from({ length: 3 })
   }
 
   return (
     <Repos>
-      {(user?.repositories || []).map((repository, i) => (
+      {(profile?.repositories || []).map((repository, i) => (
         <Repo key={i}>
           <H2>
-            <Link to={`/${user?.username}/${repository?.name}`}>
+            <Link to={`/${profile?.username}/${repository?.name}`}>
               {repository?.name}
             </Link>
           </H2>

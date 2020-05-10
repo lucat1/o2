@@ -9,7 +9,7 @@ import { Parent } from '../components/split'
 import { User as IUser } from '../types/data'
 
 export interface ProfileProps {
-  user?: IUser
+  profile?: IUser
   account?: IUser
 }
 
@@ -21,18 +21,16 @@ const Container = styled(Parent)`
   }
 `
 
-export default (props: ProfileProps) => (
+export default ({ profile, account }: ProfileProps) => (
   <Container>
     <Head>
-      <title>{props.user?.username || 'profile'} - o2</title>
+      <title>{profile?.username || 'user'} - o2</title>
       <meta
         name='description'
-        content={
-          'the user profile page' + SSG ? `of ${props.user?.username}` : ''
-        }
+        content={'the user profile page' + SSG ? `of ${profile?.username}` : ''}
       />
     </Head>
-    <User {...props} />
-    <Repos {...props} />
+    <User profile={profile} />
+    <Repos profile={profile} account={account} />
   </Container>
 )

@@ -3,56 +3,66 @@ package routes
 import (
 	"net/http"
 
-	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
+	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/quercia"
-	"github.com/rs/zerolog/log"
 )
 
 func profileData(user *models.User) data.Composer {
 	return func(r *http.Request) quercia.Props {
 		return quercia.Props{
-			"user": *user,
+			"profile": *user,
 		}
 	}
 }
 
 // Profile renders the user profile and
 func Profile(w http.ResponseWriter, r *http.Request) {
-	username := muxie.GetParam(w, "username")
+	u := r.Context().Value(middleware.User)
+	o := r.Context().Value(middleware.Organization)
 
-	var user models.User
-	if err := store.GetDB().
-		Preload("Repositories").
-		Preload("Repositories.Permissions").
-		Where(&models.User{Username: username}).
-		First(&user).
-		Error; err != nil {
+	// if we have a user
+	if u != nil {
+		user := u.(models.User)
 
-		log.Debug().
-			Str("username", username).
-			Err(err).
-			Msg("Error while query the DB to render the profile page")
-		NotFound(w, r)
+		// filter public repositories
+		repos := []models.Repository{}
+		account := ""
+		if auth.IsAuthenticated(r) {
+			claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
+			account = claims.Username
+		}
+		for _, repo := range user.Repositories {
+			if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {
+				repos = append(repos, repo)
+			}
+		}
+
+		user.Repositories = repos
+		quercia.Render(w, r, "user", data.Compose(r, data.Base, profileData(&user)))
 		return
 	}
 
-	// filter public repositories
-	repos := []models.Repository{}
-	account := ""
-	if auth.IsAuthenticated(r) {
-		claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-		account = claims.Username
-	}
-	for _, repo := range user.Repositories {
-		if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {
-			repos = append(repos, repo)
-		}
-	}
+	// if we have and organization
+	if o != nil {
+		org := u.(models.User)
 
-	user.Repositories = repos
-	quercia.Render(w, r, "profile", data.Compose(r, data.Base, profileData(&user)))
+		// filter public repositories
+		repos := []models.Repository{}
+		account := ""
+		if auth.IsAuthenticated(r) {
+			claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
+			account = claims.Username
+		}
+		for _, repo := range org.Repositories {
+			if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {
+				repos = append(repos, repo)
+			}
+		}
+
+		org.Repositories = repos
+		quercia.Render(w, r, "organization", data.Compose(r, data.Base, profileData(&org)))
+	}
 }
