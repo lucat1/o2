@@ -13,9 +13,11 @@ RUN go get github.com/markbates/pkger/cmd/pkger && \
   pkger
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w -s' -o /go/bin/o2
+RUN mkdir -p /data/repos
 
 FROM scratch
 
+COPY --from=builder /data /data
 COPY --from=builder /go/bin/o2 /bin/o2
 
 ENTRYPOINT ["/bin/o2", "--debug"]

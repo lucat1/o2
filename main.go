@@ -36,6 +36,9 @@ func init() {
 	store.Init()
 	models.Init()
 
+	// noop to include the default config file
+	pkger.Include("/data/o2.ini")
+
 	// instantiate the http directory for the static files
 	dir = pkger.Dir("/__quercia")
 	quercia.SetDir(dir)
