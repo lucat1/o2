@@ -16,6 +16,6 @@ RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/o2
 
 FROM scratch
 
-COPY --from=builder /go/bin/o2 /app/o2
+COPY --from=builder /go/bin/o2 /bin/o2
 
-ENTRYPOINT ["/app/o2"]
+ENTRYPOINT ["/bin/o2", "--debug"]
