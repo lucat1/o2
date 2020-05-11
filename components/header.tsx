@@ -9,10 +9,9 @@ import Button from './button'
 import D, { Container as DC } from './dropdown'
 import I from './image'
 import { List, Item } from './list'
-import A from './svgs/add'
 import L from './svgs/logo'
 import { Line } from './base'
-import { SpacedH4, SpacedLink, Link } from './typography'
+import { SpacedH4, SpacedLink } from './typography'
 
 const Container = styled('nav')`
   position: sticky;
@@ -45,34 +44,24 @@ const Logo = styled(L)`
 `
 
 const Image = styled(I)`
-  border-radius: 50%;
   width: 1.5em;
   height: 1.5em;
   cursor: pointer;
   outline: none;
   transition: box-shadow 200ms ease-in-out;
 
-  img {
-    border-radius: 50%;
-  }
-
   &:focus {
     box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
   }
 `
 
-const Add = styled(A)`
-  height: 1em;
-  cursor: pointer;
-`
-
 const Dropdown = styled(D)`
   right: 0;
-  top: 1.5em;
+  top: 2.25em;
 `
 
 const DContainer = styled(DC)`
-  padding: 0 0.85em;
+  margin: 0 0.85em;
 `
 
 const Header: React.FunctionComponent<BaseData> = ({ account }) => {
@@ -85,42 +74,36 @@ const Header: React.FunctionComponent<BaseData> = ({ account }) => {
           <Logo onClick={() => navigate('/')} />
           <SpacedH4 known>o2</SpacedH4>
         </div>
-        <div>
-          {account ? (
-            <DContainer>
-              <Image
-                tabIndex={0}
-                onClick={() => setOpen(true)}
-                onKeyUp={e => e.keyCode == 13 && setOpen(!open)}
-                alt='Your profile picture'
-                src={account.picture}
-              />
-              <Dropdown open={open} onClose={() => setOpen(false)}>
-                <List>
-                  <Item>
-                    <Link to={`/${account?.username}`}>Your profile</Link>
-                  </Item>
-                  <Item>
-                    <Link to='/new'>New repository</Link>
-                  </Item>
-                  <Line />
-                  <Item>
-                    <Link to='/logout'>Logout</Link>
-                  </Item>
-                </List>
-              </Dropdown>
-            </DContainer>
-          ) : (
-            <>
-              <SpacedLink known to='/login'>
-                Login
-              </SpacedLink>
-              <Button small onClick={() => navigate('/register')}>
-                Sign up
-              </Button>
-            </>
-          )}
-        </div>
+        {account ? (
+          <DContainer>
+            <Image
+              tabIndex={0}
+              onClick={() => setOpen(true)}
+              onKeyUp={e => e.keyCode == 13 && setOpen(!open)}
+              alt='Your profile picture'
+              src={account.picture}
+            />
+            <Dropdown open={open} onClose={() => setOpen(false)}>
+              <List>
+                <Item onClick={() => navigate(`/${account?.username}`)}>
+                  Your profile
+                </Item>
+                <Item onClick={() => navigate('/new')}>New repository</Item>
+                <Line />
+                <Item onClick={() => navigate('/logout')}>Logout</Item>
+              </List>
+            </Dropdown>
+          </DContainer>
+        ) : (
+          <div>
+            <SpacedLink known to='/login'>
+              Login
+            </SpacedLink>
+            <Button small onClick={() => navigate('/register')}>
+              Sign up
+            </Button>
+          </div>
+        )}
       </Body>
     </Container>
   )

@@ -26,15 +26,9 @@ const Image = styled(I)`
   flex-shrink: 0;
   width: 2em;
   height: 2em;
-  border-radius: 50%;
   cursor: pointer;
   outline: none;
   transition: box-shadow 200ms ease-in-out;
-
-  img {
-    border-radius: 50%;
-    pointer-events: none;
-  }
 
   &:focus {
     box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.4);
