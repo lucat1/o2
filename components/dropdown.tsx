@@ -21,9 +21,7 @@ const Base = styled('div', React.forwardRef)`
   max-height: 15em;
   overflow: auto;
 
-  @media (min-width: 960px) {
-    min-width: 10em;
-  }
+  min-width: 10em;
 `
 
 const Dropdown: React.FunctionComponent<React.DetailedHTMLProps<

@@ -4,17 +4,10 @@ import * as React from 'react'
 import { RepositoryProps } from '../../pages/repository'
 import NoData from '../svgs/no-data'
 import { Code, P, SpacedH2 } from '../typography'
-import Container, { Line } from '../base'
+import Container, { Line, Center } from '../base'
 
 const Spaced = styled('div')`
   padding: 0.5em 1em;
-`
-
-const Center = styled('div')`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `
 
 const Empty: React.FunctionComponent<Partial<RepositoryProps>> = ({

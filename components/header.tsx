@@ -67,6 +67,11 @@ const DContainer = styled(DC)`
 const Header: React.FunctionComponent<BaseData> = ({ account }) => {
   const [open, setOpen] = React.useState(false)
 
+  const go = React.useCallback((url: string) => {
+    setOpen(false)
+    navigate(url)
+  }, [])
+
   return (
     <Container>
       <Body>
@@ -85,12 +90,12 @@ const Header: React.FunctionComponent<BaseData> = ({ account }) => {
             />
             <Dropdown open={open} onClose={() => setOpen(false)}>
               <List>
-                <Item onClick={() => navigate(`/${account?.username}`)}>
+                <Item onClick={() => go(`/${account?.username}`)}>
                   Your profile
                 </Item>
-                <Item onClick={() => navigate('/new')}>New repository</Item>
+                <Item onClick={() => go('/new')}>New repository</Item>
                 <Line />
-                <Item onClick={() => navigate('/logout')}>Logout</Item>
+                <Item onClick={() => go('/logout')}>Logout</Item>
               </List>
             </Dropdown>
           </DContainer>

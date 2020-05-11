@@ -91,17 +91,3 @@ export const Code = styled('code')`
   width: 100%;
   overflow: auto;
 `
-
-if (process.env.NODE_ENV !== 'production') {
-  A.displayName = 'Typography(a)'
-  SpacedA.displayName = 'Spaced(a)'
-
-  P.displayName = 'Typography(p)'
-  SpacedP.displayName = 'Spaced(p)'
-
-  H4.displayName = 'Typography(h4)'
-  SpacedH4.displayName = 'Spaced(h4)'
-
-  Link.displayName = 'Typography(Link)'
-  SpacedLink.displayName = 'Spaced(Link)'
-}
