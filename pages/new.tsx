@@ -39,11 +39,11 @@ const Base = styled(B)`
 
 const Container = styled(DC)`
   display: inline;
-  padding: 0 1em;
+  margin: 0 1em;
 `
 
 const Dropdown = styled(DD)`
-  right: 1.5em;
+  right: 0;
 `
 
 const ButtonContainer = styled('div')`

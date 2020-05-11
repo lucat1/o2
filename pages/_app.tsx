@@ -42,6 +42,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       box-sizing: border-box;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
       font-feature-settings: "calt" 1;
       font-variant-ligatures: contextual;
     }
