@@ -1,38 +1,15 @@
-import { css, styled } from 'goober'
+import { styled } from 'goober'
 import * as React from 'react'
 
-import { SSG, navigate } from '@quercia/quercia'
+import { navigate } from '@quercia/quercia'
 
 import { Ref, Repository } from '../../types/data'
-import Button from '../button'
-import D from '../dropdown'
+import Dropbox from '../dropbox'
+import D, { Container } from '../dropdown'
 import { Item, List } from '../list'
-import A from '../svgs/arrow'
-
-const Arrow = styled(A)`
-  margin-left: 0.5em;
-  transition: transform 200ms ease-in-out;
-`
-
-const Dropbox = styled(Button)`
-  margin: 0 0.25em;
-  color: var(--fg-5);
-
-  height: 2.35em;
-`
 
 const Dropdown = styled(D)`
-  font-size: 0.75em;
-  position: absolute;
   right: 0;
-  margin-top: 0.75em;
-
-  max-height: 15em;
-  overflow: auto;
-
-  @media (min-width: 960px) {
-    min-width: 10em;
-  }
 `
 
 const HideOnSmall = styled('span')`
@@ -67,25 +44,12 @@ const Branch: React.FunctionComponent<{
   const [open, setOpen] = React.useState(false)
 
   return (
-    <div
-      className={css`
-        position: relative;
-      `}
-    >
-      <Dropbox
-        small
-        secondary
-        onClick={() => !open && setOpen(true)}
-        disabled={disabled}
-      >
+    <Container>
+      <Dropbox open={open} onClick={() => setOpen(true)} disabled={disabled}>
         Branch
         <HideOnSmall>
           : <strong>{current}</strong>
         </HideOnSmall>
-        <Arrow
-          style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
-          height='1em'
-        />
       </Dropbox>
       <Dropdown open={open} onClose={() => setOpen(false)}>
         <List>
@@ -104,7 +68,7 @@ const Branch: React.FunctionComponent<{
           ))}
         </List>
       </Dropdown>
-    </div>
+    </Container>
   )
 }
 

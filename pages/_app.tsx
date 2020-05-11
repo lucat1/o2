@@ -77,7 +77,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       </Head>
 
       <Progress />
-      <Header />
+      <Header {...pageProps} />
       <Body>
         <Component {...pageProps} />
       </Body>
