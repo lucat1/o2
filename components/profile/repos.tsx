@@ -3,7 +3,6 @@ import * as React from 'react'
 
 import { navigate, SSG } from '@quercia/quercia'
 
-import { ProfileProps } from '../../pages/user'
 import Button from '../button'
 import Container from '../base'
 import Skeleton from '../skeleton'
@@ -51,7 +50,11 @@ interface RepositoriesProps {
   repositories: Repository[]
 }
 
-const Repositories = ({ username, repositories, account }: RepositoriesProps) => {
+const Repositories = ({
+  username,
+  repositories,
+  account
+}: RepositoriesProps) => {
   // rener a placeholder pointing the user to create his/hers first repo
   if ((repositories || []).length == 0 && !SSG) {
     return (

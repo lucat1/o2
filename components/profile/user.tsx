@@ -1,15 +1,14 @@
 import { styled } from 'goober'
 import * as React from 'react'
 
-import { SSG } from '@quercia/quercia'
+import { SSG, navigate } from '@quercia/quercia'
 
 import { ProfileProps } from '../../pages/user'
-import _Button from '../button'
 import Image from '../image'
 import Skeleton from '../skeleton'
 import { Left } from '../split'
-import _Add from '../svgs/add'
 import { A, H2, H4, SpacedH4 } from '../typography'
+import C from '../base'
 
 const User = styled(Left)`
   display: flex;
@@ -38,6 +37,29 @@ const Line = styled('div')`
 
 const Description = styled(Line)`
   margin-top: 1em;
+`
+
+const Org = styled(C)`
+  font-size: 0.75em;
+  padding: 0.75em 0.5em;
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 200ms ease-in-out;
+
+  &:focus {
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
+  }
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
+const OrgImg = styled(Image)`
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5em;
 `
 
 const Profile = ({ profile }: ProfileProps) => (
@@ -69,6 +91,17 @@ const Profile = ({ profile }: ProfileProps) => (
           <code>{profile.description || (!SSG && 'Empty description')}</code>
         )}
       </Description>
+
+      {(profile?.organizations || []).map(({ name, picture }) => (
+        <Org
+          tabIndex={0}
+          onClick={() => navigate(`/${name}`)}
+          onKeyUp={e => e.keyCode === 13 && navigate(`/${name}`)}
+        >
+          <OrgImg src={`${picture}?s=50`} alt={`${name}'s profile picture`} />
+          <span>{name}</span>
+        </Org>
+      ))}
     </Info>
   </User>
 )

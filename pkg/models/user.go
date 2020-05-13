@@ -22,7 +22,7 @@ type User struct {
 	Location    string `gorm:"type:varchar(100)" json:"location"`
 	Picture     string `json:"picture"`
 
-	Organizations []Organization `gorm:"many2many:user_orgs;"`
+	Organizations []Organization `gorm:"many2many:user_orgs;" json:"organizations"`
 	Repositories  []Repository   `gorm:"foreignkey:OwnerName;association_foreignkey:Username" json:"repositories"`
 }
 

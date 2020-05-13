@@ -8,6 +8,6 @@ type Organization struct {
 	Description string `gorm:"type:varchar(250)" json:"description"`
 	Location    string `gorm:"type:varchar(100)" json:"location"`
 
-	Users        []User       `gorm:"many2many:user_orgs;"`
+	Users        []User       `gorm:"many2many:user_orgs;" json:"users"`
 	Repositories []Repository `gorm:"foreignkey:OwnerName;association_foreignkey:Name" json:"repositories"`
 }
