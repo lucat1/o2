@@ -1,12 +1,12 @@
 import { styled } from 'goober'
 import * as React from 'react'
 
-import { SSG } from '@quercia/quercia'
+import { SSG, Link } from '@quercia/quercia'
 
 import Image from '../image'
 import Skeleton from '../skeleton'
 import { Left } from '../split'
-import { A, H2, H4, SpacedH4 } from '../typography'
+import { A, H2 } from '../typography'
 
 import { Organization } from '../../types/data'
 
@@ -17,6 +17,7 @@ const User = styled(Left)`
 `
 
 const Info = styled('div')`
+  max-width: 12em;
   padding-left: 0;
 
   @media (max-width: 960px) {
@@ -37,6 +38,17 @@ const Line = styled('div')`
 
 const Description = styled(Line)`
   margin-top: 1em;
+`
+
+const Users = styled('div')`
+  padding: 1em;
+  display: flex;
+  justify-content: space-evenly;
+`
+
+const UserImg = styled(Image)`
+  width: 2em;
+  height: 2em;
 `
 
 const Profile = ({ profile }: { profile: Organization }) => (
@@ -64,6 +76,17 @@ const Profile = ({ profile }: { profile: Organization }) => (
           <code>{profile.description || (!SSG && 'Empty description')}</code>
         )}
       </Description>
+
+      <Users>
+        {(profile?.users || []).map(({ username, picture }) => (
+          <Link to={`/${username}`}>
+            <UserImg
+              alt={`${username}'s profile picture`}
+              src={`${picture}?s=50`}
+            />
+          </Link>
+        ))}
+      </Users>
     </Info>
   </User>
 )

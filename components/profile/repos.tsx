@@ -60,7 +60,7 @@ const Repositories = ({
     return (
       <EmptyRepos>
         <h4>
-          {username == account.username ? (
+          {username == account?.username ? (
             "You don't"
           ) : (
             <>
