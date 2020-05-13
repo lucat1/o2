@@ -15,9 +15,9 @@ const ButtonContent = styled(Content)`
 `
 
 const Btn: React.FunctionComponent<React.ClassAttributes<HTMLButtonElement> &
-  React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ disabled }) => (
+  React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ disabled, ...props }) => (
   <ButtonContent>
-    <Button disabled={disabled} type='submit'>
+    <Button disabled={disabled} type='submit' {...props}>
       Create
     </Button>
   </ButtonContent>

@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { styled, css } from 'goober'
+import { useForm } from 'react-hook-form'
+import { navigate } from '@quercia/quercia'
 
 import Button from './button'
 import Input from '../input'
@@ -31,11 +33,25 @@ const Image = styled(I)`
   margin-right: 0.5em;
 `
 
+const Form = styled('form', React.forwardRef)`
+  width: auto;
+  margin: 0;
+
+  div:first-child {
+    width: auto;
+  }
+`
+
 type Type = 'user' | 'org'
 interface Option {
   type: Type
   value: string
   picture: string
+}
+
+interface Data {
+  name: string
+  description: string
 }
 
 const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
@@ -58,6 +74,25 @@ const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
     setSelected(i)
   }, [])
 
+  const { handleSubmit, register, errors } = useForm<Data>()
+
+  const ref = React.useRef<HTMLFormElement>()
+  const onSubmit = React.useCallback(
+    (data: Data) => {
+      // instantiate the POST form data
+      const body = new FormData()
+      body.set('kind', 'repository')
+      body.set('owner', options[selected].value)
+      body.set('name', data.name)
+
+      navigate(`/new`, 'POST', {
+        body,
+        credentials: 'same-origin'
+      })
+    },
+    [selected]
+  )
+
   return (
     <>
       <Content>
@@ -74,7 +109,7 @@ const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
           <Dropdown open={open} onClose={() => setOpen(false)}>
             <List>
               {options.map(({ value, picture }, i) => (
-                <Item onClick={() => select(i)}>
+                <Item key={i} onClick={() => select(i)}>
                   <Image src={`${picture}?s=25`} />
                   {value}
                 </Item>
@@ -83,10 +118,31 @@ const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
           </Dropdown>
         </Container>
         /
-        <Input className={margin} />
+        <Form ref={ref} onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            className={margin}
+            name='name'
+            label='Name'
+            error={errors.name?.message.toString()}
+            ref={register({
+              required: 'Required',
+              pattern: {
+                value: /^[a-z0-9_-]{1,256}$/,
+                message: 'invalid repository name'
+              }
+            })}
+          />
+        </Form>
       </Content>
       <Line />
-      <Button disabled={false}>Create</Button>
+      <Button
+        onClick={() =>
+          ref.current.dispatchEvent(new Event('submit', { cancelable: true }))
+        }
+        disabled={false}
+      >
+        Create
+      </Button>
     </>
   )
 }

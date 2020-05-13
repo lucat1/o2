@@ -1,14 +1,16 @@
 import * as React from 'react'
+import { css } from 'goober'
 
 import { Head } from '@quercia/quercia'
 
-import { Center, Base } from '../components/new/layout'
+import { Base, Center } from '../components/new/layout'
 import Header from '../components/new/head'
 
 import { User, LoggedUser } from '../types/data'
-import { Line } from '../components/base'
+import { Line, Center as ErrorContainer } from '../components/base'
 import Repository from '../components/new/repository'
 import Organization from '../components/new/organization'
+import { H2 } from '../components/typography'
 
 interface AddProps {
   error?: string
@@ -19,7 +21,7 @@ interface AddProps {
 const types = ['Repository', 'Organization']
 const Elements = [Repository, Organization]
 
-export default ({ user }: AddProps) => {
+export default ({ user, error }: AddProps) => {
   const [selected, setSelected] = React.useState(0)
   const Element = Elements[selected]
 
@@ -36,6 +38,17 @@ export default ({ user }: AddProps) => {
         <Base>
           <Header types={types} selected={selected} setSelected={setSelected} />
           <Line />
+          <ErrorContainer>
+            {error && (
+              <H2
+                className={css`
+                  color: var(--error);
+                `}
+              >
+                {error}
+              </H2>
+            )}
+          </ErrorContainer>
           <Element user={user} />
         </Base>
       </Center>
