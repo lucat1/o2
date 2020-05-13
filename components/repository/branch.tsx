@@ -4,12 +4,12 @@ import * as React from 'react'
 import { navigate } from '@quercia/quercia'
 
 import { Ref, Repository } from '../../types/data'
-import Dropbox from '../dropbox'
-import D, { Container } from '../dropdown'
+import DB from '../dropbox'
+import Dropdown, { Container } from '../dropdown'
 import { Item, List } from '../list'
 
-const Dropdown = styled(D)`
-  right: 0;
+const Dropbox = styled(DB)`
+  margin: 0 0.25em;
 `
 
 const HideOnSmall = styled('span')`

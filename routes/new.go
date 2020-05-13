@@ -11,6 +11,14 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+func newData(user models.User) data.Composer {
+	return func(r *http.Request) quercia.Props {
+		return quercia.Props{
+			"user": user,
+		}
+	}
+}
+
 func newErr(w http.ResponseWriter, r *http.Request, msg string) {
 	quercia.Render(w, r, "new", data.Compose(
 		r,
@@ -25,11 +33,6 @@ func newErr(w http.ResponseWriter, r *http.Request, msg string) {
 
 // New prompts the user to create a new repository or an organization
 func New(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		quercia.Render(w, r, "new", data.Compose(r, data.Base))
-		return
-	}
-
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
 
 	// get all the mandatory data
@@ -49,6 +52,11 @@ func New(w http.ResponseWriter, r *http.Request) {
 			Msg("Could not find logged in user user")
 
 		newErr(w, r, "Cannot find the user you are logged into. Please logout and log back in")
+		return
+	}
+
+	if r.Method != "POST" {
+		quercia.Render(w, r, "new", data.Compose(r, data.Base, newData(user)))
 		return
 	}
 

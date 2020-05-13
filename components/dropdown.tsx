@@ -9,12 +9,14 @@ export const Container = styled('div')`
 const Base = styled('div', React.forwardRef)`
   border: 1px solid var(--bg-3);
   border-radius: 0.5em;
+  z-index: 100;
 
   background: var(--bg-5);
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.04);
 
   font-size: 0.75em;
   position: absolute;
+  right: 0;
   margin-top: 0.75em;
   padding: 0.25em 0;
 

@@ -56,7 +56,6 @@ const Image = styled(I)`
 `
 
 const Dropdown = styled(D)`
-  right: 0;
   top: 2.25em;
 `
 

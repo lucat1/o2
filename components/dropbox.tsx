@@ -10,7 +10,7 @@ export const Arrow = styled(A)`
 `
 
 const Container = styled(Button)`
-  margin: 0 0.25em;
+  margin: 0;
   color: var(--fg-5);
 
   height: 2.35em;
@@ -19,15 +19,17 @@ const Container = styled(Button)`
 type DropboxProps = React.ClassAttributes<HTMLButtonElement> &
   React.ButtonHTMLAttributes<HTMLButtonElement> & {
     open: boolean
+    big?: boolean
   }
 
 const Dropbox: React.FunctionComponent<DropboxProps> = ({
   children,
   open,
   onClick,
+  big,
   ...props
 }) => (
-  <Container small secondary onClick={onClick} {...props}>
+  <Container small={!big} secondary onClick={onClick} {...props}>
     {children}
     <Arrow style={{ transform: `rotate(${open ? 180 : 0}deg)` }} height='1em' />
   </Container>

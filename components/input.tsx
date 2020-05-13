@@ -7,10 +7,6 @@ const Container = styled('div')`
   flex-direction: column;
   font-size: 1em;
   margin: 1em 0;
-
-  @media (max-width: 960px) {
-    width: 90%;
-  }
 `
 
 const ErrorLabel = styled('label')`
@@ -60,15 +56,17 @@ const Input: React.FunctionComponent<React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > &
-  InputProps> = React.forwardRef(({ label, error, inline, ...props }, ref) => {
-  return (
-    <Container>
-      <InputBase placeholder={label || inline} {...props} ref={ref} />
+  InputProps> = React.forwardRef(
+  ({ label, error, inline, className, ...props }, ref) => {
+    return (
+      <Container className={className}>
+        <InputBase placeholder={label || inline} {...props} ref={ref} />
 
-      {error && <ErrorLabel htmlFor={props.id}>{error}</ErrorLabel>}
-    </Container>
-  )
-})
+        {error && <ErrorLabel htmlFor={props.id}>{error}</ErrorLabel>}
+      </Container>
+    )
+  }
+)
 
 if (process.env.NODE_ENV !== 'production') {
   Input.displayName = 'Input'
