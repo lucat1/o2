@@ -10,10 +10,10 @@ import (
 	"github.com/lucat1/quercia"
 )
 
-func profileData(user *models.User) data.Composer {
+func profileData(user interface{}) data.Composer {
 	return func(r *http.Request) quercia.Props {
 		return quercia.Props{
-			"profile": *user,
+			"profile": user,
 		}
 	}
 }
@@ -24,7 +24,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 	o := r.Context().Value(middleware.Organization)
 
 	// if we have a user
-	if u != nil {
+	if u != nil && u.(models.User).Username != "" {
 		user := u.(models.User)
 
 		// filter public repositories
@@ -41,13 +41,13 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		}
 
 		user.Repositories = repos
-		quercia.Render(w, r, "user", data.Compose(r, data.Base, profileData(&user)))
+		quercia.Render(w, r, "user", data.Compose(r, data.Base, profileData(user)))
 		return
 	}
 
 	// if we have and organization
-	if o != nil {
-		org := u.(models.User)
+	if o != nil && o.(models.Organization).Name != "" {
+		org := o.(models.Organization)
 
 		// filter public repositories
 		repos := []models.Repository{}
@@ -63,6 +63,6 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		}
 
 		org.Repositories = repos
-		quercia.Render(w, r, "organization", data.Compose(r, data.Base, profileData(&org)))
+		quercia.Render(w, r, "organization", data.Compose(r, data.Base, profileData(org)))
 	}
 }

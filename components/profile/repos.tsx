@@ -10,6 +10,7 @@ import Skeleton from '../skeleton'
 import { Right } from '../split'
 import VCS from '../svgs/git'
 import { H2, Link } from '../typography'
+import { LoggedUser, Repository } from '../../types/data'
 
 const Repos = styled(Right)`
   padding: 0 2.25em;
@@ -44,24 +45,30 @@ const EmptyRepos = styled(Repos)`
   flex-direction: column;
 `
 
-const Repositories = ({ profile, account }: ProfileProps) => {
+interface RepositoriesProps {
+  account: LoggedUser
+  username: string
+  repositories: Repository[]
+}
+
+const Repositories = ({ username, repositories, account }: RepositoriesProps) => {
   // rener a placeholder pointing the user to create his/hers first repo
-  if ((profile?.repositories || []).length == 0 && !SSG) {
+  if ((repositories || []).length == 0 && !SSG) {
     return (
       <EmptyRepos>
         <h4>
-          {profile?.username == account?.username ? (
+          {username == account.username ? (
             "You don't"
           ) : (
             <>
-              <code>{profile.username}</code> doesn't
+              <code>{username}</code> doesn't
             </>
           )}{' '}
           have any repositories yet
         </h4>
         <VCS style={{ width: '70%' }} />
 
-        {profile?.username == account?.username && (
+        {username == account?.username && (
           <Button onClick={() => navigate('/new')}>Create</Button>
         )}
       </EmptyRepos>
@@ -69,16 +76,15 @@ const Repositories = ({ profile, account }: ProfileProps) => {
   }
 
   if (SSG) {
-    profile = {} as any
-    profile.repositories = Array.from({ length: 3 })
+    repositories = Array.from({ length: 3 })
   }
 
   return (
     <Repos>
-      {(profile?.repositories || []).map((repository, i) => (
+      {(repositories || []).map((repository, i) => (
         <Repo key={i}>
           <H2>
-            <Link to={`/${profile?.username}/${repository?.name}`}>
+            <Link to={`/${username}/${repository?.name}`}>
               {repository?.name}
             </Link>
           </H2>

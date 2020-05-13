@@ -2,7 +2,7 @@ import { glob, setup } from 'goober'
 import * as React from 'react'
 import usePrefersTheme from 'use-prefers-theme'
 
-import { Head } from '@quercia/quercia'
+import { Head, SSG } from '@quercia/quercia'
 import { AppProps } from '@quercia/runtime'
 
 import Body from '../components/body'
@@ -12,6 +12,12 @@ import Progress from '../components/progress'
 setup(React.createElement)
 
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
+  if(process.env.NODE_ENV !== "production" && !SSG) {
+    console.group('Page infos:')
+    console.info('props:', pageProps)
+    console.groupEnd()
+  }
+
   glob`
     :root {
       --ff: 'Operator Mono', monospace;

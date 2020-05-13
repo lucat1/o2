@@ -8,6 +8,16 @@ export interface User extends LoggedUser {
   repositories: Repository[]
 }
 
+export interface Organization {
+  name: string
+  description: string
+  location: string
+  picture: string
+
+  repositories: Repository[]
+  users: User[]
+}
+
 export interface Repository {
   owner: string
   name: string

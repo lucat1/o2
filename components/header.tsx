@@ -93,7 +93,7 @@ const Header: React.FunctionComponent<BaseData> = ({ account }) => {
                 <Item onClick={() => go(`/${account?.username}`)}>
                   Your profile
                 </Item>
-                <Item onClick={() => go('/new')}>New repository</Item>
+                <Item onClick={() => go('/new')}>New</Item>
                 <Line />
                 <Item onClick={() => go('/logout')}>Logout</Item>
               </List>

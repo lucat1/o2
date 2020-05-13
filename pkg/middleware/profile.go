@@ -34,6 +34,7 @@ func WithProfile(fallback http.HandlerFunc) muxie.Wrapper {
 			if err := store.GetDB().
 				Preload("Repositories").
 				Preload("Repositories.Permissions").
+				Preload("Organizations").
 				Where(&models.User{Username: username}).
 				First(&user).
 				Error; err != nil {
@@ -42,6 +43,7 @@ func WithProfile(fallback http.HandlerFunc) muxie.Wrapper {
 				if err := store.GetDB().
 					Preload("Repositories").
 					Preload("Repositories.Permissions").
+					Preload("Users").
 					Where(&models.Organization{Name: username}).
 					First(&org).
 					Error; err != nil {

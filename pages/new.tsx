@@ -75,6 +75,7 @@ export default ({ error, account }: AddProps) => {
 
     // instantiate the POST form data
     const body = new FormData()
+    body.set('kind', types[selected].toLowerCase())
     body.set('name', data.name)
 
     navigate('/new', 'POST', { body, credentials: 'same-origin' })

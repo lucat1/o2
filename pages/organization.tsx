@@ -4,9 +4,15 @@ import * as React from 'react'
 import { Head, SSG } from '@quercia/quercia'
 
 import Repos from '../components/profile/repos'
-import User from '../components/profile/user'
+import Org from '../components/profile/org'
 import { Parent } from '../components/split'
-import { ProfileProps } from './user'
+
+import { Organization, LoggedUser } from '../types/data'
+
+interface OrganizationProps {
+  account: LoggedUser
+  profile: Organization
+}
 
 const Container = styled(Parent)`
   padding: 2em 5em;
@@ -16,18 +22,20 @@ const Container = styled(Parent)`
   }
 `
 
-export default ({ profile, account }: ProfileProps) => (
+export default ({ profile, account }: OrganizationProps) => (
   <Container>
     <Head>
-      <title>{profile?.username || 'organization'} - o2</title>
+      <title>{profile?.name || 'organization'} - o2</title>
       <meta
         name='description'
-        content={
-          'the profile of ' + SSG ? profile?.username : 'an organization'
-        }
+        content={'the profile of ' + SSG ? 'an organization' : profile.name}
       />
     </Head>
-    <User profile={profile} />
-    <Repos profile={profile} account={account} />
+    <Org profile={profile} />
+    <Repos
+      repositories={profile?.repositories}
+      username={profile?.name}
+      account={account}
+    />
   </Container>
 )
