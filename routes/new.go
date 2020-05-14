@@ -33,16 +33,7 @@ func newErr(w http.ResponseWriter, r *http.Request, msg string) {
 
 // New prompts the user to create a new repository or an organization
 func New(w http.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
-
-	// get all the mandatory data
-	kind := r.FormValue("kind")
-	username := r.FormValue("owner")
-	if username == "" {
-		claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-		username = claims.Username
-	}
-
+	username := r.Context().Value(auth.ClaimsKey).(*auth.Claims).Username
 	// find the logged in user
 	var user models.User
 	if err := store.GetDB().
@@ -63,9 +54,19 @@ func New(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
+
+	// get all the mandatory data
+	kind := r.FormValue("kind")
+	owner := r.FormValue("owner")
+	if username == "" {
+		claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
+		owner = claims.Username
+	}
+
 	switch kind {
 	case "repository":
-		newRepo(w, r, user)
+		newRepo(w, r, owner)
 		break
 
 	case "organization":

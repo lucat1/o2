@@ -51,7 +51,7 @@ func WithProfile(fallback http.HandlerFunc) muxie.Wrapper {
 					log.Debug().
 						Str("username", username).
 						Err(err).
-						Msg("Error while query the DB to find a user/organization")
+						Msg("Error while querying the DB to find a user/organization")
 					fallback(w, r)
 					return
 				}

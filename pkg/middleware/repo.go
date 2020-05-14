@@ -37,7 +37,7 @@ func WithRepo(fallback http.HandlerFunc) muxie.Wrapper {
 					Str("username", username).
 					Str("reponame", reponame).
 					Err(err).
-					Msg("Error while query the DB to render the repository page")
+					Msg("Error while querying the DB to render the repository page")
 				fallback(w, r)
 				return
 			}

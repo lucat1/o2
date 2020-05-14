@@ -11,16 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func newRepo(w http.ResponseWriter, r *http.Request, i interface{}) {
-	var username string
-	if user, ok := i.(models.User); ok {
-		username = user.Username
-	}
-
-	if org, ok := i.(models.Organization); ok {
-		username = org.Name
-	}
-
+func newRepo(w http.ResponseWriter, r *http.Request, username string) {
 	reponame := r.Form.Get("name")
 
 	if store.GetDB().
