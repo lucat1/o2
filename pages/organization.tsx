@@ -25,7 +25,7 @@ const Container = styled(Parent)`
 export default ({ profile, account }: OrganizationProps) => (
   <Container>
     <Head>
-      <title>{profile?.name || 'organization'} - o2</title>
+      <title>{profile?.username || 'organization'} - o2</title>
       <meta
         name='description'
         content={'the profile of ' + SSG ? 'an organization' : profile.name}
@@ -34,7 +34,7 @@ export default ({ profile, account }: OrganizationProps) => (
     <Org profile={profile} />
     <Repos
       repositories={profile?.repositories}
-      username={profile?.name}
+      username={profile?.username}
       account={account}
     />
   </Container>

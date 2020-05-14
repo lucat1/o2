@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/lucat1/o2/pkg/auth"
@@ -20,49 +21,30 @@ func profileData(user interface{}) data.Composer {
 
 // Profile renders the user profile and
 func Profile(w http.ResponseWriter, r *http.Request) {
-	u := r.Context().Value(middleware.User)
-	o := r.Context().Value(middleware.Organization)
+	user := r.Context().Value(middleware.User).(models.User)
 
-	// if we have a user
-	if u != nil && u.(models.User).Username != "" {
-		user := u.(models.User)
-
-		// filter public repositories
-		repos := []models.Repository{}
-		account := ""
-		if auth.IsAuthenticated(r) {
-			claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-			account = claims.Username
+	// filter public repositories
+	repos := []models.Repository{}
+	account := ""
+	if auth.IsAuthenticated(r) {
+		claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
+		account = claims.Username
+	}
+	for _, repo := range user.Repositories {
+		if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {
+			repos = append(repos, repo)
 		}
-		for _, repo := range user.Repositories {
-			if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {
-				repos = append(repos, repo)
-			}
-		}
+	}
+	user.Repositories = repos
 
-		user.Repositories = repos
-		quercia.Render(w, r, "user", data.Compose(r, data.Base, profileData(user)))
-		return
+	fmt.Println(user.Organizations)
+
+	page := "user"
+	if user.Type == models.TOrganization {
+		page = "organization"
 	}
 
-	// if we have and organization
-	if o != nil && o.(models.Organization).Name != "" {
-		org := o.(models.Organization)
+	quercia.Render(w, r, page, data.Compose(r, data.Base, profileData(user)))
+	return
 
-		// filter public repositories
-		repos := []models.Repository{}
-		account := ""
-		if auth.IsAuthenticated(r) {
-			claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-			account = claims.Username
-		}
-		for _, repo := range org.Repositories {
-			if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {
-				repos = append(repos, repo)
-			}
-		}
-
-		org.Repositories = repos
-		quercia.Render(w, r, "organization", data.Compose(r, data.Base, profileData(org)))
-	}
 }

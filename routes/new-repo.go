@@ -11,20 +11,11 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func newRepo(w http.ResponseWriter, r *http.Request, i interface{}) {
-	var username string
-	if user, ok := i.(models.User); ok {
-		username = user.Username
-	}
-
-	if org, ok := i.(models.Organization); ok {
-		username = org.Name
-	}
-
+func newRepo(w http.ResponseWriter, r *http.Request, user models.User) {
 	reponame := r.Form.Get("name")
 
 	if store.GetDB().
-		Where(models.Repository{OwnerName: username, Name: reponame}).
+		Where(models.Repository{OwnerName: user.Username, Name: reponame}).
 		First(&models.Repository{}).
 		Error == nil {
 		newErr(w, r, "You already own a repository with this name")
@@ -32,20 +23,20 @@ func newRepo(w http.ResponseWriter, r *http.Request, i interface{}) {
 	}
 
 	repo := models.Repository{
-		OwnerName: username,
+		OwnerName: user.Username,
 		Name:      reponame,
 		Permissions: []models.Permission{{
 			For:   "*",
 			Scope: "repo:pull",
 		}, {
-			For:   username,
+			For:   user.Username,
 			Scope: "repo:push",
 		}},
 	}
 
 	if err := store.GetDB().Save(&repo).Error; err != nil {
 		log.Error().
-			Str("owner", username).
+			Str("owner", user.Username).
 			Str("reponame", reponame).
 			Err(err).
 			Msg("Could not save new repository in the database")
@@ -54,9 +45,9 @@ func newRepo(w http.ResponseWriter, r *http.Request, i interface{}) {
 		return
 	}
 
-	if _, err := git.Init(username, reponame); err != nil {
+	if _, err := git.Init(user.Username, reponame); err != nil {
 		log.Error().
-			Str("owner", username).
+			Str("owner", user.Username).
 			Str("reponame", reponame).
 			Err(err).
 			Msg("Could not initialize a bare git repository")
@@ -67,7 +58,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, i interface{}) {
 
 	quercia.Redirect(
 		w, r,
-		"/"+username+"/"+reponame, "repository",
+		"/"+user.Username+"/"+reponame, "repository",
 		data.Compose(r, data.Base, repositoryData(repo), treeData(nil)),
 	)
 }
