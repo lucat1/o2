@@ -43,7 +43,7 @@ export type Page =
   | 'Issues'
   | 'Pulls'
   | 'Settings'
-const tabs: [Page, string][] = [
+const _tabs: [Page, string][] = [
   ['Overview', ''],
   ['Tree', '/tree/master'],
   ['Commits', '/commits/master'],
@@ -54,31 +54,34 @@ const tabs: [Page, string][] = [
 
 const Layout: React.FunctionComponent<{ page: Page } & Partial<
   RepositoryProps
->> = ({ page, children, repository }) => (
-  <Container>
-    <Head>
-      <H2>
-        <Link to={`/${repository?.owner || ''}`}>{repository?.owner}</Link>/
-        <A>{repository?.name}</A>
-      </H2>
-      <Tabs>
-        {tabs.map(([tab, url]) =>
-          SSG ? (
-            <Skeleton key={tab} width={`${tab.length / 2}em`} height='1em' />
-          ) : (
-            <Tab
-              key={tab}
-              to={`/${repository.owner}/${repository.name}${url}`}
-              selected={page == tab}
-            >
-              {tab}
-            </Tab>
-          )
-        )}
-      </Tabs>
-    </Head>
-    {children}
-  </Container>
-)
+>> = ({ page, children, repository, owns }) => {
+  let tabs = owns ? _tabs : _tabs.splice(0, _tabs.length - 1)
 
+  return (
+    <Container>
+      <Head>
+        <H2>
+          <Link to={`/${repository?.owner || ''}`}>{repository?.owner}</Link>/
+          <A>{repository?.name}</A>
+        </H2>
+        <Tabs>
+          {tabs.map(([tab, url]) =>
+            SSG ? (
+              <Skeleton key={tab} width={`${tab.length / 2}em`} height='1em' />
+            ) : (
+              <Tab
+                key={tab}
+                to={`/${repository.owner}/${repository.name}${url}`}
+                selected={page == tab}
+              >
+                {tab}
+              </Tab>
+            )
+          )}
+        </Tabs>
+      </Head>
+      {children}
+    </Container>
+  )
+}
 export default Layout

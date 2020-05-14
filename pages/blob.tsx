@@ -15,6 +15,7 @@ import { Blob, Repository } from '../types/data'
 
 export interface RepositoryProps {
   repository: Repository
+  owns: boolean
 
   blob: Blob
   data: string
@@ -44,7 +45,7 @@ const Title = styled('nav')`
   padding: 0.35em 0.5em;
 `
 
-export default ({ repository, blob, data, ext }: RepositoryProps) => {
+export default ({ repository, owns, blob, data, ext }: RepositoryProps) => {
   const [loaded, setLoaded] = React.useState(false)
 
   React.useEffect(() => {
@@ -69,7 +70,7 @@ export default ({ repository, blob, data, ext }: RepositoryProps) => {
           content='the blob of a file inside a git repository on the o2 service'
         />
       </Head>
-      <Layout repository={repository} page='Tree'>
+      <Layout owns={owns} repository={repository} page='Tree'>
         <Path repository={repository} entry={blob} />
         {blob && data && !SSG && (
           <Container>

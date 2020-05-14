@@ -10,6 +10,7 @@ import { Commit as ICommit, Repository } from '../types/data'
 
 export interface CommitsProps {
   repository: Repository
+  owns: boolean
 
   branch: string
   index: number
@@ -29,6 +30,7 @@ const ButtonContainer = styled('div')`
 
 export default ({
   repository,
+  owns,
   commits,
   prev,
   next,
@@ -56,7 +58,7 @@ export default ({
           content='the commits of a git repository on the o2 service'
         />
       </Head>
-      <Layout repository={repository} page='Commits'>
+      <Layout owns={owns} repository={repository} page='Commits'>
         {(commits || []).map(commit => (
           <Commit key={commit?.commit} base={base} commit={commit} />
         ))}

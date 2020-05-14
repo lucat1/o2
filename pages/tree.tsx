@@ -10,10 +10,11 @@ import { Repository, Tree as ITree, User } from '../types/data'
 export interface RepositoryProps {
   account: User
   repository: Repository
+  owns: boolean
   tree: ITree
 }
 
-export default ({ repository, tree, account }: RepositoryProps) => {
+export default ({ repository, tree, owns }: RepositoryProps) => {
   return (
     <>
       <Head>
@@ -28,7 +29,7 @@ export default ({ repository, tree, account }: RepositoryProps) => {
           content='the tree of a git repository on the o2 service'
         />
       </Head>
-      <Layout repository={repository} page='Tree'>
+      <Layout owns={owns} repository={repository} page='Tree'>
         <Path repository={repository} entry={tree} />
         {(tree || SSG) && <Tree repository={repository} tree={tree} />}
       </Layout>

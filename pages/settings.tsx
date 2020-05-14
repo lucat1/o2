@@ -9,9 +9,10 @@ import { Repository } from '../types/data'
 
 export interface SettingsProps {
   repository: Repository
+  owns: boolean
 }
 
-export default ({ repository }: SettingsProps) => {
+export default ({ repository, owns }: SettingsProps) => {
   return (
     <>
       <Head>
@@ -26,7 +27,7 @@ export default ({ repository }: SettingsProps) => {
           content='the settings of a git repository on the o2 service'
         />
       </Head>
-      <Layout repository={repository} page='Settings'>
+      <Layout owns={owns} repository={repository} page='Settings'>
         <Parent>
           <Left repository={repository} current='General' />
           <Right>right hand side</Right>

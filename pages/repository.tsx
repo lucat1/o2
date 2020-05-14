@@ -15,6 +15,7 @@ import { Ref, Repository, Tree as ITree, User } from '../types/data'
 export interface RepositoryProps {
   account: User
   repository: Repository
+  owns: boolean
   tree: ITree
   refs: Ref[]
   readme: string
@@ -33,6 +34,7 @@ const Description = styled('div')`
 
 export default ({
   repository,
+  owns,
   tree,
   account,
   readme,
@@ -53,7 +55,7 @@ export default ({
         </title>
         <meta name='description' content='a git repository on the o2 service' />
       </Head>
-      <Layout repository={repository} page='Overview'>
+      <Layout owns={owns} repository={repository} page='Overview'>
         <Description>
           {SSG ? (
             <Skeleton width='70%' height='1.5em' />

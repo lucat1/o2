@@ -12,10 +12,11 @@ import { DetailedCommit, Repository } from '../types/data'
 
 export interface CommitProps {
   repository: Repository
+  owns: boolean
   commit: DetailedCommit
 }
 
-export default ({ repository, commit }: CommitProps) => {
+export default ({ repository, commit, owns }: CommitProps) => {
   if (SSG) {
     // TODO: diff prerender
     return null
@@ -39,7 +40,7 @@ export default ({ repository, commit }: CommitProps) => {
           content='a commit inside of a git repository on the o2 service'
         />
       </Head>
-      <Layout repository={repository} page='Commits'>
+      <Layout owns={owns} repository={repository} page='Commits'>
         <Commit
           base={`/${repository?.owner}/${repository?.name}`}
           commit={commit}
