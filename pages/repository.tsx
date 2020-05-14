@@ -69,7 +69,7 @@ export default ({
             disabled={refs.length === 0}
           />
         </Description>
-        {!tree && !SSG && <Empty repository={repository} account={account} />}
+        {!tree && !SSG && <Empty repository={repository} owns={owns} />}
         {(tree || SSG) && <Tree repository={repository} tree={tree} />}
         {readme && (
           <Container dangerouslySetInnerHTML={{ __html: snarkdown(readme) }} />

@@ -12,11 +12,11 @@ const Spaced = styled('div')`
 
 const Empty: React.FunctionComponent<Partial<RepositoryProps>> = ({
   repository,
-  account
+  owns
 }) => {
   const url = `http://${window.location.host}/${repository.owner}/${repository.name}`
 
-  return account?.username === repository?.owner ? (
+  return owns ? (
     <Container>
       <SpacedH2>Quickstart guide</SpacedH2>
       <Line />
