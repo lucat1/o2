@@ -19,6 +19,7 @@ const ErrorLabel = styled('label')`
 const InputBase = styled('input', React.forwardRef)<{ ref: any }>`
   width: 100%;
   font-size: 0.85em;
+  font-family: var(--ff);
   padding: 0.5em 1em;
   border-radius: 0.5em;
   color: var(--fg-5);
