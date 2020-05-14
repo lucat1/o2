@@ -1,9 +1,9 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { styled, css } from 'goober'
 
 import { SSG } from '@quercia/quercia'
 
-import { Base as B } from './skeleton'
+import { Base } from './skeleton'
 
 type ImageProps = React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>,
@@ -21,19 +21,24 @@ const Img = styled('img')`
   pointer-events: none;
 `
 
-const Base = styled(B)`
+const border = css`
   border-radius: 50%;
 `
 
-const Image: React.FunctionComponent<ImageProps> = ({ src, alt, ...props }) => {
+const Image: React.FunctionComponent<ImageProps> = ({
+  src,
+  alt,
+  className,
+  ...props
+}) => {
   if (SSG) {
-    return <Base {...props} />
+    return <Base {...props} className={`${className} ${border}`} />
   }
 
   const [loaded, setLoaded] = React.useState(false)
 
   return (
-    <Base {...props}>
+    <Base {...props} className={`${className} ${border}`}>
       <Img
         style={{ opacity: loaded ? 1 : 0 }}
         onLoad={() => setLoaded(true)}

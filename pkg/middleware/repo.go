@@ -29,6 +29,7 @@ func WithRepo(fallback http.HandlerFunc) muxie.Wrapper {
 
 			var dbRepo models.Repository
 			if err := store.GetDB().
+				Preload("Permissions").
 				Where(&models.Repository{OwnerName: username, Name: reponame}).
 				First(&dbRepo).
 				Error; err != nil {

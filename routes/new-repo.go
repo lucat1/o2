@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 
+	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/models"
@@ -32,6 +33,16 @@ func newRepo(w http.ResponseWriter, r *http.Request, username string) {
 			For:   username,
 			Scope: "repo:push",
 		}},
+	}
+
+	// add permission for the creator when the repository is being
+	// created for an organization (username != logged in user's username)
+	loggedInUsername := r.Context().Value(auth.ClaimsKey).(*auth.Claims).Username
+	if username != loggedInUsername {
+		repo.Permissions = append(repo.Permissions, models.Permission{
+			For:   loggedInUsername,
+			Scope: "repo:push",
+		})
 	}
 
 	if err := store.GetDB().Save(&repo).Error; err != nil {
