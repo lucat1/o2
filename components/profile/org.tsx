@@ -56,14 +56,14 @@ const Profile = ({ profile }: { profile: Organization }) => (
     <Picture
       alt={
         profile
-          ? `${profile.username}'s profile picture`
+          ? `${profile.name}'s profile picture`
           : "The organization's profile picture"
       }
       src={profile?.picture + '?s=300'}
     />
     <Info>
       <Line>
-        <H2>{profile?.username}</H2>
+        <H2>{profile?.name}</H2>
       </Line>
       <Description>
         <A known>📍</A>

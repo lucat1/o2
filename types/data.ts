@@ -9,7 +9,13 @@ export interface User extends LoggedUser {
   organizations: Organization[]
 }
 
-export interface Organization extends User {
+export interface Organization {
+  name: string
+  description: string
+  location: string
+  picture: string
+
+  repositories: Repository[]
   users: User[]
 }
 

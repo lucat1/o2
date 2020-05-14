@@ -22,18 +22,18 @@ func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 	}
 
 	if err := store.GetDB().
-		Where(models.User{Type: models.TOrganization, Username: orgname}).
-		Find(&models.User{}).
+		Where(models.Organization{Name: orgname}).
+		Find(&models.Organization{}).
 		Error; err == nil {
 		newErr(w, r, "This name is already taken by another organization")
 		return
 	}
 
-	org := models.User{
-		Type:     models.TOrganization,
-		Username: orgname,
-		Users:    []models.User{user},
+	org := models.Organization{
+		Name:  orgname,
+		Users: []models.User{user},
 	}
+
 	if err := store.GetDB().Save(&org).Error; err != nil {
 		log.Error().
 			Str("owner", user.Username).
@@ -47,7 +47,7 @@ func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 
 	quercia.Redirect(
 		w, r,
-		"/"+org.Username, "organization",
+		"/"+org.Name, "organization",
 		data.Compose(r, data.Base, profileData(org)),
 	)
 }
