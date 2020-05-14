@@ -55,6 +55,7 @@ const Branch: React.FunctionComponent<{
         <List>
           {refs.map(ref => (
             <Item
+              key={ref.sha}
               onClick={() =>
                 navigate(
                   `/${repository.owner}/${repository.name}/tree/${ref.sha}`

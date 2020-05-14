@@ -78,8 +78,8 @@ const Profile = ({ profile }: { profile: Organization }) => (
       </Description>
 
       <Users>
-        {(profile?.users || []).map(({ username, picture }) => (
-          <Link to={`/${username}`}>
+        {(profile?.users || []).map(({ username, picture }, i) => (
+          <Link key={i} to={`/${username}`}>
             <UserImg
               alt={`${username}'s profile picture`}
               src={`${picture}?s=50`}

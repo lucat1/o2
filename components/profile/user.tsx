@@ -92,8 +92,9 @@ const Profile = ({ profile }: ProfileProps) => (
         )}
       </Description>
 
-      {(profile?.organizations || []).map(({ name, picture }) => (
+      {(profile?.organizations || []).map(({ name, picture }, i) => (
         <Org
+          key={i}
           tabIndex={0}
           onClick={() => navigate(`/${name}`)}
           onKeyUp={e => e.keyCode === 13 && navigate(`/${name}`)}
