@@ -1,5 +1,6 @@
 import { styled } from 'goober'
 import * as React from 'react'
+import { Flex } from 'rebass'
 
 import { navigate } from '@quercia/quercia'
 
@@ -72,49 +73,47 @@ const Header: React.FunctionComponent<BaseData> = ({ account }) => {
   }, [])
 
   return (
-    <Container>
-      <Body>
+    <Flex
+      sx={{
+        mx: 3
+      }}
+    >
+      <div>
+        <Logo onClick={() => navigate('/')} />
+        <SpacedH4 known>o2</SpacedH4>
+      </div>
+      {account ? (
+        <DContainer>
+          <Image
+            tabIndex={0}
+            onClick={() => setOpen(true)}
+            onKeyUp={e => e.keyCode == 13 && setOpen(!open)}
+            alt='Your profile picture'
+            src={account.picture}
+          />
+          <Dropdown open={open} onClose={() => setOpen(false)}>
+            <List>
+              <Item onClick={() => go(`/${account?.username}`)}>
+                Your profile
+              </Item>
+              <Item onClick={() => go('/new')}>New</Item>
+              <Line />
+              <Item onClick={() => go('/logout')}>Logout</Item>
+            </List>
+          </Dropdown>
+        </DContainer>
+      ) : (
         <div>
-          <Logo onClick={() => navigate('/')} />
-          <SpacedH4 known>o2</SpacedH4>
+          <SpacedLink known to='/login'>
+            Login
+          </SpacedLink>
+          <Button small onClick={() => navigate('/register')}>
+            Sign up
+          </Button>
         </div>
-        {account ? (
-          <DContainer>
-            <Image
-              tabIndex={0}
-              onClick={() => setOpen(true)}
-              onKeyUp={e => e.keyCode == 13 && setOpen(!open)}
-              alt='Your profile picture'
-              src={account.picture}
-            />
-            <Dropdown open={open} onClose={() => setOpen(false)}>
-              <List>
-                <Item onClick={() => go(`/${account?.username}`)}>
-                  Your profile
-                </Item>
-                <Item onClick={() => go('/new')}>New</Item>
-                <Line />
-                <Item onClick={() => go('/logout')}>Logout</Item>
-              </List>
-            </Dropdown>
-          </DContainer>
-        ) : (
-          <div>
-            <SpacedLink known to='/login'>
-              Login
-            </SpacedLink>
-            <Button small onClick={() => navigate('/register')}>
-              Sign up
-            </Button>
-          </div>
-        )}
-      </Body>
-    </Container>
+      )}
+    </Flex>
   )
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  Header.displayName = 'Header'
 }
 
 export default Header
