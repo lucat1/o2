@@ -1,4 +1,4 @@
-import { glob, setup } from 'goober'
+import { glob, setup, styled } from 'goober'
 import * as React from 'react'
 import usePrefersTheme from 'use-prefers-theme'
 
@@ -10,15 +10,15 @@ import Header from '../components/header'
 import Progress from '../components/progress'
 
 setup(React.createElement)
-
 const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
-  if(process.env.NODE_ENV !== "production" && !SSG) {
+  if (process.env.NODE_ENV !== 'production' && !SSG) {
     console.group('Page infos:')
     console.info('props:', pageProps)
     console.groupEnd()
   }
 
-  glob`
+  if (SSG) {
+    glob`
     :root {
       --ff: 'Operator Mono', monospace;
       --primary: #8325C1;
@@ -68,7 +68,8 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
       margin: 0;
       font-size: calc(1rem + 0.25vw);
     }
-  `
+    `
+  }
 
   const preference = usePrefersTheme()
 
