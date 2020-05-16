@@ -1,48 +1,17 @@
-import { styled } from 'goober'
 import * as React from 'react'
 import { Flex } from 'rebass'
+import styled from '@emotion/styled'
 
 import { navigate } from '@quercia/quercia'
 
 import { BaseData } from '../types/data'
-import B from './body'
 import Button from './button'
 import D, { Container as DC } from './dropdown'
 import I from './image'
 import { List, Item } from './list'
-import L from './svgs/logo'
 import { Line } from './base'
 import { SpacedH4, SpacedLink } from './typography'
-
-const Container = styled('nav')`
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  height: calc(2.5em - 1px);
-
-  background: var(--bg-6);
-  border-bottom: 1px solid var(--bg-3);
-  z-index: 10;
-`
-
-const Body = styled(B)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  div {
-    display: flex;
-    align-items: center;
-  }
-`
-
-const Logo = styled(L)`
-  height: 0.75em;
-  margin: 0.85em;
-  cursor: pointer;
-`
+import Logo from './svgs/logo'
 
 const Image = styled(I)`
   width: 1.5em;
@@ -74,14 +43,16 @@ const Header: React.FunctionComponent<BaseData> = ({ account }) => {
 
   return (
     <Flex
-      sx={{
-        mx: 3
-      }}
+      px={4}
+      height={5}
+      sx={{ borderBottom: '1px solid', borderColor: 'grey.3' }}
+      alignItems='center'
+      justifyContent='space-between'
     >
-      <div>
-        <Logo onClick={() => navigate('/')} />
+      <Flex alignItems='center'>
+        <Logo width='1rem' onClick={() => navigate('/')} />
         <SpacedH4 known>o2</SpacedH4>
-      </div>
+      </Flex>
       {account ? (
         <DContainer>
           <Image
@@ -103,14 +74,14 @@ const Header: React.FunctionComponent<BaseData> = ({ account }) => {
           </Dropdown>
         </DContainer>
       ) : (
-        <div>
+        <Flex alignItems='center'>
           <SpacedLink known to='/login'>
             Login
           </SpacedLink>
           <Button small onClick={() => navigate('/register')}>
             Sign up
           </Button>
-        </div>
+        </Flex>
       )}
     </Flex>
   )

@@ -12,6 +12,8 @@ import Body from '../components/body'
 import Header from '../components/header'
 import Progress from '../components/progress'
 
+import { base } from '../types/theme'
+
 setup(React.createElement)
 
 const glob = css`
@@ -86,7 +88,7 @@ const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <CacheProvider value={cache}>
-      <ThemeProvider theme={themes[preference]}>
+      <ThemeProvider theme={base}>
         <Global styles={glob} />
         <Head>
           {preference != 'none' && (
