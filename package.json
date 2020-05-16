@@ -16,6 +16,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.3.1",
+    "rebass": "^4.0.7",
     "snarkdown": "^1.2.2",
     "tinydate": "^1.2.0",
     "use-onclickoutside": "^0.3.1",
@@ -27,6 +28,7 @@
     "@types/prismjs": "^1.16.0",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
+    "@types/rebass": "^4.0.6",
     "bundlewatch": "^0.2.6",
     "preact": "^10.4.0",
     "typescript": "^3.8.3"
