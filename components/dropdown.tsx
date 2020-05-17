@@ -21,19 +21,22 @@ const Dropdown: React.FunctionComponent<BoxProps & {
 
   return (
     <Base
-      sx={{
-        marginTop: 2,
-        py: 3,
-        border: '1px solid',
-        borderColor: 'bg.3',
-        bg: 'bg.5',
-        borderRadius: 'md',
-        fontSize: 'sm',
-        display: open ? 'block' : 'none',
-        boxShadow: 'sm'
-      }}
       ref={ref as any}
       {...(props as any)}
+      sx={Object.assign(
+        {
+          marginTop: 2,
+          py: 3,
+          border: '1px solid',
+          borderColor: 'bg.3',
+          bg: 'bg.5',
+          borderRadius: 'md',
+          fontSize: 'sm',
+          display: open ? 'block' : 'none',
+          boxShadow: 'sm'
+        },
+        props.sx || {}
+      )}
     />
   )
 }

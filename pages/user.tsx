@@ -1,30 +1,17 @@
-import { styled } from 'goober'
 import * as React from 'react'
-
 import { Head, SSG } from '@quercia/quercia'
+
+import { Parent } from '../components/split'
 
 import Repos from '../components/profile/repos'
 import User from '../components/profile/user'
-import { Parent } from '../components/split'
-import { User as IUser, LoggedUser } from '../types/data'
 
-export interface ProfileProps {
-  profile?: IUser
-  account?: LoggedUser
-}
+import { User as IUser, Base } from '../types/data'
 
-const Container = styled(Parent)`
-  padding: 2em 5em;
-
-  @media (max-width: 960px) {
-    padding: 2em 0;
-  }
-`
-
-export default ({ profile, account }: ProfileProps) => (
-  <Container>
+export default ({ profile, account }: Base<{ profile: IUser }>) => (
+  <Parent p={['2rem 0', '2rem 5rem']}>
     <Head>
-      <title>{profile?.username || 'user'} - o2</title>
+      <title>{SSG ? 'user' : profile.username} - o2</title>
       <meta
         name='description'
         content={'the user profile page' + SSG ? '' : `of ${profile.username}`}
@@ -36,5 +23,5 @@ export default ({ profile, account }: ProfileProps) => (
       repositories={profile?.repositories}
       account={account}
     />
-  </Container>
+  </Parent>
 )

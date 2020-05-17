@@ -6,9 +6,9 @@ import { navigate } from '@quercia/quercia'
 
 import Body from './body'
 import Relative from './relative'
+import Dropdown from './dropdown'
 
 import { BaseData, LoggedUser } from '../types/data'
-import D from './dropdown'
 import I from './image'
 import { List, Item } from './list'
 import { Line } from './base'
@@ -27,11 +27,6 @@ const Image = styled(I)`
     box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
   }
 `
-
-const Dropdown = styled(D)`
-  top: 2.25em;
-`
-
 const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
   const [open, setOpen] = React.useState(false)
   const go = React.useCallback((url: string) => {
@@ -48,7 +43,11 @@ const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
         alt='Your profile picture'
         src={picture}
       />
-      <Dropdown open={open} onClose={() => setOpen(false)}>
+      <Dropdown
+        sx={{ top: '2.25em' }}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
         <List>
           <Item onClick={() => go(`/${username}`)}>Your profile</Item>
           <Item onClick={() => go('/new')}>New</Item>

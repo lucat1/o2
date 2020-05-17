@@ -80,6 +80,4 @@ export interface LoggedUser {
   picture: string
 }
 
-export interface BaseData {
-  account?: LoggedUser
-}
+export type Base<T> = { account?: LoggedUser } & T
