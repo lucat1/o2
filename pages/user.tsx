@@ -19,7 +19,7 @@ export default ({ profile, account }: Base<{ profile: IUser }>) => (
     </Head>
     <User profile={profile} />
     <Repos
-      username={profile?.username}
+      owner={profile?.username}
       repositories={profile?.repositories}
       account={account}
     />

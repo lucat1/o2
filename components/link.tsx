@@ -1,6 +1,8 @@
 import * as React from 'react'
-import { navigate } from '@quercia/quercia'
+import styled from '@emotion/styled'
 import { Link as RebassLink, LinkProps } from 'rebass'
+
+import { navigate } from '@quercia/quercia'
 
 const route = (to: string) => (
   e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -10,6 +12,14 @@ const route = (to: string) => (
   navigate(to)
 }
 
+const Anchor = styled(RebassLink)`
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
 // custom implementation of quercia's Link component with Rebass/styled-system
 const Link: React.FC<LinkProps & { to?: string }> = ({ to, ...props }) => {
   if (to) {
@@ -17,7 +27,7 @@ const Link: React.FC<LinkProps & { to?: string }> = ({ to, ...props }) => {
     props.href = to
   }
 
-  return <RebassLink color='primary.default' {...(props as any)} />
+  return <Anchor color='primary.default' {...(props as any)} />
 }
 
 export default Link

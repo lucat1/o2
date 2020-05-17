@@ -1,20 +1,21 @@
 import { styled } from 'goober'
 import * as React from 'react'
-
 import { SSG, navigate } from '@quercia/quercia'
 
-import { ProfileProps } from '../../pages/user'
+import { Left } from '../split'
+
 import Image from '../image'
 import Skeleton from '../skeleton'
-import { Left } from '../split'
 import { A, H2, H4, SpacedH4 } from '../typography'
 import C from '../base'
 
-const User = styled(Left)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
+import { User } from '../../types/data'
+
+// const User = styled(Left)`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `
 
 const Info = styled('div')`
   padding-left: 0;
@@ -62,8 +63,8 @@ const OrgImg = styled(Image)`
   margin-right: 0.5em;
 `
 
-const Profile = ({ profile }: ProfileProps) => (
-  <User>
+const Profile = ({ profile }: { profile: User }) => (
+  <Left flexDirection='column' alignItems='center'>
     <Picture
       alt={
         profile
@@ -104,7 +105,7 @@ const Profile = ({ profile }: ProfileProps) => (
         </Org>
       ))}
     </Info>
-  </User>
+  </Left>
 )
 
 export default Profile

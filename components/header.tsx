@@ -65,7 +65,11 @@ const Header: React.FC<BaseData> = ({ account }) => {
       as='nav'
       bg='bg.6'
       height={5}
-      sx={{ borderBottom: '1px solid', borderColor: 'bg.3' }}
+      sx={{
+        borderBottom: '1px solid',
+        borderColor: 'bg.3',
+        position: 'sticky'
+      }}
     >
       <Body height={5} alignItems='center' justifyContent='space-between'>
         <Link color='fg.5' to='/'>

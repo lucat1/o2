@@ -43,7 +43,6 @@ const glob = css`
   }
 
   * {
-    box-sizing: border-box;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
