@@ -1,15 +1,11 @@
 import * as React from 'react'
-import { styled } from 'goober'
+
+import Relative from '../relative'
 
 import { Content } from './layout'
-import Dropdown, { Container as DC } from '../dropdown'
+import Dropdown from '../dropdown'
 import Dropbox from '../dropbox'
 import { Item, List } from '../list'
-
-const Container = styled(DC)`
-  display: inline;
-  margin: 0 1em;
-`
 
 interface HeadProps {
   selected: number
@@ -33,7 +29,7 @@ const Head: React.FunctionComponent<HeadProps> = ({
       <a>
         <strong>Create a new</strong>
       </a>
-      <Container>
+      <Relative display='inline' mx='1rem'>
         <Dropbox open={open} onClick={() => setOpen(true)}>
           {types[selected]}
         </Dropbox>
@@ -44,7 +40,7 @@ const Head: React.FunctionComponent<HeadProps> = ({
             ))}
           </List>
         </Dropdown>
-      </Container>
+      </Relative>
     </Content>
   )
 }

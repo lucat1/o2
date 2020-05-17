@@ -3,11 +3,13 @@ import { styled, css } from 'goober'
 import { useForm } from 'react-hook-form'
 import { navigate } from '@quercia/quercia'
 
+import Relative from '../relative'
+
 import Button from './button'
 import Input from '../input'
 import I from '../image'
 import { Line, Center } from '../base'
-import Dropdown, { Container as DC } from '../dropdown'
+import Dropdown from '../dropdown'
 import Dropbox from '../dropbox'
 import { Item, List } from '../list'
 
@@ -16,11 +18,6 @@ import { User } from '../../types/data'
 const Content = styled(Center)`
   padding: 2em 0;
   flex-direction: row;
-`
-
-const Container = styled(DC)`
-  display: inline;
-  margin: 0 1em;
 `
 
 const margin = css`
@@ -96,7 +93,7 @@ const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
   return (
     <>
       <Content>
-        <Container>
+        <Relative display='inline' mx='1rem'>
           <Dropbox
             big
             className={margin}
@@ -116,7 +113,7 @@ const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
               ))}
             </List>
           </Dropdown>
-        </Container>
+        </Relative>
         /
         <Form ref={ref} onSubmit={handleSubmit(onSubmit)}>
           <Input

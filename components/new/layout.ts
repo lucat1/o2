@@ -3,6 +3,7 @@ import B, { Center as C } from '../base'
 
 export const Center = styled(C)`
   height: calc(100vh - 3.5rem);
+  flex: 1;
 `
 
 export const Base = styled(B)`

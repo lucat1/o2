@@ -3,7 +3,7 @@ import { styled } from 'goober'
 export const List = styled('ul')`
   list-style: none;
   line-height: 1em;
-  padding: 0.5em 0;
+  padding 0;
   margin: 0;
 `
 
