@@ -1,9 +1,9 @@
 import { styled } from 'goober'
 import * as React from 'react'
+import { Button } from 'rebass'
 
 import { Head, navigate, SSG } from '@quercia/quercia'
 
-import Button from '../components/button'
 import Commit from '../components/commit/commit'
 import Layout from '../components/repository/layout'
 import { Commit as ICommit, Repository } from '../types/data'

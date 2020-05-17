@@ -1,7 +1,7 @@
 import * as React from 'react'
+import { Button, ButtonProps } from 'rebass'
 import { styled } from 'goober'
 
-import Button from './button'
 import A from './svgs/arrow'
 
 export const Arrow = styled(A)`
@@ -9,18 +9,12 @@ export const Arrow = styled(A)`
   transition: transform 200ms ease-in-out;
 `
 
-const Container = styled(Button)`
-  margin: 0;
-  color: var(--fg-5);
+//height: 2.35em;
 
-  height: 2.35em;
-`
-
-type DropboxProps = React.ClassAttributes<HTMLButtonElement> &
-  React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    open: boolean
-    big?: boolean
-  }
+type DropboxProps = ButtonProps & {
+  open: boolean
+  big?: boolean
+}
 
 const Dropbox: React.FunctionComponent<DropboxProps> = ({
   children,
@@ -29,10 +23,14 @@ const Dropbox: React.FunctionComponent<DropboxProps> = ({
   big,
   ...props
 }) => (
-  <Container small={!big} secondary onClick={onClick} {...props}>
+  <Button
+    variant={big ? 'secondary' : 'md-secondary'}
+    onClick={onClick}
+    {...props}
+  >
     {children}
     <Arrow style={{ transform: `rotate(${open ? 180 : 0}deg)` }} height='1em' />
-  </Container>
+  </Button>
 )
 
 export default Dropbox

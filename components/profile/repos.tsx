@@ -1,9 +1,9 @@
 import { styled } from 'goober'
 import * as React from 'react'
+import { Button } from 'rebass'
 
 import { navigate, SSG } from '@quercia/quercia'
 
-import Button from '../button'
 import Container from '../base'
 import Skeleton from '../skeleton'
 import { Right } from '../split'

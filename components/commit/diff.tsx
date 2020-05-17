@@ -1,8 +1,8 @@
 import { css, styled } from 'goober'
+import { Button } from 'rebass'
 import { File } from 'parse-diff'
 import * as React from 'react'
 
-import Button from '../button'
 import C, { Line as L } from '../base'
 import Arrow from '../svgs/arrow'
 import { SpacedA } from '../typography'

@@ -1,8 +1,8 @@
 import * as React from 'react'
+import { Button } from 'rebass'
 import { styled } from 'goober'
 
 import { Content } from './layout'
-import Button from '../button'
 
 const ButtonContent = styled(Content)`
   width: 100%;

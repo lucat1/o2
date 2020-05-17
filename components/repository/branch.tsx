@@ -1,18 +1,17 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Button } from 'rebass'
+import styled from '@emotion/styled'
 
 import { navigate } from '@quercia/quercia'
 
 import Relative from '../relative'
+import Arrow from '../svgs/arrow'
 
 import { Ref, Repository } from '../../types/data'
-import DB from '../dropbox'
 import Dropdown from '../dropdown'
 import { Item, List } from '../list'
 
-const Dropbox = styled(DB)`
-  margin: 0 0.25em;
-`
+//margin: 0 0.25em;
 
 const HideOnSmall = styled('span')`
   @media (max-width: 500px) {
@@ -47,12 +46,20 @@ const Branch: React.FunctionComponent<{
 
   return (
     <Relative>
-      <Dropbox open={open} onClick={() => setOpen(true)} disabled={disabled}>
+      <Button
+        variant='secondary'
+        onClick={() => setOpen(true)}
+        disabled={disabled}
+      >
         Branch
         <HideOnSmall>
           : <strong>{current}</strong>
         </HideOnSmall>
-      </Dropbox>
+        <Arrow
+          style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
+          height='1em'
+        />
+      </Button>
       <Dropdown open={open} onClose={() => setOpen(false)}>
         <List>
           {refs.map(ref => (

@@ -1,10 +1,11 @@
 import * as React from 'react'
+import { Button } from 'rebass'
 
 import Relative from '../relative'
+import Arrow from '../svgs/arrow'
 
 import { Content } from './layout'
 import Dropdown from '../dropdown'
-import Dropbox from '../dropbox'
 import { Item, List } from '../list'
 
 interface HeadProps {
@@ -29,10 +30,14 @@ const Head: React.FunctionComponent<HeadProps> = ({
       <a>
         <strong>Create a new</strong>
       </a>
-      <Relative display='inline' mx='1rem'>
-        <Dropbox open={open} onClick={() => setOpen(true)}>
+      <Relative display='inline-block' mx='1rem'>
+        <Button variant='secondary' onClick={() => setOpen(true)}>
           {types[selected]}
-        </Dropbox>
+          <Arrow
+            style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
+            height='1em'
+          />
+        </Button>
         <Dropdown open={open} onClose={() => setOpen(false)}>
           <List>
             {types.map((type, i) => (

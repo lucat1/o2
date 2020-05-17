@@ -1,10 +1,10 @@
 import * as React from 'react'
+import { Button } from 'rebass'
+import { Input } from '@rebass/forms'
 import { styled, css } from 'goober'
 import { useForm } from 'react-hook-form'
 import { navigate } from '@quercia/quercia'
 
-import Button from './button'
-import Input from '../input'
 import { Line, Center } from '../base'
 
 import { User } from '../../types/data'

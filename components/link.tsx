@@ -17,7 +17,7 @@ const Link: React.FC<LinkProps & { to?: string }> = ({ to, ...props }) => {
     props.href = to
   }
 
-  return <RebassLink color='primary' {...(props as any)} />
+  return <RebassLink color='primary.default' {...(props as any)} />
 }
 
 export default Link

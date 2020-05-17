@@ -7,7 +7,7 @@ const Body = styled(Flex)`
   margin: auto;
   width: min(100%, calc(60em + 6vw));
   height: calc(100vh - ${({ height }) => height || themeGet('sizes.5')});
-  padding: 0 ${themeGet('space.3')};
+  padding: 0 ${themeGet('space.4')};
 `
 
 export default Body

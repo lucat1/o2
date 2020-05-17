@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex } from 'rebass'
+import { Flex, Button } from 'rebass'
 import styled from '@emotion/styled'
 
 import { navigate } from '@quercia/quercia'
@@ -8,7 +8,6 @@ import Body from './body'
 import Relative from './relative'
 
 import { BaseData, LoggedUser } from '../types/data'
-import Button from './button'
 import D from './dropdown'
 import I from './image'
 import { List, Item } from './list'
@@ -80,7 +79,7 @@ const Header: React.FC<BaseData> = ({ account }) => {
             <SpacedLink known to='/login'>
               Login
             </SpacedLink>
-            <Button small onClick={() => navigate('/register')}>
+            <Button variant='md' onClick={() => navigate('/register')}>
               Sign up
             </Button>
           </Flex>

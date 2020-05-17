@@ -1,12 +1,12 @@
 import * as React from 'react'
+import { Button } from 'rebass'
+import { Input } from '@rebass/forms'
 import { styled, css } from 'goober'
 import { useForm } from 'react-hook-form'
 import { navigate } from '@quercia/quercia'
 
 import Relative from '../relative'
 
-import Button from './button'
-import Input from '../input'
 import I from '../image'
 import { Line, Center } from '../base'
 import Dropdown from '../dropdown'
@@ -119,7 +119,7 @@ const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
           <Input
             className={margin}
             name='name'
-            label='Name'
+            placeholder='Name'
             error={errors.name?.message.toString()}
             ref={register({
               required: 'Required',
