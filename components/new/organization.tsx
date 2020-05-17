@@ -5,11 +5,7 @@ import { navigate } from '@quercia/quercia'
 
 import Button from './button'
 import Input from '../input'
-import I from '../image'
 import { Line, Center } from '../base'
-import Dropdown, { Container as DC } from '../dropdown'
-import Dropbox from '../dropbox'
-import { Item, List } from '../list'
 
 import { User } from '../../types/data'
 
@@ -18,19 +14,8 @@ const Content = styled(Center)`
   flex-direction: row;
 `
 
-const Container = styled(DC)`
-  display: inline;
-  margin: 0 1em;
-`
-
 const margin = css`
   margin: 0 1em;
-`
-
-const Image = styled(I)`
-  width: 1.25em;
-  height: 1.25em;
-  margin-right: 0.5em;
 `
 
 const Form = styled('form', React.forwardRef)`
@@ -41,13 +26,6 @@ const Form = styled('form', React.forwardRef)`
     width: auto;
   }
 `
-
-type Type = 'user' | 'org'
-interface Option {
-  type: Type
-  value: string
-  picture: string
-}
 
 interface Data {
   name: string

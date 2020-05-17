@@ -64,11 +64,12 @@ const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
 const Header: React.FC<BaseData> = ({ account }) => {
   return (
     <Flex
+      as='nav'
       bg='bg.6'
       height={5}
       sx={{ borderBottom: '1px solid', borderColor: 'bg.3' }}
     >
-      <Body alignItems='center' justifyContent='space-between'>
+      <Body height={5} alignItems='center' justifyContent='space-between'>
         <Link color='fg.5' to='/'>
           <Logo width='1rem' onClick={() => navigate('/')} />
         </Link>

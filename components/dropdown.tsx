@@ -29,7 +29,8 @@ const Dropdown: React.FunctionComponent<BoxProps & {
         bg: 'bg.5',
         borderRadius: 'md',
         fontSize: 'sm',
-        display: open ? 'block' : 'none'
+        display: open ? 'block' : 'none',
+        boxShadow: 'sm'
       }}
       ref={ref as any}
       {...(props as any)}

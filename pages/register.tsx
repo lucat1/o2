@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
+import { Box, Flex } from 'rebass'
+import { Input, Label } from '@rebass/forms'
 
 import { Head, navigate } from '@quercia/quercia'
 
 import Button from '../components/button'
-import Form from '../components/form'
-import Input from '../components/input'
 
 interface Data {
   email: string
@@ -44,57 +44,82 @@ export default ({ error }: RegisterProps) => {
       <Head>
         <title>register - o2</title>
       </Head>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Flex
+        as='form'
+        flexDirection='column'
+        justifyContent='center'
+        alignItems='center'
+        flex={1}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {error && <h1 style={{ color: 'red' }}>{error}</h1>}
 
-        <Input
-          name='email'
-          label='Email'
-          disabled={isLoading}
-          error={errors.email?.message.toString()}
-          ref={register({
-            required: 'Required',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: 'invalid email address'
-            }
-          })}
-        />
+        <Box py={4} width={8}>
+          <Input
+            name='email'
+            placeholder='Email'
+            disabled={isLoading}
+            ref={register({
+              required: 'Required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: 'invalid email address'
+              }
+            })}
+          />
+          {errors.email && (
+            <Label htmlFor='email' variant='error'>
+              {errors.email?.message.toString()}
+            </Label>
+          )}
+        </Box>
 
-        <Input
-          name='username'
-          label='Username'
-          disabled={isLoading}
-          error={errors.username?.message.toString()}
-          ref={register({
-            required: 'Required',
-            pattern: {
-              value: /^[a-z0-9_-]{3,15}$/,
-              message: 'invalid username'
-            }
-          })}
-        />
+        <Box py={4} width={8}>
+          <Input
+            name='username'
+            placeholder='Username'
+            disabled={isLoading}
+            ref={register({
+              required: 'Required',
+              pattern: {
+                value: /^[a-z0-9_-]{3,15}$/,
+                message: 'invalid username'
+              }
+            })}
+          />
+          {errors.username && (
+            <Label htmlFor='username' variant='error'>
+              {errors.username?.message.toString()}
+            </Label>
+          )}
+        </Box>
 
-        <Input
-          name='password'
-          label='Password'
-          type='password'
-          disabled={isLoading}
-          error={errors.password?.message.toString()}
-          ref={register({
-            required: 'Required',
-            pattern: {
-              value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-              message:
-                'invalid password. Must contain at least 8 characters, at least 1 numeric and 1 letter'
-            }
-          })}
-        />
+        <Box py={4} width={8}>
+          <Input
+            name='password'
+            placeholder='Password'
+            type='password'
+            disabled={isLoading}
+            ref={register({
+              required: 'Required',
+              pattern: {
+                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                message:
+                  'invalid password. Must contain at least 8 characters, at least 1 numeric and 1 letter'
+              }
+            })}
+          />
+          {errors.password && (
+            <Label htmlFor='password' variant='error'>
+              {errors.password?.message.toString()}
+            </Label>
+          )}
+        </Box>
 
         <Button disabled={isLoading} type='submit'>
           Submit
         </Button>
-      </Form>
+      </Flex>
     </>
   )
 }

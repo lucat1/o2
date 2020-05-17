@@ -11,7 +11,6 @@ export default () => {
         <meta name='description' content='the index page of the o2 service' />
       </Head>
       <h1>Index page</h1>
-      <Flex>flexing</Flex>
     </>
   )
 }
