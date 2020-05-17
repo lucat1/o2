@@ -3,9 +3,11 @@ import * as React from 'react'
 
 import { navigate } from '@quercia/quercia'
 
+import Relative from '../relative'
+
 import { Ref, Repository } from '../../types/data'
 import DB from '../dropbox'
-import Dropdown, { Container } from '../dropdown'
+import Dropdown from '../dropdown'
 import { Item, List } from '../list'
 
 const Dropbox = styled(DB)`
@@ -44,7 +46,7 @@ const Branch: React.FunctionComponent<{
   const [open, setOpen] = React.useState(false)
 
   return (
-    <Container>
+    <Relative>
       <Dropbox open={open} onClick={() => setOpen(true)} disabled={disabled}>
         Branch
         <HideOnSmall>
@@ -69,7 +71,7 @@ const Branch: React.FunctionComponent<{
           ))}
         </List>
       </Dropdown>
-    </Container>
+    </Relative>
   )
 }
 
