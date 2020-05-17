@@ -15,14 +15,14 @@ const Header: React.FC<Base<{}>> = ({ account }) => {
     <Flex
       as='nav'
       bg='bg.6'
-      height={5}
+      height={6}
       sx={{
         borderBottom: '1px solid',
         borderColor: 'bg.3',
         position: 'sticky'
       }}
     >
-      <Body height={5} alignItems='center' justifyContent='space-between'>
+      <Body height={6} alignItems='center' justifyContent='space-between'>
         <Link color='fg.5' to='/'>
           <Logo width='1rem' onClick={() => navigate('/')} />
         </Link>

@@ -11,23 +11,12 @@ import C from '../base'
 
 import { User } from '../../types/data'
 
-// const User = styled(Left)`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// `
-
 const Info = styled('div')`
   padding-left: 0;
 
   @media (max-width: 960px) {
     padding-left: 1em;
   }
-`
-
-const Picture = styled(Image)`
-  width: 10em;
-  height: 10em;
 `
 
 const Line = styled('div')`
@@ -65,7 +54,9 @@ const OrgImg = styled(Image)`
 
 const Profile = ({ profile }: { profile: User }) => (
   <Left flexDirection='column' alignItems='center'>
-    <Picture
+    <Image
+      width={8}
+      height={8}
       alt={
         profile
           ? `${profile.username}'s profile picture`

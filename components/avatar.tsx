@@ -13,12 +13,6 @@ import { List, Item } from './list'
 
 import { LoggedUser } from '../types/data'
 
-// transition: box-shadow 200ms ease-in-out;
-
-// &:focus {
-//   box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
-// }
-
 const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
   const [open, setOpen] = React.useState(false)
   const go = React.useCallback((url: string) => {
@@ -31,8 +25,8 @@ const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
       <Image
         sx={{
           'borderRadius': 'lg',
-          'width': 2,
-          'height': 2,
+          'width': 3,
+          'height': 3,
           'transition': 'box-shadow 200ms ease-in-out',
 
           ':focus': {

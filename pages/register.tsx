@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
-import { Box, Flex, Button } from 'rebass'
+import { Box, Button } from 'rebass'
 import { Input, Label } from '@rebass/forms'
-
 import { Head, navigate } from '@quercia/quercia'
+
+import Center from '../components/center'
 
 interface Data {
   email: string
@@ -42,17 +43,10 @@ export default ({ error }: RegisterProps) => {
       <Head>
         <title>register - o2</title>
       </Head>
-      <Flex
-        as='form'
-        flexDirection='column'
-        justifyContent='center'
-        alignItems='center'
-        flex={1}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <Center as='form' flex={1} onSubmit={handleSubmit(onSubmit)}>
         {error && <h1 style={{ color: 'red' }}>{error}</h1>}
 
-        <Box py={4} width={8}>
+        <Box py={4} width={9}>
           <Input
             name='email'
             placeholder='Email'
@@ -72,7 +66,7 @@ export default ({ error }: RegisterProps) => {
           )}
         </Box>
 
-        <Box py={4} width={8}>
+        <Box py={4} width={9}>
           <Input
             name='username'
             placeholder='Username'
@@ -92,7 +86,7 @@ export default ({ error }: RegisterProps) => {
           )}
         </Box>
 
-        <Box py={4} width={8}>
+        <Box py={4} width={9}>
           <Input
             name='password'
             placeholder='Password'
@@ -117,7 +111,7 @@ export default ({ error }: RegisterProps) => {
         <Button disabled={isLoading} type='submit'>
           Submit
         </Button>
-      </Flex>
+      </Center>
     </>
   )
 }
