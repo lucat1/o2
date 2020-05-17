@@ -1,10 +1,13 @@
 import { styled } from 'goober'
 import * as React from 'react'
 
+import Center from '../center'
+import Divider from '../divider'
+
 import { RepositoryProps } from '../../pages/repository'
 import NoData from '../svgs/no-data'
 import { Code, P, SpacedH2 } from '../typography'
-import Container, { Line, Center } from '../base'
+import Container from '../base'
 
 const Spaced = styled('div')`
   padding: 0.5em 1em;
@@ -19,12 +22,12 @@ const Empty: React.FunctionComponent<Partial<RepositoryProps>> = ({
   return owns ? (
     <Container>
       <SpacedH2>Quickstart guide</SpacedH2>
-      <Line />
+      <Divider />
       <Spaced>
         <P>You can clone the repository at this url:</P>
         <Code>{url}</Code>
       </Spaced>
-      <Line />
+      <Divider />
       <Spaced>
         <P>To inizialize (initialize) and upload a folder:</P>
         <Code>
@@ -39,7 +42,7 @@ const Empty: React.FunctionComponent<Partial<RepositoryProps>> = ({
           git push -u origin master
         </Code>
       </Spaced>
-      <Line />
+      <Divider />
       <Spaced>
         <P>To upload an existing repository on your system:</P>
         <Code>

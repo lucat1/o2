@@ -1,35 +1,27 @@
 import * as React from 'react'
+import styled from '@emotion/styled'
 import { Button, ButtonProps } from 'rebass'
-import { styled } from 'goober'
 
-import A from './svgs/arrow'
+import Arrow from './svgs/arrow'
 
-export const Arrow = styled(A)`
+export const ArrowIcon = styled(Arrow)`
   margin-left: 0.5em;
   transition: transform 200ms ease-in-out;
 `
 
 //height: 2.35em;
 
-type DropboxProps = ButtonProps & {
-  open: boolean
-  big?: boolean
-}
-
-const Dropbox: React.FunctionComponent<DropboxProps> = ({
+const Dropbox: React.FC<ButtonProps & { open: boolean }> = ({
   children,
   open,
-  onClick,
-  big,
   ...props
 }) => (
-  <Button
-    variant={big ? 'secondary' : 'md-secondary'}
-    onClick={onClick}
-    {...props}
-  >
+  <Button {...(props as any)}>
     {children}
-    <Arrow style={{ transform: `rotate(${open ? 180 : 0}deg)` }} height='1em' />
+    <ArrowIcon
+      style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
+      height='1em'
+    />
   </Button>
 )
 

@@ -1,29 +1,14 @@
-import { styled } from 'goober'
 import * as React from 'react'
-
 import { Head, SSG } from '@quercia/quercia'
 
+import { Parent } from '../components/split'
 import Repos from '../components/profile/repos'
 import Org from '../components/profile/org'
-import { Parent } from '../components/split'
 
-import { Organization, LoggedUser } from '../types/data'
+import { Organization, Base } from '../types/data'
 
-interface OrganizationProps {
-  account: LoggedUser
-  profile: Organization
-}
-
-const Container = styled(Parent)`
-  padding: 2em 5em;
-
-  @media (max-width: 960px) {
-    padding: 2em 0;
-  }
-`
-
-export default ({ profile, account }: OrganizationProps) => (
-  <Container>
+export default ({ profile, account }: Base<{ profile: Organization }>) => (
+  <Parent p={['2rem 0', '2rem 5rem']}>
     <Head>
       <title>{profile?.name || 'organization'} - o2</title>
       <meta
@@ -34,8 +19,8 @@ export default ({ profile, account }: OrganizationProps) => (
     <Org profile={profile} />
     <Repos
       repositories={profile?.repositories}
-      username={profile?.name}
+      owner={profile?.name}
       account={account}
     />
-  </Container>
+  </Parent>
 )

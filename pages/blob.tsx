@@ -1,13 +1,14 @@
+import * as React from 'react'
+import { Head, SSG } from '@quercia/quercia'
 import { css, styled } from 'goober'
 import * as pretty from 'pretty-bytes'
 import { highlight, languages } from 'prismjs/components/prism-core'
-import * as React from 'react'
 
-import { Head, SSG } from '@quercia/quercia'
+import Divider from '../components/divider'
 
 import load, { lang } from '../components/code/load'
 import Pre from '../components/code/pre'
-import Container, { Line } from '../components/base'
+import Container from '../components/base'
 import Layout from '../components/repository/layout'
 import Path, { basename } from '../components/repository/path'
 import { SpacedA } from '../components/typography'
@@ -86,7 +87,7 @@ export default ({ repository, owns, blob, data, ext }: RepositoryProps) => {
                 {pretty(blob.size)}
               </span>
             </Title>
-            <Line />
+            <Divider />
             <Code>
               <pre>{data.split('\n').map((_, i) => `${i + 1}\n`)}</pre>
               {loaded && languages[language] ? (

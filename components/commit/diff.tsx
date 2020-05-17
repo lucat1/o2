@@ -1,9 +1,12 @@
-import { css, styled } from 'goober'
+import * as React from 'react'
+import styled from '@emotion/styled'
 import { Button } from 'rebass'
 import { File } from 'parse-diff'
-import * as React from 'react'
 
-import C, { Line as L } from '../base'
+import Divider from '../divider'
+
+import { css } from 'goober'
+import C from '../base'
 import Arrow from '../svgs/arrow'
 import { SpacedA } from '../typography'
 
@@ -67,9 +70,7 @@ const FullLine = styled('div')<{ big: boolean }>`
   `}
 `
 
-const Line = styled(L)`
-  grid-column: 1 / 4;
-`
+const Line = () => <Divider sx={{ gridColumn: '1/4' }} />
 
 const Pre = styled('pre')`
   margin: 0;
@@ -109,8 +110,8 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
     <Container>
       <Title>
         <IconButton
+          variant='sm'
           flipped={collapsed}
-          tiny
           onClick={() => collapse(!collapsed)}
           aria-label={collapsed ? 'Show diff' : 'Collpase diff'}
         >
@@ -127,7 +128,7 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
             ? 'The file was deleted, hiding diff'
             : 'The diff is too big, not showing'}
 
-          <Button small onClick={() => setVisible(true)}>
+          <Button variant='md' onClick={() => setVisible(true)}>
             Show anyway
           </Button>
         </Empty>

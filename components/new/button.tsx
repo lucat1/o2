@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button } from 'rebass'
+import { Button, ButtonProps } from 'rebass'
 import { styled } from 'goober'
 
 import { Content } from './layout'
@@ -14,10 +14,9 @@ const ButtonContent = styled(Content)`
   }
 `
 
-const Btn: React.FunctionComponent<React.ClassAttributes<HTMLButtonElement> &
-  React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ disabled, ...props }) => (
+const Btn: React.FC<ButtonProps> = ({ disabled, ...props }) => (
   <ButtonContent>
-    <Button disabled={disabled} type='submit' {...props}>
+    <Button type='submit' disabled={disabled} {...(props as any)}>
       Create
     </Button>
   </ButtonContent>

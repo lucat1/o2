@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Head, SSG } from '@quercia/quercia'
 
 import { Parent } from '../components/split'
-
 import Repos from '../components/profile/repos'
 import User from '../components/profile/user'
 
