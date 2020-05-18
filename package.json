@@ -58,7 +58,7 @@
     "files": [
       {
         "path": "__quercia/*/client/*.js",
-        "maxSize": "25kB"
+        "maxSize": "28kB"
       },
       {
         "path": "__quercia/*/client/pages/**/*.js",
