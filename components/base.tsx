@@ -4,12 +4,15 @@ import { Flex, FlexProps } from 'rebass'
 const Base = (props: FlexProps) => (
   <Flex
     {...(props as any)}
-    sx={{
-      borderRadius: 'sm',
-      border: '1px solid',
-      borderColor: 'bg.3',
-      my: 4
-    }}
+    sx={Object.assign(
+      {
+        borderRadius: 'sm',
+        border: '1px solid',
+        borderColor: 'bg.3',
+        my: 4
+      },
+      props.sx
+    )}
   />
 )
 

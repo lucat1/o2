@@ -1,43 +1,22 @@
-import { styled } from 'goober'
 import * as React from 'react'
 import { Box, Flex, FlexProps } from 'rebass'
-import { SSG, navigate } from '@quercia/quercia'
+import { SSG } from '@quercia/quercia'
 
 import { Left } from '../split'
+import Image from '../image'
+import Base from '../base'
 import Heading from '../heading'
 import Text from '../text'
-import Image from '../image'
-import Skeleton from '../skeleton'
-
-import C from '../base'
+import Link from '../link'
 
 import { User } from '../../types/data'
 
-const Org = styled(C)`
-  font-size: 0.75em;
-  padding: 0.75em 0.5em;
-  cursor: pointer;
-  outline: none;
-  transition: box-shadow 200ms ease-in-out;
-
-  &:focus {
-    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
-  }
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`
-
-const OrgImg = styled(Image)`
-  display: block;
-  width: 1.5em;
-  height: 1.5em;
-  margin-right: 0.5em;
-`
-
 const Line: React.FC<FlexProps> = props => (
-  <Flex width={8} flexDirection='row' {...(props as any)} />
+  <Flex width={8} {...(props as any)} />
+)
+
+const Organization: React.FC<FlexProps> = props => (
+  <Base width={8} p={2} sx={{ outline: 'none' }} {...(props as any)} />
 )
 
 const Profile = ({ profile }: { profile: User }) => (
@@ -72,15 +51,16 @@ const Profile = ({ profile }: { profile: User }) => (
       </Line>
 
       {(profile?.organizations || []).map(({ name, picture }, i) => (
-        <Org
-          key={i}
-          tabIndex={0}
-          onClick={() => navigate(`/${name}`)}
-          onKeyUp={e => e.keyCode === 13 && navigate(`/${name}`)}
-        >
-          <OrgImg src={`${picture}?s=50`} alt={`${name}'s profile picture`} />
-          <span>{name}</span>
-        </Org>
+        <Organization key={i}>
+          <Image
+            width={3}
+            height={3}
+            mr={2}
+            src={`${picture}?s=50`}
+            alt={`${name}'s profile picture`}
+          />
+          <Link to={`/${name}`}>{name}</Link>
+        </Organization>
       ))}
     </Box>
   </Left>
