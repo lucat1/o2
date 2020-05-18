@@ -1,33 +1,17 @@
 import { styled } from 'goober'
 import * as React from 'react'
+import { Box, Flex, FlexProps } from 'rebass'
 import { SSG, navigate } from '@quercia/quercia'
 
 import { Left } from '../split'
-
+import Heading from '../heading'
+import Text from '../text'
 import Image from '../image'
 import Skeleton from '../skeleton'
-import { A, H2, H4, SpacedH4 } from '../_typography'
+
 import C from '../base'
 
 import { User } from '../../types/data'
-
-const Info = styled('div')`
-  padding-left: 0;
-
-  @media (max-width: 960px) {
-    padding-left: 1em;
-  }
-`
-
-const Line = styled('div')`
-  width: 10em;
-  display: flex;
-  flex-direction: row;
-`
-
-const Description = styled(Line)`
-  margin-top: 1em;
-`
 
 const Org = styled(C)`
   font-size: 0.75em;
@@ -52,6 +36,10 @@ const OrgImg = styled(Image)`
   margin-right: 0.5em;
 `
 
+const Line: React.FC<FlexProps> = props => (
+  <Flex width={8} flexDirection='row' {...(props as any)} />
+)
+
 const Profile = ({ profile }: { profile: User }) => (
   <Left flexDirection='column' alignItems='center'>
     <Image
@@ -64,25 +52,24 @@ const Profile = ({ profile }: { profile: User }) => (
       }
       src={profile?.picture + '?s=300'}
     />
-    <Info>
+    <Box py={4}>
       <Line>
-        <H2>{profile?.username}</H2>
+        <Heading>{profile?.username}</Heading>
       </Line>
       <Line>
-        <H4>{profile?.firstname}</H4>
-        <SpacedH4>{profile?.lastname}</SpacedH4>
+        <Heading as={'h3'} width={8} height={3} fontSize='sm'>
+          {profile?.firstname + ' ' + profile?.lastname}
+        </Heading>
       </Line>
-      <Description>
-        <A known>📍</A>
-        <A>{profile?.location || (!SSG && 'Earth')}</A>
-      </Description>
-      <Description>
-        {SSG ? (
-          <Skeleton width='100%' height='5em' />
-        ) : (
-          <code>{profile.description || (!SSG && 'Empty description')}</code>
-        )}
-      </Description>
+      <Line py={2}>
+        <Text known>📍</Text>
+        <Text>{profile?.location || (!SSG && 'Earth')}</Text>
+      </Line>
+      <Line py={2}>
+        <Text as='p' width={8} height={7}>
+          {profile?.description || 'Empty description'}
+        </Text>
+      </Line>
 
       {(profile?.organizations || []).map(({ name, picture }, i) => (
         <Org
@@ -95,7 +82,7 @@ const Profile = ({ profile }: { profile: User }) => (
           <span>{name}</span>
         </Org>
       ))}
-    </Info>
+    </Box>
   </Left>
 )
 

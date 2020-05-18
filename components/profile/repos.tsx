@@ -1,14 +1,13 @@
 import * as React from 'react'
-import { Flex, Button } from 'rebass'
+import { Flex, Box, Button } from 'rebass'
 
 import { navigate, SSG } from '@quercia/quercia'
 
 import Link from '../link'
 import Heading from '../heading'
+import Text from '../text'
 import { Right } from '../split'
 import VCS from '../svgs/git'
-
-import Skeleton from '../skeleton'
 
 import { Base, Repository as IRepository } from '../../types/data'
 
@@ -69,14 +68,14 @@ const Repositories = ({
     <Right px={[4, 6]} paddingTop={[4, 0]} flexDirection='column'>
       {(repositories || []).map((repository, i) => (
         <Repository key={i}>
-          <Heading>
+          <Heading my={0}>
             <Link to={`/${owner}/${repository?.name}`}>{repository?.name}</Link>
           </Heading>
-          {SSG ? (
-            <Skeleton width='80%' height={6} my={2} />
-          ) : (
-            <code>{repository.description}</code>
-          )}
+          <Box width='100%' my={2} height='4rem'>
+            <Text as='p' width='75%' height='4rem'>
+              {repository?.description}
+            </Text>
+          </Box>
         </Repository>
       ))}
     </Right>

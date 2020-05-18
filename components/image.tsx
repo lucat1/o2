@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { Image, ImageProps } from 'rebass'
+import { Image as RebassImage, ImageProps } from 'rebass'
 import styled from '@emotion/styled'
 import { SSG } from '@quercia/quercia'
 
 import Skeleton from './skeleton'
 
-const StyledImage = styled(Image)`
+const StyledImage = styled(RebassImage)`
   width: 100%;
   height: 100%;
   transition: opacity 0.2s ease-in-out;
@@ -15,20 +15,21 @@ const StyledImage = styled(Image)`
   outline: none;
 `
 
-const Img: React.FC<ImageProps> = ({ src, alt, ...props }) => {
+const Image: React.FC<ImageProps> = ({ src, alt, ...props }) => {
+  const sx = Object.assign(
+    { borderRadius: 'lg', flexGrow: 0, flexShrink: 0 },
+    props.sx
+  )
+
   if (SSG) {
-    return <Skeleton {...(props as any)} />
+    return <Skeleton sx={sx} {...(props as any)} />
   }
 
   const [loaded, setLoaded] = React.useState(false)
-
   return (
-    <Skeleton
-      sx={Object.assign({ borderRadius: 'lg' }, props.sx)}
-      {...(props as any)}
-    >
+    <Skeleton sx={sx} {...(props as any)}>
       <StyledImage
-        sx={Object.assign({ borderRadius: 'lg' }, props.sx)}
+        sx={sx}
         style={{ opacity: loaded ? 1 : 0 }}
         onLoad={() => setLoaded(true)}
         alt={alt}
@@ -39,4 +40,4 @@ const Img: React.FC<ImageProps> = ({ src, alt, ...props }) => {
   )
 }
 
-export default Img
+export default Image

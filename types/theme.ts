@@ -8,6 +8,8 @@ const animation = keyframes`
   }
 `
 
+const fontFamily = "'Operator Mono', monospace, mono"
+
 export const base: Theme & { forms: any } = {
   colors: {
     primary: {
@@ -26,18 +28,20 @@ export const base: Theme & { forms: any } = {
     }
   },
   space: [0, '.25rem', '.5rem', '.75rem', '1rem', '1.5rem', '2rem', '4rem'],
-  sizes: [
-    0,
-    '.5rem',
-    '1rem',
-    '1.5rem',
-    '2rem',
-    '2.5rem',
-    '3rem',
-    '5rem',
-    '10rem',
-    '15rem'
-  ],
+  sizes: {
+    0: 0,
+    1: '.5rem',
+    2: '1rem',
+    3: '1.5rem',
+    4: '2rem',
+    5: '2.5rem',
+    6: '3rem',
+    7: '5rem',
+    8: '10rem',
+    9: '15rem',
+
+    md: '1.25rem'
+  },
   radii: {
     sm: '.25rem',
     md: '.5rem',
@@ -50,7 +54,8 @@ export const base: Theme & { forms: any } = {
     lg: '1.25em'
   },
   fonts: {
-    default: "'Operator Mono', monospace, mono"
+    default: fontFamily,
+    heading: fontFamily
   },
   shadows: {
     focus: '0 0 0 4px rgba(var(--primary-rgb), 0.3)',

@@ -1,10 +1,12 @@
 import * as React from 'react'
 import { Box, BoxProps } from 'rebass'
 
-export const Skeleton: React.FC<BoxProps> = props => (
+export const Skeleton: React.FC<BoxProps> = ({ height, width, ...props }) => (
   <Box
     {...(props as any)}
     as='span'
+    height={height}
+    width={width}
     sx={Object.assign(
       {
         bg: 'bg.3',
