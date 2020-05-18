@@ -1,11 +1,11 @@
 import { styled } from 'goober'
 import * as React from 'react'
-
 import { SSG } from '@quercia/quercia'
+
+import Link from '../link'
 
 import { Blob, Entry, EntryKind, Repository, Tree } from '../../types/data'
 import Skeleton from '../skeleton'
-import { Link } from '../_typography'
 
 export const key = (entry: Entry): string => {
   return entry.kind === EntryKind.BLOB

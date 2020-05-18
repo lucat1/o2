@@ -1,11 +1,12 @@
 import { css, styled } from 'goober'
 import * as React from 'react'
-
 import { SSG } from '@quercia/quercia'
+
+import Link from '../link'
 
 import { RepositoryProps } from '../../pages/repository'
 import S from '../skeleton'
-import { A, Link } from '../_typography'
+import { A } from '../_typography'
 import { Tab, Tabs } from '../tabs'
 
 const Container = styled('main')`

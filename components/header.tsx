@@ -23,7 +23,7 @@ const Header: React.FC<Base<{}>> = ({ account }) => {
       }}
     >
       <Body height={6} alignItems='center' justifyContent='space-between'>
-        <Link color='fg.5' to='/'>
+        <Link aria-label='Link to the homepage' color='fg.5' to='/'>
           <Logo width='1rem' onClick={() => navigate('/')} />
         </Link>
         {account ? (
@@ -33,8 +33,10 @@ const Header: React.FC<Base<{}>> = ({ account }) => {
             <Link mx={4} to='/login'>
               Login
             </Link>
-            <Button variant='md' onClick={() => navigate('/register')}>
-              Sign up
+            <Button variant='md'>
+              <Link color='bg.5' to='/register'>
+                Sign up
+              </Link>
             </Button>
           </Flex>
         )}

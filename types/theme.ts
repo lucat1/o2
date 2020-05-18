@@ -86,6 +86,10 @@ export const base: Theme & { forms: any } = {
 
       ':focus': {
         boxShadow: 'focus'
+      },
+
+      'a, a:hover': {
+        textDecoration: 'none'
       }
     },
 

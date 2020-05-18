@@ -10,7 +10,7 @@ import { extractCritical } from '@emotion/server'
 import { EmotionCritical } from '@emotion/server/create-instance'
 
 export default ({ ids, css }: DocumentProps & EmotionCritical) => (
-  <html>
+  <html lang='en'>
     <QuerciaHead>
       <meta name='viewport' content='width=device-width' />
       <style

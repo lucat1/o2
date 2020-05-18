@@ -1,14 +1,14 @@
 import { styled } from 'goober'
 import * as pretty from 'pretty-bytes'
 import * as React from 'react'
-
 import { SSG } from '@quercia/quercia'
+
+import Link from '../link'
 
 import { EntryKind, Repository, Tree as ITree } from '../../types/data'
 import Skeleton from '../skeleton'
 import File from '../svgs/file'
 import Folder from '../svgs/folder'
-import { Link } from '../_typography'
 import Container from '../base'
 import { basename, key, url } from './path'
 
