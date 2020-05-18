@@ -7,7 +7,7 @@ import { Head, SSG } from '@quercia/quercia'
 import Commit from '../components/commit/commit'
 import Diff from '../components/commit/diff'
 import Layout from '../components/repository/layout'
-import { P } from '../components/typography'
+import { P } from '../components/_typography'
 import { DetailedCommit, Repository } from '../types/data'
 
 export interface CommitProps {

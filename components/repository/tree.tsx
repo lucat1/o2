@@ -8,7 +8,7 @@ import { EntryKind, Repository, Tree as ITree } from '../../types/data'
 import Skeleton from '../skeleton'
 import File from '../svgs/file'
 import Folder from '../svgs/folder'
-import { Link } from '../typography'
+import { Link } from '../_typography'
 import Container from '../base'
 import { basename, key, url } from './path'
 

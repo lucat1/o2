@@ -6,7 +6,7 @@ import { Left } from '../split'
 
 import Image from '../image'
 import Skeleton from '../skeleton'
-import { A, H2, H4, SpacedH4 } from '../typography'
+import { A, H2, H4, SpacedH4 } from '../_typography'
 import C from '../base'
 
 import { User } from '../../types/data'

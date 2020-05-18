@@ -11,7 +11,7 @@ import Pre from '../components/code/pre'
 import Container from '../components/base'
 import Layout from '../components/repository/layout'
 import Path, { basename } from '../components/repository/path'
-import { SpacedA } from '../components/typography'
+import { SpacedA } from '../components/_typography'
 import { Blob, Repository } from '../types/data'
 
 export interface RepositoryProps {

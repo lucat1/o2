@@ -6,7 +6,7 @@ import { SSG, Link } from '@quercia/quercia'
 import Image from '../image'
 import Skeleton from '../skeleton'
 import { Left } from '../split'
-import { A, H2 } from '../typography'
+import { A, H2 } from '../_typography'
 
 import { Organization } from '../../types/data'
 

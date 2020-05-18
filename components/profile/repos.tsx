@@ -4,17 +4,18 @@ import { Flex, Button } from 'rebass'
 import { navigate, SSG } from '@quercia/quercia'
 
 import Link from '../link'
+import Heading from '../heading'
 import { Right } from '../split'
 import VCS from '../svgs/git'
 
 import Skeleton from '../skeleton'
-import { H2 } from '../typography'
 
 import { Base, Repository as IRepository } from '../../types/data'
 
 const Repository: React.FC = props => (
   <Flex
     sx={{
+      'flexDirection': 'column',
       'height': 'calc(8rem - 2px)',
       'border': '1px solid',
       'borderColor': 'bg.3',
@@ -27,6 +28,7 @@ const Repository: React.FC = props => (
     }}
     my={4}
     px={6}
+    py={2}
     {...props}
   />
 )
@@ -67,11 +69,11 @@ const Repositories = ({
     <Right px={[4, 6]} paddingTop={[4, 0]} flexDirection='column'>
       {(repositories || []).map((repository, i) => (
         <Repository key={i}>
-          <H2>
+          <Heading>
             <Link to={`/${owner}/${repository?.name}`}>{repository?.name}</Link>
-          </H2>
+          </Heading>
           {SSG ? (
-            <Skeleton width='100%' height='3.5em' />
+            <Skeleton width='80%' height={6} my={2} />
           ) : (
             <code>{repository.description}</code>
           )}

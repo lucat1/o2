@@ -6,7 +6,7 @@ import Divider from '../divider'
 
 import { RepositoryProps } from '../../pages/repository'
 import NoData from '../svgs/no-data'
-import { Code, P, SpacedH2 } from '../typography'
+import { Code, P, SpacedH2 } from '../_typography'
 import Container from '../base'
 
 const Spaced = styled('div')`

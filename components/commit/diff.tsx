@@ -8,7 +8,7 @@ import Divider from '../divider'
 import { css } from 'goober'
 import C from '../base'
 import Arrow from '../svgs/arrow'
-import { SpacedA } from '../typography'
+import { SpacedA } from '../_typography'
 
 const Container = styled(C)`
   margin: 1em 0;

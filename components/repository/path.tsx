@@ -5,7 +5,7 @@ import { SSG } from '@quercia/quercia'
 
 import { Blob, Entry, EntryKind, Repository, Tree } from '../../types/data'
 import Skeleton from '../skeleton'
-import { Link } from '../typography'
+import { Link } from '../_typography'
 
 export const key = (entry: Entry): string => {
   return entry.kind === EntryKind.BLOB

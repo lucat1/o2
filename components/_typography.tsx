@@ -77,11 +77,6 @@ export const SpacedP = factory<PP>(styled('p')`
   margin: 0 0.5em;
 `)
 
-export const Link = factory<LinkProps>(_QLink)
-export const SpacedLink = factory<LinkProps>(styled(_QLink)`
-  margin: 0 0.5em;
-`)
-
 export const Code = styled('code')`
   display: flex;
   border-radius: 0.25em;
