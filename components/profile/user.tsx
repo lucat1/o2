@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Box, Flex, FlexProps } from 'rebass'
-import { SSG } from '@quercia/quercia'
 
 import { Left } from '../split'
 import Image from '../image'
@@ -42,7 +41,7 @@ const Profile = ({ profile }: { profile: User }) => (
       </Line>
       <Line py={2}>
         <Text known>📍</Text>
-        <Text>{profile?.location || (!SSG && 'Earth')}</Text>
+        <Text color='primary.default'>{profile?.location || 'Universe'}</Text>
       </Line>
       <Line py={2}>
         <Text as='p' width={8} height={7}>
