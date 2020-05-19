@@ -27,7 +27,19 @@ export const base: Theme & { forms: any } = {
       5: 'var(--fg-5)'
     }
   },
-  space: [0, '.25rem', '.5rem', '.75rem', '1rem', '1.5rem', '2rem', '4rem'],
+  space: [
+    0,
+    '.25rem',
+    '.5rem',
+    '.75rem',
+    '1rem',
+    '1.5rem',
+    '2rem',
+    '3rem',
+    '4rem',
+    '5rem',
+    '6rem'
+  ],
   sizes: {
     0: 0,
     1: '.5rem',

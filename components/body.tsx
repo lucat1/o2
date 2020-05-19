@@ -7,8 +7,6 @@ const CustomFlex = styled(Flex)`
   margin: auto;
   overflow: ${({ height }) => (height ? 'unset' : 'auto')};
   width: min(100%, calc(60em + 6vw));
-
-  height: calc(100vh - ${({ height }) => height || themeGet('sizes.6')});
 `
 
 const Body: React.FC<FlexProps> = props => (

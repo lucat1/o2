@@ -1,9 +1,10 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Flex } from 'rebass'
 import { SSG } from '@quercia/quercia'
 
 import Link from '../link'
 
+import { styled } from 'goober'
 import { RepositoryProps } from '../../pages/repository'
 import S from '../skeleton'
 import { A } from '../_typography'
@@ -59,7 +60,7 @@ const Layout: React.FunctionComponent<{ page: Page } & Partial<
   let tabs = owns ? _tabs : _tabs.splice(0, _tabs.length - 1)
 
   return (
-    <Container>
+    <Flex flexDirection='column' px={[6, 10]} py={[2, 0]}>
       <Head>
         <H2>
           <Link to={`/${repository?.owner || ''}`}>{repository?.owner}</Link>/
@@ -78,7 +79,7 @@ const Layout: React.FunctionComponent<{ page: Page } & Partial<
         </Tabs>
       </Head>
       {children}
-    </Container>
+    </Flex>
   )
 }
 export default Layout

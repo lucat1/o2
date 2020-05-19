@@ -20,6 +20,7 @@ const Dropbox: React.FC<ButtonProps & { open: boolean }> = ({
   <Button {...(props as any)}>
     {children}
     <ArrowIcon
+      css={{ marginLeft: '.5rem' }}
       style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
       height='1em'
     />
