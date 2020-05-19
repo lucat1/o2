@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { Flex, Box, Button } from 'rebass'
+import { Flex, Box } from 'rebass'
 
 import { navigate, SSG } from '@quercia/quercia'
 
 import Link from '../link'
 import Heading from '../heading'
 import Text from '../text'
+import Button from '../button'
 import { Right } from '../split'
 import VCS from '../svgs/git'
 

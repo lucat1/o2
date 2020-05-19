@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { Flex, FlexProps, Button } from 'rebass'
+import { Flex, FlexProps } from 'rebass'
 import merge from 'deep-extend'
 
 import Link, { LinkProps } from './link'
+import Button from './button'
 
 export const Tabs: React.FC<FlexProps> = props => (
   <Flex

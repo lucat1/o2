@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Button } from 'rebass'
 import styled from '@emotion/styled'
 
 import { navigate } from '@quercia/quercia'
 
 import Relative from '../relative'
+import Button from '../button'
 import Arrow from '../svgs/arrow'
 
 import { Ref, Repository } from '../../types/data'

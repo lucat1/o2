@@ -1,8 +1,9 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
-import { Button, ButtonProps } from 'rebass'
+import { ButtonProps } from 'rebass'
 
 import Arrow from './svgs/arrow'
+import Button from './button'
 
 export const ArrowIcon = styled(Arrow)`
   margin-left: 0.5em;

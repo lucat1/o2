@@ -1,9 +1,9 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
-import { Button } from 'rebass'
 import { File } from 'parse-diff'
 
 import Divider from '../divider'
+import Button from '../button'
 
 import { css } from 'goober'
 import C from '../base'

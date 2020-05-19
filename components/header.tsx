@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Button } from 'rebass'
+import { Flex } from 'rebass'
 
 import { navigate } from '@quercia/quercia'
 
@@ -7,6 +7,7 @@ import Body from './body'
 import Link from './link'
 import Avatar from './avatar'
 import Logo from './svgs/logo'
+import Button from './button'
 
 import { Base } from '../types/data'
 
