@@ -1,6 +1,6 @@
 import * as React from 'react'
-import styled from '@emotion/styled'
-import { Link as RebassLink, LinkProps } from 'rebass'
+import { Link as Anchor, LinkProps as RebassLinkProps } from 'rebass'
+import merge from 'deep-extend'
 
 import { navigate } from '@quercia/quercia'
 
@@ -12,13 +12,7 @@ const route = (to: string) => (
   navigate(to)
 }
 
-const Anchor = styled(RebassLink)`
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`
+export type LinkProps = RebassLinkProps & { to?: string }
 
 // custom implementation of quercia's Link component with Rebass/styled-system
 const Link: React.FC<LinkProps & { to?: string }> = ({ to, ...props }) => {
@@ -27,7 +21,19 @@ const Link: React.FC<LinkProps & { to?: string }> = ({ to, ...props }) => {
     props.href = to
   }
 
-  return <Anchor color='primary.default' {...(props as any)} />
+  return (
+    <Anchor
+      css={merge(
+        {
+          'textDecoration': 'none',
+          ':hover': { textDecoration: 'underline' }
+        },
+        props.css
+      )}
+      sx={merge({ color: 'primary.default' }, props.sx)}
+      {...(props as any)}
+    />
+  )
 }
 
 export default Link

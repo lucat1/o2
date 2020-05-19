@@ -8,7 +8,7 @@ export const Parent = styled(Flex)`
 `
 
 export const Left = styled(Flex)`
-  flex-basis: 15em;
+  flex-basis: 15rem;
   flex-grow: 1;
 `
 

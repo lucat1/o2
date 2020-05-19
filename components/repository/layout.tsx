@@ -1,4 +1,4 @@
-import { css, styled } from 'goober'
+import { styled } from 'goober'
 import * as React from 'react'
 import { SSG } from '@quercia/quercia'
 
@@ -66,19 +66,15 @@ const Layout: React.FunctionComponent<{ page: Page } & Partial<
           <A>{repository?.name}</A>
         </H2>
         <Tabs>
-          {tabs.map(([tab, url]) =>
-            SSG ? (
-              <Skeleton key={tab} width={`${tab.length / 2}em`} height='1em' />
-            ) : (
-              <Tab
-                key={tab}
-                to={`/${repository.owner}/${repository.name}${url}`}
-                selected={page == tab}
-              >
-                {tab}
-              </Tab>
-            )
-          )}
+          {tabs.map(([tab, url]) => (
+            <Tab
+              key={tab}
+              to={SSG ? '' : `/${repository.owner}/${repository.name}${url}`}
+              selected={page == tab}
+            >
+              {tab}
+            </Tab>
+          ))}
         </Tabs>
       </Head>
       {children}
