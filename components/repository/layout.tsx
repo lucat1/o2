@@ -37,7 +37,7 @@ const Layout: React.FunctionComponent<{ page: Page } & Partial<
         css={{ justifyContent: 'space-between' }}
         sx={{ display: ['block', 'flex'] }}
       >
-        <Heading width={8}>
+        <Heading fontSize='lg' width={8}>
           <Link to={`/${repository?.owner || ''}`}>{repository?.owner}</Link>/
           <Link to={baseURL}>{repository?.name}</Link>
         </Heading>
@@ -46,7 +46,7 @@ const Layout: React.FunctionComponent<{ page: Page } & Partial<
           {tabs.map(([tab, url]) => (
             <Tab
               key={tab}
-              to={SSG ? '' : `/${baseURL}${url}`}
+              to={SSG ? '' : `${baseURL}${url}`}
               selected={page == tab}
             >
               {tab}
