@@ -1,10 +1,12 @@
 import * as React from 'react'
-import { Text as RebassText, TextProps } from 'rebass'
+import { Text as RebassText, TextProps as RebassTextProps } from 'rebass'
 import { SSG } from '@quercia/quercia'
 
 import Skeleton from './skeleton'
 
-const Text: React.FC<TextProps & { known?: boolean }> = ({
+export type TextProps = RebassTextProps & { known?: boolean }
+
+const Text: React.FC<TextProps> = ({
   known,
   fontSize,
   width,

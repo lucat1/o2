@@ -1,28 +1,35 @@
 import * as React from 'react'
-import { Link as Anchor, LinkProps as RebassLinkProps } from 'rebass'
+import { LinkProps as RebassLinkProps } from 'rebass'
 import merge from 'deep-extend'
-
 import { navigate } from '@quercia/quercia'
 
-const route = (to: string) => (
-  e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-) => {
+import Text, { TextProps } from './text'
+
+const route = (to: string) => (e: Event) => {
   e.preventDefault()
   e.stopPropagation()
   navigate(to)
 }
 
-export type LinkProps = RebassLinkProps & { to?: string }
+export type LinkProps = RebassLinkProps &
+  TextProps & { to?: string; unkown?: boolean }
 
 // custom implementation of quercia's Link component with Rebass/styled-system
-const Link: React.FC<LinkProps & { to?: string }> = ({ to, ...props }) => {
+const Link: React.FC<LinkProps & { to?: string }> = ({
+  to,
+  known,
+  unkown,
+  ...props
+}) => {
   if (to) {
-    props.onClick = route(to)
+    props.onClick = route(to) as any
     props.href = to
   }
 
   return (
-    <Anchor
+    <Text
+      known={known || !unkown}
+      as='a'
       css={merge(
         {
           'textDecoration': 'none',

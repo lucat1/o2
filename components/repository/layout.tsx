@@ -1,42 +1,12 @@
 import * as React from 'react'
-import { Flex } from 'rebass'
+import { Flex, Box } from 'rebass'
 import { SSG } from '@quercia/quercia'
 
 import Link from '../link'
-
-import { styled } from 'goober'
-import { RepositoryProps } from '../../pages/repository'
-import S from '../skeleton'
-import { A } from '../_typography'
+import Heading from '../heading'
 import { Tab, Tabs } from '../tabs'
 
-const Container = styled('main')`
-  display: flex;
-  flex-direction: column;
-  padding: 0 6em;
-
-  @media (max-width: 960px) {
-    padding: 2em 0.5em;
-  }
-`
-
-const Head = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @media (max-width: 800px) {
-    display: block;
-  }
-`
-
-const H2 = styled('h2')`
-  display: flex;
-`
-
-const Skeleton = styled(S)`
-  margin: 0 0.5em;
-`
+import { RepositoryProps } from '../../pages/repository'
 
 export type Page =
   | 'Overview'
@@ -59,25 +29,31 @@ const Layout: React.FunctionComponent<{ page: Page } & Partial<
 >> = ({ page, children, repository, owns }) => {
   let tabs = owns ? _tabs : _tabs.splice(0, _tabs.length - 1)
 
+  const baseURL = SSG ? '' : `/${repository.owner}/${repository.name}`
+
   return (
     <Flex flexDirection='column' px={[6, 10]} py={[2, 0]}>
-      <Head>
-        <H2>
+      <Box
+        css={{ justifyContent: 'space-between' }}
+        sx={{ display: ['block', 'flex'] }}
+      >
+        <Heading width={8}>
           <Link to={`/${repository?.owner || ''}`}>{repository?.owner}</Link>/
-          <A>{repository?.name}</A>
-        </H2>
+          <Link to={baseURL}>{repository?.name}</Link>
+        </Heading>
+
         <Tabs>
           {tabs.map(([tab, url]) => (
             <Tab
               key={tab}
-              to={SSG ? '' : `/${repository.owner}/${repository.name}${url}`}
+              to={SSG ? '' : `/${baseURL}${url}`}
               selected={page == tab}
             >
               {tab}
             </Tab>
           ))}
         </Tabs>
-      </Head>
+      </Box>
       {children}
     </Flex>
   )
