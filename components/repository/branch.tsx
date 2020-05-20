@@ -39,7 +39,7 @@ const Branch: React.FunctionComponent<{
   const [open, setOpen] = React.useState(false)
 
   return (
-    <Relative mx={1}>
+    <Relative>
       <Button
         variant='secondary'
         onClick={() => setOpen(true)}

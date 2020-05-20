@@ -1,19 +1,23 @@
 import * as React from 'react'
-import { Flex, FlexProps } from 'rebass'
+import { Box, BoxProps } from 'rebass'
+import merge from 'deep-extend'
 
-const Base = (props: FlexProps) => (
-  <Flex
-    {...(props as any)}
-    sx={Object.assign(
-      {
-        borderRadius: 'sm',
-        border: '1px solid',
-        borderColor: 'bg.3',
-        my: 4
-      },
-      props.sx
-    )}
-  />
-)
+const Base = (props: BoxProps) => {
+  return (
+    <Box
+      {...(props as any)}
+      sx={merge(
+        {
+          display: 'flex',
+          borderRadius: 'sm',
+          border: '1px solid',
+          borderColor: 'bg.3',
+          my: 4
+        },
+        props.sx
+      )}
+    />
+  )
+}
 
 export default Base

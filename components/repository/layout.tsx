@@ -32,7 +32,13 @@ const Layout: React.FunctionComponent<{ page: Page } & Partial<
   const baseURL = SSG ? '' : `/${repository.owner}/${repository.name}`
 
   return (
-    <Flex flexDirection='column' px={[6, 10]} py={[2, 0]}>
+    <Flex
+      cellSpacing={0}
+      cellPadding={0}
+      css={{ flex: 1, flexDirection: 'column', borderSpacing: 0 }}
+      px={[0, 10]}
+      py={[2, 0]}
+    >
       <Box
         css={{ justifyContent: 'space-between' }}
         sx={{ display: ['block', 'flex'] }}

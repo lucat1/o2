@@ -63,7 +63,7 @@ export const base: Theme & { forms: any } = {
     xs: '.75em',
     sm: '.85em',
     md: 'calc(1rem + 0.25vw)',
-    lg: '1.25em'
+    lg: '1.5em'
   },
   fonts: {
     default: fontFamily,

@@ -10,8 +10,6 @@ export const ArrowIcon = styled(Arrow)`
   transition: transform 200ms ease-in-out;
 `
 
-//height: 2.35em;
-
 const Dropbox: React.FC<ButtonProps & { open: boolean }> = ({
   children,
   open,

@@ -29,17 +29,18 @@ export const Tabs: React.FC<FlexProps> = props => (
 export const Tab: React.FC<LinkProps & { selected?: boolean }> = ({
   selected,
   to,
-  href,
   ...props
 }) => (
   <Link
     to={to}
-    href={href}
-    css={{ outline: 'none', textDecoration: 'none' }}
+    css={{ outline: 'none', textDecoration: 'none', minWidth: 'unset' }}
     sx={{ fontSize: 'sm' }}
   >
     <Button
-      sx={merge({ py: 2, px: 3, mx: 1 }, props.sx)}
+      sx={merge(
+        { 'py': 2, 'px': 3, 'mx': 1, ':last-child': { mr: 0 } },
+        props.sx
+      )}
       css={{ minWidth: 'unset' }}
       variant='md-secondary'
       {...(props as any)}
