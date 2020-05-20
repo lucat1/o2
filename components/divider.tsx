@@ -6,14 +6,8 @@ const Divider: React.FC<BoxProps> = props => (
   <Box
     {...(props as any)}
     as='hr'
-    sx={merge(
-      {
-        bg: 'bg.3',
-        border: 0,
-        height: '1px'
-      },
-      props.sx
-    )}
+    css={merge({ border: 0, height: '1px' }, props.css)}
+    sx={merge({ bg: 'bg.3' }, props.sx)}
   />
 )
 

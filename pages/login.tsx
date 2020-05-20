@@ -46,7 +46,11 @@ export default ({ error }: LoginProps) => {
       <Head>
         <title>login - o2</title>
       </Head>
-      <Center as='form' flex={1} onSubmit={handleSubmit(onSubmit)}>
+      <Center
+        css={{ height: 'calc(100vh - 3.5rem)', flex: 1 }}
+        as='form'
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {error && <h1 style={{ color: 'red' }}>{error}</h1>}
 
         <Box py={4} width={9}>
