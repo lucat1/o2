@@ -1,13 +1,14 @@
 import { styled } from 'goober'
 import * as React from 'react'
-
 import { Head, navigate, SSG } from '@quercia/quercia'
 
 import Button from '../components/button'
 
 import Commit from '../components/commit/commit'
 import Layout from '../components/repository/layout'
-import { Commit as ICommit, Repository } from '../types/data'
+
+import { Commit as ICommit } from '../types/data'
+import { Repository } from '../types/repository'
 
 export interface CommitsProps {
   repository: Repository

@@ -8,7 +8,9 @@ import Commit from '../components/commit/commit'
 import Diff from '../components/commit/diff'
 import Layout from '../components/repository/layout'
 import { P } from '../components/_typography'
-import { DetailedCommit, Repository } from '../types/data'
+
+import { DetailedCommit } from '../types/data'
+import { Repository } from '../types/repository'
 
 export interface CommitProps {
   repository: Repository
