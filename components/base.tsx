@@ -9,7 +9,7 @@ const Base = (props: BoxProps) => {
       sx={merge(
         {
           display: 'flex',
-          borderRadius: 'sm',
+          borderRadius: 'md',
           border: '1px solid',
           borderColor: 'bg.3',
           my: 4

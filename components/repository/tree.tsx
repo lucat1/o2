@@ -9,68 +9,31 @@ import Skeleton from '../skeleton'
 import File from '../svgs/file'
 import Folder from '../svgs/folder'
 
-import { EntryKind, Repository, Tree as ITree } from '../../types/data'
 import { basename, key, url } from './path'
-
-// const Grid = styled(Container)`
-//   display: grid;
-//   grid-template-columns: auto 1fr auto;
-
-//   & > div:last-child,
-//   & > div:nth-last-child(2),
-//   & > div:nth-last-child(3) {
-//     border-bottom: 0;
-//   }
-
-//   & > div:last-child {
-//     border-bottom-right-radius: 0.5em;
-//   }
-
-//   & > div:nth-last-child(3) {
-//     border-bottom-left-radius: 0.5em;
-//   }
-
-//   & > div:nth-child(3) {
-//     border-top-right-radius: 0.5em;
-//   }
-
-//   & > div:first-child {
-//     border-top-left-radius: 0.5em;
-//   }
-// `
+import { EntryKind, Repository, Tree as ITree } from '../../types/data'
 
 const Cell: React.FC<BoxProps> = props => (
   <Box
     as='td'
     css={{
       'textOverflow': 'ellipsis',
+      'lineHeight': '1rem',
+      'textAlign': 'start',
 
+      ':not(:nth-child(2))': { whiteSpace: 'nowrap' },
       ':nth-child(2)': { width: '100%' },
       ':nth-child(3)': { textAlign: 'end' }
+    }}
+    sx={{
+      p: 2,
+      svg: {
+        width: 2,
+        height: 2
+      }
     }}
     {...(props as any)}
   />
 )
-
-// styled('td')`
-//   text-overflow: ellipsis;
-//   white-space: nowrap;
-//   overflow: hidden;
-
-//   display: flex;
-//   padding: 0.35em 0.5em;
-//   border-bottom: 1px solid var(--bg-3);
-
-//   &:nth-child(6n + 1),
-//   &:nth-child(6n + 2),
-//   &:nth-child(6n + 3) {
-//     background: var(--bg-6);
-//   }
-
-//   svg {
-//     width: 1em;
-//   }
-// `
 
 const rnd = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min
@@ -86,13 +49,24 @@ const Tree: React.FunctionComponent<{
   }
 
   return (
-    <Base sx={{ display: 'block' }} as='table'>
+    <Base
+      sx={{
+        display: 'block',
+        borderCollapse: 'collapse',
+        tableLayout: 'auto',
+        width: '100%'
+      }}
+      as='table'
+    >
       <thead>
-        <tr>
-          <Cell>/</Cell>
-          <Cell>Name</Cell>
-          <Cell>Size</Cell>
-        </tr>
+        <Box
+          as='tr'
+          sx={{ borderBottom: '1px solid', borderColor: 'bg.3', td: { py: 3 } }}
+        >
+          <Cell as='th'></Cell>
+          <Cell as='th'>Name</Cell>
+          <Cell as='th'>Size</Cell>
+        </Box>
       </thead>
       <tbody>
         {(tree.children || [])
@@ -102,7 +76,7 @@ const Tree: React.FunctionComponent<{
             <tr key={i}>
               <Cell>
                 {SSG ? (
-                  <Skeleton height={2} width={2} />
+                  <Skeleton height={3} width={3} />
                 ) : entry.kind === EntryKind.BLOB ? (
                   <File />
                 ) : (
@@ -111,12 +85,14 @@ const Tree: React.FunctionComponent<{
               </Cell>
               <Cell>
                 {SSG ? (
-                  <Skeleton height={2} width={`${rnd(13, 4)}rem`} />
+                  <Skeleton height={3} width={`${rnd(13, 4)}rem`} />
                 ) : (
                   <Link
-                    style={{
-                      color: `var(--${entry.kind ? 'fg-5' : 'primary'})`
-                    }}
+                    sx={
+                      entry.kind
+                        ? { color: 'fg.5' }
+                        : { color: 'primary.default' }
+                    }
                     to={url(repository, tree, entry)}
                   >
                     {basename(key(entry))}
@@ -125,7 +101,7 @@ const Tree: React.FunctionComponent<{
               </Cell>
               <Cell>
                 {SSG ? (
-                  <Skeleton height={2} width={`${rnd(4, 1)}rem`} />
+                  <Skeleton height={3} width={`${rnd(6, 3)}rem`} />
                 ) : (
                   entry.kind !== EntryKind.TREE && pretty(entry.size)
                 )}

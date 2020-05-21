@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { LinkProps as RebassLinkProps } from 'rebass'
-import merge from 'deep-extend'
 import { navigate } from '@quercia/quercia'
+import merge from 'deep-extend'
 
 import Text, { TextProps } from './text'
 

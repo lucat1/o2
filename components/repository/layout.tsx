@@ -27,7 +27,7 @@ const _tabs: [Page, string][] = [
 const Layout: React.FunctionComponent<{ page: Page } & Partial<
   RepositoryProps
 >> = ({ page, children, repository, owns }) => {
-  let tabs = owns ? _tabs : _tabs.splice(0, _tabs.length - 1)
+  let tabs = owns ? _tabs : _tabs.concat().splice(0, _tabs.length - 1)
 
   const baseURL = SSG ? '' : `/${repository.owner}/${repository.name}`
 

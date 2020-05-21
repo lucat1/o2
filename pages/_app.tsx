@@ -65,7 +65,7 @@ const glob = css`
 
   body {
     margin: 0;
-    font-size: calc(1rem + 0.25vw);
+    font-size: calc(1rem + 0.4vw);
   }
 `
 

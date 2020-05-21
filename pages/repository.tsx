@@ -4,12 +4,13 @@ import snarkdown from 'snarkdown'
 import { Head, SSG } from '@quercia/quercia'
 
 import Base from '../components/base'
-import Skeleton from '../components/skeleton'
+import Text from '../components/text'
 
-import Branch from '../components/repository/branch'
-import Empty from '../components/repository/empty'
 import Layout from '../components/repository/layout'
+import Branch from '../components/repository/branch'
 import Tree from '../components/repository/tree'
+
+import Empty from '../components/repository/empty'
 import { Ref, Repository, Tree as ITree, User } from '../types/data'
 
 export interface RepositoryProps {
@@ -20,17 +21,6 @@ export interface RepositoryProps {
   tree: ITree
   refs: Ref[]
 }
-
-// const Container = styled(C)`
-//   padding: 1.5em;
-//   overflow: auto;
-// `
-
-// const Description = styled('div')`
-//   display: flex;
-//   justify-content: space-between;
-//   text-overflow: ellipsis;
-// `
 
 export default ({
   repository,
@@ -63,11 +53,10 @@ export default ({
             textOverflow: 'ellipsis'
           }}
         >
-          {SSG ? (
-            <Skeleton width='70%' height='1.5em' />
-          ) : (
-            <code>{repository.description}</code>
-          )}
+          <Text css={{ flexShrink: 10 }} width={8} height={4} as='code'>
+            {repository?.description}
+          </Text>
+
           <Branch
             repository={repository}
             current={tree?.branch.name}
