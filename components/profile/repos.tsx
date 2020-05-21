@@ -10,7 +10,8 @@ import Button from '../button'
 import { Right } from '../split'
 import VCS from '../svgs/git'
 
-import { Base, Repository as IRepository } from '../../types/data'
+import { Base } from '../../types/data'
+import { Repository as IRepository } from '../../types/repository'
 
 const Repository: React.FC = props => (
   <Flex

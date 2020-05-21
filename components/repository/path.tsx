@@ -1,5 +1,5 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Box } from 'rebass'
 import { SSG } from '@quercia/quercia'
 
 import Link from '../link'
@@ -34,21 +34,12 @@ export const basename = (path: string): string => {
   return splits[splits.length - 1]
 }
 
-const Line = styled('div')`
-  margin-top: 1em;
-  height: 1.5em;
-
-  & + div {
-    margin-top: 1em;
-  }
-`
-
 const Path: React.FunctionComponent<{
   entry: Entry
   repository: Repository
 }> = ({ entry, repository }) => {
   if (SSG) {
-    return <Skeleton height='1.5em' width='14em' />
+    return <Skeleton height={3} width={9} />
   }
 
   const k = key(entry)
@@ -65,7 +56,7 @@ const Path: React.FunctionComponent<{
   const _base = base(repository, entry as any, { kind: 0 } as any)
 
   return (
-    <Line>
+    <Box height={3}>
       <Link to={_base}>{repository.name}</Link>
       {parts.map((path, i) => (
         <React.Fragment key={i}>
@@ -77,7 +68,7 @@ const Path: React.FunctionComponent<{
           )}
         </React.Fragment>
       ))}
-    </Line>
+    </Box>
   )
 }
 
