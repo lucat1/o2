@@ -38,7 +38,13 @@ export const Tab: React.FC<LinkProps & { selected?: boolean }> = ({
   >
     <Button
       sx={merge(
-        { 'py': 2, 'px': 3, 'mx': 1, ':last-child': { mr: 0 } },
+        {
+          'py': 2,
+          'px': 3,
+          'mx': 2,
+          ':last-child': { mr: 0 },
+          'color': selected && 'primary.default'
+        },
         props.sx
       )}
       css={{ minWidth: 'unset' }}

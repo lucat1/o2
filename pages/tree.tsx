@@ -5,6 +5,7 @@ import { Head, SSG } from '@quercia/quercia'
 import Layout from '../components/repository/layout'
 import Path from '../components/repository/path'
 import Tree from '../components/repository/tree'
+
 import { RepositoryProps } from '../types/repository'
 
 export default ({ repository, tree, owns }: RepositoryProps) => {
