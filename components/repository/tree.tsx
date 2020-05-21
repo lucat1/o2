@@ -84,20 +84,19 @@ const Tree: React.FunctionComponent<{
                 )}
               </Cell>
               <Cell>
-                {SSG ? (
-                  <Skeleton height={3} width={`${rnd(13, 4)}rem`} />
-                ) : (
-                  <Link
-                    sx={
-                      entry.kind
-                        ? { color: 'fg.5' }
-                        : { color: 'primary.default' }
-                    }
-                    to={url(repository, tree, entry)}
-                  >
-                    {basename(key(entry))}
-                  </Link>
-                )}
+                <Link
+                  unkown
+                  height={3}
+                  width={`${rnd(13, 4)}rem`}
+                  sx={
+                    entry.kind
+                      ? { color: 'fg.5' }
+                      : { color: 'primary.default' }
+                  }
+                  to={SSG ? '' : url(repository, tree, entry)}
+                >
+                  {SSG ? '' : basename(key(entry))}
+                </Link>
               </Cell>
               <Cell>
                 {SSG ? (
