@@ -6,7 +6,7 @@ import Link from '../link'
 import Heading from '../heading'
 import { Tab, Tabs } from '../tabs'
 
-import { RepositoryProps } from '../../pages/repository'
+import { RepositoryProps } from '../../types/repository'
 
 export type Page =
   | 'Overview'

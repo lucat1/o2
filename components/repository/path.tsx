@@ -4,7 +4,13 @@ import { SSG } from '@quercia/quercia'
 
 import Link from '../link'
 
-import { Blob, Entry, EntryKind, Repository, Tree } from '../../types/data'
+import {
+  Blob,
+  Entry,
+  EntryKind,
+  Repository,
+  Tree
+} from '../../types/repository'
 import Skeleton from '../skeleton'
 
 export const key = (entry: Entry): string => {

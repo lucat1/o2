@@ -9,7 +9,7 @@ import Arrow from '../svgs/arrow'
 import Dropdown from '../dropdown'
 import { Item, List } from '../list'
 
-import { Ref, Repository } from '../../types/data'
+import { Ref, Repository } from '../../types/repository'
 
 const HideOnSmall: React.FC<TextProps> = props => (
   <Text as='a' sx={{ display: ['none', 'inherit'] }} {...(props as any)} />

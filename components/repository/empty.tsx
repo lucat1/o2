@@ -4,10 +4,11 @@ import * as React from 'react'
 import Center from '../center'
 import Divider from '../divider'
 
-import { RepositoryProps } from '../../pages/repository'
 import NoData from '../svgs/no-data'
 import { Code, P, SpacedH2 } from '../_typography'
 import Container from '../base'
+
+import { RepositoryProps } from '../../types/repository'
 
 const Spaced = styled('div')`
   padding: 0.5em 1em;

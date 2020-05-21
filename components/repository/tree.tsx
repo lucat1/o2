@@ -10,7 +10,7 @@ import File from '../svgs/file'
 import Folder from '../svgs/folder'
 
 import { basename, key, url } from './path'
-import { EntryKind, Repository, Tree as ITree } from '../../types/data'
+import { EntryKind, RepositoryProps } from '../../types/repository'
 
 const Cell: React.FC<BoxProps> = props => (
   <Box
@@ -38,10 +38,10 @@ const Cell: React.FC<BoxProps> = props => (
 const rnd = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min
 
-const Tree: React.FunctionComponent<{
-  tree: ITree
-  repository: Repository
-}> = ({ tree, repository }) => {
+const Tree: React.FunctionComponent<Partial<RepositoryProps>> = ({
+  tree,
+  repository
+}) => {
   if (SSG) {
     tree = {
       children: Array.from({ length: 12 }).map(() => ({ kind: 0 }))
