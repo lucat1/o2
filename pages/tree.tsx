@@ -6,9 +6,9 @@ import Layout from '../components/repository/layout'
 import Path from '../components/repository/path'
 import Tree from '../components/repository/tree'
 
-import { RepositoryProps } from '../types/repository'
+import { Base, RepositoryProps } from '../types/repository'
 
-export default ({ repository, tree, owns }: RepositoryProps) => {
+export default ({ repository, tree, owns }: Base<RepositoryProps>) => {
   return (
     <Layout owns={owns} repository={repository} page='Tree'>
       <Head>

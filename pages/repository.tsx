@@ -11,8 +11,7 @@ import Branch from '../components/repository/branch'
 import Tree from '../components/repository/tree'
 
 import Empty from '../components/repository/empty'
-import { Base } from '../types/data'
-import { RepositoryProps } from '../types/repository'
+import { Base, RepositoryProps } from '../types/repository'
 
 export default ({
   repository,

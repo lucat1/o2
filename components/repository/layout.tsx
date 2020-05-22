@@ -6,7 +6,7 @@ import Link from '../link'
 import Heading from '../heading'
 import { Tab, Tabs } from '../tabs'
 
-import { RepositoryProps } from '../../types/repository'
+import { Base } from '../../types/repository'
 
 export type Page =
   | 'Overview'
@@ -24,9 +24,12 @@ const _tabs: [Page, string][] = [
   ['Settings', '/settings']
 ]
 
-const Layout: React.FunctionComponent<{ page: Page } & Partial<
-  RepositoryProps
->> = ({ page, children, repository, owns }) => {
+const Layout: React.FunctionComponent<Base<{ page: Page }>> = ({
+  page,
+  children,
+  repository,
+  owns
+}) => {
   let tabs = owns ? _tabs : _tabs.concat().splice(0, _tabs.length - 1)
 
   const baseURL = SSG ? '' : `/${repository.owner}/${repository.name}`

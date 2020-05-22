@@ -1,53 +1,43 @@
 import * as React from 'react'
-import { Head, SSG } from '@quercia/quercia'
-import { css, styled } from 'goober'
 import * as pretty from 'pretty-bytes'
 import { highlight, languages } from 'prismjs/components/prism-core'
+import { Head, SSG } from '@quercia/quercia'
 
-import Divider from '../components/divider'
-
-import load, { lang } from '../components/code/load'
-import Pre from '../components/code/pre'
 import Container from '../components/base'
+import Divider from '../components/divider'
 import Layout from '../components/repository/layout'
 import Path, { basename } from '../components/repository/path'
+
+import Pre from '../components/code/pre'
 import { SpacedA } from '../components/_typography'
 
-import { Blob, Repository } from '../types/repository'
+import load, { lang } from '../components/code/load'
+import { Base, BlobProps } from '../types/repository'
 
-export interface RepositoryProps {
-  repository: Repository
-  owns: boolean
+// const Code = styled('code')`
+//   overflow: auto;
+//   display: grid;
+//   grid-template-columns: auto 3fr;
 
-  blob: Blob
-  data: string
-  ext: string
-}
+//   pre {
+//     margin: 0.25em 0;
 
-const Code = styled('code')`
-  overflow: auto;
-  display: grid;
-  grid-template-columns: auto 3fr;
+//     &:nth-child(1) {
+//       padding: 0 1em;
+//       user-select: none;
+//       text-align: right;
+//     }
+//   }
+// `
 
-  pre {
-    margin: 0.25em 0;
+// const Title = styled('nav')`
+//   display: flex;
+//   align-items: center;
 
-    &:nth-child(1) {
-      padding: 0 1em;
-      user-select: none;
-      text-align: right;
-    }
-  }
-`
+//   padding: 0.35em 0.5em;
+// `
 
-const Title = styled('nav')`
-  display: flex;
-  align-items: center;
-
-  padding: 0.35em 0.5em;
-`
-
-export default ({ repository, owns, blob, data, ext }: RepositoryProps) => {
+export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
   const [loaded, setLoaded] = React.useState(false)
 
   React.useEffect(() => {

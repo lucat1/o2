@@ -8,16 +8,13 @@ import NoData from '../svgs/no-data'
 import { Code, P, SpacedH2 } from '../_typography'
 import Container from '../base'
 
-import { RepositoryProps } from '../../types/repository'
+import { Base } from '../../types/repository'
 
 const Spaced = styled('div')`
   padding: 0.5em 1em;
 `
 
-const Empty: React.FunctionComponent<Partial<RepositoryProps>> = ({
-  repository,
-  owns
-}) => {
+const Empty: React.FunctionComponent<Base<{}>> = ({ repository, owns }) => {
   const url = `http://${window.location.host}/${repository.owner}/${repository.name}`
 
   return owns ? (

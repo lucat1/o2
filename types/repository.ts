@@ -1,8 +1,18 @@
+import { Base as IBase } from './data'
+
 export interface Repository {
   owner: string
   name: string
   description: string
 }
+
+export interface BlobProps {
+  blob: Blob
+  data: string
+  ext: string
+}
+
+export type Base<T> = IBase<{ repository: Repository; owns: boolean } & T>
 
 export enum EntryKind {
   TREE = 0,
@@ -32,8 +42,6 @@ export interface Ref {
 }
 
 export interface RepositoryProps {
-  repository: Repository
-  owns: boolean
   readme: string
   tree: Tree
   refs: Ref[]

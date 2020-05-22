@@ -4,13 +4,13 @@ import * as pretty from 'pretty-bytes'
 import { SSG } from '@quercia/quercia'
 
 import Link from '../link'
-import Base from '../base'
+import Container from '../base'
 import Skeleton from '../skeleton'
 import File from '../svgs/file'
 import Folder from '../svgs/folder'
 
 import { basename, key, url } from './path'
-import { EntryKind, RepositoryProps } from '../../types/repository'
+import { EntryKind, Base, RepositoryProps } from '../../types/repository'
 
 const Cell: React.FC<BoxProps> = props => (
   <Box
@@ -38,7 +38,7 @@ const Cell: React.FC<BoxProps> = props => (
 const rnd = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min
 
-const Tree: React.FunctionComponent<Partial<RepositoryProps>> = ({
+const Tree: React.FunctionComponent<Base<RepositoryProps>> = ({
   tree,
   repository
 }) => {
@@ -49,7 +49,7 @@ const Tree: React.FunctionComponent<Partial<RepositoryProps>> = ({
   }
 
   return (
-    <Base
+    <Container
       sx={{
         display: 'block',
         borderCollapse: 'collapse',
@@ -108,7 +108,7 @@ const Tree: React.FunctionComponent<Partial<RepositoryProps>> = ({
             </tr>
           ))}
       </tbody>
-    </Base>
+    </Container>
   )
 }
 
