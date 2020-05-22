@@ -43,7 +43,7 @@ const Repositories = ({
   if ((repositories || []).length == 0 && !SSG) {
     return (
       <Right flexDirection='column' alignItems='center'>
-        <h4>
+        <Text as='h4'>
           {owner == account?.username ? (
             "You don't"
           ) : (
@@ -52,7 +52,7 @@ const Repositories = ({
             </>
           )}{' '}
           have any repositories yet
-        </h4>
+        </Text>
         <VCS style={{ width: '70%' }} />
 
         {owner == account?.username && (
@@ -70,7 +70,7 @@ const Repositories = ({
     <Right px={[4, 6]} paddingTop={[4, 0]} flexDirection='column'>
       {(repositories || []).map((repository, i) => (
         <Repository key={i}>
-          <Heading my={0}>
+          <Heading my={0} fontSize='lg'>
             <Link to={`/${owner}/${repository?.name}`}>{repository?.name}</Link>
           </Heading>
           <Box width='100%' my={2} height='4rem'>

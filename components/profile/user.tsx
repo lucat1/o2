@@ -32,10 +32,10 @@ const Profile = ({ profile }: { profile: User }) => (
     />
     <Box py={4}>
       <Line>
-        <Heading>{profile?.username}</Heading>
+        <Heading fontSize='lg'>{profile?.username}</Heading>
       </Line>
       <Line>
-        <Heading as={'h3'} width={8} height={3} fontSize='sm'>
+        <Heading as={'h3'} width={8} height={3} fontSize='xs'>
           {profile?.firstname + ' ' + profile?.lastname}
         </Heading>
       </Line>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box } from 'rebass'
+import { Box, Flex } from 'rebass'
 import { Head, SSG } from '@quercia/quercia'
 import * as pretty from 'pretty-bytes'
 import { highlight, languages } from 'prismjs/components/prism-core'
@@ -32,13 +32,6 @@ import { Base, BlobProps } from '../types/repository'
 //   }
 // `
 
-// const Title = styled('nav')`
-//   display: flex;
-//   align-items: center;
-
-//   padding: 0.35em 0.5em;
-// `
-
 export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
   const [loaded, setLoaded] = React.useState(false)
 
@@ -67,25 +60,17 @@ export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
       <Layout owns={owns} repository={repository} page='Tree'>
         <Path repository={repository} entry={blob} />
 
-        <Container
-          as='table'
-          sx={{
-            display: 'block',
-            borderCollapse: 'collapse',
-            tableLayout: 'auto'
-          }}
-        >
-          <Box as='tr' px={2} py={1}>
-            <th>
-              {!SSG && basename(blob.name)}
-              <Link href='?raw'>raw</Link>
-              <Text flex={1} textAlign='right'>
-                {!SSG && pretty(blob?.size)}
-              </Text>
-            </th>
-          </Box>
+        <Container css={{ alignItems: 'center', flexDirection: 'row' }}>
+          <Flex px={2} py={1} flex={1}>
+            <Text>{!SSG && basename(blob.name)}</Text>
+            <Link href='?raw'>raw</Link>
+            <Text flex={1} textAlign='right'>
+              {!SSG && pretty(blob?.size)}
+            </Text>
+          </Flex>
           <Divider />
-          {/*
+          <Box overflow='auto'>
+            {/*
             <pre>{data?.split('\n').map((_, i) => `${i + 1}\n`)}</pre>
             {loaded && languages[language] ? (
               <Pre
@@ -96,6 +81,7 @@ export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
             ) : (
               <Pre>{data}</Pre>
             )}*/}
+          </Box>
         </Container>
       </Layout>
     </>
