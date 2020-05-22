@@ -4,11 +4,11 @@ import { File } from 'parse-diff'
 
 import Divider from '../divider'
 import Button from '../button'
+import Text from '../text'
 
 import { css } from 'goober'
 import C from '../base'
 import Arrow from '../svgs/arrow'
-import { SpacedA } from '../_typography'
 
 const Container = styled(C)`
   margin: 1em 0;
@@ -84,7 +84,7 @@ const green = css`
   background: var(--green);
 `
 
-const Stat = styled(SpacedA)<{ new: boolean }>`
+const Stat = styled(Text)<{ new: boolean }>`
   font-weight: bold;
   color: ${props => `var(--${props.new ? 'green' : 'red'})`};
 `

@@ -1,13 +1,13 @@
 import { styled } from 'goober'
 import * as diff from 'parse-diff'
 import * as React from 'react'
-
 import { Head, SSG } from '@quercia/quercia'
+
+import Layout from '../components/repository/layout'
+import Text from '../components/text'
 
 import Commit from '../components/commit/commit'
 import Diff from '../components/commit/diff'
-import Layout from '../components/repository/layout'
-import { P } from '../components/_typography'
 
 import { DetailedCommit } from '../types/data'
 import { Repository } from '../types/repository'
@@ -47,12 +47,12 @@ export default ({ repository, commit, owns }: CommitProps) => {
           base={`/${repository?.owner}/${repository?.name}`}
           commit={commit}
         />
-        <P>
+        <Text>
           Showing {files.length} changed file{files.length > 1 ? 's' : ''} with{' '}
           <strong>
             {additions} additions and {deletions} deletions
           </strong>
-        </P>
+        </Text>
         {files.map(file => (
           <Diff key={file.from + '-' + file.to} file={file} />
         ))}
