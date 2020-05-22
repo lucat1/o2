@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head, navigate, SSG } from '@quercia/quercia'
+import { Head, SSG } from '@quercia/quercia'
 
 import Center from '../components/center'
 import Button from '../components/button'
@@ -18,15 +18,6 @@ export interface CommitsProps {
   next: boolean
   commits: ICommit[]
 }
-
-// const ButtonContainer = styled('div')`
-//   flex: 1;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: center;
-//   padding: 1em;
-// `
 
 export default ({
   repository,
