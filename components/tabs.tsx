@@ -34,16 +34,14 @@ export const Tab: React.FC<LinkProps & { selected?: boolean }> = ({
   <Link
     to={to}
     css={{ outline: 'none', textDecoration: 'none', minWidth: 'unset' }}
-    sx={{ fontSize: 'sm' }}
+    sx={{ 'fontSize': 'sm', 'mx': 1, ':last-child': { mr: 0 } }}
   >
     <Button
       sx={merge(
         {
-          'py': 2,
-          'px': 3,
-          'mx': 2,
-          ':last-child': { mr: 0 },
-          'color': selected && 'primary.default'
+          py: 2,
+          px: 3,
+          color: selected ? 'primary.default' : 'fg.5'
         },
         props.sx
       )}
