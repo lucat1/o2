@@ -1,32 +1,23 @@
-import { styled } from 'goober'
 import * as React from 'react'
-
 import { Head, SSG } from '@quercia/quercia'
 
+import Center from '../components/center'
+import Heading from '../components/heading'
 import NotFound from '../components/svgs/notfound'
-import { H4 } from '../components/_typography'
 
-const Container = styled('div')`
-  height: calc(100% - 2.5em);
+import { Base } from '../types/data'
 
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`
-
-interface NotFoundProps {
-  path: string
-}
-
-export default ({ path }: NotFoundProps) => (
-  <>
+export default ({ path }: Base<{ path: string }>) => (
+  <Center css={{ height: 'calc(100vh - 3.5rem)', flex: 1 }}>
     <Head>
       <title>not found {!SSG && path} - o2</title>
     </Head>
-    <Container>
-      <h1>Page not found:</h1>
-      <H4>{path}</H4>
-      <NotFound style={{ width: '90%', marginTop: '2em' }} />
-    </Container>
-  </>
+    <Heading known as='h1'>
+      Page not found:
+    </Heading>
+    <Heading as='h4' width={9}>
+      {path}
+    </Heading>
+    <NotFound style={{ width: '70%', marginTop: '2em' }} />
+  </Center>
 )
