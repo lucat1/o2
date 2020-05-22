@@ -39,8 +39,8 @@ const Layout: React.FunctionComponent<Base<{ page: Page }>> = ({
       cellSpacing={0}
       cellPadding={0}
       css={{ flex: 1, flexDirection: 'column', borderSpacing: 0 }}
-      px={[0, 10]}
-      py={[2, 0]}
+      py={6}
+      px={[0, 9]}
     >
       <Box
         css={{ justifyContent: 'space-between' }}

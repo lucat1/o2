@@ -73,7 +73,7 @@ export const base: Theme & { forms: any } = {
     focus: '0 0 0 4px rgba(var(--primary-rgb), 0.3)',
     sm: '0px 3px 5px rgba(0, 0, 0, 0.04)'
   },
-  breakpoints: ['960px'],
+  breakpoints: ['960px', '1440px'],
 
   // buttons: {
   //   'primary': {

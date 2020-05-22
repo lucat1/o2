@@ -8,7 +8,7 @@ import User from '../components/profile/user'
 import { User as IUser, Base } from '../types/data'
 
 export default ({ profile, account }: Base<{ profile: IUser }>) => (
-  <Parent p={['2rem 0', '2rem 5rem']}>
+  <Parent py={6} px={[0, 9]}>
     <Head>
       <title>{SSG ? 'user' : profile.username} - o2</title>
       <meta

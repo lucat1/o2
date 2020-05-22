@@ -51,10 +51,11 @@ const Tree: React.FunctionComponent<Except<Base<{ tree: ITree }>, 'owns'>> = ({
 
   return (
     <Container
-      sx={{
+      css={{
         display: 'block',
         borderCollapse: 'collapse',
-        tableLayout: 'auto'
+        tableLayout: 'auto',
+        overflow: 'auto'
       }}
       as='table'
     >

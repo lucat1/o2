@@ -1,19 +1,19 @@
 import * as React from 'react'
-import { themeGet } from '@styled-system/theme-get'
-import styled from '@emotion/styled'
 import { Flex, FlexProps } from 'rebass'
-
-const CustomFlex = styled(Flex)`
-  margin: auto;
-  overflow: ${({ height }) => (height ? 'unset' : 'auto')};
-  width: min(100%, calc(60em + 6vw));
-`
+import merge from 'deep-extend'
 
 const Body: React.FC<FlexProps> = props => (
-  <CustomFlex
+  <Flex
     {...(props as any)}
     as='main'
-    sx={Object.assign({ px: 4 }, props.sx)}
+    sx={merge(
+      {
+        m: 'auto',
+        px: 4,
+        width: ['100%', 'calc(60rem + 1.5vw)', 'calc(60rem + 6vw)']
+      },
+      props.sx
+    )}
   />
 )
 
