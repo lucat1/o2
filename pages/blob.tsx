@@ -58,7 +58,14 @@ export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
 
           <Divider width='100%' />
           <Flex width='100%' overflow='auto' flexDirection='row'>
-            <Pre px={3} sx={{ borderRight: '1px solid', borderColor: 'bg.3' }}>
+            <Pre
+              px={3}
+              sx={{
+                borderRight: '1px solid',
+                borderColor: 'bg.3',
+                flexShrink: 0
+              }}
+            >
               {data?.split('\n').map((_, i) => `${i + 1}\n`)}
             </Pre>
             {loaded && languages[language] ? (

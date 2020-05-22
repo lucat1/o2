@@ -29,7 +29,7 @@ const Pre: React.FC<TextProps> = props => (
       },
 
       '.atrule, .keyword': {
-        color: '#c678dd'
+        color: 'var(--primary)'
       },
 
       '.function': {
