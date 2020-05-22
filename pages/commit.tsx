@@ -1,4 +1,3 @@
-import { styled } from 'goober'
 import * as diff from 'parse-diff'
 import * as React from 'react'
 import { Head, SSG } from '@quercia/quercia'
@@ -10,15 +9,13 @@ import Commit from '../components/commit/commit'
 import Diff from '../components/commit/diff'
 
 import { DetailedCommit } from '../types/data'
-import { Repository } from '../types/repository'
+import { Base } from '../types/repository'
 
-export interface CommitProps {
-  repository: Repository
-  owns: boolean
-  commit: DetailedCommit
-}
-
-export default ({ repository, commit, owns }: CommitProps) => {
+export default ({
+  repository,
+  commit,
+  owns
+}: Base<{ commit: DetailedCommit }>) => {
   if (SSG) {
     // TODO: diff prerender
     return null

@@ -34,11 +34,9 @@ const Header: React.FC<Base<{}>> = ({ account }) => {
             <Link mx={4} to='/login'>
               Login
             </Link>
-            <Button variant='md'>
-              <Link color='bg.5' to='/register'>
-                Sign up
-              </Link>
-            </Button>
+            <Link css={{ textDecoration: 'none' }} color='bg.5' to='/register'>
+              <Button variant='md'>Sign up</Button>
+            </Link>
           </Flex>
         )}
       </Body>

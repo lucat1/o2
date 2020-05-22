@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Flex } from 'rebass'
 
 import { Head } from '@quercia/quercia'
 
