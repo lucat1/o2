@@ -20,6 +20,8 @@ const Text: React.FC<TextProps> = ({
     props.sx || {}
   )
 
+  props.as = props.as || 'span'
+
   if (SSG && !known) {
     // make the width resemble more the size of the text
     let w = props.children?.toString().length || 8

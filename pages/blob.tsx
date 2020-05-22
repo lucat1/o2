@@ -1,15 +1,17 @@
 import * as React from 'react'
+import { Box } from 'rebass'
+import { Head, SSG } from '@quercia/quercia'
 import * as pretty from 'pretty-bytes'
 import { highlight, languages } from 'prismjs/components/prism-core'
-import { Head, SSG } from '@quercia/quercia'
 
 import Container from '../components/base'
 import Divider from '../components/divider'
+import Text from '../components/text'
+import Link from '../components/link'
 import Layout from '../components/repository/layout'
 import Path, { basename } from '../components/repository/path'
 
 import Pre from '../components/code/pre'
-import { SpacedA } from '../components/_typography'
 
 import load, { lang } from '../components/code/load'
 import { Base, BlobProps } from '../types/repository'
@@ -64,35 +66,37 @@ export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
       </Head>
       <Layout owns={owns} repository={repository} page='Tree'>
         <Path repository={repository} entry={blob} />
-        {blob && data && !SSG && (
-          <Container>
-            <Title>
-              {basename(blob.name)}
-              <SpacedA href='?raw'>raw</SpacedA>
-              <span
-                className={css`
-                  flex: 1;
-                  text-align: right;
-                `}
-              >
-                {pretty(blob.size)}
-              </span>
-            </Title>
-            <Divider />
-            <Code>
-              <pre>{data.split('\n').map((_, i) => `${i + 1}\n`)}</pre>
-              {loaded && languages[language] ? (
-                <Pre
-                  dangerouslySetInnerHTML={{
-                    __html: highlight(data, languages[language], language)
-                  }}
-                />
-              ) : (
-                <Pre>{data}</Pre>
-              )}
-            </Code>
-          </Container>
-        )}
+
+        <Container
+          as='table'
+          sx={{
+            display: 'block',
+            borderCollapse: 'collapse',
+            tableLayout: 'auto'
+          }}
+        >
+          <Box as='tr' px={2} py={1}>
+            <th>
+              {!SSG && basename(blob.name)}
+              <Link href='?raw'>raw</Link>
+              <Text flex={1} textAlign='right'>
+                {!SSG && pretty(blob?.size)}
+              </Text>
+            </th>
+          </Box>
+          <Divider />
+          {/*
+            <pre>{data?.split('\n').map((_, i) => `${i + 1}\n`)}</pre>
+            {loaded && languages[language] ? (
+              <Pre
+                dangerouslySetInnerHTML={{
+                  __html: highlight(data, languages[language], language)
+                }}
+              />
+            ) : (
+              <Pre>{data}</Pre>
+            )}*/}
+        </Container>
       </Layout>
     </>
   )

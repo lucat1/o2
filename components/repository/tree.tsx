@@ -10,7 +10,8 @@ import File from '../svgs/file'
 import Folder from '../svgs/folder'
 
 import { basename, key, url } from './path'
-import { EntryKind, Base, RepositoryProps } from '../../types/repository'
+import { Except } from 'type-fest'
+import { EntryKind, Base, Tree as ITree } from '../../types/repository'
 
 const Cell: React.FC<BoxProps> = props => (
   <Box
@@ -38,7 +39,7 @@ const Cell: React.FC<BoxProps> = props => (
 const rnd = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min
 
-const Tree: React.FunctionComponent<Base<RepositoryProps>> = ({
+const Tree: React.FunctionComponent<Except<Base<{ tree: ITree }>, 'owns'>> = ({
   tree,
   repository
 }) => {
@@ -53,8 +54,7 @@ const Tree: React.FunctionComponent<Base<RepositoryProps>> = ({
       sx={{
         display: 'block',
         borderCollapse: 'collapse',
-        tableLayout: 'auto',
-        width: '100%'
+        tableLayout: 'auto'
       }}
       as='table'
     >
