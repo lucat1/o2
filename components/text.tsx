@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Text as RebassText, TextProps as RebassTextProps } from 'rebass'
 import { SSG } from '@quercia/quercia'
+import merge from 'deep-extend'
 
 import Skeleton from './skeleton'
 
@@ -33,7 +34,10 @@ const Text: React.FC<TextProps> = ({
     }
 
     return (
-      <RebassText {...(props as any)}>
+      <RebassText
+        {...(props as any)}
+        css={merge({ display: 'flex', alignItems: 'center ' }, props.css)}
+      >
         <Skeleton width={width || w + 'rem'} height={height || '1.25rem'} />
       </RebassText>
     )
