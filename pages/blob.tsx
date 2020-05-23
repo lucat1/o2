@@ -15,6 +15,7 @@ import Pre from '../components/code/pre'
 import load, { lang } from '../components/code/load'
 import { Base, BlobProps } from '../types/repository'
 
+// TODO: proper prerender
 export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
   const [loaded, setLoaded] = React.useState(false)
 
