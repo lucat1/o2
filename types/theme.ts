@@ -25,7 +25,9 @@ export const base: Theme & { forms: any } = {
     },
     fg: {
       5: 'var(--fg-5)'
-    }
+    },
+    red: 'var(--red)',
+    green: 'var(--green)'
   },
   space: [
     0,

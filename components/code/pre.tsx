@@ -11,6 +11,7 @@ const Pre: React.FC<TextProps> = props => (
     css={{
       'tabSize': 2,
       'margin': 0,
+
       '.comment, .prolog, .doctype, .cdata': {
         color: '#5c6370'
       },

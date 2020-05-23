@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Box, BoxProps } from 'rebass'
+import { Box, BoxProps, FlexProps } from 'rebass'
 import merge from '../types/xtend'
 
-const Base = (props: BoxProps) => {
+const Base = (props: BoxProps & FlexProps) => {
   return (
     <Box
       {...(props as any)}

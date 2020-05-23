@@ -10,9 +10,11 @@ import Text from '../components/text'
 import Link from '../components/link'
 import Layout from '../components/repository/layout'
 import Path, { basename } from '../components/repository/path'
-import Pre from '../components/code/pre'
 
+import Gutter from '../components/code/gutter'
+import Pre from '../components/code/pre'
 import load, { lang } from '../components/code/load'
+
 import { Base, BlobProps } from '../types/repository'
 
 // TODO: proper prerender
@@ -59,18 +61,7 @@ export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
 
           <Divider width='100%' />
           <Flex width='100%' overflow='auto' flexDirection='row'>
-            <Pre
-              px={3}
-              sx={{
-                textAlign: 'end',
-                pointerEvents: 'none',
-                borderRight: '1px solid',
-                borderColor: 'bg.3',
-                flexShrink: 0
-              }}
-            >
-              {data?.split('\n').map((_, i) => `${i + 1}\n`)}
-            </Pre>
+            <Gutter>{data?.split('\n').map((_, i) => `${i + 1}\n`)}</Gutter>
             {loaded && languages[language] ? (
               <Pre
                 dangerouslySetInnerHTML={{

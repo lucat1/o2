@@ -72,6 +72,12 @@ const Button: React.FC<ButtonProps> = props => {
         color: 'fg.5',
         bg: 'transparent',
         minWidth: '5.5rem'
+      },
+      'sm-secondary': {
+        minWidth: '1.25rem',
+        borderColor: 'bg.3',
+        color: 'fg.5',
+        bg: 'transparent'
       }
     }
   })(props)
