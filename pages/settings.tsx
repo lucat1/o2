@@ -29,7 +29,7 @@ export default ({ repository, owns }: SettingsProps) => {
         />
       </Head>
       <Layout owns={owns} repository={repository} page='Settings'>
-        <Parent>
+        <Parent py={6}>
           <Left repository={repository} current='General' />
           <Right>right hand side</Right>
         </Parent>
