@@ -69,7 +69,7 @@ export default ({
           css={{ textDecoration: 'none' }}
           color='bg.5'
         >
-          <Button disabled={!prev}>Next</Button>
+          <Button disabled={!next}>Next</Button>
         </Link>
       </Center>
     </Layout>

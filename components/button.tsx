@@ -36,6 +36,12 @@ const PrimaryButton: React.FC<ButtonProps> = props => (
 
         ':focus': {
           boxShadow: 'focus'
+        },
+
+        '&[disabled]': {
+          bg: 'bg.4',
+          borderColor: 'bg.4',
+          cursor: 'default'
         }
       },
       props.sx
