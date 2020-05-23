@@ -1,4 +1,3 @@
-import { setup } from 'goober'
 import * as React from 'react'
 import usePrefersTheme, { Preference } from 'use-prefers-theme'
 
@@ -13,8 +12,6 @@ import Header from '../components/header'
 import Progress from '../components/progress'
 
 import { base } from '../types/theme'
-
-setup(React.createElement)
 
 const glob = css`
   :root {
