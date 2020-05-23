@@ -1,16 +1,8 @@
 import { Theme } from 'styled-system'
-import { keyframes } from '@emotion/css'
-
-const animation = keyframes`
-  100% {
-    background: transparent;
-    color: inherit;
-  }
-`
 
 const fontFamily = "'Operator Mono', monospace, mono"
 
-export const base: Theme & { forms: any } = {
+export const base: Theme = {
   colors: {
     primary: {
       default: '#c792ea',
@@ -75,36 +67,5 @@ export const base: Theme & { forms: any } = {
     focus: '0 0 0 4px rgba(var(--primary-rgb), 0.3)',
     sm: '0px 3px 5px rgba(0, 0, 0, 0.04)'
   },
-  breakpoints: ['960px', '1440px'],
-
-  // customization section for @rebass/forms
-  forms: {
-    input: {
-      'borderRadius': 'md',
-      'outline': 'none',
-      'transition': 'box-shadow 200ms ease-in-out',
-      'borderColor': 'bg.3',
-      'fontSize': 'sm',
-      'fontFamily': 'default',
-      'px': 4,
-      'py': 2,
-
-      ':focus': {
-        borderColor: 'primary.light',
-        boxShadow: 'focus'
-      },
-
-      ':-webkit-autofill': {
-        animation: `${animation} 0s forwards`
-      }
-    },
-    error: {
-      my: 2,
-      fontSize: 'sm',
-      color: 'error'
-    },
-    label: {
-      my: 2
-    }
-  }
+  breakpoints: ['960px', '1440px']
 }

@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { Box } from 'rebass'
-import { Input, Label } from '@rebass/forms'
 import { Head, navigate } from '@quercia/quercia'
 
 import Center from '../components/center'
 import Button from '../components/button'
+import Input from '../components/input'
+import Label from '../components/label'
 
 interface Data {
   email: string

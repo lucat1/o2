@@ -36,18 +36,3 @@ export const Item: React.FC<FlexProps & { selected?: boolean }> = ({
     {...(props as any)}
   />
 )
-
-// styled(Flex)<{ selected?: boolean }>`
-//     padding: 0.5em 0.75em;
-//     cursor: pointer;
-
-//     color: ${({ selected }) => (selected ? 'var(--primary)' : 'inherit')};
-//     font-weight: ${({ selected }) => (selected ? 'bold' : 'inherit')};
-
-//     display: flex;
-//     align-items: center;
-
-//     &:hover {
-//       background: var(--bg-4);
-//     }
-//   `
