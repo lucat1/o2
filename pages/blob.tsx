@@ -61,6 +61,8 @@ export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {
             <Pre
               px={3}
               sx={{
+                textAlign: 'end',
+                pointerEvents: 'none',
                 borderRight: '1px solid',
                 borderColor: 'bg.3',
                 flexShrink: 0
