@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Flex, FlexProps } from 'rebass'
-import merge from 'deep-extend'
+import merge from '../types/xtend'
 
 export const Parent: React.FC<FlexProps> = props => (
   <Flex

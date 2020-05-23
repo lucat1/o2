@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Box, BoxProps } from 'rebass'
-import merge from 'deep-extend'
+import merge from '../types/xtend'
 
 const Base = (props: BoxProps) => {
   return (

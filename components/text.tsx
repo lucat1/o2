@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text as RebassText, TextProps as RebassTextProps } from 'rebass'
 import { SSG } from '@quercia/quercia'
-import merge from 'deep-extend'
+import merge from '../types/xtend'
 
 import Skeleton from './skeleton'
 

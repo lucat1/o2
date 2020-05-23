@@ -14,7 +14,6 @@
     "@emotion/server": "^11.0.0-next.12",
     "@emotion/styled": "^11.0.0-next.12",
     "@rebass/forms": "^4.0.6",
-    "deep-extend": "^0.6.0",
     "goober": "lucat1/goober#3f120e5c0d97423fb4b0bf68893d764a11ce05ae",
     "parse-diff": "^0.7.0",
     "pretty-bytes": "^5.3.0",

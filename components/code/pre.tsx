@@ -1,5 +1,5 @@
 import * as React from 'react'
-import merge from 'deep-extend'
+import merge from '../../types/xtend'
 
 import Text, { TextProps } from '../text'
 

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { variant } from 'styled-system'
 import { Button as RebassButton, ButtonProps } from 'rebass'
-import merge from 'deep-extend'
+import merge from '../types/xtend'
 
 const PrimaryButton: React.FC<ButtonProps> = props => (
   <RebassButton
