@@ -10,7 +10,7 @@ const animation = keyframes({
   }
 })
 
-const Label: React.FC<InputProps> = props => (
+const Label: React.FC<InputProps> = React.forwardRef((props, ref) => (
   <RebassInput
     {...(props as any)}
     sx={merge(
@@ -35,7 +35,8 @@ const Label: React.FC<InputProps> = props => (
       },
       props.sx
     )}
+    ref={ref}
   />
-)
+))
 
 export default Label
