@@ -4,7 +4,6 @@ import { Head, SSG } from '@quercia/quercia'
 import Center from '../components/center'
 import Button from '../components/button'
 import Link from '../components/link'
-
 import Commit from '../components/commit/commit'
 import Layout from '../components/repository/layout'
 

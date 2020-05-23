@@ -15,12 +15,7 @@ export type LinkProps = RebassLinkProps &
   TextProps & { to?: string; unkown?: boolean }
 
 // custom implementation of quercia's Link component with Rebass/styled-system
-const Link: React.FC<LinkProps & { to?: string }> = ({
-  to,
-  known,
-  unkown,
-  ...props
-}) => {
+const Link: React.FC<LinkProps & { to?: string }> = ({ to, ...props }) => {
   if (to) {
     props.onClick = route(to) as any
     props.href = to
@@ -28,7 +23,6 @@ const Link: React.FC<LinkProps & { to?: string }> = ({
 
   return (
     <Text
-      known={known || !unkown}
       as='a'
       css={merge(
         {

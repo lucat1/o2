@@ -24,7 +24,7 @@ const Header: React.FC<Base<{}>> = ({ account }) => {
       }}
     >
       <Body height={6} alignItems='center' justifyContent='space-between'>
-        <Link aria-label='Link to the homepage' color='fg.5' to='/'>
+        <Link known aria-label='Link to the homepage' color='fg.5' to='/'>
           <Logo width='1rem' onClick={() => navigate('/')} />
         </Link>
         {account ? (

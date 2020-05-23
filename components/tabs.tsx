@@ -32,6 +32,7 @@ export const Tab: React.FC<LinkProps & { selected?: boolean }> = ({
   ...props
 }) => (
   <Link
+    known
     to={to}
     css={{ outline: 'none', textDecoration: 'none', minWidth: 'unset' }}
     sx={{ 'fontSize': 'sm', 'mx': 1, ':last-child': { mr: 0 } }}
