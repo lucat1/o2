@@ -25,18 +25,20 @@ const Head: React.FunctionComponent<HeadProps> = ({
   }, [])
 
   return (
-    <Flex p={2}>
+    <Flex p={2} alignItems='center'>
       <Heading m={0} known>
         create a new
       </Heading>
-      <Relative>
-        <Dropbox open={open} onClick={() => setOpen(true)}>
+      <Relative mx={2}>
+        <Dropbox variant='secondary' open={open} onClick={() => setOpen(true)}>
           {types[selected]}
         </Dropbox>
         <Dropdown open={open} onClose={() => setOpen(false)}>
           <List>
             {types.map((type, i) => (
-              <Item onClick={() => select(i)}>{type}</Item>
+              <Item selected={selected == i} key={i} onClick={() => select(i)}>
+                {type}
+              </Item>
             ))}
           </List>
         </Dropdown>

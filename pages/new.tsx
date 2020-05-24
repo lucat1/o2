@@ -32,7 +32,7 @@ export default ({ user, error }: Base<AddProps>) => {
           content='create a new repositroy/organization in o2'
         />
       </Head>
-      <Container>
+      <Container flexDirection='column'>
         <Header types={types} selected={selected} setSelected={setSelected} />
         <Divider />
         <Center>{error && <Heading color='error'>{error}</Heading>}</Center>
