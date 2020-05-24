@@ -55,7 +55,8 @@ const Tree: React.FunctionComponent<Except<Base<{ tree: ITree }>, 'owns'>> = ({
         display: 'block',
         borderCollapse: 'collapse',
         tableLayout: 'auto',
-        overflow: 'auto'
+        overflowX: 'auto',
+        overflowY: 'hidden'
       }}
       as='table'
     >

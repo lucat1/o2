@@ -1,16 +1,7 @@
-import styled from '@emotion/styled'
 import * as React from 'react'
 import { Box, BoxProps } from 'rebass'
+import merge from '../types/xtend'
 import useOnClickOutside from 'use-onclickoutside'
-
-const Base = styled(Box)`
-  position: absolute;
-  right: 0;
-  z-index: 100;
-  max-height: 15em;
-  min-width: 10em;
-  overflow: auto;
-`
 
 const Dropdown: React.FunctionComponent<BoxProps & {
   open: boolean
@@ -20,13 +11,24 @@ const Dropdown: React.FunctionComponent<BoxProps & {
   useOnClickOutside(ref, onClose)
 
   return (
-    <Base
+    <Box
       ref={ref as any}
       {...(props as any)}
-      sx={Object.assign(
+      css={merge(
+        {
+          position: 'absolute',
+          right: 0,
+          zIndex: 100,
+          overflow: 'auto'
+        },
+        props.css
+      )}
+      sx={merge(
         {
           marginTop: 2,
           py: 3,
+          maxHeight: 8,
+          minWidth: 8,
           border: '1px solid',
           borderColor: 'bg.3',
           bg: 'bg.5',

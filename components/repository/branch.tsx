@@ -4,8 +4,7 @@ import { navigate } from '@quercia/quercia'
 
 import Relative from '../relative'
 import Center from '../center'
-import Button from '../button'
-import Arrow from '../svgs/arrow'
+import Dropbox from '../dropbox'
 import Dropdown from '../dropdown'
 import { Item, List } from '../list'
 
@@ -40,8 +39,9 @@ const Branch: React.FunctionComponent<{
 
   return (
     <Relative>
-      <Button
+      <Dropbox
         variant='secondary'
+        open={open}
         onClick={() => setOpen(true)}
         disabled={disabled}
       >
@@ -49,11 +49,7 @@ const Branch: React.FunctionComponent<{
         <HideOnSmall>
           : <strong>{current}</strong>
         </HideOnSmall>
-        <Arrow
-          style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
-          height='1em'
-        />
-      </Button>
+      </Dropbox>
       <Dropdown open={open} onClose={() => setOpen(false)}>
         <List>
           {refs.map(ref => (

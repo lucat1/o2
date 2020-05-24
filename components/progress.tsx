@@ -1,20 +1,7 @@
 import * as React from 'react'
 import { Box } from 'rebass'
-import styled from '@emotion/styled'
 
 import { SSG, useRouter } from '@quercia/quercia'
-
-const Bar = styled('div')`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0.15em;
-  background: var(--primary);
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out, width 0.2s ease-in-out;
-  z-index: 11;
-`
 
 const Progress: React.FunctionComponent = () => {
   if (SSG) {

@@ -1,14 +1,9 @@
 import * as React from 'react'
-import styled from '@emotion/styled'
-import { ButtonProps } from 'rebass'
+import { Box, ButtonProps } from 'rebass'
+import merge from '../types/xtend'
 
 import Arrow from './svgs/arrow'
 import Button from './button'
-
-export const ArrowIcon = styled(Arrow)`
-  margin-left: 0.5em;
-  transition: transform 200ms ease-in-out;
-`
 
 const Dropbox: React.FC<ButtonProps & { open: boolean }> = ({
   children,
@@ -17,10 +12,13 @@ const Dropbox: React.FC<ButtonProps & { open: boolean }> = ({
 }) => (
   <Button {...(props as any)}>
     {children}
-    <ArrowIcon
-      css={{ marginLeft: '.5rem' }}
+    <Box
+      as={Arrow}
+      sx={merge(
+        { ml: 2, height: 2, transition: 'transform 300ms ease-in-out' },
+        props.sx
+      )}
       style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
-      height='1em'
     />
   </Button>
 )

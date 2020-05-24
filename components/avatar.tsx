@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Flex } from 'rebass'
-import styled from '@emotion/styled'
 
 import { navigate } from '@quercia/quercia'
 
