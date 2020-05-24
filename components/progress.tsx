@@ -1,5 +1,6 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Box } from 'rebass'
+import styled from '@emotion/styled'
 
 import { SSG, useRouter } from '@quercia/quercia'
 
@@ -54,7 +55,7 @@ const Progress: React.FunctionComponent = () => {
     return () => clearInterval(handle)
   }, [loading])
 
-  return <Bar style={{ width: `${val}%`, opacity: opacity }} />
+  return <Box style={{ width: `${val}%`, opacity: opacity }} />
 }
 
 export default Progress

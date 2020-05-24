@@ -1,13 +1,22 @@
-import { extractCss } from 'goober'
 import * as React from 'react'
+import {
+  QuerciaHead,
+  QuerciaScripts,
+  QuerciaMount,
+  DocumentProps
+} from '@quercia/runtime'
 
-import { DocumentProps, QuerciaHead, QuerciaMount, QuerciaScripts } from '@quercia/runtime'
+import { extractCritical } from '@emotion/server'
+import { EmotionCritical } from '@emotion/server/create-instance'
 
-export default ({ css }: DocumentProps & { css: string }) => (
+export default ({ ids, css }: DocumentProps & EmotionCritical) => (
   <html lang='en'>
     <QuerciaHead>
       <meta name='viewport' content='width=device-width' />
-      <style id='_goober' dangerouslySetInnerHTML={{ __html: css }} />
+      <style
+        data-emotion-css={ids.join(' ')}
+        dangerouslySetInnerHTML={{ __html: css }}
+      />
     </QuerciaHead>
     <body>
       <QuerciaMount />
@@ -17,6 +26,5 @@ export default ({ css }: DocumentProps & { css: string }) => (
 )
 
 export const getInitialProps = ({ renderPage }: DocumentProps) => {
-  renderPage()
-  return { css: extractCss() }
+  return extractCritical(renderPage())
 }

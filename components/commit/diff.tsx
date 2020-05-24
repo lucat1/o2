@@ -1,92 +1,15 @@
-import { css, styled } from 'goober'
-import { File } from 'parse-diff'
 import * as React from 'react'
+import { Flex } from 'rebass'
+import { File } from 'parse-diff'
 
+import Container from '../base'
+import Center from '../center'
+import Divider from '../divider'
 import Button from '../button'
-import C, { Line as L } from '../base'
+import Text from '../text'
 import Arrow from '../svgs/arrow'
-import { SpacedA } from '../typography'
-
-const Container = styled(C)`
-  margin: 1em 0;
-  overflow: hidden;
-
-  &:nth-child(4) {
-    margin-top: 0.5em;
-  }
-`
-
-const Title = styled('div')`
-  align-items: center;
-  display: flex;
-  padding: 0.35em 0.5em;
-`
-
-const Code = styled('code')`
-  overflow: auto;
-
-  display: grid;
-  grid-template-columns: auto auto 3fr;
-`
-
-const Empty = styled('div')`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-
-  height: 7em;
-  padding: 1.25em;
-`
-
-const IconButton = styled(Button)<{ flipped: boolean }>`
-  margin-right: 0.5em;
-  padding: 0;
-  color: var(--fg-5);
-  background: var(--bg-3);
-  transform: rotate(${({ flipped }) => (flipped ? '180' : '360')}deg);
-`
-
-const LineNumbers = styled('div')`
-  padding: 0 0.75em;
-  user-select: none;
-  text-align: right;
-`
-
-const FullLine = styled('div')<{ big: boolean }>`
-  grid-column: 1 / 4;
-  padding: 0 0.75em;
-  background: var(--bg-6);
-
-  ${({ big }) =>
-    big &&
-    `
-  height: 3.5em;
-  display: flex;
-  align-items: center;
-  `}
-`
-
-const Line = styled(L)`
-  grid-column: 1 / 4;
-`
-
-const Pre = styled('pre')`
-  margin: 0;
-`
-
-const red = css`
-  background: var(--red);
-`
-
-const green = css`
-  background: var(--green);
-`
-
-const Stat = styled(SpacedA)<{ new: boolean }>`
-  font-weight: bold;
-  color: ${props => `var(--${props.new ? 'green' : 'red'})`};
-`
+import Pre from '../code/pre'
+import Gutter from '../code/gutter'
 
 const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
   const [visible, setVisible] = React.useState(
@@ -106,62 +29,86 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
   }
 
   return (
-    <Container>
-      <Title>
-        <IconButton
-          flipped={collapsed}
-          tiny
+    <Container flexDirection='column'>
+      <Flex alignItems='center' py={1} px={2} fontSize='sm'>
+        <Button
+          p={1}
+          variant='sm-secondary'
           onClick={() => collapse(!collapsed)}
           aria-label={collapsed ? 'Show diff' : 'Collpase diff'}
         >
-          <Arrow height='1em' />
-        </IconButton>
-        <a>{title}</a>
-        {file.new && <Stat new>NEW</Stat>}
-        {file.deleted && <Stat new={false}>DEL</Stat>}
-      </Title>
-      {!collapsed && <Line />}
+          <Arrow
+            style={{
+              transform: `rotate(${collapsed ? 180 : 360}deg)`
+            }}
+            height='1em'
+          />
+        </Button>
+        <Text px={2}>{title}</Text>
+        {file.new && (
+          <Text fontWeight='bold' color='green'>
+            NEW
+          </Text>
+        )}
+        {file.deleted && (
+          <Text fontWeight='bold' color='red'>
+            DEL
+          </Text>
+        )}
+      </Flex>
+
+      {!collapsed && <Divider />}
       {!visible && !collapsed && (
-        <Empty>
+        <Center css={{ textAlign: 'center' }} p={4}>
           {file.deleted
             ? 'The file was deleted, hiding diff'
             : 'The diff is too big, not showing'}
 
-          <Button small onClick={() => setVisible(true)}>
+          <Button mt={4} variant='md' onClick={() => setVisible(true)}>
             Show anyway
           </Button>
-        </Empty>
+        </Center>
       )}
       {visible &&
         !collapsed &&
         file.chunks.map((chunk, i) => (
-          <Code key={i}>
-            {i !== 0 && <Line />}
-            <FullLine big={i !== 0}>{chunk.content}</FullLine>
-            {i !== 0 && <Line />}
-            {chunk.changes.map((change, i) => {
-              const csx =
-                change.type === 'del'
-                  ? red
-                  : change.type === 'add'
-                  ? green
-                  : undefined
+          <Flex flexDirection='column' key={i}>
+            {i !== 0 && <Divider />}
+            <Flex
+              alignItems='center'
+              bg='bg.6'
+              px={3}
+              height={i !== 0 ? 6 : 'auto'}
+            >
+              {chunk.content}
+            </Flex>
+            {i !== 0 && <Divider />}
 
-              return (
-                <React.Fragment key={i}>
-                  <LineNumbers className={csx}>
-                    {!file.new && !file.deleted && chunk.oldStart + i}
-                  </LineNumbers>
-                  <LineNumbers className={csx}>
-                    {chunk.newStart + i}
-                  </LineNumbers>
-                  <div className={csx}>
-                    <Pre>{change.content}</Pre>
-                  </div>
-                </React.Fragment>
-              )
-            })}
-          </Code>
+            <Flex width='100%' overflow='auto' flexDirection='row'>
+              <Gutter
+                sx={{
+                  color: !file.new && !file.deleted ? 'inherit' : 'transparent'
+                }}
+              >
+                {chunk.changes.map((_, i) => `${chunk.oldStart + i}\n`)}
+              </Gutter>
+              <Gutter>
+                {chunk.changes.map((_, i) => `${chunk.newStart + i}\n`)}
+              </Gutter>
+              <Pre>
+                {chunk.changes.map((change, i) => {
+                  const color =
+                    change.type === 'del'
+                      ? 'var(--red)'
+                      : change.type === 'add'
+                      ? 'var(--green)'
+                      : 'inherit'
+
+                  return <span style={{ color }}>{change.content + '\n'}</span>
+                })}
+              </Pre>
+            </Flex>
+          </Flex>
         ))}
     </Container>
   )

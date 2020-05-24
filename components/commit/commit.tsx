@@ -1,118 +1,78 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Flex } from 'rebass'
 import format from 'tinydate'
 
-import { navigate, SSG } from '@quercia/quercia'
+import Container from '../base'
+import Image from '../image'
+import Link from '../link'
+import Text from '../text'
 
 import { Commit as ICommit } from '../../types/data'
-import I from '../image'
-import Container from '../base'
-import S from '../skeleton'
-import { Link, P } from '../typography'
-
-const CommitContainer = styled(Container)`
-  margin: 0.5em 0;
-  padding: 0.35em 0.75em;
-  height: 3.5em;
-
-  white-space: nowrap;
-  overflow: hidden;
-
-  display: flex;
-  align-items: center;
-`
-
-const Image = styled(I)`
-  flex-shrink: 0;
-  width: 2em;
-  height: 2em;
-  cursor: pointer;
-  outline: none;
-  transition: box-shadow 200ms ease-in-out;
-
-  &:focus {
-    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.4);
-  }
-`
-
-const Data = styled('div')`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  flex-shrink: 1;
-  margin: 0 0.5em;
-
-  overflow: hidden;
-`
-
-const WhiteLink = styled(Link)`
-  color: var(--fg-5);
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
-const Skeleton = S
-
-const TinyP = styled(P)`
-  margin: 0;
-  font-size: 0.85em;
-`
-
-const TinyPSkeleton = styled('p')`
-  margin: 0;
-  font-size: 0.85em;
-`
-
-const Right = styled('div')`
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-`
 
 const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
   commit,
   base
 }) => (
-  <CommitContainer>
-    <Image
-      alt={
-        commit
-          ? `${commit.author.username}'s profile picture`
-          : "commit author's profile picture"
-      }
-      src={commit ? `${commit.author.picture}?s=75` : ''}
-      tabIndex={0}
-      onClick={() => navigate(`/${commit.author.username}`)}
-      onKeyUp={e => e.keyCode === 13 && navigate(`/${commit.author.username}`)}
-    />
-    <Data>
-      <WhiteLink to={`${base}/commit/${commit?.commit}`}>
-        {commit?.subject}
-      </WhiteLink>
-      {SSG ? (
-        <TinyPSkeleton>
-          <Skeleton height={1.1} width={12} />
-        </TinyPSkeleton>
-      ) : (
-        <TinyP>
-          <Link to={`/${commit?.author.username}`}>
+  <Container
+    my={2}
+    px={2}
+    py={3}
+    css={{
+      overflow: 'hidden',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }}
+  >
+    <Flex>
+      <Link
+        known
+        css={{ outline: 'none', flexShrink: 0, display: 'flex' }}
+        to={`/${commit?.author?.username}`}
+      >
+        <Image
+          width={5}
+          height={5}
+          alt={
+            commit
+              ? `${commit.author.username}'s profile picture`
+              : "commit author's profile picture"
+          }
+          src={commit ? `${commit.author.picture}?s=75` : ''}
+        />
+      </Link>
+      <Flex
+        css={{
+          'flexDirection': 'column',
+          'a, span': {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
+          }
+        }}
+        mx={2}
+      >
+        <Link width={8} color='fg.5' to={`${base}/commit/${commit?.commit}`}>
+          {commit?.subject}
+        </Link>
+
+        <Text known fontSize='xs' display='flex' mt={2} as='span'>
+          <Link height={2} to={`/${commit?.author.username}`}>
             {commit?.author?.username}
           </Link>
-          {' commited on '}
-          {format('{DD} {MM} {YYYY}')(new Date(commit?.author?.date))}
-        </TinyP>
-      )}
-    </Data>
-    <Right>
-      <Link to={`${base}/tree/${commit?.tree}`}>{commit?.abbrv_tree}</Link>
-    </Right>
-  </CommitContainer>
+          <Text height={2} px={1}>
+            commited on
+          </Text>
+          <Text height={2}>
+            {format('{DD} {MM} {YYYY}')(new Date(commit?.author?.date))}
+          </Text>
+        </Text>
+      </Flex>
+    </Flex>
+
+    <Link css={{ flexShrink: 0 }} to={`${base}/tree/${commit?.tree}`}>
+      {commit?.abbrv_tree}
+    </Link>
+  </Container>
 )
 
 export default Commit

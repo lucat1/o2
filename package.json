@@ -9,13 +9,18 @@
     "dev": "rm -rf __quercia && quercia watch"
   },
   "dependencies": {
-    "goober": "lucat1/goober#3f120e5c0d97423fb4b0bf68893d764a11ce05ae",
+    "@emotion/css": "^11.0.0-next.12",
+    "@emotion/react": "^11.0.0-next.12",
+    "@emotion/server": "^11.0.0-next.12",
+    "@emotion/styled": "^11.0.0-next.12",
+    "@rebass/forms": "^4.0.6",
     "parse-diff": "^0.7.0",
     "pretty-bytes": "^5.3.0",
     "prismjs": "^1.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.3.1",
+    "rebass": "^4.0.7",
     "snarkdown": "^1.2.2",
     "tinydate": "^1.2.0",
     "use-onclickoutside": "^0.3.1",
@@ -23,13 +28,21 @@
   },
   "devDependencies": {
     "@quercia/cli": "0.4.0",
+    "@styled-system/theme-get": "^5.1.2",
     "@types/node": "^13.11.1",
     "@types/prismjs": "^1.16.0",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
+    "@types/rebass": "^4.0.6",
+    "@types/rebass__forms": "^4.0.2",
     "bundlewatch": "^0.2.6",
     "preact": "^10.4.0",
+    "type-fest": "^0.14.0",
     "typescript": "^3.8.3"
+  },
+  "resolutions": {
+    "@emotion/react": "^11.0.0-next.12",
+    "@emotion/styled": "^11.0.0-next.12"
   },
   "prettier": {
     "printWidth": 80,
@@ -45,7 +58,7 @@
     "files": [
       {
         "path": "__quercia/*/client/*.js",
-        "maxSize": "21kB"
+        "maxSize": "31kB"
       },
       {
         "path": "__quercia/*/client/pages/**/*.js",

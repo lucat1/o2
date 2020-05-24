@@ -1,35 +1,10 @@
-import { styled } from 'goober'
 import * as React from 'react'
-
 import { SSG } from '@quercia/quercia'
 
-import { Repository } from '../../types/data'
-import { Tab as T } from '../tabs'
-import { Left as L } from '../split'
+import { Left as Split } from '../split'
+import { Tab } from '../tabs'
 
-const Container = styled(L)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1em 0;
-  border-right: 1px solid var(--bg-3);
-  height: 100%;
-
-  @media (max-width: 680px) {
-    border: none;
-  }
-`
-
-const Tab = styled(T)`
-  font-size: 1em;
-  width: 70%;
-  height: 2.25em;
-  margin: 0.5em 0;
-
-  &:nth-child(1) {
-    margin-top: 0;
-  }
-`
+import { Repository } from '../../types/repository'
 
 type Page = 'General' | 'Permissions' | 'Hooks'
 
@@ -40,10 +15,13 @@ interface LeftProps {
 
 const pages: Page[] = ['General', 'Permissions', 'Hooks']
 
+// TODO: Fix tabs margin-right on last child
 const Left: React.FunctionComponent<LeftProps> = ({ repository, current }) => (
-  <Container>
+  <Split px={[0, 4]} flexDirection='column'>
     {pages.map(page => (
       <Tab
+        width='100%'
+        my={2}
         selected={page == current}
         to={
           SSG
@@ -56,7 +34,7 @@ const Left: React.FunctionComponent<LeftProps> = ({ repository, current }) => (
         {page}
       </Tab>
     ))}
-  </Container>
+  </Split>
 )
 
 export default Left

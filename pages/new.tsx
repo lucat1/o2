@@ -1,57 +1,43 @@
 import * as React from 'react'
-import { css } from 'goober'
-
 import { Head } from '@quercia/quercia'
 
-import { Base, Center } from '../components/new/layout'
-import Header from '../components/new/head'
+import Container from '../components/base'
+import Center from '../components/center'
+import Heading from '../components/heading'
+import Divider from '../components/divider'
 
-import { User, LoggedUser } from '../types/data'
-import { Line, Center as ErrorContainer } from '../components/base'
+import Header from '../components/new/head'
 import Repository from '../components/new/repository'
 import Organization from '../components/new/organization'
-import { H2 } from '../components/typography'
+
+import { Base, User } from '../types/data'
 
 interface AddProps {
   error?: string
-  account: LoggedUser
   user: User
 }
 
 const types = ['Repository', 'Organization']
-const Elements = [Repository, Organization]
 
-export default ({ user, error }: AddProps) => {
+export default ({ user, error }: Base<AddProps>) => {
   const [selected, setSelected] = React.useState(0)
-  const Element = Elements[selected]
+  const Element = [Repository, Organization][selected]
 
   return (
-    <>
+    <Center css={{ height: 'calc(100vh - 3.5rem)', flex: 1 }}>
       <Head>
-        <title>add - o2</title>
+        <title>new - o2</title>
         <meta
           name='description'
           content='create a new repositroy/organization in o2'
         />
       </Head>
-      <Center>
-        <Base>
-          <Header types={types} selected={selected} setSelected={setSelected} />
-          <Line />
-          <ErrorContainer>
-            {error && (
-              <H2
-                className={css`
-                  color: var(--error);
-                `}
-              >
-                {error}
-              </H2>
-            )}
-          </ErrorContainer>
-          <Element user={user} />
-        </Base>
-      </Center>
-    </>
+      <Container flexDirection='column'>
+        <Header types={types} selected={selected} setSelected={setSelected} />
+        <Divider />
+        <Center>{error && <Heading color='error'>{error}</Heading>}</Center>
+        <Element user={user} />
+      </Container>
+    </Center>
   )
 }

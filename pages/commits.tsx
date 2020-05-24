@@ -1,32 +1,22 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Head, SSG } from '@quercia/quercia'
 
-import { Head, navigate, SSG } from '@quercia/quercia'
-
+import Center from '../components/center'
 import Button from '../components/button'
+import Link from '../components/link'
 import Commit from '../components/commit/commit'
 import Layout from '../components/repository/layout'
-import { Commit as ICommit, Repository } from '../types/data'
+
+import { Commit as ICommit } from '../types/data'
+import { Base } from '../types/repository'
 
 export interface CommitsProps {
-  repository: Repository
-  owns: boolean
-
   branch: string
   index: number
   prev: boolean
   next: boolean
   commits: ICommit[]
 }
-
-const ButtonContainer = styled('div')`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 1em;
-`
 
 export default ({
   repository,
@@ -36,16 +26,16 @@ export default ({
   next,
   index,
   branch
-}: CommitsProps) => {
+}: Base<CommitsProps>) => {
   if (SSG) {
     commits = Array.from({ length: 20 })
   }
 
   const base = `/${repository?.owner}/${repository?.name}`
-  const goTo = (i: number) => navigate(`${base}/commits/${branch}/${i}`)
+  const url = (i: number) => `${base}/commits/${branch}/${i}`
 
   return (
-    <>
+    <Layout owns={owns} repository={repository} page='Commits'>
       <Head>
         <title>
           {typeof repository === 'object'
@@ -58,20 +48,29 @@ export default ({
           content='the commits of a git repository on the o2 service'
         />
       </Head>
-      <Layout owns={owns} repository={repository} page='Commits'>
-        {(commits || []).map(commit => (
-          <Commit key={commit?.commit} base={base} commit={commit} />
-        ))}
 
-        <ButtonContainer>
-          <Button onClick={() => goTo(index - 1)} disabled={!prev}>
-            Previous
-          </Button>
-          <Button onClick={() => goTo(index + 1)} disabled={!next}>
-            Next
-          </Button>
-        </ButtonContainer>
-      </Layout>
-    </>
+      {(commits || []).map(commit => (
+        <Commit key={commit?.commit} base={base} commit={commit} />
+      ))}
+
+      <Center flexDirection='row' p={4}>
+        <Link
+          m={4}
+          to={url(index - 1)}
+          css={{ textDecoration: 'none' }}
+          color='bg.5'
+        >
+          <Button disabled={!prev}>Previous</Button>
+        </Link>
+        <Link
+          m={4}
+          to={url(index + 1)}
+          css={{ textDecoration: 'none' }}
+          color='bg.5'
+        >
+          <Button disabled={!next}>Next</Button>
+        </Link>
+      </Center>
+    </Layout>
   )
 }

@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
-
+import { Box } from 'rebass'
 import { Head, navigate } from '@quercia/quercia'
 
+import Center from '../components/center'
 import Button from '../components/button'
-import Form from '../components/form'
 import Input from '../components/input'
+import Label from '../components/label'
 
 interface Data {
   email: string
@@ -42,18 +43,21 @@ export default ({ error }: LoginProps) => {
   }
 
   return (
-    <>
+    <Center
+      css={{ height: 'calc(100vh - 3.5rem)', flex: 1 }}
+      as='form'
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Head>
         <title>login - o2</title>
       </Head>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        {error && <h1 style={{ color: 'red' }}>{error}</h1>}
+      {error && <h1 style={{ color: 'red' }}>{error}</h1>}
 
+      <Box py={4} width={9}>
         <Input
           name='email'
-          label='Email'
+          placeholder='Email'
           disabled={isLoading}
-          error={errors.email?.message.toString()}
           ref={register({
             required: 'Required',
             pattern: {
@@ -62,13 +66,19 @@ export default ({ error }: LoginProps) => {
             }
           })}
         />
+        {errors.email && (
+          <Label htmlFor='email' variant='error'>
+            {errors.email?.message.toString()}
+          </Label>
+        )}
+      </Box>
 
+      <Box py={4} width={9}>
         <Input
           name='password'
-          label='Password'
+          placeholder='Password'
           type='password'
           disabled={isLoading}
-          error={errors.password?.message.toString()}
           ref={register({
             required: 'Required',
             pattern: {
@@ -78,11 +88,16 @@ export default ({ error }: LoginProps) => {
             }
           })}
         />
+        {errors.password && (
+          <Label htmlFor='password' variant='error'>
+            {errors.password?.message.toString()}
+          </Label>
+        )}
+      </Box>
 
-        <Button disabled={isLoading} type='submit'>
-          Login
-        </Button>
-      </Form>
-    </>
+      <Button disabled={isLoading} type='submit'>
+        Login
+      </Button>
+    </Center>
   )
 }

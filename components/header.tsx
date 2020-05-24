@@ -1,120 +1,47 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Flex } from 'rebass'
 
 import { navigate } from '@quercia/quercia'
 
-import { BaseData } from '../types/data'
-import B from './body'
+import Body from './body'
+import Link from './link'
+import Avatar from './avatar'
+import Logo from './svgs/logo'
 import Button from './button'
-import D, { Container as DC } from './dropdown'
-import I from './image'
-import { List, Item } from './list'
-import L from './svgs/logo'
-import { Line } from './base'
-import { SpacedH4, SpacedLink } from './typography'
 
-const Container = styled('nav')`
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
+import { Base } from '../types/data'
 
-  height: calc(2.5em - 1px);
-
-  background: var(--bg-6);
-  border-bottom: 1px solid var(--bg-3);
-  z-index: 10;
-`
-
-const Body = styled(B)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  div {
-    display: flex;
-    align-items: center;
-  }
-`
-
-const Logo = styled(L)`
-  height: 0.75em;
-  margin: 0.85em;
-  cursor: pointer;
-`
-
-const Image = styled(I)`
-  width: 1.5em;
-  height: 1.5em;
-  cursor: pointer;
-  outline: none;
-  transition: box-shadow 200ms ease-in-out;
-
-  &:focus {
-    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
-  }
-`
-
-const Dropdown = styled(D)`
-  top: 2.25em;
-`
-
-const DContainer = styled(DC)`
-  margin: 0 0.85em;
-`
-
-const Header: React.FunctionComponent<BaseData> = ({ account }) => {
-  const [open, setOpen] = React.useState(false)
-
-  const go = React.useCallback((url: string) => {
-    setOpen(false)
-    navigate(url)
-  }, [])
-
+const Header: React.FC<Base<{}>> = ({ account }) => {
   return (
-    <Container>
-      <Body>
-        <div>
-          <Logo onClick={() => navigate('/')} />
-          <SpacedH4 known>o2</SpacedH4>
-        </div>
+    <Flex
+      as='nav'
+      bg='bg.6'
+      height={6}
+      sx={{
+        borderBottom: '1px solid',
+        borderColor: 'bg.3',
+        position: 'sticky'
+      }}
+    >
+      <Body height={6} alignItems='center' justifyContent='space-between'>
+        <Link known aria-label='Link to the homepage' color='fg.5' to='/'>
+          <Logo width='1rem' onClick={() => navigate('/')} />
+        </Link>
         {account ? (
-          <DContainer>
-            <Image
-              tabIndex={0}
-              onClick={() => setOpen(true)}
-              onKeyUp={e => e.keyCode == 13 && setOpen(!open)}
-              alt='Your profile picture'
-              src={account.picture}
-            />
-            <Dropdown open={open} onClose={() => setOpen(false)}>
-              <List>
-                <Item onClick={() => go(`/${account?.username}`)}>
-                  Your profile
-                </Item>
-                <Item onClick={() => go('/new')}>New</Item>
-                <Line />
-                <Item onClick={() => go('/logout')}>Logout</Item>
-              </List>
-            </Dropdown>
-          </DContainer>
+          <Avatar {...account} />
         ) : (
-          <div>
-            <SpacedLink known to='/login'>
+          <Flex alignItems='center'>
+            <Link mx={4} to='/login'>
               Login
-            </SpacedLink>
-            <Button small onClick={() => navigate('/register')}>
-              Sign up
-            </Button>
-          </div>
+            </Link>
+            <Link css={{ textDecoration: 'none' }} color='bg.5' to='/register'>
+              <Button variant='md'>Sign up</Button>
+            </Link>
+          </Flex>
         )}
       </Body>
-    </Container>
+    </Flex>
   )
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  Header.displayName = 'Header'
 }
 
 export default Header

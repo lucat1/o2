@@ -1,46 +1,21 @@
 import * as React from 'react'
-import { styled, css } from 'goober'
+import { Flex } from 'rebass'
 import { useForm } from 'react-hook-form'
 import { navigate } from '@quercia/quercia'
 
-import Button from './button'
-import Input from '../input'
-import I from '../image'
-import { Line, Center } from '../base'
-import Dropdown, { Container as DC } from '../dropdown'
+import Center from '../center'
+import Relative from '../relative'
+import Divider from '../divider'
 import Dropbox from '../dropbox'
+import Dropdown from '../dropdown'
 import { Item, List } from '../list'
+import Input from '../input'
+import Text from '../text'
+import Label from '../label'
+import Image from '../image'
+import Button from '../button'
 
 import { User } from '../../types/data'
-
-const Content = styled(Center)`
-  padding: 2em 0;
-  flex-direction: row;
-`
-
-const Container = styled(DC)`
-  display: inline;
-  margin: 0 1em;
-`
-
-const margin = css`
-  margin: 0 1em;
-`
-
-const Image = styled(I)`
-  width: 1.25em;
-  height: 1.25em;
-  margin-right: 0.5em;
-`
-
-const Form = styled('form', React.forwardRef)`
-  width: auto;
-  margin: 0;
-
-  div:first-child {
-    width: auto;
-  }
-`
 
 type Type = 'user' | 'org'
 interface Option {
@@ -95,54 +70,75 @@ const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
 
   return (
     <>
-      <Content>
-        <Container>
+      <Center alignItems='center' flexDirection='row' px={4} py={6}>
+        <Relative display='inline'>
           <Dropbox
-            big
-            className={margin}
+            variant='secondary'
+            px={[0, 4]}
             open={open}
             onClick={() => setOpen(true)}
           >
-            <Image src={`${options[selected].picture}?s=25`} />
+            <Image
+              mr={2}
+              width={2}
+              height={2}
+              src={`${options[selected].picture}?s=25`}
+            />
             {options[selected].value || 'user'}
           </Dropbox>
           <Dropdown open={open} onClose={() => setOpen(false)}>
             <List>
               {options.map(({ value, picture }, i) => (
                 <Item key={i} onClick={() => select(i)}>
-                  <Image src={`${picture}?s=25`} />
+                  <Image mr={2} width={2} height={2} src={`${picture}?s=25`} />
                   {value}
                 </Item>
               ))}
             </List>
           </Dropdown>
-        </Container>
-        /
-        <Form ref={ref} onSubmit={handleSubmit(onSubmit)}>
+        </Relative>
+
+        <Text mx={2} known>
+          /
+        </Text>
+
+        <Flex
+          css={{ flexShrink: 1 }}
+          as='form'
+          ref={ref}
+          flexDirection='column'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Input
-            className={margin}
             name='name'
-            label='Name'
-            error={errors.name?.message.toString()}
+            placeholder='Name'
+            //error={errors.name?.message.toString()}
             ref={register({
               required: 'Required',
               pattern: {
                 value: /^[a-z0-9_-]{1,256}$/,
-                message: 'invalid repository name'
+                message: 'Invalid name'
               }
             })}
           />
-        </Form>
-      </Content>
-      <Line />
-      <Button
-        onClick={() =>
-          ref.current.dispatchEvent(new Event('submit', { cancelable: true }))
-        }
-        disabled={false}
-      >
-        Create
-      </Button>
+        </Flex>
+      </Center>
+      <Divider />
+      <Flex py={2} px={4} justifyContent='space-between' alignItems='center'>
+        <Button
+          onClick={() =>
+            ref.current.dispatchEvent(new Event('submit', { cancelable: true }))
+          }
+          disabled={false}
+        >
+          Create
+        </Button>
+        {errors.name && (
+          <Label width='auto' htmlFor='name' variant='error'>
+            {errors.name?.message.toString()}
+          </Label>
+        )}
+      </Flex>
     </>
   )
 }

@@ -5,7 +5,8 @@ import { Head } from '@quercia/quercia'
 import Layout from '../components/repository/layout'
 import Left from '../components/settings/left'
 import { Parent, Right } from '../components/split'
-import { Repository } from '../types/data'
+
+import { Repository } from '../types/repository'
 
 export interface SettingsProps {
   repository: Repository
@@ -28,7 +29,7 @@ export default ({ repository, owns }: SettingsProps) => {
         />
       </Head>
       <Layout owns={owns} repository={repository} page='Settings'>
-        <Parent>
+        <Parent py={6}>
           <Left repository={repository} current='General' />
           <Right>right hand side</Right>
         </Parent>

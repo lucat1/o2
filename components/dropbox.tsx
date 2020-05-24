@@ -1,38 +1,28 @@
 import * as React from 'react'
-import { styled } from 'goober'
+import styled from '@emotion/styled'
+import { ButtonProps } from 'rebass'
 
+import Arrow from './svgs/arrow'
 import Button from './button'
-import A from './svgs/arrow'
 
-export const Arrow = styled(A)`
+export const ArrowIcon = styled(Arrow)`
   margin-left: 0.5em;
   transition: transform 200ms ease-in-out;
 `
 
-const Container = styled(Button)`
-  margin: 0;
-  color: var(--fg-5);
-
-  height: 2.35em;
-`
-
-type DropboxProps = React.ClassAttributes<HTMLButtonElement> &
-  React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    open: boolean
-    big?: boolean
-  }
-
-const Dropbox: React.FunctionComponent<DropboxProps> = ({
+const Dropbox: React.FC<ButtonProps & { open: boolean }> = ({
   children,
   open,
-  onClick,
-  big,
   ...props
 }) => (
-  <Container small={!big} secondary onClick={onClick} {...props}>
+  <Button {...(props as any)}>
     {children}
-    <Arrow style={{ transform: `rotate(${open ? 180 : 0}deg)` }} height='1em' />
-  </Container>
+    <ArrowIcon
+      css={{ marginLeft: '.5rem' }}
+      style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
+      height='1em'
+    />
+  </Button>
 )
 
 export default Dropbox

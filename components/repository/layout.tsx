@@ -1,40 +1,12 @@
-import { css, styled } from 'goober'
 import * as React from 'react'
-
+import { Flex, Box } from 'rebass'
 import { SSG } from '@quercia/quercia'
 
-import { RepositoryProps } from '../../pages/repository'
-import S from '../skeleton'
-import { A, Link } from '../typography'
+import Link from '../link'
+import Heading from '../heading'
 import { Tab, Tabs } from '../tabs'
 
-const Container = styled('main')`
-  display: flex;
-  flex-direction: column;
-  padding: 0 6em;
-
-  @media (max-width: 960px) {
-    padding: 2em 0.5em;
-  }
-`
-
-const Head = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @media (max-width: 800px) {
-    display: block;
-  }
-`
-
-const H2 = styled('h2')`
-  display: flex;
-`
-
-const Skeleton = styled(S)`
-  margin: 0 0.5em;
-`
+import { Base } from '../../types/repository'
 
 export type Page =
   | 'Overview'
@@ -52,36 +24,47 @@ const _tabs: [Page, string][] = [
   ['Settings', '/settings']
 ]
 
-const Layout: React.FunctionComponent<{ page: Page } & Partial<
-  RepositoryProps
->> = ({ page, children, repository, owns }) => {
-  let tabs = owns ? _tabs : _tabs.splice(0, _tabs.length - 1)
+const Layout: React.FunctionComponent<Base<{ page: Page }>> = ({
+  page,
+  children,
+  repository,
+  owns
+}) => {
+  let tabs = owns ? _tabs : _tabs.concat().splice(0, _tabs.length - 1)
+
+  const baseURL = SSG ? '' : `/${repository.owner}/${repository.name}`
 
   return (
-    <Container>
-      <Head>
-        <H2>
+    <Flex
+      cellSpacing={0}
+      cellPadding={0}
+      css={{ flex: 1, flexDirection: 'column', borderSpacing: 0 }}
+      py={6}
+      px={[0, 9]}
+    >
+      <Box
+        css={{ justifyContent: 'space-between' }}
+        sx={{ display: ['block', 'flex'] }}
+      >
+        <Heading fontSize='lg' width={8}>
           <Link to={`/${repository?.owner || ''}`}>{repository?.owner}</Link>/
-          <A>{repository?.name}</A>
-        </H2>
+          <Link to={baseURL}>{repository?.name}</Link>
+        </Heading>
+
         <Tabs>
-          {tabs.map(([tab, url]) =>
-            SSG ? (
-              <Skeleton key={tab} width={`${tab.length / 2}em`} height='1em' />
-            ) : (
-              <Tab
-                key={tab}
-                to={`/${repository.owner}/${repository.name}${url}`}
-                selected={page == tab}
-              >
-                {tab}
-              </Tab>
-            )
-          )}
+          {tabs.map(([tab, url]) => (
+            <Tab
+              key={tab}
+              to={SSG ? '' : `${baseURL}${url}`}
+              selected={page == tab}
+            >
+              {tab}
+            </Tab>
+          ))}
         </Tabs>
-      </Head>
+      </Box>
       {children}
-    </Container>
+    </Flex>
   )
 }
 export default Layout

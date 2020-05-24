@@ -1,51 +1,42 @@
 import * as React from 'react'
-import { styled, css } from 'goober'
-
+import { Image as RebassImage, ImageProps } from 'rebass'
+import styled from '@emotion/styled'
 import { SSG } from '@quercia/quercia'
 
-import { Base } from './skeleton'
+import Skeleton from './skeleton'
 
-type ImageProps = React.DetailedHTMLProps<
-  React.ImgHTMLAttributes<HTMLImageElement>,
-  HTMLImageElement
-> & {
-  src: string
-}
-
-const Img = styled('img')`
+const StyledImage = styled(RebassImage)`
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   transition: opacity 0.2s ease-in-out;
+
   user-select: none;
   pointer-events: none;
+  outline: none;
 `
 
-const border = css`
-  border-radius: 50%;
-`
+const Image: React.FC<ImageProps> = ({ src, alt, ...props }) => {
+  const sx = Object.assign(
+    { borderRadius: 'lg', flexGrow: 0, flexShrink: 0 },
+    props.sx
+  )
 
-const Image: React.FunctionComponent<ImageProps> = ({
-  src,
-  alt,
-  className,
-  ...props
-}) => {
   if (SSG) {
-    return <Base {...props} className={`${className} ${border}`} />
+    return <Skeleton sx={sx} {...(props as any)} />
   }
 
   const [loaded, setLoaded] = React.useState(false)
-
   return (
-    <Base {...props} className={`${className} ${border}`}>
-      <Img
+    <Skeleton sx={sx} {...(props as any)}>
+      <StyledImage
+        sx={sx}
         style={{ opacity: loaded ? 1 : 0 }}
         onLoad={() => setLoaded(true)}
         alt={alt}
         src={src}
+        {...(props as any)}
       />
-    </Base>
+    </Skeleton>
   )
 }
 

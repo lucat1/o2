@@ -1,15 +1,11 @@
 import * as React from 'react'
-import { styled } from 'goober'
+import { Flex } from 'rebass'
 
-import { Content } from './layout'
-import Dropdown, { Container as DC } from '../dropdown'
+import Heading from '../heading'
+import Dropdown from '../dropdown'
+import Relative from '../relative'
 import Dropbox from '../dropbox'
 import { Item, List } from '../list'
-
-const Container = styled(DC)`
-  display: inline;
-  margin: 0 1em;
-`
 
 interface HeadProps {
   selected: number
@@ -29,23 +25,25 @@ const Head: React.FunctionComponent<HeadProps> = ({
   }, [])
 
   return (
-    <Content>
-      <a>
-        <strong>Create a new</strong>
-      </a>
-      <Container>
-        <Dropbox open={open} onClick={() => setOpen(true)}>
+    <Flex p={2} alignItems='center'>
+      <Heading m={0} known>
+        create a new
+      </Heading>
+      <Relative mx={2}>
+        <Dropbox variant='secondary' open={open} onClick={() => setOpen(true)}>
           {types[selected]}
         </Dropbox>
         <Dropdown open={open} onClose={() => setOpen(false)}>
           <List>
             {types.map((type, i) => (
-              <Item onClick={() => select(i)}>{type}</Item>
+              <Item selected={selected == i} key={i} onClick={() => select(i)}>
+                {type}
+              </Item>
             ))}
           </List>
         </Dropdown>
-      </Container>
-    </Content>
+      </Relative>
+    </Flex>
   )
 }
 

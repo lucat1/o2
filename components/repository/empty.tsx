@@ -1,32 +1,40 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Flex, FlexProps } from 'rebass'
 
-import { RepositoryProps } from '../../pages/repository'
+import Container from '../base'
+import Center from '../center'
+import Divider from '../divider'
+import Heading from '../heading'
+import Text from '../text'
+import Code from '../code'
 import NoData from '../svgs/no-data'
-import { Code, P, SpacedH2 } from '../typography'
-import Container, { Line, Center } from '../base'
 
-const Spaced = styled('div')`
-  padding: 0.5em 1em;
-`
+import { Base } from '../../types/repository'
 
-const Empty: React.FunctionComponent<Partial<RepositoryProps>> = ({
-  repository,
-  owns
-}) => {
+const Spaced: React.FC<FlexProps> = props => (
+  <Flex flexDirection='column' {...(props as any)} sx={{ px: 4, py: 2 }} />
+)
+
+const Empty: React.FunctionComponent<Base<{}>> = ({ repository, owns }) => {
   const url = `http://${window.location.host}/${repository.owner}/${repository.name}`
 
   return owns ? (
-    <Container>
-      <SpacedH2>Quickstart guide</SpacedH2>
-      <Line />
+    <Container css={{ flexDirection: 'column' }}>
       <Spaced>
-        <P>You can clone the repository at this url:</P>
+        <Heading>Quickstart guide</Heading>
+      </Spaced>
+      <Divider />
+      <Spaced>
+        <Text known as='p'>
+          You can clone the repository at this url:
+        </Text>
         <Code>{url}</Code>
       </Spaced>
-      <Line />
+      <Divider />
       <Spaced>
-        <P>To inizialize (initialize) and upload a folder:</P>
+        <Text known as='p'>
+          To inizialize and upload a folder:
+        </Text>
         <Code>
           git init
           <br />
@@ -39,9 +47,11 @@ const Empty: React.FunctionComponent<Partial<RepositoryProps>> = ({
           git push -u origin master
         </Code>
       </Spaced>
-      <Line />
+      <Divider />
       <Spaced>
-        <P>To upload an existing repository on your system:</P>
+        <Text known as='p'>
+          To upload an existing repository on your system:
+        </Text>
         <Code>
           git remote add origin {url}
           <br />

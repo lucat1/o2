@@ -1,41 +1,26 @@
-import { styled } from 'goober'
 import * as React from 'react'
-
 import { Head, SSG } from '@quercia/quercia'
 
+import { Parent } from '../components/split'
 import Repos from '../components/profile/repos'
 import Org from '../components/profile/org'
-import { Parent } from '../components/split'
 
-import { Organization, LoggedUser } from '../types/data'
+import { Base, Organization } from '../types/data'
 
-interface OrganizationProps {
-  account: LoggedUser
-  profile: Organization
-}
-
-const Container = styled(Parent)`
-  padding: 2em 5em;
-
-  @media (max-width: 960px) {
-    padding: 2em 0;
-  }
-`
-
-export default ({ profile, account }: OrganizationProps) => (
-  <Container>
+export default ({ profile, account }: Base<{ profile: Organization }>) => (
+  <Parent p={['2rem 0', '2rem 5rem']}>
     <Head>
-      <title>{profile?.name || 'organization'} - o2</title>
+      <title>{SSG ? 'user' : profile.name} - o2</title>
       <meta
         name='description'
-        content={'the profile of ' + SSG ? 'an organization' : profile.name}
+        content={'the user profile page' + SSG ? '' : `of ${profile.name}`}
       />
     </Head>
     <Org profile={profile} />
     <Repos
+      owner={profile?.name}
       repositories={profile?.repositories}
-      username={profile?.name}
       account={account}
     />
-  </Container>
+  </Parent>
 )

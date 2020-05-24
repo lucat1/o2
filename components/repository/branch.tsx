@@ -1,39 +1,34 @@
-import { styled } from 'goober'
 import * as React from 'react'
-
+import { FlexProps, Text, TextProps } from 'rebass'
 import { navigate } from '@quercia/quercia'
 
-import { Ref, Repository } from '../../types/data'
-import DB from '../dropbox'
-import Dropdown, { Container } from '../dropdown'
+import Relative from '../relative'
+import Center from '../center'
+import Button from '../button'
+import Arrow from '../svgs/arrow'
+import Dropdown from '../dropdown'
 import { Item, List } from '../list'
 
-const Dropbox = styled(DB)`
-  margin: 0 0.25em;
-`
+import { Ref, Repository } from '../../types/repository'
 
-const HideOnSmall = styled('span')`
-  @media (max-width: 500px) {
-    display: none;
-  }
-`
+const HideOnSmall: React.FC<TextProps> = props => (
+  <Text as='a' sx={{ display: ['none', 'inherit'] }} {...(props as any)} />
+)
 
-const Tag = styled('div')`
-  font-size: 0.75em;
-  background: var(--bg-3);
-  height: 1.5em;
-  width: 1.5em;
-  padding: 0.5em;
-  border-radius: 0.35em;
-  margin-right: 0.75em;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const B = () => <Tag>b</Tag>
-const T = () => <Tag>t</Tag>
+const Tag: React.FC<FlexProps> = props => (
+  <Center
+    sx={{
+      fontSize: 'xs',
+      bg: 'bg.3',
+      width: 3,
+      height: 3,
+      px: 2,
+      borderRadius: 'md',
+      mr: 3
+    }}
+    {...(props as any)}
+  />
+)
 
 const Branch: React.FunctionComponent<{
   current: string
@@ -44,13 +39,21 @@ const Branch: React.FunctionComponent<{
   const [open, setOpen] = React.useState(false)
 
   return (
-    <Container>
-      <Dropbox open={open} onClick={() => setOpen(true)} disabled={disabled}>
+    <Relative>
+      <Button
+        variant='secondary'
+        onClick={() => setOpen(true)}
+        disabled={disabled}
+      >
         Branch
         <HideOnSmall>
           : <strong>{current}</strong>
         </HideOnSmall>
-      </Dropbox>
+        <Arrow
+          style={{ transform: `rotate(${open ? 180 : 0}deg)` }}
+          height='1em'
+        />
+      </Button>
       <Dropdown open={open} onClose={() => setOpen(false)}>
         <List>
           {refs.map(ref => (
@@ -63,13 +66,13 @@ const Branch: React.FunctionComponent<{
               }
               selected={ref.name == current}
             >
-              {ref.kind === 'branch' ? <B /> : <T />}
+              <Tag>{ref.kind === 'branch' ? 'b' : 't'}</Tag>
               {ref.name}
             </Item>
           ))}
         </List>
       </Dropdown>
-    </Container>
+    </Relative>
   )
 }
 

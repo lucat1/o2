@@ -1,70 +1,28 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Box, Flex, FlexProps } from 'rebass'
 
-import { SSG, navigate } from '@quercia/quercia'
-
-import { ProfileProps } from '../../pages/user'
-import Image from '../image'
-import Skeleton from '../skeleton'
 import { Left } from '../split'
-import { A, H2, H4, SpacedH4 } from '../typography'
-import C from '../base'
+import Image from '../image'
+import Base from '../base'
+import Heading from '../heading'
+import Text from '../text'
+import Link from '../link'
 
-const User = styled(Left)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
+import { User } from '../../types/data'
 
-const Info = styled('div')`
-  padding-left: 0;
+const Line: React.FC<FlexProps> = props => (
+  <Flex width={8} {...(props as any)} />
+)
 
-  @media (max-width: 960px) {
-    padding-left: 1em;
-  }
-`
+const Organization: React.FC<FlexProps> = props => (
+  <Base width={8} p={2} sx={{ outline: 'none' }} {...(props as any)} />
+)
 
-const Picture = styled(Image)`
-  width: 10em;
-  height: 10em;
-`
-
-const Line = styled('div')`
-  width: 10em;
-  display: flex;
-  flex-direction: row;
-`
-
-const Description = styled(Line)`
-  margin-top: 1em;
-`
-
-const Org = styled(C)`
-  font-size: 0.75em;
-  padding: 0.75em 0.5em;
-  cursor: pointer;
-  outline: none;
-  transition: box-shadow 200ms ease-in-out;
-
-  &:focus {
-    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.3);
-  }
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`
-
-const OrgImg = styled(Image)`
-  display: block;
-  width: 1.5em;
-  height: 1.5em;
-  margin-right: 0.5em;
-`
-
-const Profile = ({ profile }: ProfileProps) => (
-  <User>
-    <Picture
+const Profile = ({ profile }: { profile: User }) => (
+  <Left flexDirection='column' alignItems='center'>
+    <Image
+      width={8}
+      height={8}
       alt={
         profile
           ? `${profile.username}'s profile picture`
@@ -72,39 +30,39 @@ const Profile = ({ profile }: ProfileProps) => (
       }
       src={profile?.picture + '?s=300'}
     />
-    <Info>
+    <Box py={4}>
       <Line>
-        <H2>{profile?.username}</H2>
+        <Heading fontSize='lg'>{profile?.username}</Heading>
       </Line>
       <Line>
-        <H4>{profile?.firstname}</H4>
-        <SpacedH4>{profile?.lastname}</SpacedH4>
+        <Heading as={'h3'} width={8} height={3} fontSize='xs'>
+          {profile?.firstname + ' ' + profile?.lastname}
+        </Heading>
       </Line>
-      <Description>
-        <A known>📍</A>
-        <A>{profile?.location || (!SSG && 'Earth')}</A>
-      </Description>
-      <Description>
-        {SSG ? (
-          <Skeleton width='100%' height='5em' />
-        ) : (
-          <code>{profile.description || (!SSG && 'Empty description')}</code>
-        )}
-      </Description>
+      <Line py={2}>
+        <Text known>📍</Text>
+        <Text color='primary.default'>{profile?.location || 'Universe'}</Text>
+      </Line>
+      <Line py={2}>
+        <Text as='p' width={8} height={7}>
+          {profile?.description || 'Empty description'}
+        </Text>
+      </Line>
 
       {(profile?.organizations || []).map(({ name, picture }, i) => (
-        <Org
-          key={i}
-          tabIndex={0}
-          onClick={() => navigate(`/${name}`)}
-          onKeyUp={e => e.keyCode === 13 && navigate(`/${name}`)}
-        >
-          <OrgImg src={`${picture}?s=50`} alt={`${name}'s profile picture`} />
-          <span>{name}</span>
-        </Org>
+        <Organization key={i}>
+          <Image
+            width={3}
+            height={3}
+            mr={2}
+            src={`${picture}?s=50`}
+            alt={`${name}'s profile picture`}
+          />
+          <Link to={`/${name}`}>{name}</Link>
+        </Organization>
       ))}
-    </Info>
-  </User>
+    </Box>
+  </Left>
 )
 
 export default Profile

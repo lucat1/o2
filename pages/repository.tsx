@@ -1,51 +1,31 @@
-import { styled } from 'goober'
 import * as React from 'react'
+import { Flex } from 'rebass'
+import { Head, SSG } from '@quercia/quercia'
 import snarkdown from 'snarkdown'
 
-import { Head, SSG } from '@quercia/quercia'
+import Container from '../components/base'
+import Text from '../components/text'
 
-import Branch from '../components/repository/branch'
-import C from '../components/base'
-import Empty from '../components/repository/empty'
 import Layout from '../components/repository/layout'
+import Branch from '../components/repository/branch'
 import Tree from '../components/repository/tree'
-import Skeleton from '../components/skeleton'
-import { Ref, Repository, Tree as ITree, User } from '../types/data'
 
-export interface RepositoryProps {
-  account: User
-  repository: Repository
-  owns: boolean
-  tree: ITree
-  refs: Ref[]
-  readme: string
-}
-
-const Container = styled(C)`
-  padding: 1.5em;
-  overflow: auto;
-`
-
-const Description = styled('div')`
-  display: flex;
-  justify-content: space-between;
-  text-overflow: ellipsis;
-`
+import Empty from '../components/repository/empty'
+import { Base, RepositoryProps } from '../types/repository'
 
 export default ({
   repository,
   owns,
   tree,
-  account,
   readme,
   refs
-}: RepositoryProps) => {
+}: Base<RepositoryProps>) => {
   if (!refs) {
     refs = []
   }
 
   return (
-    <>
+    <Layout owns={owns} repository={repository} page='Overview'>
       <Head>
         <title>
           {typeof repository === 'object'
@@ -55,26 +35,32 @@ export default ({
         </title>
         <meta name='description' content='a git repository on the o2 service' />
       </Head>
-      <Layout owns={owns} repository={repository} page='Overview'>
-        <Description>
-          {SSG ? (
-            <Skeleton width='70%' height='1.5em' />
-          ) : (
-            <code>{repository.description}</code>
-          )}
-          <Branch
-            repository={repository}
-            current={tree?.branch.name}
-            refs={refs}
-            disabled={refs.length === 0}
-          />
-        </Description>
-        {!tree && !SSG && <Empty repository={repository} owns={owns} />}
-        {(tree || SSG) && <Tree repository={repository} tree={tree} />}
-        {readme && (
-          <Container dangerouslySetInnerHTML={{ __html: snarkdown(readme) }} />
-        )}
-      </Layout>
-    </>
+      <Flex
+        css={{
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          textOverflow: 'ellipsis'
+        }}
+      >
+        <Text css={{ flexShrink: 10 }} width={8} height={4} as='code'>
+          {repository?.description}
+        </Text>
+
+        <Branch
+          repository={repository}
+          current={tree?.branch.name}
+          refs={refs}
+          disabled={refs.length === 0}
+        />
+      </Flex>
+      {!tree && !SSG && <Empty repository={repository} owns={owns} />}
+      {(tree || SSG) && <Tree repository={repository} tree={tree} />}
+      {readme && (
+        <Container
+          sx={{ display: 'block', p: 5, overflow: 'auto' }}
+          dangerouslySetInnerHTML={{ __html: snarkdown(readme) }}
+        />
+      )}
+    </Layout>
   )
 }
