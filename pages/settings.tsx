@@ -1,12 +1,11 @@
 import * as React from 'react'
+import { Flex } from 'rebass'
 import { useForm } from 'react-hook-form'
-import { Box } from 'rebass'
-import { Head } from '@quercia/quercia'
+import { navigate, Head } from '@quercia/quercia'
 
 import { Parent, Right } from '../components/split'
 import Heading from '../components/heading'
-import Input from '../components/input'
-import Label from '../components/label'
+import Button from '../components/button'
 
 import Left from '../components/settings/left'
 import Field from '../components/settings/field'
@@ -22,7 +21,28 @@ export default ({ profile, error }: SettingsProps) => {
   const [isLoading, setLoading] = React.useState(
     error && typeof error !== 'string'
   )
-  const { handleSubmit, register, errors } = useForm<User>()
+  const {
+    handleSubmit,
+    register,
+    errors,
+    reset,
+    formState: { dirty }
+  } = useForm<User>()
+  const onSubmit = (data: User) => {
+    setLoading(true)
+
+    // instantiate the POST form data
+    const body = new FormData()
+    body.set('username', data.username)
+    body.set('firstname', data.firstname)
+    body.set('lastname', data.lastname)
+    body.set('location', data.location)
+
+    navigate('/settings', 'POST', {
+      body,
+      credentials: 'same-origin'
+    })
+  }
 
   return (
     <>
@@ -35,7 +55,12 @@ export default ({ profile, error }: SettingsProps) => {
       </Head>
       <Parent py={6} px={[0, 9]}>
         <Left pages={['General']} current='General' base='/settings' />
-        <Right flexDirection='column' px={[0, 4]}>
+        <Right
+          as='form'
+          onSubmit={handleSubmit(onSubmit)}
+          flexDirection='column'
+          px={[0, 4]}
+        >
           <Heading my={3} fontSize='2rem' height={5} width={9}>
             Settings - {profile?.username}
           </Heading>
@@ -50,7 +75,7 @@ export default ({ profile, error }: SettingsProps) => {
             ref={register({
               required: 'Required',
               pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                value: /^[a-z0-9_-]{3,15}$/,
                 message: 'invalid username'
               }
             })}
@@ -95,6 +120,15 @@ export default ({ profile, error }: SettingsProps) => {
             description='Your location is displayed in your profile. You can of course omit it for privacy concerns.'
             ref={register()}
           />
+
+          <Flex py={6} px={2} justifyContent='space-between'>
+            <Button onClick={() => reset()} disabled={!dirty}>
+              Reset
+            </Button>
+            <Button type='submit' disabled={!dirty}>
+              Save
+            </Button>
+          </Flex>
         </Right>
       </Parent>
     </>
