@@ -44,7 +44,7 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 			auth.Must(func(w http.ResponseWriter, r *http.Request) {
 				// we have authentication inside of here
 				claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-				has := models.HasPex(pexes, claims.Username, scopes)
+				has := models.HasPex(pexes, claims.UUID, scopes)
 
 				handle(w, r, has, f, fallback)
 			})(w, r)

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/jinzhu/gorm"
+	"github.com/lucat1/o2/pkg/store"
 )
 
 // User is the database model for a user
@@ -23,7 +24,7 @@ type User struct {
 	Picture     string `json:"picture"`
 
 	Organizations []Organization `gorm:"many2many:user_orgs;" json:"organizations"`
-	Repositories  []Repository   `gorm:"polymorphic:Owner;foreignkey:OwnerName;association_foreignkey:Username" json:"repositories"`
+	Repositories  []Repository   `gorm:"polymorphic:Owner;foreignkey:OwnerUUID;association_foreignkey:UUID" json:"repositories"`
 }
 
 // Picture generates the picture url of a profile picture
@@ -35,4 +36,26 @@ func Picture(email string) string {
 // BeforeSave will generate the profile picture url from gravatar
 func (user *User) BeforeSave(scope *gorm.Scope) error {
 	return scope.SetColumn("Picture", Picture(user.Email))
+}
+
+// BeforeUpdate changes the OwnerName field in all the owner repositories
+func (user *User) BeforeUpdate() (err error) {
+	var dbUser User
+	if err := store.GetDB().
+		Where(User{Base: Base{UUID: user.UUID}}).
+		Preload("Repositories").
+		First(&dbUser).
+		Error; err != nil {
+		return err
+	}
+
+	// update all repositories
+	for _, repository := range dbUser.Repositories {
+		repository.OwnerName = user.Username
+		if err := store.GetDB().Save(repository).Error; err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

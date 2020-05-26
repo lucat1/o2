@@ -1,23 +1,17 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
+	uuid "github.com/satori/go.uuid"
 )
 
 // Repository is the database model for a git repository
 type Repository struct {
-	Model
-	ComputedName string `gorm:"unique_index" json:"-"`
-
-	OwnerName string `gorm:"type:varchar(36);primary_index" json:"owner"`
+	Base
+	OwnerName string    `gorm:"type:varchar(32)" json:"owner"`
+	OwnerUUID uuid.UUID `gorm:"type:char(36);primary_index" json:"-"`
 
 	Name        string `gorm:"primary_index" json:"name"`
 	Description string `gorm:"type:varchar(250)" json:"description"`
 
-	Permissions []Permission `gorm:"foreignkey:Resource;association_foreignkey:ComputedName" json:"-"`
-}
-
-// BeforeSave updates the `ComputedName` value of the repository
-func (repo *Repository) BeforeSave(scope *gorm.Scope) error {
-	return scope.SetColumn("ComputedName", repo.OwnerName+"/"+repo.Name)
+	Permissions []Permission `gorm:"foreignkey:Resource;association_foreignkey:UUID" json:"-"`
 }

@@ -9,6 +9,8 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/git"
+	"github.com/lucat1/o2/pkg/middleware"
+	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/routes/shared"
 	"github.com/rs/zerolog/log"
 )
@@ -23,8 +25,7 @@ func RPC(rpc string) func(http.ResponseWriter, *http.Request) {
 			return
 		}
 
-		// TODO: Check if the user has access!
-
+		dbRepo := r.Context().Value(middleware.DbRepo).(models.Repository)
 		username := muxie.GetParam(w, "username")
 		reponame := muxie.GetParam(w, "reponame")
 		log.Debug().
@@ -41,7 +42,7 @@ func RPC(rpc string) func(http.ResponseWriter, *http.Request) {
 		w.WriteHeader(http.StatusOK)
 
 		// build the git headless rpc command
-		dir := git.GetPath(username, reponame)
+		dir := git.GetPath(dbRepo.UUID.String())
 		cmd := exec.Command("git", rpc, "--stateless-rpc", dir)
 		cmd.Env = os.Environ()
 		if protocol := r.Header.Get("Git-Protocol"); protocol != "" {

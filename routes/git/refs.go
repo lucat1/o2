@@ -5,6 +5,8 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/git"
+	"github.com/lucat1/o2/pkg/middleware"
+	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/routes/shared"
 	"github.com/rs/zerolog/log"
 )
@@ -17,8 +19,7 @@ func InfoRefs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: Check if the user has access!
-
+	dbRepo := r.Context().Value(middleware.DbRepo).(models.Repository)
 	username := muxie.GetParam(w, "username")
 	reponame := muxie.GetParam(w, "reponame")
 	log.Debug().
@@ -26,7 +27,7 @@ func InfoRefs(w http.ResponseWriter, r *http.Request) {
 		Str("reponame", reponame).
 		Msg("Handling git info refs")
 
-	dir := git.GetPath(username, reponame)
+	dir := git.GetPath(dbRepo.UUID.String())
 	serviceName := getServiceType(r)
 	version := r.Header.Get("Git-Protocol")
 

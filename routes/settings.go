@@ -19,6 +19,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := store.GetDB().
 		Where(&models.User{Username: claims.Username}).
+		Preload("Repositories").
 		First(&user).
 		Error; err != nil {
 		log.Debug().
@@ -48,6 +49,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	user.Lastname = r.Form.Get("lastname")
 	user.Location = r.Form.Get("location")
 
+	// 2. Update the database
 	if err := store.GetDB().Save(user).Error; err != nil {
 		log.Debug().
 			Str("username", user.Username).
