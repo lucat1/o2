@@ -58,6 +58,7 @@ func main() {
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", auth.Must(routes.Logout))
 	mux.HandleFunc("/new", auth.Must(routes.New))
+	mux.HandleFunc("/settings", auth.Must(routes.Settings))
 
 	profile := mux.Of("/:username")
 	profile.Use(middleware.WithProfile(shared.NotFound))

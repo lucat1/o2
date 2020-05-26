@@ -27,7 +27,7 @@ const Dropdown: React.FunctionComponent<BoxProps & {
         {
           marginTop: 2,
           py: 3,
-          maxHeight: 8,
+          maxHeight: [8, 9],
           minWidth: 8,
           border: '1px solid',
           borderColor: 'bg.3',

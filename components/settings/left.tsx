@@ -4,19 +4,16 @@ import { SSG } from '@quercia/quercia'
 import { Left as Split } from '../split'
 import { Tab } from '../tabs'
 
-import { Repository } from '../../types/repository'
-
 type Page = 'General' | 'Permissions' | 'Hooks'
 
 interface LeftProps {
   current: Page
-  repository: Repository
+  pages: Page[]
+  base: string
 }
 
-const pages: Page[] = ['General', 'Permissions', 'Hooks']
-
 // TODO: Fix tabs margin-right on last child
-const Left: React.FC<LeftProps> = ({ repository, current }) => (
+const Left: React.FC<LeftProps> = ({ current, pages, base }) => (
   <Split px={[0, 4]} flexDirection='column'>
     {pages.map((page, i) => (
       <Tab
@@ -27,9 +24,7 @@ const Left: React.FC<LeftProps> = ({ repository, current }) => (
         to={
           SSG
             ? ''
-            : `/${repository.owner}/${repository.name}/settings${
-                page == 'General' ? '' : '/' + page.toLowerCase()
-              }`
+            : `${base}${page == 'General' ? '' : '/' + page.toLowerCase()}`
         }
       >
         {page}

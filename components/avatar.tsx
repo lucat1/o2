@@ -41,6 +41,8 @@ const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
       <Dropdown sx={{ top: 5 }} open={open} onClose={() => setOpen(false)}>
         <List>
           <Item onClick={() => go(`/${username}`)}>Your profile</Item>
+          <Item onClick={() => go('/settings')}>Settings</Item>
+          <Divider />
           <Item onClick={() => go('/new')}>New</Item>
           <Divider />
           <Item onClick={() => go('/logout')}>Logout</Item>

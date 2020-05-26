@@ -13,7 +13,12 @@ const Label: React.FC<LabelProps> = props => {
     }
   })(props)
 
-  return <RebassLabel {...(props as any)} sx={merge({ my: 2 }, sx, props.sx)} />
+  return (
+    <RebassLabel
+      {...(props as any)}
+      sx={merge({ fontSize: 'xs', my: 2 }, sx, props.sx)}
+    />
+  )
 }
 
 export default Label

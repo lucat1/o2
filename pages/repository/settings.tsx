@@ -1,6 +1,5 @@
 import * as React from 'react'
-
-import { Head } from '@quercia/quercia'
+import { SSG, Head } from '@quercia/quercia'
 
 import Layout from '../../components/repository/layout'
 import Left from '../../components/settings/left'
@@ -30,7 +29,11 @@ export default ({ repository, owns }: SettingsProps) => {
       </Head>
       <Layout owns={owns} repository={repository} page='Settings'>
         <Parent py={6}>
-          <Left repository={repository} current='General' />
+          <Left
+            base={SSG ? '' : `${repository.owner}/${repository.name}/settings`}
+            pages={['General', 'Permissions', 'Hooks']}
+            current='General'
+          />
           <Right>right hand side</Right>
         </Parent>
       </Layout>

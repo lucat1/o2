@@ -19,14 +19,10 @@ interface RegisterProps {
 }
 
 export default ({ error }: RegisterProps) => {
-  const [isLoading, setLoading] = React.useState(typeof error == 'string')
+  const [isLoading, setLoading] = React.useState(
+    error && typeof error !== 'string'
+  )
   const { handleSubmit, register, errors } = useForm<Data>()
-
-  React.useEffect(() => {
-    if (error) {
-      setLoading(false)
-    }
-  }, [error])
 
   const onSubmit = (data: Data) => {
     setLoading(true)
