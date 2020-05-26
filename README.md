@@ -4,26 +4,12 @@
   <strong>o2 - self-hosted git ui</strong>
 </p>
 
-### demo
-
-![demo gif](screens/demo.gif)
-
 ### screenshots
 
-![diff/commit view](screens/9.png)
-
-![commits pagination view](screens/8.png)
-
-![commits view](screens/7.png)
-
-![blob view](screens/6.png)
-
-![tree view](screens/5.png)
-
-![repository view](screens/4.png)
-
-![profile view](screens/3.png)
-
-![login view](screens/2.png)
-
-![register view](screens/1.png)
+![login](https://user-images.githubusercontent.com/29304787/82896559-7492c100-9f56-11ea-992a-e631dd75e5a8.png)
+![profile](https://user-images.githubusercontent.com/29304787/82896565-75c3ee00-9f56-11ea-9354-91a3b5eaeb71.png)
+![new](https://user-images.githubusercontent.com/29304787/82896566-765c8480-9f56-11ea-92a8-48d3caad4574.png)
+![tree](https://user-images.githubusercontent.com/29304787/82896572-778db180-9f56-11ea-9005-92ee284735f8.png)
+![blob](https://user-images.githubusercontent.com/29304787/82896569-76f51b00-9f56-11ea-9774-c596ce190a18.png)
+![commits](https://user-images.githubusercontent.com/29304787/82896574-78264800-9f56-11ea-994d-90307a3d881d.png)
+![commit](https://user-images.githubusercontent.com/29304787/82896573-778db180-9f56-11ea-9408-37335fee5966.png)
