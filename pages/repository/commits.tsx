@@ -49,8 +49,8 @@ export default ({
         />
       </Head>
 
-      {(commits || []).map(commit => (
-        <Commit key={commit?.commit} base={base} commit={commit} />
+      {(commits || []).map((commit, i) => (
+        <Commit key={i} base={base} commit={commit} />
       ))}
 
       <Center flexDirection='row' p={4}>

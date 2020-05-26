@@ -104,7 +104,11 @@ const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
                       ? 'var(--green)'
                       : 'inherit'
 
-                  return <span style={{ color }}>{change.content + '\n'}</span>
+                  return (
+                    <span key={i} style={{ color }}>
+                      {change.content + '\n'}
+                    </span>
+                  )
                 })}
               </Pre>
             </Flex>
