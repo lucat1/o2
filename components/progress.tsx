@@ -42,7 +42,13 @@ const Progress: React.FunctionComponent = () => {
     return () => clearInterval(handle)
   }, [loading])
 
-  return <Box style={{ width: `${val}%`, opacity: opacity }} />
+  return (
+    <Box
+      css={{ height: '.15rem', zIndex: 99 }}
+      sx={{ bg: 'primary.default' }}
+      style={{ width: `${val}%`, opacity: opacity }}
+    />
+  )
 }
 
 export default Progress
