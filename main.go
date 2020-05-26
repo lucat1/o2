@@ -1,12 +1,10 @@
 package main
 
 import (
-	// initialize zerolog
 	"flag"
 	"net/http"
 	"strconv"
 
-	// initialize zerolog options
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/middleware"
@@ -14,6 +12,8 @@ import (
 	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes"
 	"github.com/lucat1/o2/routes/git"
+	"github.com/lucat1/o2/routes/repository"
+	"github.com/lucat1/o2/routes/shared"
 	"github.com/lucat1/quercia"
 	"github.com/markbates/pkger"
 
@@ -60,33 +60,33 @@ func main() {
 	mux.HandleFunc("/new", auth.Must(routes.New))
 
 	profile := mux.Of("/:username")
-	profile.Use(middleware.WithProfile(routes.NotFound))
+	profile.Use(middleware.WithProfile(shared.NotFound))
 	profile.HandleFunc("/", routes.Profile)
 
 	repo := mux.Of("/:username/:reponame")
-	repo.Use(middleware.WithRepo(routes.NotFound))
+	repo.Use(middleware.WithRepo(shared.NotFound))
 
 	// generate the resource value based on the :username/:reponame
 	repo.Use(middleware.WithResource(func(w http.ResponseWriter, _ http.Request) string {
 		return muxie.GetParam(w, "username") + "/" + muxie.GetParam(w, "reponame")
 	}))
 
-	repo.Use(middleware.MustPex([]string{"repo:pull"}, routes.NotFound))
+	repo.Use(middleware.MustPex([]string{"repo:pull"}, shared.NotFound))
 
-	repo.HandleFunc("/", routes.Repository)
+	repo.HandleFunc("/", repository.Repository)
 	repo.Handle(
 		"/settings",
 		middleware.MustPex(
 			[]string{"repo:push"},
-			routes.NotFound,
-		)(http.HandlerFunc(routes.Settings)),
+			shared.NotFound,
+		)(http.HandlerFunc(repository.Settings)),
 	)
-	repo.HandleFunc("/tree/:branch", routes.Tree)
-	repo.HandleFunc("/tree/:branch/*path", routes.Tree)
-	repo.HandleFunc("/blob/:branch/*path", routes.Blob)
-	repo.HandleFunc("/commits/:branch", routes.Commits)
-	repo.HandleFunc("/commits/:branch/:page", routes.Commits)
-	repo.HandleFunc("/commit/:sha", routes.Commit)
+	repo.HandleFunc("/tree/:branch", repository.Tree)
+	repo.HandleFunc("/tree/:branch/*path", repository.Tree)
+	repo.HandleFunc("/blob/:branch/*path", repository.Blob)
+	repo.HandleFunc("/commits/:branch", repository.Commits)
+	repo.HandleFunc("/commits/:branch/:page", repository.Commits)
+	repo.HandleFunc("/commit/:sha", repository.Commit)
 
 	// git smart http protocol
 	repo.HandleFunc("/info/refs", git.InfoRefs)
@@ -95,12 +95,12 @@ func main() {
 		"/git-receive-pack",
 		middleware.MustPex(
 			[]string{"repo:push"},
-			routes.NotFound,
+			shared.NotFound,
 		)(http.HandlerFunc(git.RPC("receive-pack"))),
 	)
 
 	// 404 handler
-	mux.HandleFunc("/*path", routes.NotFound)
+	mux.HandleFunc("/*path", shared.NotFound)
 
 	log.Info().
 		Str("host", *host).

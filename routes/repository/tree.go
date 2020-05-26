@@ -1,4 +1,4 @@
-package routes
+package repository
 
 import (
 	"net/http"
@@ -8,17 +8,11 @@ import (
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/routes/datas"
+	"github.com/lucat1/o2/routes/shared"
 	"github.com/lucat1/quercia"
 	"github.com/rs/zerolog/log"
 )
-
-func treeData(tree *git.Tree) data.Composer {
-	return func(r *http.Request) quercia.Props {
-		return quercia.Props{
-			"tree": tree,
-		}
-	}
-}
 
 // Tree renders a folder inside a repository
 func Tree(w http.ResponseWriter, r *http.Request) {
@@ -38,13 +32,13 @@ func Tree(w http.ResponseWriter, r *http.Request) {
 			Str("path", path).
 			Err(err).
 			Msg("Error while getting git tree from the filesystem repository")
-		NotFound(w, r)
+		shared.NotFound(w, r)
 		return
 	}
 
 	quercia.Render(
 		w, r,
-		"tree",
-		data.Compose(r, data.Base, repositoryData(dbRepo), treeData(tree)),
+		"repository/tree",
+		data.Compose(r, data.Base, datas.RepositoryData(dbRepo), datas.TreeData(tree)),
 	)
 }

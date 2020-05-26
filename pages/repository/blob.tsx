@@ -4,18 +4,18 @@ import { Head, SSG } from '@quercia/quercia'
 import * as pretty from 'pretty-bytes'
 import { highlight, languages } from 'prismjs/components/prism-core'
 
-import Container from '../components/base'
-import Divider from '../components/divider'
-import Text from '../components/text'
-import Link from '../components/link'
-import Layout from '../components/repository/layout'
-import Path, { basename } from '../components/repository/path'
+import Container from '../../components/base'
+import Divider from '../../components/divider'
+import Text from '../../components/text'
+import Link from '../../components/link'
+import Layout from '../../components/repository/layout'
+import Path, { basename } from '../../components/repository/path'
 
-import Gutter from '../components/code/gutter'
-import Pre from '../components/code/pre'
-import load, { lang } from '../components/code/load'
+import Gutter from '../../components/code/gutter'
+import Pre from '../../components/code/pre'
+import load, { lang } from '../../components/code/load'
 
-import { Base, BlobProps } from '../types/repository'
+import { Base, BlobProps } from '../../types/repository'
 
 // TODO: proper prerender
 export default ({ repository, owns, blob, data, ext }: Base<BlobProps>) => {

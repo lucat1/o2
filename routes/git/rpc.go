@@ -9,7 +9,7 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/git"
-	"github.com/lucat1/o2/routes"
+	"github.com/lucat1/o2/routes/shared"
 	"github.com/rs/zerolog/log"
 )
 
@@ -19,7 +19,7 @@ import (
 func RPC(rpc string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
-			routes.NotFound(w, r)
+			shared.NotFound(w, r)
 			return
 		}
 

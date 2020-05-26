@@ -1,4 +1,4 @@
-package routes
+package repository
 
 import (
 	"net/http"
@@ -9,21 +9,11 @@ import (
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/routes/datas"
+	"github.com/lucat1/o2/routes/shared"
 	"github.com/lucat1/quercia"
 	"github.com/rs/zerolog/log"
 )
-
-func commitsData(branch string, commits git.Commits) data.Composer {
-	return func(r *http.Request) quercia.Props {
-		return quercia.Props{
-			"branch":  branch,
-			"index":   commits.Index,
-			"prev":    commits.Prev,
-			"next":    commits.Next,
-			"commits": commits.Commits,
-		}
-	}
-}
 
 // Commits lists the latest 20 commits of a repository
 func Commits(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +32,7 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 				Str("page", _page).
 				Err(err).
 				Msg("Invalid commits page")
-			NotFound(w, r)
+			shared.NotFound(w, r)
 			return
 		}
 		page = id
@@ -56,17 +46,17 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 			Int("page", page).
 			Err(err).
 			Msg("Error while getting git commits from the filesystem repository")
-		NotFound(w, r)
+		shared.NotFound(w, r)
 		return
 	}
 
 	quercia.Render(
 		w, r,
-		"commits",
+		"repository/commits",
 		data.Compose(r,
 			data.Base,
-			repositoryData(dbRepo),
-			commitsData(branch, commits),
+			datas.RepositoryData(dbRepo),
+			datas.CommitsData(branch, commits),
 		),
 	)
 }

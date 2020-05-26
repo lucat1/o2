@@ -2,13 +2,13 @@ import * as diff from 'parse-diff'
 import * as React from 'react'
 import { Head, SSG } from '@quercia/quercia'
 
-import Layout from '../components/repository/layout'
-import Text from '../components/text'
-import Commit from '../components/commit/commit'
-import Diff from '../components/commit/diff'
+import Layout from '../../components/repository/layout'
+import Text from '../../components/text'
+import Commit from '../../components/commit/commit'
+import Diff from '../../components/commit/diff'
 
-import { DetailedCommit } from '../types/data'
-import { Base } from '../types/repository'
+import { DetailedCommit } from '../../types/data'
+import { Base } from '../../types/repository'
 
 // TODO: proper prerender
 export default ({

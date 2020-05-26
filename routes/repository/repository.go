@@ -1,48 +1,17 @@
-package routes
+package repository
 
 import (
 	"net/http"
 	"strings"
 
-	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 	"github.com/rs/zerolog/log"
 )
-
-func repositoryData(repo models.Repository) data.Composer {
-	return func(r *http.Request) quercia.Props {
-		canPush := false
-		if auth.IsAuthenticated(r) {
-			username := r.Context().Value(auth.ClaimsKey).(*auth.Claims).Username
-			canPush = models.HasPex(models.ToPex(repo.Permissions), username, []string{"repo:push"})
-		}
-
-		return quercia.Props{
-			"repository": repo,
-			"owns":       canPush,
-		}
-	}
-}
-
-func readmeData(data string) data.Composer {
-	return func(r *http.Request) quercia.Props {
-		return quercia.Props{
-			"readme": data,
-		}
-	}
-}
-
-func refsData(refs []git.Ref) data.Composer {
-	return func(r *http.Request) quercia.Props {
-		return quercia.Props{
-			"refs": refs,
-		}
-	}
-}
 
 // Repository renders the view of a git repository
 func Repository(w http.ResponseWriter, r *http.Request) {
@@ -92,13 +61,13 @@ func Repository(w http.ResponseWriter, r *http.Request) {
 
 	quercia.Render(
 		w, r,
-		"repository",
+		"repository/repository",
 		data.Compose(
 			r, data.Base,
-			repositoryData(dbRepo),
-			treeData(tree),
-			readmeData(readmeContent),
-			refsData(refs),
+			datas.RepositoryData(dbRepo),
+			datas.TreeData(tree),
+			datas.ReadmeData(readmeContent),
+			datas.RefsData(refs),
 		),
 	)
 }

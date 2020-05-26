@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { Head, SSG } from '@quercia/quercia'
 
-import Center from '../components/center'
-import Button from '../components/button'
-import Link from '../components/link'
-import Commit from '../components/commit/commit'
-import Layout from '../components/repository/layout'
+import Center from '../../components/center'
+import Button from '../../components/button'
+import Link from '../../components/link'
+import Commit from '../../components/commit/commit'
+import Layout from '../../components/repository/layout'
 
-import { Commit as ICommit } from '../types/data'
-import { Base } from '../types/repository'
+import { Commit as ICommit } from '../../types/data'
+import { Base } from '../../types/repository'
 
 export interface CommitsProps {
   branch: string

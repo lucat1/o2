@@ -2,11 +2,11 @@ import * as React from 'react'
 
 import { Head } from '@quercia/quercia'
 
-import Layout from '../components/repository/layout'
-import Left from '../components/settings/left'
-import { Parent, Right } from '../components/split'
+import Layout from '../../components/repository/layout'
+import Left from '../../components/settings/left'
+import { Parent, Right } from '../../components/split'
 
-import { Repository } from '../types/repository'
+import { Repository } from '../../types/repository'
 
 export interface SettingsProps {
   repository: Repository

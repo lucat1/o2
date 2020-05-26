@@ -7,16 +7,9 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 )
-
-func profileData(user interface{}) data.Composer {
-	return func(r *http.Request) quercia.Props {
-		return quercia.Props{
-			"profile": user,
-		}
-	}
-}
 
 // Profile renders the user profile and
 func Profile(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +34,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		}
 
 		user.Repositories = repos
-		quercia.Render(w, r, "user", data.Compose(r, data.Base, profileData(user)))
+		quercia.Render(w, r, "user", data.Compose(r, data.Base, datas.ProfileData(user)))
 		return
 	}
 
@@ -63,6 +56,6 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		}
 
 		org.Repositories = repos
-		quercia.Render(w, r, "organization", data.Compose(r, data.Base, profileData(org)))
+		quercia.Render(w, r, "organization", data.Compose(r, data.Base, datas.ProfileData(org)))
 	}
 }

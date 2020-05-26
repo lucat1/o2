@@ -1,4 +1,4 @@
-package routes
+package repository
 
 import (
 	"net/http"
@@ -6,6 +6,7 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 )
 
@@ -15,7 +16,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 	quercia.Render(
 		w, r,
-		"settings",
-		data.Compose(r, data.Base, repositoryData(dbRepo)),
+		"repository/settings",
+		data.Compose(r, data.Base, datas.RepositoryData(dbRepo)),
 	)
 }

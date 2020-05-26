@@ -3,15 +3,15 @@ import { Flex } from 'rebass'
 import { Head, SSG } from '@quercia/quercia'
 import snarkdown from 'snarkdown'
 
-import Container from '../components/base'
-import Text from '../components/text'
+import Container from '../../components/base'
+import Text from '../../components/text'
 
-import Layout from '../components/repository/layout'
-import Branch from '../components/repository/branch'
-import Tree from '../components/repository/tree'
+import Layout from '../../components/repository/layout'
+import Branch from '../../components/repository/branch'
+import Tree from '../../components/repository/tree'
 
-import Empty from '../components/repository/empty'
-import { Base, RepositoryProps } from '../types/repository'
+import Empty from '../../components/repository/empty'
+import { Base, RepositoryProps } from '../../types/repository'
 
 export default ({
   repository,

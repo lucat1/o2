@@ -1,4 +1,4 @@
-package routes
+package repository
 
 import (
 	"net/http"
@@ -8,17 +8,11 @@ import (
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/routes/datas"
+	"github.com/lucat1/o2/routes/shared"
 	"github.com/lucat1/quercia"
 	"github.com/rs/zerolog/log"
 )
-
-func commitData(commit git.DetailedCommit) data.Composer {
-	return func(r *http.Request) quercia.Props {
-		return quercia.Props{
-			"commit": commit,
-		}
-	}
-}
 
 // Commit renders the diff of a single commit
 func Commit(w http.ResponseWriter, r *http.Request) {
@@ -34,17 +28,17 @@ func Commit(w http.ResponseWriter, r *http.Request) {
 			Str("sha", sha).
 			Err(err).
 			Msg("Error while looking for commit inside a git repository")
-		NotFound(w, r)
+		shared.NotFound(w, r)
 		return
 	}
 
 	quercia.Render(
 		w, r,
-		"commit",
+		"repository/commit",
 		data.Compose(r,
 			data.Base,
-			repositoryData(dbRepo),
-			commitData(commit),
+			datas.RepositoryData(dbRepo),
+			datas.CommitData(commit),
 		),
 	)
 }

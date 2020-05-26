@@ -6,20 +6,9 @@ import (
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 )
-
-func registerErr(w http.ResponseWriter, r *http.Request, msg string) {
-	quercia.Render(w, r, "register", data.Compose(
-		r,
-		data.Base,
-		func(r *http.Request) quercia.Props {
-			return quercia.Props{
-				"error": msg,
-			}
-		},
-	))
-}
 
 // Register renders the register page and handles authentication
 func Register(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +29,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	password := r.Form.Get("password")
 
 	if username == "" || email == "" || password == "" {
-		registerErr(w, r, "Please fill in all the required fields")
+		datas.RegisterErr(w, r, "Please fill in all the required fields")
 		return
 	}
 
@@ -50,7 +39,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}, password)
 
 	if err != nil {
-		registerErr(w, r, err.Error())
+		datas.RegisterErr(w, r, err.Error())
 		return
 	}
 

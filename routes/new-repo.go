@@ -8,6 +8,7 @@ import (
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
+	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 	"github.com/rs/zerolog/log"
 )
@@ -19,7 +20,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, username string) {
 		Where(models.Repository{OwnerName: username, Name: reponame}).
 		First(&models.Repository{}).
 		Error == nil {
-		newErr(w, r, "You already own a repository with this name")
+		datas.NewErr(w, r, "You already own a repository with this name")
 		return
 	}
 
@@ -52,7 +53,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, username string) {
 			Err(err).
 			Msg("Could not save new repository in the database")
 
-		newErr(w, r, "Internal error. Please try again layer")
+		datas.NewErr(w, r, "Internal error. Please try again layer")
 		return
 	}
 
@@ -63,13 +64,13 @@ func newRepo(w http.ResponseWriter, r *http.Request, username string) {
 			Err(err).
 			Msg("Could not initialize a bare git repository")
 
-		newErr(w, r, "Internal error. Please try again layer")
+		datas.NewErr(w, r, "Internal error. Please try again layer")
 		return
 	}
 
 	quercia.Redirect(
 		w, r,
 		"/"+username+"/"+reponame, "repository",
-		data.Compose(r, data.Base, repositoryData(repo), treeData(nil)),
+		data.Compose(r, data.Base, datas.RepositoryData(repo), datas.TreeData(nil)),
 	)
 }

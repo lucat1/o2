@@ -5,7 +5,7 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/git"
-	"github.com/lucat1/o2/routes"
+	"github.com/lucat1/o2/routes/shared"
 	"github.com/rs/zerolog/log"
 )
 
@@ -13,7 +13,7 @@ import (
 // refs, branch names and commit hashes
 func InfoRefs(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		routes.NotFound(w, r)
+		shared.NotFound(w, r)
 		return
 	}
 

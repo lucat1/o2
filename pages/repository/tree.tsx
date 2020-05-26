@@ -2,11 +2,11 @@ import * as React from 'react'
 
 import { Head, SSG } from '@quercia/quercia'
 
-import Layout from '../components/repository/layout'
-import Path from '../components/repository/path'
-import Tree from '../components/repository/tree'
+import Layout from '../../components/repository/layout'
+import Path from '../../components/repository/path'
+import Tree from '../../components/repository/tree'
 
-import { Base, RepositoryProps } from '../types/repository'
+import { Base, RepositoryProps } from '../../types/repository'
 
 export default ({ repository, tree, owns }: Base<RepositoryProps>) => {
   return (
