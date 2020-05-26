@@ -44,8 +44,8 @@ export default ({
         <strong>{additions} additions</strong> and{' '}
         <strong>{deletions} deletions</strong>
       </Text>
-      {files.map(file => (
-        <Diff key={file.from + '-' + file.to} file={file} />
+      {files.map((file, i) => (
+        <Diff key={i} file={file} />
       ))}
     </Layout>
   )

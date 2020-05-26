@@ -52,9 +52,9 @@ const Layout: React.FunctionComponent<Base<{ page: Page }>> = ({
         </Heading>
 
         <Tabs>
-          {tabs.map(([tab, url]) => (
+          {tabs.map(([tab, url], i) => (
             <Tab
-              key={tab}
+              key={i}
               to={SSG ? '' : `${baseURL}${url}`}
               selected={page == tab}
             >

@@ -16,10 +16,11 @@ interface LeftProps {
 const pages: Page[] = ['General', 'Permissions', 'Hooks']
 
 // TODO: Fix tabs margin-right on last child
-const Left: React.FunctionComponent<LeftProps> = ({ repository, current }) => (
+const Left: React.FC<LeftProps> = ({ repository, current }) => (
   <Split px={[0, 4]} flexDirection='column'>
-    {pages.map(page => (
+    {pages.map((page, i) => (
       <Tab
+        key={i}
         width='100%'
         my={2}
         selected={page == current}

@@ -37,28 +37,3 @@ export default ({ repository, owns }: SettingsProps) => {
     </>
   )
 }
-
-/*   const {
-    handleSubmit,
-    register,
-    errors,
-    formState: { dirty }
-  } = useForm()
-  
-  <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          name='name'
-          label='Name'
-          defaultValue={repository?.name}
-          disabled={loading}
-          error={errors.name?.message.toString()}
-          ref={register({
-            required: 'Required'
-          })}
-        />
-
-        <Button type='submit' disabled={!dirty || loading}>
-          Save
-        </Button>
-      </form>
-*/
