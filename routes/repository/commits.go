@@ -27,7 +27,7 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(_page)
 		if err != nil {
 			log.Debug().
-				Str("username", dbRepo.OwnerName).
+				Str("uuid", dbRepo.OwnerUUID.String()).
 				Str("reponame", dbRepo.Name).
 				Str("page", _page).
 				Err(err).
@@ -41,7 +41,7 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 	commits, err := repo.Branch(branch).Commits(page, 20)
 	if err != nil {
 		log.Debug().
-			Str("username", dbRepo.OwnerName).
+			Str("uuid", dbRepo.OwnerUUID.String()).
 			Str("reponame", dbRepo.Name).
 			Int("page", page).
 			Err(err).

@@ -40,10 +40,6 @@ func New(w http.ResponseWriter, r *http.Request) {
 	// get all the mandatory data
 	kind := r.FormValue("kind")
 	owner := r.FormValue("owner")
-	if username == "" {
-		claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-		owner = claims.Username
-	}
 
 	switch kind {
 	case "repository":

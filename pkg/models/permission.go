@@ -3,15 +3,16 @@ package models
 import (
 	"github.com/lucat1/o2/pkg/store"
 	"github.com/rs/zerolog/log"
+	uuid "github.com/satori/go.uuid"
 )
 
 // Permission is the database model for a permission to acess a resource
 type Permission struct {
-	For   string `gorm:"primary_index" json:"for"`
+	For   string `gorm:"type:char(36);primary_index" json:"for"`
 	Scope string `gorm:"primary_index" json:"resource"`
 
-	Owner    Repository `gorm:"foreignkey:Resource;association_foreignkey:ComputedName" json:"-"`
-	Resource string     `gorm:"primary_index" json:"owner"`
+	Owner    Repository `gorm:"foreignkey:Resource;association_foreignkey:UUID" json:"-"`
+	Resource uuid.UUID  `gorm:"type:char(36);primary_index" json:"owner"`
 }
 
 // Pex is a struct that holds the data fetched from the db so we can
@@ -36,7 +37,7 @@ func includes(s []string, e string) bool {
 func FetchPexes(resource string, scopes []string) ([]Pex, bool) {
 	permissions := []Permission{}
 	if err := store.GetDB().
-		Where(&Permission{Resource: resource}).
+		Where(&Permission{Resource: uuid.Must(uuid.FromString(resource))}).
 		Find(&permissions).Error; err != nil {
 		log.Error().
 			Err(err).

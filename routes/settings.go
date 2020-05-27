@@ -19,6 +19,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := store.GetDB().
 		Where(&models.User{Username: claims.Username}).
+		Preload("Repositories").
 		First(&user).
 		Error; err != nil {
 		log.Debug().
@@ -48,8 +49,13 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	user.Lastname = r.Form.Get("lastname")
 	user.Location = r.Form.Get("location")
 
-	if err := store.GetDB().Save(user).Error; err != nil {
+	// 2. Update the database
+	if err := store.
+		GetDB().
+		Save(user).
+		Error; err != nil {
 		log.Debug().
+			Err(err).
 			Str("username", user.Username).
 			Str("firstname", user.Firstname).
 			Str("lastname", user.Lastname).
@@ -58,6 +64,17 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		datas.SettingsErr(w, r, user, "Internal error. Please try again later")
 		return
 	}
+
+	log.Debug().
+		Str("username", user.Username).
+		Str("firstname", user.Firstname).
+		Str("lastname", user.Lastname).
+		Str("location", user.Location).
+		Msg("Updated user settings")
+
+	// update auth token
+	token, _ := auth.Token(user)
+	auth.SetCookie(w, r, token)
 
 	quercia.Redirect(
 		w, r,

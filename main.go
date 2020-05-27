@@ -29,7 +29,7 @@ var dir pkger.Dir
 
 func init() {
 	port = flag.Int("port", 3000, "Sets the web server port")
-	host = flag.String("host", "localhost", "Sets the web server host")
+	host = flag.String("host", "0.0.0.0", "Sets the web server host")
 	flag.Parse()
 
 	// initialize the logger, store and database
@@ -64,13 +64,11 @@ func main() {
 	profile.Use(middleware.WithProfile(shared.NotFound))
 	profile.HandleFunc("/", routes.Profile)
 
-	repo := mux.Of("/:username/:reponame")
+	repo := profile.Of("/:reponame")
 	repo.Use(middleware.WithRepo(shared.NotFound))
 
 	// generate the resource value based on the :username/:reponame
-	repo.Use(middleware.WithResource(func(w http.ResponseWriter, _ http.Request) string {
-		return muxie.GetParam(w, "username") + "/" + muxie.GetParam(w, "reponame")
-	}))
+	repo.Use(middleware.WithResource(middleware.RepositoryResource))
 
 	repo.Use(middleware.MustPex([]string{"repo:pull"}, shared.NotFound))
 

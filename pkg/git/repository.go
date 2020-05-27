@@ -11,8 +11,8 @@ type Repository struct {
 }
 
 // Get returns the repository object for the given bare repo
-func Get(username, reponame string) (*Repository, error) {
-	path := GetPath(username, reponame)
+func Get(uuid string) (*Repository, error) {
+	path := GetPath(uuid)
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return nil, errors.New("The git repository at the given path does not exist")
 	}

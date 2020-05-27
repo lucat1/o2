@@ -30,6 +30,11 @@ func initDB() {
 		log.Fatal().Err(err).Msg("Could not connect to database")
 	}
 
+	// eanble gorm logging mode on debug
+	if *debug {
+		db.LogMode(true)
+	}
+
 	log.Info().Msg("Successfully connected to the database")
 	database = db
 }

@@ -23,7 +23,7 @@ func Commit(w http.ResponseWriter, r *http.Request) {
 	commit, err := repo.Commit(sha)
 	if err != nil {
 		log.Debug().
-			Str("username", dbRepo.OwnerName).
+			Str("uuid", dbRepo.OwnerUUID.String()).
 			Str("reponame", dbRepo.Name).
 			Str("sha", sha).
 			Err(err).

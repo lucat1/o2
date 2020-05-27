@@ -13,6 +13,7 @@ import (
 
 // Claims is the struct serialized into the JWT
 type Claims struct {
+	UUID     string `json:"uuid"`
 	Email    string `json:"email"`
 	Username string `json:"username"`
 	Picture  string `json:"picture"`
@@ -26,6 +27,7 @@ const lifespan = 8 * time.Hour
 // Token generates a login JWT for the requested user
 func Token(user models.User) (string, error) {
 	claims := &Claims{
+		UUID:     user.UUID.String(),
 		Email:    user.Email,
 		Username: user.Username,
 		Picture:  user.Picture,

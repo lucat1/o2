@@ -27,7 +27,7 @@ func Tree(w http.ResponseWriter, r *http.Request) {
 	tree, err := repo.Branch(branch).Tree(path)
 	if err != nil {
 		log.Debug().
-			Str("username", dbRepo.OwnerName).
+			Str("uuid", dbRepo.OwnerUUID.String()).
 			Str("reponame", dbRepo.Name).
 			Str("path", path).
 			Err(err).

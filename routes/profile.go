@@ -25,7 +25,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		account := ""
 		if auth.IsAuthenticated(r) {
 			claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-			account = claims.Username
+			account = claims.UUID
 		}
 		for _, repo := range user.Repositories {
 			if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {
@@ -47,7 +47,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		account := ""
 		if auth.IsAuthenticated(r) {
 			claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-			account = claims.Username
+			account = claims.UUID
 		}
 		for _, repo := range org.Repositories {
 			if models.HasPex(models.ToPex(repo.Permissions), account, []string{"repo:pull"}) {

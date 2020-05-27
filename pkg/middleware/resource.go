@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/kataras/muxie"
+	"github.com/lucat1/o2/pkg/models"
 	"golang.org/x/net/context"
 )
 
@@ -25,4 +26,10 @@ func WithResource(gen ResourceGenerator) muxie.Wrapper {
 			f.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
+}
+
+// RepositoryResource is the default resource generator for a repository
+var RepositoryResource ResourceGenerator = func(w http.ResponseWriter, r http.Request) string {
+	repo := r.Context().Value(DbRepo).(models.Repository)
+	return repo.UUID.String()
 }
