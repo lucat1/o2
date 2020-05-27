@@ -9,5 +9,5 @@ type Organization struct {
 	Location    string `gorm:"type:varchar(100)" json:"location"`
 
 	Users        []User       `gorm:"many2many:user_orgs;" json:"users"`
-	Repositories []Repository `gorm:"polymorphic:Owner;foreignkey:OwnerUUID;association_foreignkey:UUID" json:"repositories"`
+	Repositories []Repository `gorm:"polymorphic:Owner;foreignkey:OwnerUUID,OwnerName;association_foreignkey:UUID,Name" json:"repositories"`
 }
