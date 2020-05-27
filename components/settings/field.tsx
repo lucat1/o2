@@ -15,7 +15,7 @@ const Field: React.FC<InputProps & {
 }> = React.forwardRef(
   ({ errors, placeholder, name, description, ...props }, ref) => (
     <Box px={2} py={4}>
-      <Heading color='primary.default'>{placeholder}</Heading>
+      <Heading known color='primary.default'>{placeholder}</Heading>
 
       <Input
         {...(props as any)}
