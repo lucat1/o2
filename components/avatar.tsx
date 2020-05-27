@@ -38,7 +38,12 @@ const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
         alt='Your profile picture'
         src={picture}
       />
-      <Dropdown sx={{ top: 5 }} open={open} onClose={() => setOpen(false)}>
+      <Dropdown
+        sx={{ top: 5 }}
+        css={{ zIndex: 200 }}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
         <List>
           <Item onClick={() => go(`/${username}`)}>Your profile</Item>
           <Item onClick={() => go('/settings')}>Settings</Item>

@@ -50,8 +50,12 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	user.Location = r.Form.Get("location")
 
 	// 2. Update the database
-	if err := store.GetDB().Save(user).Error; err != nil {
+	if err := store.
+		GetDB().
+		Save(user).
+		Error; err != nil {
 		log.Debug().
+			Err(err).
 			Str("username", user.Username).
 			Str("firstname", user.Firstname).
 			Str("lastname", user.Lastname).
@@ -60,6 +64,13 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		datas.SettingsErr(w, r, user, "Internal error. Please try again later")
 		return
 	}
+
+	log.Debug().
+		Str("username", user.Username).
+		Str("firstname", user.Firstname).
+		Str("lastname", user.Lastname).
+		Str("location", user.Location).
+		Msg("Updated user settings")
 
 	quercia.Redirect(
 		w, r,
