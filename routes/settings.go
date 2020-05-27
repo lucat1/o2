@@ -72,6 +72,10 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		Str("location", user.Location).
 		Msg("Updated user settings")
 
+	// update auth token
+	token, _ := auth.Token(user)
+	auth.SetCookie(w, r, token)
+
 	quercia.Redirect(
 		w, r,
 		"/"+user.Username, "user",
