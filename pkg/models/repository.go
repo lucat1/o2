@@ -7,7 +7,7 @@ import (
 // Repository is the database model for a git repository
 type Repository struct {
 	Base
-	OwnerName string    `gorm:"type:varchar(32)" json:"owner"`
+	OwnerName string    `gorm:"type:varchar(32);primary_index" json:"owner"`
 	OwnerUUID uuid.UUID `gorm:"type:char(36);primary_index" json:"-"`
 
 	Name        string `gorm:"primary_index" json:"name"`
