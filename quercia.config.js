@@ -1,14 +1,23 @@
-module.exports = function({ config, target, mode }) {
+const { join } = require('path')
+
+module.exports = function({ config, target, mode, buildID }) {
+  config.module.rules.push({
+    test: /\.(woff2)$/i,
+    loader: 'file-loader',
+    options: {
+      // set a static public path so that both the client
+      // and the server can have the same url for the file
+      publicPath: join('__quercia', buildID, 'client')
+    }
+  })
+
   if (target === 'client') {
     // for production use `preact` instead of `react` to save bytes
     if (mode === 'production') {
-      config.resolve = {
-        ...config.resolve,
-        alias: {
-          ...config.resolve.alias,
-          'react': 'preact/compat',
-          'react-dom': 'preact/compat'
-        }
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'react': 'preact/compat',
+        'react-dom': 'preact/compat'
       }
     }
   }

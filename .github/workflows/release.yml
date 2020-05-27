@@ -39,6 +39,7 @@ jobs:
         run: |
           go get github.com/markbates/pkger/cmd/pkger
           rm -rf __quercia/*/server
+          rm data/CascadiaCode.woff2
           pkger
 
       - name: Build the go binary

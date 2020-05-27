@@ -35,6 +35,7 @@
     "@types/rebass": "^4.0.6",
     "@types/rebass__forms": "^4.0.2",
     "bundlewatch": "^0.2.6",
+    "file-loader": "^6.0.0",
     "preact": "^10.4.0",
     "type-fest": "^0.14.0",
     "typescript": "^3.8.3"

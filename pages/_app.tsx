@@ -1,6 +1,5 @@
 import * as React from 'react'
 import usePrefersTheme, { Preference } from 'use-prefers-theme'
-
 import { Head, SSG } from '@quercia/quercia'
 import { AppProps } from '@quercia/runtime'
 
@@ -12,10 +11,11 @@ import Header from '../components/header'
 import Progress from '../components/progress'
 
 import { base } from '../types/theme'
+import font from '../data/CascadiaCode.woff2'
 
 const glob = css`
   :root {
-    --ff: 'Operator Mono', monospace;
+    --ff: 'Operator Mono', 'Cascadia Code', monospace;
     --primary: #8325c1;
     --primary-rgb: 199, 146, 234;
     --error: #fd9726;
@@ -53,16 +53,18 @@ const glob = css`
     transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
   }
 
-  html,
-  code,
-  pre,
-  input {
-    font-family: var(--ff);
+  @font-face {
+    font-family: 'Cascadia Code';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(${font});
   }
 
   body {
     margin: 0;
     font-size: calc(1rem + 0.4vw);
+    font-family: var(--ff);
   }
 `
 
