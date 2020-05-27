@@ -1,11 +1,14 @@
 import * as React from 'react'
-import { Flex } from 'rebass'
+import { Box, Flex } from 'rebass'
+import { Textarea } from '@rebass/forms'
 import { useForm } from 'react-hook-form'
 import { navigate, Head } from '@quercia/quercia'
 
 import { Parent, Right } from '../components/split'
 import Heading from '../components/heading'
 import Button from '../components/button'
+import Input from '../components/input'
+import Label from '../components/label'
 
 import Left from '../components/settings/left'
 import Field from '../components/settings/field'
@@ -37,6 +40,7 @@ export default ({ profile, error }: SettingsProps) => {
     body.set('firstname', data.firstname)
     body.set('lastname', data.lastname)
     body.set('location', data.location)
+    body.set('description', data.description)
 
     navigate('/settings', 'POST', {
       body,
@@ -120,6 +124,33 @@ export default ({ profile, error }: SettingsProps) => {
             description='Your location is displayed in your profile. You can of course omit it for privacy concerns.'
             ref={register()}
           />
+
+          <Box px={2} py={4}>
+            <Heading known color='primary.default'>
+              Description
+            </Heading>
+
+            <Input
+              as={Textarea}
+              css={{
+                minWidth: '100%',
+                maxWidth: '100%'
+              }}
+              sx={{ minHeight: 5, height: 7 }}
+              disabled={isLoading}
+              name='description'
+              placeholder='Empty description'
+              defaultValue={profile?.description}
+              ref={register({ maxLength: 250 })}
+            />
+
+            <Label htmlFor='description'>A brief description of yourself</Label>
+            {errors.description && (
+              <Label htmlFor='description' variant='error'>
+                {errors.description?.message.toString()}
+              </Label>
+            )}
+          </Box>
 
           <Flex py={6} px={2} justifyContent='space-between'>
             <Button onClick={() => reset()} disabled={!dirty}>

@@ -48,6 +48,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	user.Firstname = r.Form.Get("firstname")
 	user.Lastname = r.Form.Get("lastname")
 	user.Location = r.Form.Get("location")
+	user.Description = r.Form.Get("description")
 
 	// 2. Update the database
 	if err := store.
@@ -60,6 +61,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 			Str("firstname", user.Firstname).
 			Str("lastname", user.Lastname).
 			Str("location", user.Location).
+			Str("description", user.Description).
 			Msg("Could not upate user's settings")
 		datas.SettingsErr(w, r, user, "Internal error. Please try again later")
 		return
@@ -70,6 +72,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		Str("firstname", user.Firstname).
 		Str("lastname", user.Lastname).
 		Str("location", user.Location).
+		Str("description", user.Description).
 		Msg("Updated user settings")
 
 	// update auth token
