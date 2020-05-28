@@ -33,6 +33,11 @@ func WithRepo(fallback http.HandlerFunc) muxie.Wrapper {
 			reponame := muxie.GetParam(w, "reponame")
 			db, git := actions.GetRepo(UUID, reponame)
 
+			if db == nil && git == nil {
+				fallback(w, r)
+				return
+			}
+
 			// save the values in the context
 			ctx := context.WithValue(r.Context(), DbRepo, *db)
 			ctx = context.WithValue(ctx, GitRepo, git)
