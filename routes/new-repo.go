@@ -3,9 +3,9 @@ package routes
 import (
 	"net/http"
 
+	"github.com/lucat1/o2/pkg/actions"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/git"
-	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
@@ -17,7 +17,7 @@ import (
 
 func newRepo(w http.ResponseWriter, r *http.Request, owner string) {
 	reponame := r.Form.Get("name")
-	userOwner, orgOwner := middleware.GetProfile(owner)
+	userOwner, orgOwner := actions.GetProfile(owner)
 
 	var (
 		username string

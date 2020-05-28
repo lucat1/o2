@@ -5,10 +5,8 @@ import (
 	"net/http"
 
 	"github.com/kataras/muxie"
-	"github.com/lucat1/o2/pkg/git"
+	"github.com/lucat1/o2/pkg/actions"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
-	"github.com/rs/zerolog/log"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -33,38 +31,11 @@ func WithRepo(fallback http.HandlerFunc) muxie.Wrapper {
 				UUID = o.UUID
 			}
 			reponame := muxie.GetParam(w, "reponame")
-
-			var dbRepo models.Repository
-			if err := store.GetDB().
-				Preload("Permissions").
-				Where(&models.Repository{OwnerUUID: UUID, Name: reponame}).
-				First(&dbRepo).
-				Error; err != nil {
-
-				log.Debug().
-					Str("uuid", UUID.String()).
-					Str("reponame", reponame).
-					Err(err).
-					Msg("Error while querying the DB to render the repository page")
-				fallback(w, r)
-				return
-			}
-
-			repo, err := git.Get(dbRepo.UUID.String())
-			if err != nil {
-				log.Debug().
-					Str("uuid", dbRepo.UUID.String()).
-					Str("reponame", reponame).
-					Err(err).
-					Msg("Error while looking for repository on the filesystem")
-				fallback(w, r)
-				return
-			}
+			db, git := actions.GetRepo(UUID, reponame)
 
 			// save the values in the context
-			ctx := context.WithValue(r.Context(), DbRepo, dbRepo)
-			ctx = context.WithValue(ctx, GitRepo, repo)
-
+			ctx := context.WithValue(r.Context(), DbRepo, db)
+			ctx = context.WithValue(ctx, GitRepo, git)
 			f.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
