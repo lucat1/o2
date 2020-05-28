@@ -106,7 +106,7 @@ export default ({ profile, error }: SettingsProps) => {
             name='lastname'
             placeholder='Last name'
             defaultValue={profile?.lastname}
-            description='Follows the same rules as your Fist name.'
+            description='Follows the same rules as your First name.'
             ref={register({
               pattern: {
                 value: /^[a-z ,.'-]+$/i,
