@@ -141,7 +141,12 @@ export default ({ profile, error }: SettingsProps) => {
               name='description'
               placeholder='Empty description'
               defaultValue={profile?.description}
-              ref={register({ maxLength: 250 })}
+              ref={register({
+                maxLength: {
+                  value: 250,
+                  message: 'The description cannot be loger than 250 chars.'
+                }
+              })}
             />
 
             <Label htmlFor='description'>A brief description of yourself</Label>
