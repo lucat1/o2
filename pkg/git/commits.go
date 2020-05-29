@@ -3,7 +3,6 @@ package git
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -84,7 +83,6 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 		}
 
 		if i%3 == 0 {
-			fmt.Println(part)
 			// json data
 			var commit Commit
 			if err := json.Unmarshal([]byte(part), &commit); err != nil {
@@ -100,7 +98,7 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 			if i == len(parts)-4 && commit.Parent != "" {
 				res.Next = true
 			}
-		} else if i%2 == 0 {
+		} else if (i-1)%3 == 0 {
 			res.Commits[len(res.Commits)-1].Subject = part
 		} else {
 			// body message
