@@ -87,7 +87,8 @@ export default ({ profile, error }: SettingsProps) => {
               required: 'Required',
               pattern: {
                 value: /^[a-z0-9_-]{3,15}$/,
-                message: 'invalid username'
+                message:
+                  'Invalid username: can only contain a-z, 0-9, _ and -. No uppercase letters'
               }
             })}
           />
