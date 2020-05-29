@@ -13,6 +13,7 @@ import (
 	"github.com/lucat1/o2/routes"
 	"github.com/lucat1/o2/routes/git"
 	"github.com/lucat1/o2/routes/repository"
+	"github.com/lucat1/o2/routes/settings"
 	"github.com/lucat1/o2/routes/shared"
 	"github.com/lucat1/quercia"
 	"github.com/markbates/pkger"
@@ -58,7 +59,8 @@ func main() {
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", auth.Must(routes.Logout))
 	mux.HandleFunc("/new", auth.Must(routes.New))
-	mux.HandleFunc("/settings", auth.Must(routes.Settings))
+	mux.HandleFunc("/settings", auth.Must(settings.Settings))
+	mux.HandleFunc("/settings/privacy", auth.Must(settings.Privacy))
 
 	profile := mux.Of("/:username")
 	profile.Use(middleware.WithProfile(shared.NotFound))

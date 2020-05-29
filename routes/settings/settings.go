@@ -1,4 +1,4 @@
-package routes
+package settings
 
 import (
 	"net/http"
@@ -19,7 +19,6 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := store.GetDB().
 		Where(&models.User{Username: claims.Username}).
-		Preload("Repositories").
 		First(&user).
 		Error; err != nil {
 		log.Debug().
@@ -35,7 +34,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		quercia.Render(
 			w, r,
-			"settings",
+			"settings/settings",
 			data.Compose(r, data.Base, datas.ProfileData(user)),
 		)
 		return

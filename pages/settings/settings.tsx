@@ -4,16 +4,16 @@ import { Textarea } from '@rebass/forms'
 import { useForm } from 'react-hook-form'
 import { navigate, Head } from '@quercia/quercia'
 
-import { Parent, Right } from '../components/split'
-import Heading from '../components/heading'
-import Button from '../components/button'
-import Input from '../components/input'
-import Label from '../components/label'
+import { Parent, Right } from '../../components/split'
+import Heading from '../../components/heading'
+import Button from '../../components/button'
+import Input from '../../components/input'
+import Label from '../../components/label'
 
-import Left from '../components/settings/left'
-import Field from '../components/settings/field'
+import Left from '../../components/settings/left'
+import Field from '../../components/settings/field'
 
-import { User } from '../types/data'
+import { User } from '../../types/data'
 
 export interface SettingsProps {
   profile: User
@@ -58,7 +58,11 @@ export default ({ profile, error }: SettingsProps) => {
         />
       </Head>
       <Parent py={6} px={[0, 9]}>
-        <Left pages={['General']} current='General' base='/settings' />
+        <Left
+          pages={['General', 'Privacy']}
+          current='General'
+          base='/settings'
+        />
         <Right
           as='form'
           onSubmit={handleSubmit(onSubmit)}

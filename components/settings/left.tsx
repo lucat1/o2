@@ -4,7 +4,7 @@ import { SSG } from '@quercia/quercia'
 import { Left as Split } from '../split'
 import { Tab } from '../tabs'
 
-type Page = 'General' | 'Permissions' | 'Hooks'
+type Page = 'General' | 'Privacy' | 'Permissions' | 'Hooks'
 
 interface LeftProps {
   current: Page
