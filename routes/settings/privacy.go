@@ -73,10 +73,10 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 			goto renderError
 		}
 
-		fmt.Println(user.Username)
+		fmt.Println(user.UUID.String())
 		quercia.Redirect(
 			w, r,
-			"/"+user.Username, "user",
+			"/"+claims.Username, "user",
 			data.Compose(r, data.Base, datas.ProfileData(user)),
 		)
 		return
