@@ -32,6 +32,7 @@ export default ({ profile, error }: SettingsProps) => {
     register,
     errors,
     reset,
+    getValues,
     formState: { dirty }
   } = useForm<Data>()
   const onSubmit = (data: Data) => {
@@ -42,9 +43,7 @@ export default ({ profile, error }: SettingsProps) => {
     body.set('current', data.current)
     body.set('new', data.new)
 
-    console.log('HANDLING', window.location.pathname)
-
-    navigate(window.location.pathname, 'POST', {
+    navigate('/settings/privacy', 'POST', {
       body,
       credentials: 'same-origin'
     })
@@ -111,7 +110,11 @@ export default ({ profile, error }: SettingsProps) => {
                 value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                 message:
                   'invalid password. Must contain at least 8 characters, at least 1 numeric and 1 letter'
-              }
+              },
+              validate: value =>
+                value === getValues()['current']
+                  ? 'Cannot use the current password as the new one'
+                  : true
             })}
           />
 

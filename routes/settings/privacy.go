@@ -79,6 +79,7 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 			"/"+user.Username, "user",
 			data.Compose(r, data.Base, datas.ProfileData(user)),
 		)
+		return
 	}
 
 	goto renderError
