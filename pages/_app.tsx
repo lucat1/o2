@@ -63,7 +63,7 @@ const glob = css`
 
   body {
     margin: 0;
-    font-size: calc(1rem + 0.4vw);
+    font-size: calc(1rem + 0.33vw);
     font-family: var(--ff);
   }
 `
