@@ -3,6 +3,7 @@ package git
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -63,7 +64,7 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 		"--skip="+strconv.Itoa(offset*amount),
 		"-n "+strconv.Itoa(amount),
 		// the `body` is appended at the end of the json to allor for newlines
-		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"parent\": \"%P\",\"subject\": \"%s\",\"author\": {  \"username\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"username\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%b"+sep,
+		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"parent\": \"%P\",\"author\": {  \"username\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"username\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%s"+sep+"%b"+sep,
 	)
 	if err != nil {
 		return res, err
@@ -82,7 +83,8 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 			continue
 		}
 
-		if i%2 == 0 {
+		if i%3 == 0 {
+			fmt.Println(part)
 			// json data
 			var commit Commit
 			if err := json.Unmarshal([]byte(part), &commit); err != nil {
@@ -95,10 +97,11 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 
 			// if we have a parent it means that we have more commits
 			// in the history to show, so we can enable the next page button
-			if i == len(parts)-3 && commit.Parent != "" {
+			if i == len(parts)-4 && commit.Parent != "" {
 				res.Next = true
 			}
-
+		} else if i%2 == 0 {
+			res.Commits[len(res.Commits)-1].Subject = part
 		} else {
 			// body message
 			res.Commits[len(res.Commits)-1].Body = part

@@ -23,7 +23,7 @@ func (r Repository) Commit(sha string) (DetailedCommit, error) {
 		r.Path,
 		"show",
 		sha,
-		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"subject\": \"%s\",\"author\": {  \"username\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"username\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%b"+sep,
+		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"author\": {  \"username\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"username\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%s"+sep+"%b"+sep,
 	)
 	if err != nil {
 		return DetailedCommit{}, err
@@ -31,15 +31,16 @@ func (r Repository) Commit(sha string) (DetailedCommit, error) {
 
 	// parse the output
 	parts := strings.Split(buf.String(), sep)
-	if len(parts) != 3 {
+	if len(parts) != 4 {
 		return DetailedCommit{}, errors.New("Corrupted git show output")
 	}
-	data, body, diff := parts[0], parts[1], parts[2]
+	data, subject, body, diff := parts[0], parts[1], parts[2], parts[3]
 
 	var out DetailedCommit
 	if err = json.Unmarshal([]byte(data), &out); err != nil {
 		return out, nil
 	}
+	out.Subject = subject
 	out.Body = body
 
 	// generate profile pictures for authros/commiters
@@ -48,6 +49,5 @@ func (r Repository) Commit(sha string) (DetailedCommit, error) {
 
 	// add git diff
 	out.Diff = diff
-
 	return out, nil
 }
