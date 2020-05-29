@@ -5,7 +5,7 @@ type Organization struct {
 	Base
 
 	Name        string `gorm:"type:varchar(32);unique_index" json:"name"`
-	Description string `gorm:"type:varchar(250)" json:"description"`
+	Description string `gorm:"type:varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci" json:"description"`
 	Location    string `gorm:"type:varchar(100)" json:"location"`
 
 	Users        []User       `gorm:"many2many:user_orgs;" json:"users"`

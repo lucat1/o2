@@ -18,7 +18,7 @@ type User struct {
 
 	Firstname   string `gorm:"type:varchar(50)" json:"firstname"`
 	Lastname    string `gorm:"type:varchar(50)" json:"lastname"`
-	Description string `gorm:"type:varchar(250)" json:"description"`
+	Description string `gorm:"type:varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci" json:"description"`
 	Location    string `gorm:"type:varchar(100)" json:"location"`
 	Picture     string `json:"picture"`
 

@@ -29,6 +29,7 @@ func initDB() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not connect to database")
 	}
+	db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4 auto_increment=1")
 
 	// eanble gorm logging mode on debug
 	if *debug {
