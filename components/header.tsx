@@ -20,7 +20,8 @@ const Header: React.FC<Base<{}>> = ({ account }) => {
       sx={{
         borderBottom: '1px solid',
         borderColor: 'bg.3',
-        position: 'sticky'
+        position: 'sticky',
+        zIndex: 200
       }}
     >
       <Body height={6} alignItems='center' justifyContent='space-between'>
