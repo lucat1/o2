@@ -57,8 +57,8 @@
   "bundlewatch": {
     "files": [
       {
-        "path": "__quercia/*/client/*.js",
-        "maxSize": "31kB"
+        "path": "__quercia/client/*.js",
+        "maxSize": "20kB"
       },
       {
         "path": "__quercia/*/client/pages/**/*.js",
