@@ -43,7 +43,13 @@ func New(w http.ResponseWriter, r *http.Request) {
 
 	switch kind {
 	case "repository":
-		newRepo(w, r, owner)
+		// if the user is creating a repository for another org
+		// we give the creator push permissions
+		if owner != user.Username {
+			newRepo(w, r, owner, &user.UUID)
+		} else {
+			newRepo(w, r, owner, nil)
+		}
 		break
 
 	case "organization":

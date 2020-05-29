@@ -15,7 +15,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-func newRepo(w http.ResponseWriter, r *http.Request, owner string) {
+func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.UUID) {
 	reponame := r.Form.Get("name")
 	userOwner, orgOwner := actions.GetProfile(owner)
 
@@ -53,6 +53,14 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string) {
 			For:   UUID.String(),
 			Scope: "repo:push",
 		}},
+	}
+
+	// add extra push permissions to the user
+	if extra != nil {
+		repo.Permissions = append(repo.Permissions, models.Permission{
+			For:   extra.String(),
+			Scope: "repo:push",
+		})
 	}
 
 	if err := store.GetDB().Save(&repo).Error; err != nil {
