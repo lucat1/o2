@@ -7,6 +7,7 @@ import Center from '../components/center'
 import Button from '../components/button'
 import Input from '../components/input'
 import Label from '../components/label'
+import Heading from '../components/heading'
 
 interface Data {
   email: string
@@ -47,7 +48,7 @@ export default ({ error }: LoginProps) => {
       <Head>
         <title>login - o2</title>
       </Head>
-      {error && <h1 style={{ color: 'red' }}>{error}</h1>}
+      {error && <Heading color='error'>{error}</Heading>}
 
       <Box py={4} width={9}>
         <Input

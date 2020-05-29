@@ -1,45 +1,50 @@
 import * as React from 'react'
 import { Flex } from 'rebass'
 import { useForm } from 'react-hook-form'
-import { navigate, Head } from '@quercia/quercia'
+import { navigate, Head, SSG } from '@quercia/quercia'
 
 import { Parent, Right } from '../../components/split'
 import Heading from '../../components/heading'
 import Button from '../../components/button'
+import Label from '../../components/label'
+import Divider from '../../components/divider'
 
 import Left from '../../components/settings/left'
 import Field from '../../components/settings/field'
-
-import { User } from '../../types/data'
 
 export interface SettingsProps {
   error?: string
   profile: { username: string }
 }
 
+interface Data {
+  current: string
+  new: string
+}
+
 export default ({ profile, error }: SettingsProps) => {
   const [isLoading, setLoading] = React.useState(
-    error && typeof error !== 'string'
+    error ? typeof error == 'string' : false
   )
+
   const {
     handleSubmit,
     register,
     errors,
     reset,
     formState: { dirty }
-  } = useForm<User>()
-  const onSubmit = (data: User) => {
+  } = useForm<Data>()
+  const onSubmit = (data: Data) => {
     setLoading(true)
 
     // instantiate the POST form data
     const body = new FormData()
-    body.set('username', data.username)
-    body.set('firstname', data.firstname)
-    body.set('lastname', data.lastname)
-    body.set('location', data.location)
-    body.set('description', data.description)
+    body.set('current', data.current)
+    body.set('new', data.new)
 
-    navigate('/settings', 'POST', {
+    console.log('HANDLING', window.location.pathname)
+
+    navigate(window.location.pathname, 'POST', {
       body,
       credentials: 'same-origin'
     })
@@ -48,7 +53,7 @@ export default ({ profile, error }: SettingsProps) => {
   return (
     <>
       <Head>
-        <title>profile settings - o2</title>
+        <title>profile settings (privacy) - o2</title>
         <meta
           name='description'
           content='the settings of a user/organization'
@@ -70,28 +75,54 @@ export default ({ profile, error }: SettingsProps) => {
             Privacy - {profile?.username}
           </Heading>
 
+          {error && <Heading color='error'>{error}</Heading>}
+
+          <Label>
+            In order to update your password pelase provide your current
+            password and the new one you want to set.
+          </Label>
+
           <Field
             errors={errors}
             disabled={isLoading}
-            name='username'
-            placeholder='Username'
-            defaultValue={profile?.username}
-            description='The username is displayed in your profile and in every repository you own / contribute to.'
+            name='current'
+            type='password'
+            placeholder='Current password'
+            description='Your current password.'
             ref={register({
               required: 'Required',
               pattern: {
-                value: /^[a-z0-9_-]{3,15}$/,
-                message: 'invalid username'
+                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                message: 'invalid password'
               }
             })}
           />
+
+          <Field
+            errors={errors}
+            disabled={isLoading}
+            name='new'
+            type='password'
+            placeholder='New password'
+            description='The new password.'
+            ref={register({
+              required: 'Required',
+              pattern: {
+                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                message:
+                  'invalid password. Must contain at least 8 characters, at least 1 numeric and 1 letter'
+              }
+            })}
+          />
+
+          <Divider />
 
           <Flex py={6} px={2} justifyContent='space-between'>
             <Button onClick={() => reset()} disabled={!dirty}>
               Reset
             </Button>
             <Button type='submit' disabled={!dirty}>
-              Save
+              Update
             </Button>
           </Flex>
         </Right>

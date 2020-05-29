@@ -62,7 +62,12 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 			Str("location", user.Location).
 			Str("description", user.Description).
 			Msg("Could not upate user's settings")
-		datas.SettingsErr(w, r, user, "Internal error. Please try again later")
+
+		datas.SettingsError(
+			w, r,
+			"settings/settings",
+			"Internal error. Please try again later",
+		)
 		return
 	}
 

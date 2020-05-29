@@ -7,6 +7,7 @@ import Center from '../components/center'
 import Button from '../components/button'
 import Input from '../components/input'
 import Label from '../components/label'
+import Heading from '../components/heading'
 
 interface Data {
   email: string
@@ -33,7 +34,10 @@ export default ({ error }: RegisterProps) => {
     body.set('username', data.username)
     body.set('password', data.password)
 
-    navigate('/register', 'POST', { body, credentials: 'same-origin' })
+    navigate(window.location.pathname, 'POST', {
+      body,
+      credentials: 'same-origin'
+    })
   }
 
   return (
@@ -46,7 +50,7 @@ export default ({ error }: RegisterProps) => {
         as='form'
         onSubmit={handleSubmit(onSubmit)}
       >
-        {error && <h1 style={{ color: 'red' }}>{error}</h1>}
+        {error && <Heading color='error'>{error}</Heading>}
 
         <Box py={4} width={9}>
           <Input

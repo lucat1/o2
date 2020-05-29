@@ -7,16 +7,11 @@ import (
 	"github.com/lucat1/quercia"
 )
 
-// SettingsErr renders the settings page with an error
-func SettingsErr(w http.ResponseWriter, r *http.Request, user interface{}, msg string) {
-	quercia.Render(w, r, "settings", data.Compose(
+// SettingsError renders a settings page with an error
+func SettingsError(w http.ResponseWriter, r *http.Request, page, msg string) {
+	quercia.Render(w, r, page, data.Compose(
 		r,
 		data.Base,
-		ProfileData(user),
-		func(r *http.Request) quercia.Props {
-			return quercia.Props{
-				"error": msg,
-			}
-		},
+		ErrorData(msg),
 	))
 }

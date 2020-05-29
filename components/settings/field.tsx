@@ -7,15 +7,15 @@ import Heading from '../heading'
 import Input from '../input'
 import Label from '../label'
 
-import { User } from '../../types/data'
-
 const Field: React.FC<InputProps & {
   description: string
-  errors: NestDataObject<User, FieldError>
+  errors: NestDataObject<any, FieldError>
 }> = React.forwardRef(
   ({ errors, placeholder, name, description, ...props }, ref) => (
     <Box px={2} py={4}>
-      <Heading known color='primary.default'>{placeholder}</Heading>
+      <Heading known color='primary.default'>
+        {placeholder}
+      </Heading>
 
       <Input
         {...(props as any)}

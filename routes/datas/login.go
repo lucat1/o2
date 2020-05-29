@@ -12,10 +12,6 @@ func LoginErr(w http.ResponseWriter, r *http.Request, msg string) {
 	quercia.Render(w, r, "login", data.Compose(
 		r,
 		data.Base,
-		func(r *http.Request) quercia.Props {
-			return quercia.Props{
-				"error": msg,
-			}
-		},
+		ErrorData(msg),
 	))
 }

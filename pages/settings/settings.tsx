@@ -9,6 +9,7 @@ import Heading from '../../components/heading'
 import Button from '../../components/button'
 import Input from '../../components/input'
 import Label from '../../components/label'
+import Divider from '../../components/divider'
 
 import Left from '../../components/settings/left'
 import Field from '../../components/settings/field'
@@ -22,7 +23,7 @@ export interface SettingsProps {
 
 export default ({ profile, error }: SettingsProps) => {
   const [isLoading, setLoading] = React.useState(
-    error && typeof error !== 'string'
+    error ? typeof error == 'string' : false
   )
   const {
     handleSubmit,
@@ -42,7 +43,7 @@ export default ({ profile, error }: SettingsProps) => {
     body.set('location', data.location)
     body.set('description', data.description)
 
-    navigate('/settings', 'POST', {
+    navigate(window.location.pathname, 'POST', {
       body,
       credentials: 'same-origin'
     })
@@ -51,7 +52,7 @@ export default ({ profile, error }: SettingsProps) => {
   return (
     <>
       <Head>
-        <title>profile settings - o2</title>
+        <title>profile settings (general) - o2</title>
         <meta
           name='description'
           content='the settings of a user/organization'
@@ -73,6 +74,8 @@ export default ({ profile, error }: SettingsProps) => {
             Settings - {profile?.username}
           </Heading>
 
+          {error && <Heading color='error'>{error}</Heading>}
+
           <Field
             errors={errors}
             disabled={isLoading}
@@ -88,6 +91,8 @@ export default ({ profile, error }: SettingsProps) => {
               }
             })}
           />
+
+          <Divider />
 
           <Field
             errors={errors}
@@ -129,6 +134,8 @@ export default ({ profile, error }: SettingsProps) => {
             ref={register()}
           />
 
+          <Divider />
+
           <Box px={2} py={4}>
             <Heading known color='primary.default'>
               Description
@@ -153,13 +160,17 @@ export default ({ profile, error }: SettingsProps) => {
               })}
             />
 
-            <Label htmlFor='description'>A brief description of yourself</Label>
+            <Label htmlFor='description'>
+              A brief description of yourself.
+            </Label>
             {errors.description && (
               <Label htmlFor='description' variant='error'>
                 {errors.description?.message.toString()}
               </Label>
             )}
           </Box>
+
+          <Divider />
 
           <Flex py={6} px={2} justifyContent='space-between'>
             <Button onClick={() => reset()} disabled={!dirty}>
