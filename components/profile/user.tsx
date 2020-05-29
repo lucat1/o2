@@ -31,7 +31,7 @@ const Profile = ({ profile }: { profile: User }) => (
       src={profile?.picture + '?s=300'}
     />
     <Box py={4}>
-      <Line>
+      <Line css={{ wordWrap: 'break-word' }}>
         <Heading fontSize='lg'>{profile?.username}</Heading>
       </Line>
       <Line>
