@@ -1436,10 +1436,10 @@
     pirates "^4.0.1"
     source-map-support "^0.5.13"
 
-"@quercia/cli@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@quercia/cli/-/cli-0.5.0.tgz#79697ad8824dc07d31530534e45e8a3da0c6d7df"
-  integrity sha512-CY2fJ1G6B8vxXWtp35sjGiug4AQdlH/EWlgJ1gmeUNgF5b9zRZFas6nxyMYjC+38NsSoTD29nsdNUriTKf66vQ==
+"@quercia/cli@0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@quercia/cli/-/cli-0.5.3.tgz#0f7a2157b0eed44360f76698a0b8d00cf25c6a89"
+  integrity sha512-Tk2oKV+eQ9Jbf01jxkbu7OIF17SfXEc7Jcl+auMjcTif7XjGL5ZWDZqDxPVcaghdreLTed8mkXy1iuG34tj1QQ==
   dependencies:
     "@babel/core" "^7.9.0"
     "@babel/preset-env" "^7.9.5"
