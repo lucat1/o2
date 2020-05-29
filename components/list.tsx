@@ -16,7 +16,7 @@ export const Item: React.FC<FlexProps & { selected?: boolean }> = ({
   ...props
 }) => (
   <Flex
-    as='ul'
+    as='li'
     py={2}
     px={3}
     alignItems='center'
