@@ -33,5 +33,7 @@ func (base *Base) BeforeCreate(scope *gorm.Scope) error {
 
 // Init initializes all the database modules
 func Init() {
-	store.GetDB().AutoMigrate(&User{}, &Repository{}, &Permission{}, &Organization{})
+	store.GetDB().
+		Set("gorm:table_options", "CHARSET=utf8mb4").
+		AutoMigrate(&User{}, &Repository{}, &Permission{}, &Organization{})
 }
