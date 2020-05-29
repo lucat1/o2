@@ -30,7 +30,7 @@ export default ({ repository, owns }: SettingsProps) => {
       <Layout owns={owns} repository={repository} page='Settings'>
         <Parent py={6}>
           <Left
-            base={SSG ? '' : `${repository.owner}/${repository.name}/settings`}
+            base={SSG ? '' : `/${repository.owner}/${repository.name}/settings`}
             pages={['General', 'Permissions', 'Hooks']}
             current='General'
           />

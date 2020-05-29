@@ -46,6 +46,7 @@ const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
       >
         <List>
           <Item onClick={() => go(`/${username}`)}>Your profile</Item>
+          <Divider />
           <Item onClick={() => go('/settings')}>Settings</Item>
           <Divider />
           <Item onClick={() => go('/new')}>New</Item>
