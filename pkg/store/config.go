@@ -23,8 +23,8 @@ func init() {
 	ConfigPath = flag.String("config", "data/o2.ini", "The path to the configuration file")
 }
 
-// Init loads the configuration file and saves it into memory
-func initConfig() {
+// InitConfig loads the configuration file and saves it into memory
+func InitConfig() {
 	// make the path absolute by resolving it against the process cwd
 	if !path.IsAbs(*ConfigPath) {
 		*ConfigPath = path.Join(cwd, *ConfigPath)

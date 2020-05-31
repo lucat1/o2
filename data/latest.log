@@ -17,3 +17,11 @@
 {"level":"info","host":"0.0.0.0","port":3000,"time":1590931560,"message":"Starting web server"}
 {"level":"info","time":1590931742,"message":"Successfully connected to the database"}
 {"level":"info","host":"0.0.0.0","port":3000,"time":1590931742,"message":"Starting web server"}
+{"level":"info","time":1590931887,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590931887,"message":"Starting web server"}
+{"level":"info","time":1590931943,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590931943,"message":"Starting web server"}
+{"level":"info","time":1590932414,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590932414,"message":"Starting web server"}
+{"level":"info","time":1590932547,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590932548,"message":"Starting web server"}

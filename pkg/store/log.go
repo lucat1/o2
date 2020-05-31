@@ -4,18 +4,30 @@ import (
 	"flag"
 	"io"
 	"os"
+	"path"
 
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/rs/zerolog"
 )
 
-var debug *bool
+var (
+	// HooksLogsPath is the path to the hooks logs
+	HooksLogsPath string
+	debug         *bool
+)
 
 func init() {
 	debug = flag.Bool("debug", false, "Set the loglevel to debug")
 }
 
-func initLog() {
+// InitLogs initialzes the custom zerolog logger
+func InitLogs() {
+	// Resolve the path for the hooks logs used by git hooks
+	HooksLogsPath = config.Section("o2").Key("hooks_log").String()
+	if !path.IsAbs(HooksLogsPath) {
+		HooksLogsPath = path.Join(cwd, HooksLogsPath)
+	}
+
 	// UNIX Time is faster and smaller than most timestamps
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)

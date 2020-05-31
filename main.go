@@ -34,7 +34,9 @@ func init() {
 	flag.Parse()
 
 	// initialize the logger, store and database
-	store.Init()
+	store.InitConfig()
+	store.InitLogs()
+	store.InitDatabase()
 	store.InitHooks()
 	models.Init()
 

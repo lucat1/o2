@@ -13,14 +13,17 @@ func init() {
 	logsPath := os.Getenv("LOGSPATH")
 
 	// initialize the logger, store and database
-	store.Init()
+	store.InitConfig()
+	store.InitLogs()
 
 	// store logs only in a file. Don't print anything to the client
 	file, err := os.OpenFile(logsPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		log.Fatal().Err(err).Msg("Could not open log file")
+		log.Fatal().Err(err).Msg("Could not open log file (post-receive)")
 	}
 	log.Output(file)
+
+	store.InitDatabase()
 }
 
 func main() {

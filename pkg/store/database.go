@@ -16,7 +16,8 @@ import (
 
 var database *gorm.DB
 
-func initDB() {
+// InitDatabase initializes the database connection
+func InitDatabase() {
 	dialect := config.Section("database").Key("dialect").String()
 	uri := config.Section("database").Key("uri").String()
 	log.Debug().

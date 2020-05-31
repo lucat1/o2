@@ -52,7 +52,7 @@ func RPC(rpc string) func(http.ResponseWriter, *http.Request) {
 			cmd.Env,
 			"O2_POST_RECEIVE="+store.PostReceiveHook,
 			"CONFIGPATH="+*store.ConfigPath,
-			"LOGSPATH="+store.GetConfig().Section("o2").Key("hooks_log").String(),
+			"LOGSPATH="+store.HooksLogsPath,
 		)
 
 		if protocol := r.Header.Get("Git-Protocol"); protocol != "" {
