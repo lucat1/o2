@@ -25,7 +25,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 	)
 
 	if userOwner != nil {
-		username = userOwner.Username
+		username = userOwner.Name
 		UUID = userOwner.UUID
 	}
 

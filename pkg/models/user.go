@@ -13,7 +13,7 @@ type User struct {
 	Base
 
 	Email    string `gorm:"type:varchar(100);unique_index" json:"email"`
-	Username string `gorm:"type:varchar(32);unique_index" json:"username"`
+	Name     string `gorm:"type:varchar(32);primary_key" json:"username"`
 	Password string `json:"-"`
 
 	Firstname   string `gorm:"type:varchar(50)" json:"firstname"`
@@ -23,7 +23,7 @@ type User struct {
 	Picture     string `json:"picture"`
 
 	Organizations []Organization `gorm:"many2many:user_orgs;" json:"organizations"`
-	Repositories  []Repository   `gorm:"polymorphic:Owner;foreignkey:OwnerUUID,OwnerName;association_foreignkey:UUID,Username" json:"repositories"`
+	Repositories  []Repository   `gorm:"polymorphic:Owner" json:"repositories"`
 }
 
 // Picture generates the picture url of a profile picture

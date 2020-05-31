@@ -17,7 +17,7 @@ func GetProfile(name string) (*models.User, *models.Organization) {
 		Preload("Repositories").
 		Preload("Repositories.Permissions").
 		Preload("Organizations").
-		Where(&models.User{Username: name}).
+		Where(&models.User{Name: name}).
 		First(&user).
 		Error; err != nil {
 

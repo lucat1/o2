@@ -19,7 +19,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := store.GetDB().
 		Preload("Organizations").
-		Where(&models.User{Username: username}).
+		Where(&models.User{Name: username}).
 		First(&user).Error; err != nil {
 		log.Error().
 			Str("username", username).
@@ -45,7 +45,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 	case "repository":
 		// if the user is creating a repository for another org
 		// we give the creator push permissions
-		if owner != user.Username {
+		if owner != user.Name {
 			newRepo(w, r, owner, &user.UUID)
 		} else {
 			newRepo(w, r, owner, nil)

@@ -20,7 +20,7 @@ func exists(user models.User) bool {
 
 // Register creates a new database instance of the given user
 func Register(user models.User, password string) (string, error) {
-	if exists(models.User{Username: user.Username}) {
+	if exists(models.User{Name: user.Name}) {
 		return "", errors.New("The username is taken")
 	}
 

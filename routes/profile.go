@@ -17,7 +17,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 	o := r.Context().Value(middleware.Organization)
 
 	// if we have a user
-	if u != nil && u.(models.User).Username != "" {
+	if u != nil && u.(models.User).Name != "" {
 		user := u.(models.User)
 
 		// filter public repositories

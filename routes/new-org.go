@@ -15,10 +15,10 @@ func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 	orgname := r.Form.Get("name")
 
 	if err := store.GetDB().
-		Where(models.User{Username: orgname}).
+		Where(models.User{Name: orgname}).
 		First(&models.User{}).
 		Error; err == nil {
-		datas.NewErr(w, r, "This name is already taken by an user")
+		datas.NewErr(w, r, "This name is already taken by a user")
 		return
 	}
 
@@ -37,7 +37,7 @@ func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 
 	if err := store.GetDB().Save(&org).Error; err != nil {
 		log.Error().
-			Str("owner", user.Username).
+			Str("owner", user.Name).
 			Str("orgname", orgname).
 			Err(err).
 			Msg("Could not save new organization in the database")

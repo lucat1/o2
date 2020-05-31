@@ -48,7 +48,7 @@ func Must(f http.HandlerFunc) http.HandlerFunc {
 				}
 
 				token, err := Login(models.User{
-					Username: username,
+					Name:     username,
 					Password: password,
 				})
 				if err != nil {
