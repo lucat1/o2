@@ -21,7 +21,7 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 
 	var user models.User
 	if err := store.GetDB().
-		Where(&models.User{Username: claims.Username}).
+		Where(&models.User{Name: claims.Username}).
 		First(&user).
 		Error; err != nil {
 		log.Debug().

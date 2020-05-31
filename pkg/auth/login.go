@@ -11,7 +11,7 @@ import (
 
 // Login checks the given email/password and authenticates a user
 func Login(user models.User) (string, error) {
-	find := models.User{Username: user.Username, Email: user.Email}
+	find := models.User{Name: user.Name, Email: user.Email}
 	if !exists(find) {
 		return "", errors.New("Invalid email address")
 	}

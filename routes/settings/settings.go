@@ -18,7 +18,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 	var user models.User
 	if err := store.GetDB().
-		Where(&models.User{Username: claims.Username}).
+		Where(&models.User{Name: claims.Username}).
 		First(&user).
 		Error; err != nil {
 		log.Debug().
@@ -43,7 +43,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
 	// Upadte the database informations with the changed data
 	// 1. Gather data
-	user.Username = r.Form.Get("username")
+	user.Name = r.Form.Get("username")
 	user.Firstname = r.Form.Get("firstname")
 	user.Lastname = r.Form.Get("lastname")
 	user.Location = r.Form.Get("location")
@@ -56,7 +56,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		Error; err != nil {
 		log.Debug().
 			Err(err).
-			Str("username", user.Username).
+			Str("username", user.Name).
 			Str("firstname", user.Firstname).
 			Str("lastname", user.Lastname).
 			Str("location", user.Location).
@@ -72,7 +72,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Debug().
-		Str("username", user.Username).
+		Str("username", user.Name).
 		Str("firstname", user.Firstname).
 		Str("lastname", user.Lastname).
 		Str("location", user.Location).
@@ -85,7 +85,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 	quercia.Redirect(
 		w, r,
-		"/"+user.Username, "user",
+		"/"+user.Name, "user",
 		data.Compose(r, data.Base, datas.ProfileData(user)),
 	)
 }
