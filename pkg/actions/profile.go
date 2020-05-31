@@ -1,9 +1,9 @@
 package actions
 
 import (
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
-	"github.com/rs/zerolog/log"
 )
 
 // GetProfile queries the database for a user/organization

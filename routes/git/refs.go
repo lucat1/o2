@@ -5,10 +5,10 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/git"
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/routes/shared"
-	"github.com/rs/zerolog/log"
 )
 
 // InfoRefs handles the request for the repository's

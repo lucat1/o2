@@ -4,7 +4,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/rs/zerolog/log"
+	"github.com/lucat1/o2/pkg/log"
 )
 
 // FIXME: TODO: Maybe just merge this and lots of other functions with the git package??

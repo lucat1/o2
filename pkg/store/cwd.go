@@ -3,7 +3,7 @@ package store
 import (
 	"os"
 
-	"github.com/rs/zerolog/log"
+	"github.com/lucat1/o2/pkg/log"
 )
 
 var cwd string

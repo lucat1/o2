@@ -1,8 +1,8 @@
 package models
 
 import (
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/store"
-	"github.com/rs/zerolog/log"
 	uuid "github.com/satori/go.uuid"
 )
 

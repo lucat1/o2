@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/rs/zerolog/log"
+	"github.com/lucat1/o2/pkg/log"
 )
 
 // DebugMiddleware logs route response timings and request data in debug mode

@@ -28,7 +28,7 @@ func isAuthenticated(r *http.Request) (*Claims, bool) {
 func _isAuthenticated(value string) (*Claims, bool) {
 	claims := &Claims{}
 
-	key := store.GetConfig().Section("").Key("jwt_key").String()
+	key := store.GetConfig().Section("o2").Key("jwt_key").String()
 	token, err := jwt.ParseWithClaims(value, claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(key), nil
 	})

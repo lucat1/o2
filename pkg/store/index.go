@@ -5,7 +5,8 @@ package store
 // - configuration
 // - database(gorm)
 func Init() {
-	initLog()
 	initConfig()
+	initLog()
 	initDB()
+	initHooks()
 }

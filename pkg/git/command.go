@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"os/exec"
 
-	"github.com/rs/zerolog/log"
+	"github.com/lucat1/o2/pkg/log"
 )
 
 // Command executes a git command with the given arguments in the given location

@@ -1,10 +1,11 @@
 package git
 
 import (
+	"io/ioutil"
 	"os"
 	"path"
 
-	"github.com/rs/zerolog/log"
+	"github.com/lucat1/o2/pkg/log"
 )
 
 // Init initializes a bare git repository at the given path
@@ -16,16 +17,22 @@ func Init(uuid string) (*Repository, error) {
 	}
 
 	// Minimalize fs size by removing useless files (for now useless)
-	// We may implement something via hooks later i think
-	// TODO: Hooks?! (wekhooks also)
 	if err = os.RemoveAll(path.Join(dir, "hooks")); err != nil {
-		log.Error().Err(err).Msg("Error while removing hooks folder in new repo")
+		log.Error().Err(err).Msg("Error while removing info folder in new repo")
 	}
 	if err = os.RemoveAll(path.Join(dir, "info")); err != nil {
 		log.Error().Err(err).Msg("Error while removing info folder in new repo")
 	}
 	if err = os.Remove(path.Join(dir, "description")); err != nil {
 		log.Error().Err(err).Msg("Error while removing description file in new repo")
+	}
+
+	// setup hooks
+	if err = os.Mkdir(path.Join(dir, "hooks"), 0700); err != nil {
+		log.Error().Err(err).Msg("Error while creating the hooks folder in the new repo")
+	}
+	if err = ioutil.WriteFile(path.Join(dir, "hooks", "post-receive"), postReceiveHook, 0700); err != nil {
+		log.Error().Err(err).Msg("Error while creating the `post-receive` hook in the new repo")
 	}
 
 	return Get(uuid)

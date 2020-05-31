@@ -2,7 +2,7 @@ package store
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/rs/zerolog/log"
+	"github.com/lucat1/o2/pkg/log"
 
 	// mysql driver for gorm
 	_ "github.com/jinzhu/gorm/dialects/mysql"

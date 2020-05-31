@@ -6,12 +6,12 @@ import (
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/git"
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/o2/routes/shared"
 	"github.com/lucat1/quercia"
-	"github.com/rs/zerolog/log"
 )
 
 // Commit renders the diff of a single commit

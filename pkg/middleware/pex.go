@@ -6,8 +6,8 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/auth"
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/rs/zerolog/log"
 )
 
 // MustPex checks if the authenticated user has access to the required permission

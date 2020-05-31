@@ -2,9 +2,11 @@ package store
 
 import (
 	"flag"
+	"io"
+	"os"
 
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 )
 
 var debug *bool
@@ -18,8 +20,17 @@ func initLog() {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
+	// setup a file-based and a stdout logger
+	file, err := os.OpenFile(config.Section("o2").Key("log").String(),
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Could not open log file")
+	}
+
+	log.Output(io.MultiWriter(os.Stderr, file))
+
 	if *debug {
-		log.Info().Msg("Loglevel set to debug")
+		log.Debug().Msg("Loglevel set to debug")
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
 }

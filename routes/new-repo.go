@@ -6,11 +6,11 @@ import (
 	"github.com/lucat1/o2/pkg/actions"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/git"
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
-	"github.com/rs/zerolog/log"
 
 	uuid "github.com/satori/go.uuid"
 )

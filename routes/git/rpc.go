@@ -9,10 +9,11 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/git"
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/shared"
-	"github.com/rs/zerolog/log"
 )
 
 // RPC is a route which spawns a git headless service
@@ -45,6 +46,14 @@ func RPC(rpc string) func(http.ResponseWriter, *http.Request) {
 		dir := git.GetPath(dbRepo.UUID.String())
 		cmd := exec.Command("git", rpc, "--stateless-rpc", dir)
 		cmd.Env = os.Environ()
+
+		// add hooks values environment variables
+		cmd.Env = append(
+			cmd.Env,
+			"O2_POST_RECEIVE="+store.PostReceiveHook,
+			"CONFIGPATH="+*store.ConfigPath,
+		)
+
 		if protocol := r.Header.Get("Git-Protocol"); protocol != "" {
 			cmd.Env = append(cmd.Env, "GIT_PROTOCOL="+protocol)
 		}

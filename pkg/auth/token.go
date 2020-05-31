@@ -36,7 +36,7 @@ func Token(user models.User) (string, error) {
 		},
 	}
 
-	key := store.GetConfig().Section("").Key("jwt_key").String()
+	key := store.GetConfig().Section("o2").Key("jwt_key").String()
 	_token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := _token.SignedString([]byte(key))
 	if err != nil {

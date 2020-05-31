@@ -18,7 +18,7 @@ import (
 	"github.com/lucat1/quercia"
 	"github.com/markbates/pkger"
 
-	"github.com/rs/zerolog/log"
+	"github.com/lucat1/o2/pkg/log"
 )
 
 var (
