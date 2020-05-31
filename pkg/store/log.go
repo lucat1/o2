@@ -26,11 +26,11 @@ func initLog() {
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY,
 		0644,
 	)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Could not open log file")
+	if err == nil {
+		log.Output(io.MultiWriter(os.Stderr, file))
+	} else {
+		log.Debug().Err(err).Msg("Could not open log file, ignoring")
 	}
-
-	log.Output(io.MultiWriter(os.Stderr, file))
 
 	if *debug {
 		log.Debug().Msg("Loglevel set to debug")
