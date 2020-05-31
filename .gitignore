@@ -1,4 +1,5 @@
 __quercia
 node_modules
+bins
 data/repos/*
 pkged.go

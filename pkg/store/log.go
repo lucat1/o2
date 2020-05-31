@@ -21,8 +21,11 @@ func initLog() {
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	// setup a file-based and a stdout logger
-	file, err := os.OpenFile(config.Section("o2").Key("log").String(),
-		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(
+		config.Section("o2").Key("log").String(),
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY,
+		0644,
+	)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not open log file")
 	}

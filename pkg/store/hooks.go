@@ -12,7 +12,8 @@ var (
 	PostReceiveHook string
 )
 
-func initHooks() {
+// InitHooks initializes the hooks paths
+func InitHooks() {
 	output, err := exec.Command("which", "o2-post-receive").Output()
 	if err != nil {
 		log.Fatal().

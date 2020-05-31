@@ -8,5 +8,4 @@ func Init() {
 	initConfig()
 	initLog()
 	initDB()
-	initHooks()
 }

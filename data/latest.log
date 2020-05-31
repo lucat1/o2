@@ -1,2 +1,17 @@
 {"level":"info","time":1590926454,"message":"Successfully connected to the database"}
 {"level":"info","host":"0.0.0.0","port":3000,"time":1590926454,"message":"Starting web server"}
+{"level":"info","time":1590926900,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590926901,"message":"Starting web server"}
+{"level":"info","time":1590930839,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590930839,"message":"Starting web server"}
+{"level":"info","time":1590930927,"message":"Successfully connected to the database"}
+{"level":"fatal","error":"exit status 1","path":"/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/luca/.bin:/home/luca/.volta/bin","time":1590930927,"message":"Could not find `o2-post-receive` hook"}
+{"level":"info","time":1590931078,"message":"Successfully connected to the database"}
+{"level":"fatal","error":"exit status 1","path":"/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/luca/.bin:/home/luca/.volta/bin","time":1590931078,"message":"Could not find `o2-post-receive` hook"}
+{"level":"info","time":1590931083,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590931083,"message":"Starting web server"}
+{"level":"info","time":1590931085,"message":"Successfully connected to the database"}
+{"level":"info","time":1590931096,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590931096,"message":"Starting web server"}
+{"level":"info","time":1590931560,"message":"Successfully connected to the database"}
+{"level":"info","host":"0.0.0.0","port":3000,"time":1590931560,"message":"Starting web server"}

@@ -35,6 +35,7 @@ func init() {
 
 	// initialize the logger, store and database
 	store.Init()
+	store.InitHooks()
 	models.Init()
 
 	// noop to include the default config file
