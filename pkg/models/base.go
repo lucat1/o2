@@ -35,5 +35,11 @@ func (base *Base) BeforeCreate(scope *gorm.Scope) error {
 func Init() {
 	store.GetDB().
 		Set("gorm:table_options", "CHARSET=utf8mb4").
-		AutoMigrate(&User{}, &Repository{}, &Permission{}, &Organization{})
+		AutoMigrate(
+			&User{},
+			&Repository{},
+			&Permission{},
+			&Organization{},
+			&Event{},
+		)
 }

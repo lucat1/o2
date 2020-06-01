@@ -7,4 +7,4 @@ o2:
 	go build main.go
 
 cmds:
-	go build -o bins/o2-post-receive cmd/post-receive/main.go
+	go build -o bins/o2-post-receive cmd/post-receive/*.go

@@ -1,12 +1,13 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"os"
+	"path"
+	"time"
 
-	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/log"
+	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
 )
 
@@ -29,7 +30,8 @@ func init() {
 }
 
 func main() {
-	dir := os.Getenv("GIT_DIR")
+	gitDir := os.Getenv("GIT_DIR")
+	dir := path.Join(store.GetCwd(), gitDir)
 
 	// read stdin data
 	previous, next, ref := parseStdin()
@@ -42,53 +44,27 @@ func main() {
 		Str("ref", ref).
 		Msg("Called post-receive")
 
+	// get commits
 	repo := findRepository(dir)
+	dbRepo := findDatabaseRepository(dir)
 	commits := findCommits(repo, previous, next)
 	log.Info().
 		Int("commits", len(commits.Commits)).
 		Msg("Found commits")
-}
 
-func parseStdin() (string, string, string) {
-	scanner := bufio.NewScanner(os.Stdin)
-	// scan every byte
-	scanner.Split(bufio.ScanBytes)
-
-	i := 0
-	res := []string{"", "", ""}
-
-	// split by spaces
-	for scanner.Scan() {
-		char := scanner.Text()
-		if char == " " {
-			i++
-			continue
-		}
-
-		res[i] += char
+	// push the action to the database
+	event := models.Event{
+		Time:         time.Now(),
+		Kind:         models.CommitEvent,
+		ResourceUUID: dbRepo.OwnerUUID,
+		Data: map[string]interface{}{
+			"commits": commitsHashes(commits),
+		},
 	}
 
-	if err := scanner.Err(); err != nil {
-		log.Fatal().Err(err).Msg("Could not read input from stdin")
+	if err := store.GetDB().Save(&event).Error; err != nil {
+		log.Fatal().Err(err).Msg("Could not save event in the database")
 	}
 
-	return res[0], res[1], res[2]
-}
-
-func findRepository(path string) *git.Repository {
-	return &git.Repository{Path: path}
-}
-
-func findCommits(repo *git.Repository, prev, next string) git.Commits {
-	commits, err := repo.Branch(prev+".."+next).Commits(0, 100)
-	if err != nil {
-		log.Fatal().
-			Err(err).
-			Str("repo", repo.Path).
-			Str("prev", prev).
-			Str("next", next).
-			Msg("Could not find pushed commits")
-	}
-
-	return commits
+	log.Info().Msg("Successfully saved event in databases")
 }
