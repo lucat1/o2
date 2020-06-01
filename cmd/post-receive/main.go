@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"os"
 
@@ -28,9 +29,20 @@ func init() {
 
 func main() {
 	dir := os.Getenv("GIT_DIR")
+
+	// read stdin data
+	scanner := bufio.NewScanner(os.Stdin)
+	stdin := ""
+	for scanner.Scan() {
+		stdin += scanner.Text()
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal().Err(err).Msg("Could not read input from stdin")
+	}
+
 	log.Info().
 		Str("dir", dir).
 		Strs("arguments", os.Args).
-		Strs("environment", os.Environ()).
+		Str("stdin", stdin).
 		Msg("Calling post-receive")
 }

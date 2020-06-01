@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	// PostReceiveHook is the path to the post-recieve-hook command
+	// PostReceiveHook is the path to the post-receive-hook command
 	PostReceiveHook string
 )
 
@@ -28,8 +28,8 @@ func InitHooks() {
 			Msg("Could not find `o2-post-receive` hook")
 	}
 
-	PostReceiveHook = string(output)
+	PostReceiveHook = string(output)[:len(output)-1]
 	log.Debug().
-		Str("post-recieve", PostReceiveHook).
+		Str("post-receive", PostReceiveHook).
 		Msg("Found hooks")
 }
