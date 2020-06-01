@@ -5,6 +5,7 @@ import (
 	"flag"
 	"os"
 
+	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/store"
 )
@@ -31,18 +32,63 @@ func main() {
 	dir := os.Getenv("GIT_DIR")
 
 	// read stdin data
-	scanner := bufio.NewScanner(os.Stdin)
-	stdin := ""
-	for scanner.Scan() {
-		stdin += scanner.Text()
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal().Err(err).Msg("Could not read input from stdin")
-	}
+	previous, next, ref := parseStdin()
 
 	log.Info().
 		Str("dir", dir).
 		Strs("arguments", os.Args).
-		Str("stdin", stdin).
-		Msg("Calling post-receive")
+		Str("previous", previous).
+		Str("next", next).
+		Str("ref", ref).
+		Msg("Called post-receive")
+
+	repo := findRepository(dir)
+	commits := findCommits(repo, previous, next)
+	log.Info().
+		Int("commits", len(commits.Commits)).
+		Msg("Found commits")
+}
+
+func parseStdin() (string, string, string) {
+	scanner := bufio.NewScanner(os.Stdin)
+	// scan every byte
+	scanner.Split(bufio.ScanBytes)
+
+	i := 0
+	res := []string{"", "", ""}
+
+	// split by spaces
+	for scanner.Scan() {
+		char := scanner.Text()
+		if char == " " {
+			i++
+			continue
+		}
+
+		res[i] += char
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal().Err(err).Msg("Could not read input from stdin")
+	}
+
+	return res[0], res[1], res[2]
+}
+
+func findRepository(path string) *git.Repository {
+	return &git.Repository{Path: path}
+}
+
+func findCommits(repo *git.Repository, prev, next string) git.Commits {
+	commits, err := repo.Branch(prev+".."+next).Commits(0, 100)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Str("repo", repo.Path).
+			Str("prev", prev).
+			Str("next", next).
+			Msg("Could not find pushed commits")
+	}
+
+	return commits
 }
