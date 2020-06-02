@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"github.com/lucat1/o2/pkg/store"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -29,17 +28,4 @@ type Base struct {
 // BeforeCreate will set a UUID rather than numeric ID.
 func (base *Base) BeforeCreate(scope *gorm.Scope) error {
 	return scope.SetColumn("UUID", uuid.NewV4())
-}
-
-// Init initializes all the database modules
-func Init() {
-	store.GetDB().
-		Set("gorm:table_options", "CHARSET=utf8mb4").
-		AutoMigrate(
-			&User{},
-			&Repository{},
-			&Permission{},
-			&Organization{},
-			&Event{},
-		)
 }

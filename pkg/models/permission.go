@@ -1,8 +1,6 @@
 package models
 
 import (
-	"github.com/lucat1/o2/pkg/log"
-	"github.com/lucat1/o2/pkg/store"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -35,26 +33,26 @@ func includes(s []string, e string) bool {
 // FetchPexes queries the database and produces an array of permissions for the
 // requested resource
 func FetchPexes(resource string, scopes []string) ([]Pex, bool) {
-	permissions := []Permission{}
-	if err := store.GetDB().
-		Where(&Permission{Resource: uuid.Must(uuid.FromString(resource))}).
-		Find(&permissions).Error; err != nil {
-		log.Error().
-			Err(err).
-			Str("resource", resource).
-			Msg("Error while checking permissions")
+	// permissions := []Permission{}
+	// if err := store.GetDB().
+	// 	Where(&Permission{Resource: uuid.Must(uuid.FromString(resource))}).
+	// 	Find(&permissions).Error; err != nil {
+	// 	log.Error().
+	// 		Err(err).
+	// 		Str("resource", resource).
+	// 		Msg("Error while checking permissions")
 
-		// we return false cause we cannot guarantee that
-		//the user has the requested permissions
-		return []Pex{}, false
-	}
+	// 	// we return false cause we cannot guarantee that
+	// 	//the user has the requested permissions
+	// 	return []Pex{}, false
+	// }
 
 	perms := []Permission{}
-	for _, permission := range permissions {
-		if includes(scopes, permission.Scope) {
-			perms = append(perms, permission)
-		}
-	}
+	// for _, permission := range permissions {
+	// 	if includes(scopes, permission.Scope) {
+	// 		perms = append(perms, permission)
+	// 	}
+	// }
 
 	return ToPex(perms), true
 }

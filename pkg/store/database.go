@@ -1,20 +1,20 @@
 package store
 
 import (
-	"github.com/jinzhu/gorm"
+	"github.com/jmoiron/sqlx"
 	"github.com/lucat1/o2/pkg/log"
 
-	// mysql driver for gorm
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	// mysql driver for sql(x)
+	_ "github.com/go-sql-driver/mysql"
 
-	// sqlite driver for gorm
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	// sqlite driver for sql(x)
+	_ "github.com/mattn/go-sqlite3"
 
-	// postgres driver for gorm
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	// postgres driver for sql(x)
+	_ "github.com/lib/pq"
 )
 
-var database *gorm.DB
+var database *sqlx.DB
 
 // InitDatabase initializes the database connection
 func InitDatabase() {
@@ -26,23 +26,21 @@ func InitDatabase() {
 		Msg("Opening to database")
 
 	// connection URI format: user:password@(localhost)/dbname?charset=utf8&parseTime=True&loc=Local
-	db, err := gorm.Open(dialect, uri)
+	db, err := sqlx.Open(dialect, uri)
 	if err != nil {
+		log.Fatal().Err(err).Msg("Could not parse connection URI")
+	}
+	if err = db.Ping(); err != nil {
 		log.Fatal().Err(err).Msg("Could not connect to database")
 	}
-	db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4 auto_increment=1")
-
-	// eanble gorm logging mode on debug
-	if *debug {
-		db.LogMode(true)
-	}
+	//db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4 auto_increment=1")
 
 	log.Info().Msg("Successfully connected to the database")
 	database = db
 }
 
 // GetDB returns the current database instance
-func GetDB() *gorm.DB {
+func GetDB() *sqlx.DB {
 	return database
 }
 
