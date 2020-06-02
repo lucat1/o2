@@ -30,4 +30,11 @@ func main() {
 	if err := user.Insert(); err != nil {
 		log.Fatal().Err(err).Msg("Couldn't save user into the database")
 	}
+
+	user.Firstname = "Te"
+	user.Lastname = "st"
+
+	if err := user.Update(); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't update user into the database")
+	}
 }

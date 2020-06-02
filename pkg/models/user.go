@@ -32,6 +32,30 @@ INSERT INTO users (
 )
 `
 
+const updateUser = `
+UPDATE users SET (
+	uuid,
+	created_at,
+	updated_at,
+	deleted_at,
+
+	email,
+	name,
+	password,
+
+	firstname,
+	lastname,
+	description,
+	location,
+	picture
+) VALUES (
+	?, ?, ?,
+	?, ?, ?,
+	?, ?, ?,
+	?, ?, ?
+) WHERE uuid=?
+`
+
 // User is the database model for a user
 type User struct {
 	Base
@@ -62,7 +86,7 @@ func (user User) Insert() error {
 	user.Base.generate()
 
 	// query the db
-	store.GetDB().Exec(
+	_, err := store.GetDB().Exec(
 		store.GetDB().Rebind(insertUser),
 		user.UUID,
 		user.CreatedAt,
@@ -78,5 +102,33 @@ func (user User) Insert() error {
 		user.Picture,
 	)
 
-	return nil
+	return err
+}
+
+// Update updates a user struct in the database
+func (user User) Update() error {
+	// generate uuids and timestamps
+	user.Base.generate()
+
+	// query the db
+	_, err := store.GetDB().Exec(
+		store.GetDB().Rebind(updateUser),
+		user.UUID,
+		user.CreatedAt,
+		user.UpdatedAt,
+		user.DeletedAt,
+		user.Email,
+		user.Name,
+		user.Password,
+		user.Firstname,
+		user.Lastname,
+		user.Description,
+		user.Location,
+		user.Picture,
+
+		// where
+		user.UUID,
+	)
+
+	return err
 }

@@ -1,8 +1,12 @@
 package store
 
 import (
+	"database/sql"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/lucat1/o2/pkg/log"
+	sqldblogger "github.com/simukti/sqldb-logger"
+	"github.com/simukti/sqldb-logger/logadapter/zerologadapter"
 
 	// mysql driver for sql(x)
 	_ "github.com/go-sql-driver/mysql"
@@ -26,17 +30,24 @@ func InitDatabase() {
 		Msg("Opening to database")
 
 	// connection URI format: user:password@(localhost)/dbname?charset=utf8&parseTime=True&loc=Local
-	db, err := sqlx.Open(dialect, uri)
+	db, err := sql.Open(dialect, uri)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not parse connection URI")
 	}
 	if err = db.Ping(); err != nil {
 		log.Fatal().Err(err).Msg("Could not connect to database")
 	}
-	//db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4 auto_increment=1")
+
+	loggerAdapter := zerologadapter.New(log.Logger)
+	db = sqldblogger.OpenDriver(
+		uri, db.Driver(), loggerAdapter,
+		sqldblogger.WithQueryerLevel(sqldblogger.LevelDebug),
+		sqldblogger.WithPreparerLevel(sqldblogger.LevelDebug),
+		sqldblogger.WithExecerLevel(sqldblogger.LevelDebug),
+	)
 
 	log.Info().Msg("Successfully connected to the database")
-	database = db
+	database = sqlx.NewDb(db, dialect)
 }
 
 // GetDB returns the current database instance
