@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/lucat1/o2/pkg/store"
 )
@@ -33,27 +34,7 @@ INSERT INTO users (
 `
 
 const updateUser = `
-UPDATE users SET (
-	uuid,
-	created_at,
-	updated_at,
-	deleted_at,
-
-	email,
-	name,
-	password,
-
-	firstname,
-	lastname,
-	description,
-	location,
-	picture
-) VALUES (
-	?, ?, ?,
-	?, ?, ?,
-	?, ?, ?,
-	?, ?, ?
-) WHERE uuid=?
+UPDATE users SET created_at=?, updated_at=?, deleted_at=?, email=?, name=?, password=?, firstname=?, lastname=?, description=?, location=?, picture=? WHERE uuid=?
 `
 
 // User is the database model for a user
@@ -81,9 +62,9 @@ func Picture(email string) string {
 }
 
 // Insert inserts a user into the database
-func (user User) Insert() error {
+func (user *User) Insert() error {
 	// generate uuids and timestamps
-	user.Base.generate()
+	user.generate()
 
 	// query the db
 	_, err := store.GetDB().Exec(
@@ -107,13 +88,12 @@ func (user User) Insert() error {
 
 // Update updates a user struct in the database
 func (user User) Update() error {
-	// generate uuids and timestamps
-	user.Base.generate()
+	// update updated_at time stamp
+	user.UpdatedAt = time.Now()
 
 	// query the db
 	_, err := store.GetDB().Exec(
 		store.GetDB().Rebind(updateUser),
-		user.UUID,
 		user.CreatedAt,
 		user.UpdatedAt,
 		user.DeletedAt,

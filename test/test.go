@@ -21,7 +21,7 @@ func init() {
 }
 
 func main() {
-	user := models.User{
+	user := &models.User{
 		Email:    "test@gmail.com",
 		Name:     "test",
 		Password: "test",
