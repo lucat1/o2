@@ -22,34 +22,32 @@ func init() {
 }
 
 func main() {
-	user := &models.User{
-		Email:    "test@gmail.com",
-		Name:     "test",
-		Password: "test",
+	user1 := &models.User{
+		Email:     "test1@gmail.com",
+		Name:      "test1",
+		Password:  "test1",
+		Firstname: "ab",
 	}
 
-	if err := user.Insert(); err != nil {
-		log.Fatal().Err(err).Msg("Couldn't save user into the database")
+	user2 := &models.User{
+		Email:     "test2@gmail.com",
+		Name:      "test2",
+		Password:  "test2",
+		Firstname: "ab",
 	}
 
-	user.Firstname = "Te"
-	user.Lastname = "st"
-
-	if err := user.Update(); err != nil {
-		log.Fatal().Err(err).Msg("Couldn't update user into the database")
+	if err := user1.Insert(); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't save user1 into the database")
 	}
 
-	u, err := models.FirstUser("uuid", user.UUID)
+	if err := user2.Insert(); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't save user2 into the database")
+	}
+
+	users, err := models.SelectUsers("firstname", "ab")
 	if err != nil {
-		log.Fatal().Err(err).Msg("Couldn't query for user by its id")
+		log.Fatal().Err(err).Msg("Couldn't query for userS by THEIR firstnameS")
 	}
 
-	fmt.Println(u)
-
-	u, err = models.FirstUser("name", user.Name)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Couldn't query for user by its name")
-	}
-
-	fmt.Println(u)
+	fmt.Println(users)
 }

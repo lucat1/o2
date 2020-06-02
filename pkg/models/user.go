@@ -51,7 +51,7 @@ UPDATE users SET
 WHERE uuid=?
 `
 
-const firstUser = `
+const findUsers = `
 	SELECT * FROM users WHERE %s=? AND deleted_at IS NULL
 `
 
@@ -131,9 +131,15 @@ func (user User) Update() error {
 	return err
 }
 
-// FirstUser returns the first user found when querying the database
+// GetUser returns the first user found when querying the database
 // with the given field and value pair
-func FirstUser(field string, value interface{}) (u User, err error) {
-	err = store.GetDB().Get(&u, fmt.Sprintf(firstUser, field), value)
+func GetUser(field string, value interface{}) (u User, err error) {
+	err = store.GetDB().Get(&u, fmt.Sprintf(findUsers+"LIMIT 1", field), value)
+	return
+}
+
+// SelectUsers returns a list of users matching the given field/value pair
+func SelectUsers(field string, value interface{}) (users []User, err error) {
+	err = store.GetDB().Select(&users, fmt.Sprintf(findUsers, field), value)
 	return
 }
