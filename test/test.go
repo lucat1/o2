@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
 )
@@ -20,5 +21,13 @@ func init() {
 }
 
 func main() {
+	user := models.User{
+		Email:    "test@gmail.com",
+		Name:     "test",
+		Password: "test",
+	}
 
+	if err := user.Insert(); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't save user into the database")
+	}
 }

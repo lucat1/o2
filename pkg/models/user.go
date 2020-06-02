@@ -5,8 +5,32 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jinzhu/gorm"
+	"github.com/lucat1/o2/pkg/store"
 )
+
+const insertUser = `
+INSERT INTO users (
+	uuid,
+	created_at,
+	updated_at,
+	deleted_at,
+
+	email,
+	name,
+	password,
+
+	firstname,
+	lastname,
+	description,
+	location,
+	picture
+) VALUES (
+	?, ?, ?,
+	?, ?, ?,
+	?, ?, ?,
+	?, ?, ?
+)
+`
 
 // User is the database model for a user
 type User struct {
@@ -32,7 +56,27 @@ func Picture(email string) string {
 	return "https://www.gravatar.com/avatar/" + fmt.Sprintf("%x", hash)
 }
 
-// BeforeSave will generate the profile picture url from gravatar
-func (user *User) BeforeSave(scope *gorm.Scope) error {
-	return scope.SetColumn("Picture", Picture(user.Email))
+// Insert inserts a user into the database
+func (user User) Insert() error {
+	// generate uuids and timestamps
+	user.Base.generate()
+
+	// query the db
+	store.GetDB().Exec(
+		store.GetDB().Rebind(insertUser),
+		user.UUID,
+		user.CreatedAt,
+		user.UpdatedAt,
+		user.DeletedAt,
+		user.Email,
+		user.Name,
+		user.Password,
+		user.Firstname,
+		user.Lastname,
+		user.Description,
+		user.Location,
+		user.Picture,
+	)
+
+	return nil
 }

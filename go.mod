@@ -7,7 +7,6 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/jcmturner/gokrb5/v8 v8.3.0 // indirect
 	github.com/jinzhu/gorm v1.9.12
-	github.com/jmoiron/modl v0.0.0-20160417153729-99654d091ece
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/kataras/muxie v1.0.9
 	github.com/lib/pq v1.6.0
