@@ -1,7 +1,0 @@
-{"level":"info","time":1591087792,"message":"Successfully connected to the database"}
-{"level":"fatal","error":"exit status 1","path":"/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/luca/.bin:/home/luca/.volta/bin","time":1591087792,"message":"Could not find `o2-post-receive` hook"}
-{"level":"info","time":1591087805,"message":"Successfully connected to the database"}
-{"level":"info","time":1591087870,"message":"Successfully connected to the database"}
-{"level":"fatal","error":"Error 1286: Unknown storage engine 'charset'","time":1591087870,"message":"Could not initialize database tables"}
-{"level":"info","time":1591087980,"message":"Successfully connected to the database"}
-{"level":"info","time":1591087997,"message":"Successfully connected to the database"}
