@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
@@ -37,4 +38,18 @@ func main() {
 	if err := user.Update(); err != nil {
 		log.Fatal().Err(err).Msg("Couldn't update user into the database")
 	}
+
+	u, err := models.FirstUser("uuid", user.UUID)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Couldn't query for user by its id")
+	}
+
+	fmt.Println(u)
+
+	u, err = models.FirstUser("name", user.Name)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Couldn't query for user by its name")
+	}
+
+	fmt.Println(u)
 }

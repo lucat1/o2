@@ -18,10 +18,10 @@ type Model struct {
 // Base recreates gorm.Model but with a UUID instead
 // of an ID. We generate that via satori/go.uuid
 type Base struct {
-	UUID      uuid.UUID  `db:"type:char(36);primary_key" json:"-"`
-	CreatedAt time.Time  `json:"-"`
-	UpdatedAt time.Time  `json:"-"`
-	DeletedAt *time.Time `sql:"index" json:"-"`
+	UUID      uuid.UUID  `json:"-"`
+	CreatedAt time.Time  `db:"created_at" json:"-"`
+	UpdatedAt time.Time  `db:"updated_at" json:"-"`
+	DeletedAt *time.Time `db:"deleted_at" sql:"index" json:"-"`
 }
 
 func (base *Base) generate() {

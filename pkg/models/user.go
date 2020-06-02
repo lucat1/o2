@@ -34,7 +34,25 @@ INSERT INTO users (
 `
 
 const updateUser = `
-UPDATE users SET created_at=?, updated_at=?, deleted_at=?, email=?, name=?, password=?, firstname=?, lastname=?, description=?, location=?, picture=? WHERE uuid=?
+UPDATE users SET
+	created_at=?,
+	updated_at=?,
+	deleted_at=?,
+
+	email=?,
+	name=?,
+	password=?,
+
+	firstname=?,
+	lastname=?,
+	description=?,
+	location=?,
+	picture=?
+WHERE uuid=?
+`
+
+const firstUser = `
+	SELECT * FROM users WHERE %s=? AND deleted_at IS NULL
 `
 
 // User is the database model for a user
@@ -111,4 +129,11 @@ func (user User) Update() error {
 	)
 
 	return err
+}
+
+// FirstUser returns the first user found when querying the database
+// with the given field and value pair
+func FirstUser(field string, value interface{}) (u User, err error) {
+	err = store.GetDB().Get(&u, fmt.Sprintf(firstUser, field), value)
+	return
 }
