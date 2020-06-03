@@ -39,7 +39,7 @@ WHERE uuid=?
 `
 
 const findRepositories = `
-	SELECT * FROM repositories WHERE %s=? AND deleted_at IS NULL
+SELECT * FROM repositories WHERE %s=? AND deleted_at IS NULL
 `
 
 // Repository is the database model for a git repository

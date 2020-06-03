@@ -38,15 +38,15 @@ WHERE uuid=?
 `
 
 const addMapping = `
-	INSERT INTO users_organizations (user_uuid, organization_uuid) VALUES (?, ?)
+INSERT INTO users_organizations (user_uuid, organization_uuid) VALUES (?, ?)
 `
 
 const delMapping = `
-	DELETE FROM users_organizations WHERE user_uuid=? AND organization_uuid=?
+DELETE FROM users_organizations WHERE user_uuid=? AND organization_uuid=?
 `
 
 const findOrganizations = `
-	SELECT * FROM organizations WHERE %s=? AND deleted_at IS NULL
+SELECT * FROM organizations WHERE %s=? AND deleted_at IS NULL
 `
 
 // Organization is the database model for an org

@@ -88,4 +88,14 @@ func main() {
 	if err = organization.Del(user1); err != nil {
 		log.Fatal().Err(err).Msg("Couldn't remove a user from the user<->org relationship")
 	}
+
+	permission := models.Permission{
+		Beneficiary: user1.UUID,
+		Resource:    repo.UUID,
+		Scope:       "repo:pull",
+	}
+
+	if err := permission.Insert(); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't save permission into the database")
+	}
 }

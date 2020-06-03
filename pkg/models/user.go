@@ -52,7 +52,7 @@ WHERE uuid=?
 `
 
 const findUsers = `
-	SELECT * FROM users WHERE %s=? AND deleted_at IS NULL
+SELECT * FROM users WHERE %s=? AND deleted_at IS NULL
 `
 
 // User is the database model for a user
