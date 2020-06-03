@@ -22,14 +22,14 @@ func init() {
 }
 
 func main() {
-	user1 := &models.User{
+	user1 := models.User{
 		Email:     "test1@gmail.com",
 		Name:      "test1",
 		Password:  "test1",
 		Firstname: "ab",
 	}
 
-	user2 := &models.User{
+	user2 := models.User{
 		Email:     "test2@gmail.com",
 		Name:      "test2",
 		Password:  "test2",
@@ -73,4 +73,19 @@ func main() {
 	}
 
 	fmt.Println(repos)
+
+	organization := models.Organization{
+		Name: "ttttt",
+	}
+	if err := organization.Insert(); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't save organization into the database")
+	}
+
+	if err = organization.Add(user1); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't add a user to the user<->org relationship")
+	}
+
+	if err = organization.Del(user1); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't remove a user from the user<->org relationship")
+	}
 }

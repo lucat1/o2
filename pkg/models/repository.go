@@ -38,7 +38,7 @@ UPDATE repositories SET
 WHERE uuid=?
 `
 
-const findRepository = `
+const findRepositories = `
 	SELECT * FROM repositories WHERE %s=? AND deleted_at IS NULL
 `
 
@@ -106,7 +106,7 @@ func (repository Repository) Update() error {
 func GetRepository(field string, value interface{}) (repository Repository, err error) {
 	err = store.GetDB().Get(
 		&repository,
-		fmt.Sprintf(findRepository+"LIMIT 1", field),
+		fmt.Sprintf(findRepositories+"LIMIT 1", field),
 		value,
 	)
 	return
@@ -117,7 +117,7 @@ func GetRepository(field string, value interface{}) (repository Repository, err 
 func SelectRepositories(field string, value interface{}) (repositories []Repository, err error) {
 	err = store.GetDB().Select(
 		&repositories,
-		fmt.Sprintf(findRepository, field),
+		fmt.Sprintf(findRepositories, field),
 		value,
 	)
 	return

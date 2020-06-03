@@ -88,9 +88,11 @@ func (user *User) Insert() error {
 		user.CreatedAt,
 		user.UpdatedAt,
 		user.DeletedAt,
+
 		user.Email,
 		user.Name,
 		user.Password,
+
 		user.Firstname,
 		user.Lastname,
 		user.Description,
@@ -112,9 +114,11 @@ func (user User) Update() error {
 		user.CreatedAt,
 		user.UpdatedAt,
 		user.DeletedAt,
+
 		user.Email,
 		user.Name,
 		user.Password,
+
 		user.Firstname,
 		user.Lastname,
 		user.Description,
