@@ -68,9 +68,6 @@ type User struct {
 	Description string `json:"description"`
 	Location    string `json:"location"`
 	Picture     string `json:"picture"`
-
-	// Organizations []Organization `gorm:"many2many:user_orgs;" json:"organizations"`
-	// Repositories  []Repository   `gorm:"polymorphic:Owner" json:"repositories"`
 }
 
 // Picture generates the picture url of a profile picture

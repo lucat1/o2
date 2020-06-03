@@ -67,6 +67,40 @@ CREATE TABLE IF NOT EXISTS repositories (
 )
 `
 
+const createOrganization = `
+CREATE TABLE IF NOT EXISTS organizations (
+	uuid CHAR(36) NOT NULL,
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME NOT NULL,
+	deleted_at DATETIME NULL,
+
+	name 	VARCHAR(32) UNIQUE NOT NULL,
+	description VARCHAR(250),
+	location VARCHAR(100),
+	picture TEXT,
+
+	PRIMARY KEY (uuid, name)
+)
+`
+
+const createUserToOrganization = `
+CREATE TABLE IF NOT EXISTS users_organizations (
+	user_uuid CHAR(36) NOT NULL,
+	organization_uuid CHAR(36) NOT NULL,
+
+	PRIMARY KEY (user_uuid, organization_uuid),
+	INDEX (user_uuid, organization_uuid),
+
+	FOREIGN KEY (user_uuid)
+		REFERENCES users(uuid)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+
+	FOREIGN KEY (organization_uuid)
+		REFERENCES organizations(uuid)
+		ON UPDATE CASCADE ON DELETE CASCADE
+)
+`
+
 const collation = `
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 `
@@ -80,6 +114,20 @@ func Init() {
 			Msg("Could not create `users` table")
 	}
 
+	_, err = store.GetDB().Exec(createOrganization + collation)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Could not create `organizations` table")
+	}
+
+	_, err = store.GetDB().Exec(createUserToOrganization + collation)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Could not create `users_organizations` table")
+	}
+
 	_, err = store.GetDB().Exec(createRepository + collation)
 	if err != nil {
 		log.Fatal().
@@ -89,9 +137,7 @@ func Init() {
 
 	// store.GetDB().
 	// 	AutoMigrate(
-	// 		&Repository{},
 	// 		&Permission{},
-	// 		&Organization{},
 	// 		&Event{},
 	// 	)
 }
