@@ -66,4 +66,11 @@ func main() {
 	if err := repo.Update(); err != nil {
 		log.Fatal().Err(err).Msg("Couldn't update repo in the database")
 	}
+
+	repos, err := models.SelectRepositories("owner_name", user1.Name)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Couldn't query for repositorIES by THEIR ownerNameS")
+	}
+
+	fmt.Println(repos)
 }

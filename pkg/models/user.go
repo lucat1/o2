@@ -133,8 +133,12 @@ func (user User) Update() error {
 
 // GetUser returns the first user found when querying the database
 // with the given field and value pair
-func GetUser(field string, value interface{}) (u User, err error) {
-	err = store.GetDB().Get(&u, fmt.Sprintf(findUsers+"LIMIT 1", field), value)
+func GetUser(field string, value interface{}) (user User, err error) {
+	err = store.GetDB().Get(
+		&user,
+		fmt.Sprintf(findUsers+"LIMIT 1", field),
+		value,
+	)
 	return
 }
 
