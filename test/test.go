@@ -50,4 +50,15 @@ func main() {
 	}
 
 	fmt.Println(users)
+
+	repo := models.Repository{
+		OwnerName: user1.Name,
+		OwnerUUID: user1.UUID,
+
+		Name: "test",
+	}
+
+	if err := repo.Insert(); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't save repo into the database")
+	}
 }

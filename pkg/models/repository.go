@@ -1,11 +1,25 @@
 package models
 
 import (
+	"github.com/lucat1/o2/pkg/store"
 	uuid "github.com/satori/go.uuid"
 )
 
 const insertRepositroy = `
-INSERT INTO users () VALUES ()
+INSERT INTO repositories (
+	uuid,
+	created_at,
+	updated_at,
+	deleted_at,
+
+	owner_uuid,
+	owner_name,
+	name,
+	description
+) VALUES (
+	?, ?, ?, ?,
+	?, ?, ?, ?
+)
 `
 
 // Repository is the database model for a git repository
@@ -19,4 +33,25 @@ type Repository struct {
 	Description string `json:"description"`
 
 	// Permissions []Permission `gorm:"foreignkey:Resource;association_foreignkey:UUID" json:"-"`
+}
+
+// Insert inserts a repository into the database
+func (repository *Repository) Insert() error {
+	// generate uuids and timestamps
+	repository.generate()
+
+	// query the db
+	_, err := store.GetDB().Exec(
+		store.GetDB().Rebind(insertRepositroy),
+		repository.UUID,
+		repository.CreatedAt,
+		repository.UpdatedAt,
+		repository.DeletedAt,
+		repository.OwnerUUID,
+		repository.OwnerName,
+		repository.Name,
+		repository.Description,
+	)
+
+	return err
 }
