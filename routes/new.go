@@ -7,22 +7,18 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 )
 
 // New prompts the user to create a new repository or an organization
 func New(w http.ResponseWriter, r *http.Request) {
-	username := r.Context().Value(auth.ClaimsKey).(*auth.Claims).Username
+	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
 	// find the logged in user
-	var user models.User
-	if err := store.GetDB().
-		Preload("Organizations").
-		Where(&models.User{Name: username}).
-		First(&user).Error; err != nil {
+	user, err := models.GetUser("name", claims.Username)
+	if err != nil {
 		log.Error().
-			Str("username", username).
+			Str("username", claims.Username).
 			Err(err).
 			Msg("Could not find logged in user user")
 

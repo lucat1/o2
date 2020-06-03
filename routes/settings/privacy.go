@@ -8,7 +8,6 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 	"golang.org/x/crypto/bcrypt"
@@ -18,14 +17,10 @@ import (
 // like passwords, emails and such
 func Privacy(w http.ResponseWriter, r *http.Request) {
 	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-
-	var user models.User
-	if err := store.GetDB().
-		Where(&models.User{Name: claims.Username}).
-		First(&user).
-		Error; err != nil {
+	user, e := models.GetUser("name", claims.Username)
+	if e != nil {
 		log.Debug().
-			Err(err).
+			Err(e).
 			Str("username", claims.Username).
 			Msg("Couldn't fetch user to render the settings/privacy page")
 
@@ -66,7 +61,7 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 		}
 
 		user.Password = string(hashed)
-		if e := store.GetDB().Save(&user).Error; e != nil {
+		if e := user.Update(); e != nil {
 			log.Error().Err(e).Bytes("hashed", hashed).Msg("Error while updating a user's password")
 
 			err = "Internal error. Please try again later"

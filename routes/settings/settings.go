@@ -7,7 +7,6 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 )
@@ -15,12 +14,8 @@ import (
 // Settings renders the settings of a user/organization
 func Settings(w http.ResponseWriter, r *http.Request) {
 	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-
-	var user models.User
-	if err := store.GetDB().
-		Where(&models.User{Name: claims.Username}).
-		First(&user).
-		Error; err != nil {
+	user, err := models.GetUser("name", claims.Username)
+	if err != nil {
 		log.Debug().
 			Err(err).
 			Str("username", claims.Username).
@@ -50,10 +45,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	user.Description = r.Form.Get("description")
 
 	// 2. Update the database
-	if err := store.
-		GetDB().
-		Save(user).
-		Error; err != nil {
+	if err := user.Update(); err != nil {
 		log.Debug().
 			Err(err).
 			Str("username", user.Name).
