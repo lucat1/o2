@@ -46,6 +46,27 @@ CREATE TABLE IF NOT EXISTS users (
 )
 `
 
+const createRepository = `
+CREATE TABLE IF NOT EXISTS repositories (
+	uuid CHAR(36) NOT NULL,
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME NOT NULL,
+	deleted_at DATETIME NULL,
+
+	owner_uuid CHAR(36) UNIQUE NOT NULL,
+	owner_name VARCHAR(32) UNIQUE NOT NULL,
+	name 	VARCHAR(32) UNIQUE NOT NULL,
+	description VARCHAR(250),
+
+	PRIMARY KEY (uuid, owner_uuid, owner_name, name),
+	INDEX (owner_uuid, owner_name),
+
+	FOREIGN KEY (owner_uuid, owner_name)
+		REFERENCES users(uuid, name)
+		ON UPDATE CASCADE ON DELETE CASCADE
+)
+`
+
 const collation = `
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 `
@@ -56,7 +77,14 @@ func Init() {
 	if err != nil {
 		log.Fatal().
 			Err(err).
-			Msg("Could not create user's table")
+			Msg("Could not create `users` table")
+	}
+
+	_, err = store.GetDB().Exec(createRepository + collation)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Could not create `repositories` table")
 	}
 
 	// store.GetDB().

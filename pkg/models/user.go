@@ -59,18 +59,18 @@ const findUsers = `
 type User struct {
 	Base
 
-	Email    string `gorm:"type:varchar(100);unique_index" json:"email"`
-	Name     string `gorm:"type:varchar(32);primary_key" json:"username"`
+	Email    string `json:"email"`
+	Name     string `json:"username"`
 	Password string `json:"-"`
 
-	Firstname   string `gorm:"type:varchar(50)" json:"firstname"`
-	Lastname    string `gorm:"type:varchar(50)" json:"lastname"`
-	Description string `gorm:"type:varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci" json:"description"`
-	Location    string `gorm:"type:varchar(100)" json:"location"`
+	Firstname   string `json:"firstname"`
+	Lastname    string `json:"lastname"`
+	Description string `json:"description"`
+	Location    string `json:"location"`
 	Picture     string `json:"picture"`
 
-	Organizations []Organization `gorm:"many2many:user_orgs;" json:"organizations"`
-	Repositories  []Repository   `gorm:"polymorphic:Owner" json:"repositories"`
+	// Organizations []Organization `gorm:"many2many:user_orgs;" json:"organizations"`
+	// Repositories  []Repository   `gorm:"polymorphic:Owner" json:"repositories"`
 }
 
 // Picture generates the picture url of a profile picture
