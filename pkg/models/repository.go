@@ -39,7 +39,7 @@ WHERE uuid=?
 `
 
 const findRepositories = `
-SELECT * FROM repositories WHERE %s=? AND deleted_at IS NULL
+SELECT * FROM repositories WHERE owner_uuid=? AND name=? AND deleted_at IS NULL
 `
 
 // Repository is the database model for a git repository
@@ -103,11 +103,11 @@ func (repository Repository) Update() error {
 
 // GetRepository returns the first repository found when querying
 // the database with the given field and value pair
-func GetRepository(field string, value interface{}) (repository Repository, err error) {
+func GetRepository(owner uuid.UUID, name string) (repository Repository, err error) {
 	err = store.GetDB().Get(
 		&repository,
-		fmt.Sprintf(findRepositories+"LIMIT 1", field),
-		value,
+		findRepositories+"LIMIT 1",
+		owner, name,
 	)
 	return
 }
