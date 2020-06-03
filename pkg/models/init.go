@@ -101,6 +101,20 @@ CREATE TABLE IF NOT EXISTS users_organizations (
 )
 `
 
+const createPermission = `
+CREATE TABLE IF NOT EXISTS permissions (
+	beneficiary CHAR(36) NOT NULL,
+	resource CHAR(36) NOT NULL,
+	scope VARCHAR(100) NOT NULL,
+
+	PRIMARY KEY (beneficiary, resource, scope),
+
+	FOREIGN KEY (resource)
+		REFERENCES repositories(uuid)
+		ON UPDATE CASCADE ON DELETE CASCADE
+)
+`
+
 const collation = `
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 `
@@ -111,33 +125,39 @@ func Init() {
 	if err != nil {
 		log.Fatal().
 			Err(err).
-			Msg("Could not create `users` table")
+			Msg("Could not create the `users` table")
 	}
 
 	_, err = store.GetDB().Exec(createOrganization + collation)
 	if err != nil {
 		log.Fatal().
 			Err(err).
-			Msg("Could not create `organizations` table")
+			Msg("Could not create the `organizations` table")
 	}
 
 	_, err = store.GetDB().Exec(createUserToOrganization + collation)
 	if err != nil {
 		log.Fatal().
 			Err(err).
-			Msg("Could not create `users_organizations` table")
+			Msg("Could not create the `users_organizations` table")
 	}
 
 	_, err = store.GetDB().Exec(createRepository + collation)
 	if err != nil {
 		log.Fatal().
 			Err(err).
-			Msg("Could not create `repositories` table")
+			Msg("Could not create the `repositories` table")
+	}
+
+	_, err = store.GetDB().Exec(createPermission + collation)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Could not create the `permissions` table")
 	}
 
 	// store.GetDB().
 	// 	AutoMigrate(
-	// 		&Permission{},
 	// 		&Event{},
 	// 	)
 }
