@@ -1,6 +1,8 @@
 package models
 
 import (
+	"time"
+
 	"github.com/lucat1/o2/pkg/store"
 	uuid "github.com/satori/go.uuid"
 )
@@ -20,6 +22,19 @@ INSERT INTO repositories (
 	?, ?, ?, ?,
 	?, ?, ?, ?
 )
+`
+
+const updateRepository = `
+UPDATE repositories SET
+	created_at=?,
+	updated_at=?,
+	deleted_at=?,
+
+	owner_uuid=?,
+	owner_name=?,
+	name=?,
+	description=?
+WHERE uuid=?
 `
 
 // Repository is the database model for a git repository
@@ -47,10 +62,35 @@ func (repository *Repository) Insert() error {
 		repository.CreatedAt,
 		repository.UpdatedAt,
 		repository.DeletedAt,
+
 		repository.OwnerUUID,
 		repository.OwnerName,
 		repository.Name,
 		repository.Description,
+	)
+
+	return err
+}
+
+// Update updates a repository struct in the database
+func (repository Repository) Update() error {
+	// update updated_at time stamp
+	repository.UpdatedAt = time.Now()
+
+	// query the db
+	_, err := store.GetDB().Exec(
+		store.GetDB().Rebind(updateRepository),
+		repository.CreatedAt,
+		repository.UpdatedAt,
+		repository.DeletedAt,
+
+		repository.OwnerUUID,
+		repository.OwnerName,
+		repository.Name,
+		repository.Description,
+
+		// where
+		repository.UUID,
 	)
 
 	return err

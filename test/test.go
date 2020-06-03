@@ -61,4 +61,9 @@ func main() {
 	if err := repo.Insert(); err != nil {
 		log.Fatal().Err(err).Msg("Couldn't save repo into the database")
 	}
+
+	repo.Description = "this is a test description"
+	if err := repo.Update(); err != nil {
+		log.Fatal().Err(err).Msg("Couldn't update repo in the database")
+	}
 }
