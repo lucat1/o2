@@ -5,26 +5,16 @@ import (
 
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func exists(user models.User) bool {
-	var dummy models.User
-	if err := store.GetDB().Where(&user).First(&dummy).Error; err != nil {
-		return false
-	}
-
-	return true
-}
-
 // Register creates a new database instance of the given user
 func Register(user models.User, password string) (string, error) {
-	if exists(models.User{Name: user.Name}) {
+	if _, err := models.GetUser("name", user.Name); err == nil {
 		return "", errors.New("The username is taken")
 	}
 
-	if exists(models.User{Email: user.Email}) {
+	if _, err := models.GetUser("email", user.Email); err == nil {
 		return "", errors.New("The email is already in use for another account")
 	}
 
@@ -35,7 +25,7 @@ func Register(user models.User, password string) (string, error) {
 
 	user.Password = string(hashed)
 
-	if err := store.GetDB().Save(&user).Error; err != nil {
+	if err := user.Insert(); err != nil {
 		log.Error().Err(err).Msg("Error while registering new user")
 		return "", errors.New("Internal error. Please try again later")
 	}
