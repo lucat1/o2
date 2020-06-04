@@ -8,6 +8,8 @@ import (
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/pex"
+	uuid "github.com/satori/go.uuid"
 )
 
 // MustPex checks if the authenticated user has access to the required permission
@@ -15,17 +17,17 @@ import (
 func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			resource := r.Context().Value(Resource).(string)
+			resource := r.Context().Value(Resource).(uuid.UUID)
 			log.Debug().
 				Strs("scopes", scopes).
-				Str("resource", resource).
+				Str("resource", resource.String()).
 				Msg("Checking the user's permission for the required scopes")
 
-			pexes, ok := models.FetchPexes(resource, scopes)
-			if !ok {
-				fallback.ServeHTTP(w, r)
-				return
-			}
+			pexes := pex.SelectPexes(resource, scopes)
+			// if !ok {
+			// 	fallback.ServeHTTP(w, r)
+			// 	return
+			// }
 
 			authRequired := false
 			for _, pex := range pexes {
@@ -36,7 +38,7 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 			}
 
 			if !authRequired {
-				has := models.HasAll(pexes, scopes)
+				has := pex.HasAll(pexes, scopes)
 				handle(w, r, has, f, fallback)
 				return
 			}
@@ -44,7 +46,18 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 			auth.Must(func(w http.ResponseWriter, r *http.Request) {
 				// we have authentication inside of here
 				claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-				has := models.HasPex(pexes, claims.UUID, scopes)
+				user, err := models.GetUser("name", claims.Username)
+				if err != nil {
+					log.Debug().
+						Err(err).
+						Str("username", claims.Username).
+						Msg("Could not fetch user from the db while checking permissions")
+
+					fallback.ServeHTTP(w, r)
+					return
+				}
+
+				has := pex.HasPex(pexes, user.UUID, scopes)
 
 				handle(w, r, has, f, fallback)
 			})(w, r)

@@ -84,7 +84,7 @@ func SelectPermissions(resource uuid.UUID) (permissions []Permission, err error)
 
 // SelectPermissionsWhere returns a list of permissions for the requested resource
 // also appending the requested `extra` where parameter to the sql string
-func SelectPermissionsWhere(resource uuid.UUID, extra string, others ...[]interface{}) (permissions []Permission, err error) {
+func SelectPermissionsWhere(resource uuid.UUID, extra string, others ...interface{}) (permissions []Permission, err error) {
 	err = store.GetDB().Select(
 		&permissions,
 		findResourcePermissions+"AND "+extra,

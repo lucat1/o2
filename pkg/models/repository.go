@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/lucat1/o2/pkg/store"
@@ -39,7 +38,7 @@ WHERE uuid=?
 `
 
 const findRepositories = `
-SELECT * FROM repositories WHERE owner_uuid=? AND name=? AND deleted_at IS NULL
+SELECT * FROM repositories WHERE owner_uuid=? AND deleted_at IS NULL
 `
 
 // Repository is the database model for a git repository
@@ -113,12 +112,23 @@ func GetRepository(owner uuid.UUID, name string) (repository Repository, err err
 }
 
 // SelectRepositories returns a list of repositories
-// matching the given field/value pair
-func SelectRepositories(field string, value interface{}) (repositories []Repository, err error) {
+// for a given owner
+func SelectRepositories(owner uuid.UUID) (repositories []Repository, err error) {
 	err = store.GetDB().Select(
 		&repositories,
-		fmt.Sprintf(findRepositories, field),
-		value,
+		findRepositories,
+		owner,
+	)
+	return
+}
+
+// SelectRepositoriesWhere returns a list of repositories for the requested resource
+// also appending the requested `extra` where parameter to the sql string
+func SelectRepositoriesWhere(owner uuid.UUID, extra string, others ...interface{}) (repositories []Repository, err error) {
+	err = store.GetDB().Select(
+		&repositories,
+		findRepositories+"AND "+extra,
+		owner, others,
 	)
 	return
 }
