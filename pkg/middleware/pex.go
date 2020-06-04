@@ -46,11 +46,11 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 			auth.Must(func(w http.ResponseWriter, r *http.Request) {
 				// we have authentication inside of here
 				claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-				user, err := models.GetUser("name", claims.Username)
+				user, err := models.GetUser("uuid", claims.UUID)
 				if err != nil {
 					log.Debug().
 						Err(err).
-						Str("username", claims.Username).
+						Str("uuid", claims.UUID.String()).
 						Msg("Could not fetch user from the db while checking permissions")
 
 					fallback.ServeHTTP(w, r)

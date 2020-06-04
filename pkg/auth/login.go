@@ -9,7 +9,18 @@ import (
 
 // Login checks the given email/password and authenticates a user
 func Login(user models.User) (string, error) {
-	found, err := models.GetUser("email", user.Email)
+	var (
+		found models.User
+		err   error
+	)
+
+	if user.Email != "" {
+		found, err = models.GetUser("email", user.Email)
+	} else {
+		// use username instead on git cli logins
+		found, err = models.GetUser("name", user.Name)
+	}
+
 	if err != nil {
 		return "", errors.New("Invalid email address")
 	}
