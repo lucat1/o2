@@ -15,6 +15,11 @@ type Model struct {
 	DeletedAt *time.Time `db:"deleted_at" json:"-"`
 }
 
+func (model *Model) generate() {
+	model.CreatedAt = time.Now()
+	model.UpdatedAt = time.Now()
+}
+
 // Base recreates gorm.Model but with a UUID instead
 // of an ID. We generate that via satori/go.uuid
 type Base struct {

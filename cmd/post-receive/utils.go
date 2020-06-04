@@ -8,7 +8,6 @@ import (
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -42,26 +41,22 @@ func findRepository(path string) *git.Repository {
 	return &git.Repository{Path: path}
 }
 
-func findDatabaseRepository(dir string) (db models.Repository) {
+func findDatabaseRepository(dir string) models.Repository {
 	rawUUID := path.Base(dir)
 	id, err := uuid.FromString(rawUUID)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Could not parse UUID")
 	}
 
-	if err := store.GetDB().
-		Preload("Permissions").
-		Where(&models.Repository{Base: models.Base{UUID: id}}).
-		First(&db).
-		Error; err != nil {
-
+	repo, err := models.GetByUUID(id)
+	if err != nil {
 		log.Fatal().
-			Str("uuid", rawUUID).
 			Err(err).
+			Str("uuid", id.String()).
 			Msg("Error while querying the DB to find a repository")
 	}
 
-	return
+	return repo
 }
 
 func findCommits(repo *git.Repository, prev, next string) git.Commits {

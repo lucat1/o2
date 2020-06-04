@@ -115,6 +115,22 @@ CREATE TABLE IF NOT EXISTS permissions (
 )
 `
 
+const createEvent = `
+CREATE TABLE IF NOT EXISTS events (
+	id INT NOT NULL AUTO_INCREMENT,
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME NOT NULL,
+	deleted_at DATETIME NULL,
+
+	resource CHAR(36) NOT NULL,
+	time DATETIME NOT NULL,
+	kind VARCHAR(100) NOT NULL,
+	data TEXT NOT NULL,
+
+	PRIMARY KEY (id, resource)
+)
+`
+
 const collation = `
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 `
@@ -156,8 +172,10 @@ func Init() {
 			Msg("Could not create the `permissions` table")
 	}
 
-	// store.GetDB().
-	// 	AutoMigrate(
-	// 		&Event{},
-	// 	)
+	_, err = store.GetDB().Exec(createEvent + collation)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Could not create the `events` table")
+	}
 }

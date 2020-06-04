@@ -121,8 +121,18 @@ func (repository Repository) Del(perm Permission) error {
 func GetRepository(owner uuid.UUID, name string) (repository Repository, err error) {
 	err = store.GetDB().Get(
 		&repository,
-		findRepositories+"LIMIT 1",
+		findRepositories+"AND name=? LIMIT 1",
 		owner, name,
+	)
+	return
+}
+
+// GetByUUID fetches for a single repository with the given UUID
+func GetByUUID(id uuid.UUID) (repository Repository, err error) {
+	err = store.GetDB().Get(
+		&repository,
+		"SELECT * FROM repositories WHERE uuid=? AND deleted_at IS NULL LIMIT 1",
+		id,
 	)
 	return
 }
