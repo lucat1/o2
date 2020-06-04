@@ -73,20 +73,29 @@ func GetPermission(beneficiary uuid.UUID, resource uuid.UUID, scope string) (per
 	return
 }
 
-// SelectPermissions returns a list of permissions for the requested resource
-func SelectPermissions(resource uuid.UUID) (permissions []Permission, err error) {
+// SelectPermissions returns a list of permissions for the requested resource and scopes
+func SelectPermissions(resource uuid.UUID, scopes []string) (permissions []Permission, err error) {
+	query, args, err := sqlx.In(
+		findResourcePermissions+"AND scope IN (?)",
+		resource, scopes,
+	)
+	if err != nil {
+		return permissions, err
+	}
 	err = store.GetDB().Select(
 		&permissions,
-		findResourcePermissions,
-		resource,
+		store.GetDB().Rebind(query),
+		args...,
 	)
 	return
 }
 
-// SelectPermissionsWithScopes returns a list of permissions for the requested resource
-// (only the requested scopes)
-func SelectPermissionsWithScopes(resource uuid.UUID, scopes []string) (permissions []Permission, err error) {
-	query, args, err := sqlx.In(findResourcePermissions+"AND scope IN (?)", resource, scopes)
+// FindPermissions returns a list of permissions for the requested resource & beneficiary & scopes
+func FindPermissions(resource uuid.UUID, beneficiary uuid.UUID, scopes []string) (permissions []Permission, err error) {
+	query, args, err := sqlx.In(
+		findResourcePermissions+"AND (beneficiary=? OR beneficiary=?) AND scope IN (?)",
+		resource, beneficiary, uuid.Nil, scopes,
+	)
 	if err != nil {
 		return permissions, err
 	}

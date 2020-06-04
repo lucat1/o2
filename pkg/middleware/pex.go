@@ -18,47 +18,31 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			resource := r.Context().Value(Resource).(uuid.UUID)
+			user := r.Context().Value(auth.AccountKey).(*models.User)
 			log.Debug().
 				Strs("scopes", scopes).
 				Str("resource", resource.String()).
+				Bool("logged", user != nil).
 				Msg("Checking the user's permission for the required scopes")
 
-			pexes := pex.SelectPexes(resource, scopes)
-			// if !ok {
-			// 	fallback.ServeHTTP(w, r)
-			// 	return
-			// }
-
-			authRequired := false
-			for _, pex := range pexes {
-				if pex.RequiresAuth {
-					authRequired = true
-					break
-				}
+			id := uuid.Nil
+			if user != nil {
+				id = user.UUID
 			}
 
-			if !authRequired {
-				has := pex.HasAll(pexes, scopes)
-				handle(w, r, has, f, fallback)
+			if pex.Can(resource, id, scopes) {
+				handle(w, r, true, f, fallback)
 				return
+			} else if user != nil {
+				// if the user is logged in and he doesn't have permission render the fallback
+				fallback.ServeHTTP(w, r)
 			}
 
+			// if the user/id cannot do that we ask them to log in again
 			auth.Must(func(w http.ResponseWriter, r *http.Request) {
 				// we have authentication inside of here
-				claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-				user, err := models.GetUser("uuid", claims.UUID)
-				if err != nil {
-					log.Debug().
-						Err(err).
-						Str("uuid", claims.UUID.String()).
-						Msg("Could not fetch user from the db while checking permissions")
-
-					fallback.ServeHTTP(w, r)
-					return
-				}
-
-				has := pex.HasPex(pexes, user.UUID, scopes)
-
+				user := r.Context().Value(auth.AccountKey).(*models.User)
+				has := pex.Can(resource, user.UUID, scopes)
 				handle(w, r, has, f, fallback)
 			})(w, r)
 		})

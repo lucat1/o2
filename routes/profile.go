@@ -29,8 +29,8 @@ func filterRepositories(owner uuid.UUID, viewer uuid.UUID) (res []models.Reposit
 	}
 
 	for _, repo := range repositories {
-		if pex.HasPex(
-			pex.SelectPexes(repo.UUID, []string{"repo:pull"}),
+		if pex.Can(
+			repo.UUID,
 			viewer,
 			[]string{"repo:pull"},
 		) {
