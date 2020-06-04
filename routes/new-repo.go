@@ -98,6 +98,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 		"/"+username+"/"+reponame, "repository/repository",
 		data.Compose(r, data.Base, datas.RepositoryData(repo), datas.TreeData(nil)),
 	)
+	return
 
 fatal:
 	log.Error().

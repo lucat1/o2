@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/jmoiron/sqlx"
 	"github.com/lucat1/o2/pkg/store"
 	uuid "github.com/satori/go.uuid"
 )
@@ -66,7 +67,7 @@ func (permission Permission) Delete() error {
 func GetPermission(beneficiary uuid.UUID, resource uuid.UUID, scope string) (permission Permission, err error) {
 	err = store.GetDB().Get(
 		&permission,
-		findSinglePermission+"LIMIT 1",
+		store.GetDB().Rebind(findSinglePermission+"LIMIT 1"),
 		beneficiary, resource, scope,
 	)
 	return
@@ -82,13 +83,17 @@ func SelectPermissions(resource uuid.UUID) (permissions []Permission, err error)
 	return
 }
 
-// SelectPermissionsWhere returns a list of permissions for the requested resource
-// also appending the requested `extra` where parameter to the sql string
-func SelectPermissionsWhere(resource uuid.UUID, extra string, others ...interface{}) (permissions []Permission, err error) {
+// SelectPermissionsWithScopes returns a list of permissions for the requested resource
+// (only the requested scopes)
+func SelectPermissionsWithScopes(resource uuid.UUID, scopes []string) (permissions []Permission, err error) {
+	query, args, err := sqlx.In(findResourcePermissions+"AND scope IN (?)", resource, scopes)
+	if err != nil {
+		return permissions, err
+	}
 	err = store.GetDB().Select(
 		&permissions,
-		findResourcePermissions+"AND "+extra,
-		resource, others,
+		store.GetDB().Rebind(query),
+		args...,
 	)
 	return
 }

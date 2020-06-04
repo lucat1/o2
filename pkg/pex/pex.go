@@ -16,13 +16,13 @@ type Pex struct {
 // SelectPexes queries the database and produces an array of permissions for the
 // requested resource with the requested scopes
 func SelectPexes(resource uuid.UUID, scopes []string) []Pex {
-	perms, err := models.SelectPermissionsWhere(resource, "scope IN ?", scopes)
+	perms, err := models.SelectPermissionsWithScopes(resource, scopes)
 	if err != nil {
 		log.Error().
 			Err(err).
 			Str("resource", resource.String()).
 			Strs("scopes", scopes).
-			Msg("Error while fetching permissions")
+			Msg("Error while selecting permissions")
 
 		// we return false cause we cannot guarantee that
 		//the user has the requested permissions

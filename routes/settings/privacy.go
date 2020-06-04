@@ -1,7 +1,6 @@
 package settings
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/lucat1/o2/pkg/auth"
@@ -62,7 +61,6 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 			goto renderError
 		}
 
-		fmt.Println(user.UUID.String())
 		quercia.Redirect(
 			w, r,
 			"/"+user.Name, "user",

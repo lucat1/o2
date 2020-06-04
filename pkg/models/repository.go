@@ -137,8 +137,7 @@ func GetByUUID(id uuid.UUID) (repository Repository, err error) {
 	return
 }
 
-// SelectRepositories returns a list of repositories
-// for a given owner
+// SelectRepositories returns a list of repositories for a given owner
 func SelectRepositories(owner uuid.UUID) (repositories []Repository, err error) {
 	err = store.GetDB().Select(
 		&repositories,
