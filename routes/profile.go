@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/lucat1/o2/pkg/auth"
@@ -10,7 +9,6 @@ import (
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/pex"
-	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/o2/routes/shared"
 	"github.com/lucat1/quercia"
 	uuid "github.com/satori/go.uuid"
@@ -61,8 +59,14 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		fmt.Println(repos)
-		quercia.Render(w, r, "user", data.Compose(r, data.Base, datas.ProfileData(user)))
+		quercia.Render(
+			w, r, "user",
+			data.Compose(r,
+				data.Base,
+				data.WithAny("profile", user),
+				data.WithAny("repositories", repos),
+			),
+		)
 		return
 	}
 
@@ -75,7 +79,13 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		fmt.Println(repos)
-		quercia.Render(w, r, "organization", data.Compose(r, data.Base, datas.ProfileData(org)))
+		quercia.Render(
+			w, r, "organization",
+			data.Compose(r,
+				data.Base,
+				data.WithAny("profile", org),
+				data.WithAny("repositories", repos),
+			),
+		)
 	}
 }

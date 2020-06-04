@@ -6,8 +6,13 @@ import Repos from '../components/profile/repos'
 import User from '../components/profile/user'
 
 import { User as IUser, Base } from '../types/data'
+import { Repository } from '../types/repository'
 
-export default ({ profile, account }: Base<{ profile: IUser }>) => (
+export default ({
+  profile,
+  account,
+  repositories
+}: Base<{ repositories: Repository[]; profile: IUser }>) => (
   <Parent py={6} px={[0, 9]}>
     <Head>
       <title>{SSG ? 'user' : profile.username} - o2</title>
@@ -19,7 +24,7 @@ export default ({ profile, account }: Base<{ profile: IUser }>) => (
     <User profile={profile} />
     <Repos
       owner={profile?.username}
-      repositories={profile?.repositories}
+      repositories={repositories}
       account={account}
     />
   </Parent>
