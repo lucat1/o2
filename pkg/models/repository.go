@@ -100,6 +100,22 @@ func (repository Repository) Update() error {
 	return err
 }
 
+// Add adds a permission node to the repository for the given user/scope
+func (repository Repository) Add(perm Permission) error {
+	// assign the permission to this repository
+	perm.Resource = repository.UUID
+
+	return perm.Insert()
+}
+
+// Del removes a permission node from the repository for the given user/scope
+func (repository Repository) Del(perm Permission) error {
+	// assign the permission to this repository
+	perm.Resource = repository.UUID
+
+	return perm.Delete()
+}
+
 // GetRepository returns the first repository found when querying
 // the database with the given field and value pair
 func GetRepository(owner uuid.UUID, name string) (repository Repository, err error) {

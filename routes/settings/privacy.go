@@ -16,15 +16,9 @@ import (
 // Privacy is a settings tab used to change privacy-concerned settings
 // like passwords, emails and such
 func Privacy(w http.ResponseWriter, r *http.Request) {
-	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-	user, e := models.GetUser("name", claims.Username)
-	if e != nil {
-		log.Debug().
-			Err(e).
-			Str("username", claims.Username).
-			Msg("Couldn't fetch user to render the settings/privacy page")
-
-		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", quercia.Props{})
+	user := r.Context().Value(auth.AccountKey).(*models.User)
+	if user == nil {
+		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", data.Compose(r, data.Base))
 		return
 	}
 
@@ -71,7 +65,7 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(user.UUID.String())
 		quercia.Redirect(
 			w, r,
-			"/"+claims.Username, "user",
+			"/"+user.Name, "user",
 			data.Compose(r, data.Base, datas.ProfileData(user)),
 		)
 		return

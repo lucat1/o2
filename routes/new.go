@@ -5,7 +5,6 @@ import (
 
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
-	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
@@ -13,21 +12,14 @@ import (
 
 // New prompts the user to create a new repository or an organization
 func New(w http.ResponseWriter, r *http.Request) {
-	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-	// find the logged in user
-	user, err := models.GetUser("name", claims.Username)
-	if err != nil {
-		log.Error().
-			Str("username", claims.Username).
-			Err(err).
-			Msg("Could not find logged in user user")
-
-		datas.NewErr(w, r, "Cannot find the user you are logged into. Please logout and log back in")
+	user := r.Context().Value(auth.AccountKey).(*models.User)
+	if user == nil {
+		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", data.Compose(r, data.Base))
 		return
 	}
 
 	if r.Method != "POST" {
-		quercia.Render(w, r, "new", data.Compose(r, data.Base, datas.NewData(user)))
+		quercia.Render(w, r, "new", data.Compose(r, data.Base, datas.NewData(*user)))
 		return
 	}
 
@@ -49,7 +41,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 		break
 
 	case "organization":
-		newOrg(w, r, user)
+		newOrg(w, r, *user)
 		break
 
 	default:

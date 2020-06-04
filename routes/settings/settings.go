@@ -13,15 +13,9 @@ import (
 
 // Settings renders the settings of a user/organization
 func Settings(w http.ResponseWriter, r *http.Request) {
-	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-	user, err := models.GetUser("name", claims.Username)
-	if err != nil {
-		log.Debug().
-			Err(err).
-			Str("username", claims.Username).
-			Msg("Couldn't fetch user to render the settings page")
-
-		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", quercia.Props{})
+	user := r.Context().Value(auth.AccountKey).(*models.User)
+	if user == nil {
+		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", data.Compose(r, data.Base))
 		return
 	}
 
@@ -72,7 +66,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		Msg("Updated user settings")
 
 	// update auth token
-	token, _ := auth.Token(user)
+	token, _ := auth.Token(*user)
 	auth.SetCookie(w, r, token)
 
 	quercia.Redirect(

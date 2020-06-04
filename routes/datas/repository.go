@@ -15,8 +15,8 @@ func RepositoryData(repo models.Repository) data.Composer {
 	return func(r *http.Request) quercia.Props {
 		canPush := false
 		if auth.IsAuthenticated(r) {
-			username := r.Context().Value(auth.ClaimsKey).(*auth.Claims).UUID
-			canPush = models.HasPex(models.ToPex(repo.Permissions), username, []string{"repo:push"})
+			//username := r.Context().Value(auth.ClaimsKey).(*auth.Claims).UUID
+			canPush = true //models.HasPex(models.ToPex(repo.Permissions), username, []string{"repo:push"})
 		}
 
 		return quercia.Props{

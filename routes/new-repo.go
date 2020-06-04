@@ -8,7 +8,6 @@ import (
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 
@@ -34,10 +33,8 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 		UUID = orgOwner.UUID
 	}
 
-	if store.GetDB().
-		Where(models.Repository{OwnerUUID: UUID, Name: reponame}).
-		First(&models.Repository{}).
-		Error == nil {
+	_, err := models.GetRepository(UUID, reponame)
+	if err == nil {
 		datas.NewErr(w, r, "You already own a repository with this name")
 		return
 	}
@@ -46,32 +43,42 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 		OwnerUUID: UUID,
 		OwnerName: username,
 		Name:      reponame,
-		Permissions: []models.Permission{{
-			For:   "*",
-			Scope: "repo:pull",
-		}, {
-			For:   UUID.String(),
-			Scope: "repo:push",
-		}},
+		// Permissions: []models.Permission{{
+		// 	For:   "*",
+		// 	Scope: "repo:pull",
+		// }, {
+		// 	For:   UUID.String(),
+		// 	Scope: "repo:push",
+		// }},
+	}
+
+	if err = repo.Insert(); err != nil {
+		goto fatal
+	}
+
+	// add permissions
+	if err = repo.Add(models.Permission{
+		Beneficiary: uuid.Nil,
+		Scope:       "repo:pull",
+	}); err != nil {
+		goto fatal
+	}
+
+	if err = repo.Add(models.Permission{
+		Beneficiary: UUID,
+		Scope:       "repo:push",
+	}); err != nil {
+		goto fatal
 	}
 
 	// add extra push permissions to the user
 	if extra != nil {
-		repo.Permissions = append(repo.Permissions, models.Permission{
-			For:   extra.String(),
-			Scope: "repo:push",
-		})
-	}
-
-	if err := store.GetDB().Save(&repo).Error; err != nil {
-		log.Error().
-			Str("owner", UUID.String()).
-			Str("reponame", reponame).
-			Err(err).
-			Msg("Could not save new repository in the database")
-
-		datas.NewErr(w, r, "Internal error. Please try again layer")
-		return
+		if err = repo.Add(models.Permission{
+			Beneficiary: *extra,
+			Scope:       "repo:push",
+		}); err != nil {
+			goto fatal
+		}
 	}
 
 	if _, err := git.Init(repo.UUID.String()); err != nil {
@@ -91,4 +98,14 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 		"/"+username+"/"+reponame, "repository/repository",
 		data.Compose(r, data.Base, datas.RepositoryData(repo), datas.TreeData(nil)),
 	)
+
+fatal:
+	log.Error().
+		Err(err).
+		Str("owner", UUID.String()).
+		Str("reponame", reponame).
+		Msg("Could not save new repository in the database")
+
+	datas.NewErr(w, r, "Internal error. Please try again layer")
+	return
 }

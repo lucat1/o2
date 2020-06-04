@@ -6,7 +6,6 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 )
@@ -14,36 +13,30 @@ import (
 func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 	orgname := r.Form.Get("name")
 
-	if err := store.GetDB().
-		Where(models.User{Name: orgname}).
-		First(&models.User{}).
-		Error; err == nil {
+	_, err := models.GetUser("name", orgname)
+	if err == nil {
 		datas.NewErr(w, r, "This name is already taken by a user")
 		return
 	}
 
-	if err := store.GetDB().
-		Where(models.Organization{Name: orgname}).
-		Find(&models.Organization{}).
-		Error; err == nil {
+	_, err = models.GetOrganization("name", orgname)
+	if err == nil {
 		datas.NewErr(w, r, "This name is already taken by another organization")
 		return
 	}
 
 	org := models.Organization{
-		Name:  orgname,
-		Users: []models.User{user},
+		Name: orgname,
 	}
 
-	if err := store.GetDB().Save(&org).Error; err != nil {
-		log.Error().
-			Str("owner", user.Name).
-			Str("orgname", orgname).
-			Err(err).
-			Msg("Could not save new organization in the database")
+	// save the org
+	if err := org.Insert(); err != nil {
+		goto fatal
+	}
 
-		datas.NewErr(w, r, "Internal error. Please try again layer")
-		return
+	// assign the user to the org
+	if err := org.Add(user); err != nil {
+		goto fatal
 	}
 
 	quercia.Redirect(
@@ -51,4 +44,14 @@ func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 		"/"+org.Name, "organization",
 		data.Compose(r, data.Base, datas.ProfileData(org)),
 	)
+
+fatal:
+	log.Error().
+		Err(err).
+		Str("owner", user.Name).
+		Str("orgname", orgname).
+		Msg("Could not save new organization in the database")
+
+	datas.NewErr(w, r, "Internal error. Please try again layer")
+	return
 }
