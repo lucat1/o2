@@ -69,9 +69,15 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	token, _ := auth.Token(*user)
 	auth.SetCookie(w, r, token)
 
+	repos, _ := models.SelectRepositories(user.UUID)
+
 	quercia.Redirect(
 		w, r,
 		"/"+user.Name, "user",
-		data.Compose(r, data.Base, datas.ProfileData(user)),
+		data.Compose(r,
+			data.Base,
+			data.WithAny("profile", user),
+			data.WithAny("repositories", repos),
+		),
 	)
 }
