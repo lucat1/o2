@@ -27,7 +27,7 @@ import (
 
 const createUser = `
 CREATE TABLE IF NOT EXISTS users (
-	uuid CHAR(36) NOT NULL,
+	uuid CHAR(36) UNIQUE NOT NULL,
 	created_at DATETIME NOT NULL,
 	updated_at DATETIME NOT NULL,
 	deleted_at DATETIME NULL,
@@ -49,14 +49,14 @@ CREATE TABLE IF NOT EXISTS users (
 
 const createRepository = `
 CREATE TABLE IF NOT EXISTS repositories (
-	uuid CHAR(36) NOT NULL,
+	uuid CHAR(36) UNIQUE NOT NULL,
 	created_at DATETIME NOT NULL,
 	updated_at DATETIME NOT NULL,
 	deleted_at DATETIME NULL,
 
-	owner_uuid CHAR(36) UNIQUE NOT NULL,
-	owner_name VARCHAR(32) UNIQUE NOT NULL,
-	name 	VARCHAR(32) UNIQUE NOT NULL,
+	owner_uuid CHAR(36) NOT NULL,
+	owner_name VARCHAR(32) NOT NULL,
+	name 	VARCHAR(32) NOT NULL,
 	description VARCHAR(250),
 
 	PRIMARY KEY (uuid, owner_uuid, owner_name, name),
