@@ -57,5 +57,9 @@ func SetCookie(w http.ResponseWriter, r *http.Request, token string) *http.Reque
 	http.SetCookie(w, cookie)
 
 	claims, _ := _isAuthenticated(token)
-	return r.WithContext(context.WithValue(r.Context(), ClaimsKey, claims))
+	user, _ := models.GetUser("uuid", claims.UUID)
+	return r.WithContext(context.WithValue(
+		context.WithValue(r.Context(), AccountKey, &user),
+		ClaimsKey, claims),
+	)
 }

@@ -14,7 +14,11 @@ var Base Composer = func(r *http.Request) quercia.Props {
 		return quercia.Props{}
 	}
 
-	user := r.Context().Value(auth.AccountKey).(*models.User)
+	user, ok := r.Context().Value(auth.AccountKey).(*models.User)
+	// not logged indeed
+	if !ok {
+		return quercia.Props{}
+	}
 
 	return quercia.Props{
 		"account": quercia.Props{

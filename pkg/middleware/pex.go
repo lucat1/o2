@@ -18,7 +18,7 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			resource := r.Context().Value(Resource).(uuid.UUID)
-			user := r.Context().Value(auth.AccountKey).(*models.User)
+			user, ok := r.Context().Value(auth.AccountKey).(*models.User)
 			log.Debug().
 				Strs("scopes", scopes).
 				Str("resource", resource.String()).
@@ -26,16 +26,17 @@ func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 				Msg("Checking the user's permission for the required scopes")
 
 			id := uuid.Nil
-			if user != nil {
+			if !ok {
 				id = user.UUID
 			}
 
 			if pex.Can(resource, id, scopes) {
 				handle(w, r, true, f, fallback)
 				return
-			} else if user != nil {
+			} else if !ok {
 				// if the user is logged in and he doesn't have permission render the fallback
 				fallback.ServeHTTP(w, r)
+				return
 			}
 
 			// if the user/id cannot do that we ask them to log in again
