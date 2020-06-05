@@ -86,8 +86,10 @@ jobs:
         shell: bash
         run: |
           go get -v -t -d ./...
+          go get -d -v github.com/markbates/pkger@v0.16.0
           go get github.com/markbates/pkger/cmd/pkger
           rm -rf __quercia/*/server
+          rm data/CascadiaCode.woff2
           pkger
 
       - name: Build the go binary
