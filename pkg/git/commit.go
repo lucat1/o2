@@ -5,7 +5,6 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/lucat1/o2/pkg/models"
 	"github.com/m1ome/randstr"
 )
 
@@ -42,10 +41,6 @@ func (r Repository) Commit(sha string) (DetailedCommit, error) {
 	}
 	out.Subject = subject
 	out.Body = body
-
-	// generate profile pictures for authros/commiters
-	out.Author.Picture = models.Picture(out.Author.Email)
-	out.Commiter.Picture = models.Picture(out.Commiter.Email)
 
 	// add git diff
 	out.Diff = diff

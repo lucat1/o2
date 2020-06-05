@@ -1,9 +1,7 @@
 package models
 
 import (
-	"crypto/md5"
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/lucat1/o2/pkg/store"
@@ -81,12 +79,6 @@ type User struct {
 	Description string `json:"description"`
 	Location    string `json:"location"`
 	Picture     string `json:"picture"`
-}
-
-// Picture generates the picture url of a profile picture
-func Picture(email string) string {
-	hash := md5.Sum([]byte(strings.ToLower(email)))
-	return "https://www.gravatar.com/avatar/" + fmt.Sprintf("%x", hash)
 }
 
 // Insert inserts a user into the database
