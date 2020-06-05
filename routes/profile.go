@@ -87,7 +87,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: frontend -> merge user/organization pages
 	quercia.Render(
-		w, r, "user",
+		w, r, string(user.Type),
 		data.Compose(r,
 			data.Base,
 			data.WithAny("profile", user),

@@ -15,7 +15,7 @@ import Label from '../label'
 import Image from '../image'
 import Button from '../button'
 
-import { User } from '../../types/data'
+import { User, Organization } from '../../types/data'
 
 type Type = 'user' | 'org'
 interface Option {
@@ -29,11 +29,19 @@ interface Data {
   description: string
 }
 
-const Repository: React.FunctionComponent<{ user: User }> = ({ user }) => {
+interface Props {
+  user: User
+  organizations: Organization[]
+}
+
+const Repository: React.FunctionComponent<Props> = ({
+  user,
+  organizations
+}) => {
   const options: Option[] = React.useMemo(
     () => [
       { type: 'user', value: user?.username, picture: user?.picture },
-      ...(user?.organizations || []).map(({ name, picture }) => ({
+      ...(organizations || []).map(({ name, picture }) => ({
         type: 'org' as Type,
         value: name,
         picture

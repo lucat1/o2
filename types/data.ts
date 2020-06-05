@@ -6,8 +6,6 @@ export interface User extends LoggedUser {
   description: string
   location: string
   picture: string
-
-  organizations: Organization[]
 }
 
 export interface Organization {
@@ -15,9 +13,6 @@ export interface Organization {
   description: string
   location: string
   picture: string
-
-  repositories: Repository[]
-  users: User[]
 }
 
 export interface Commit {

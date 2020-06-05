@@ -38,6 +38,15 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	user.Location = r.Form.Get("location")
 	user.Description = r.Form.Get("description")
 
+	if user.Name == "" {
+		datas.SettingsError(
+			w, r,
+			"settings/settings",
+			"Your username cannot be empty!",
+		)
+		return
+	}
+
 	// 2. Update the database
 	if err := user.Update(); err != nil {
 		log.Debug().

@@ -7,13 +7,19 @@ import Heading from '../heading'
 import Text from '../text'
 import Link from '../link'
 
-import { Organization } from '../../types/data'
+import { Organization, User } from '../../types/data'
 
 const Line: React.FC<FlexProps> = props => (
   <Flex width={8} {...(props as any)} />
 )
 
-const Profile = ({ profile }: { profile: Organization }) => (
+const Profile = ({
+  profile,
+  users
+}: {
+  profile: Organization
+  users: User[]
+}) => (
   <Left flexDirection='column' alignItems='center'>
     <Image
       width={8}
@@ -40,7 +46,7 @@ const Profile = ({ profile }: { profile: Organization }) => (
       </Line>
 
       <Flex py={4}>
-        {(profile?.users || []).map(({ username, picture }, i) => (
+        {(users || []).map(({ username, picture }, i) => (
           <Link key={i} to={`/${username}`}>
             <Image
               width={4}

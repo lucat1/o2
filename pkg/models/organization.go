@@ -16,7 +16,7 @@ DELETE FROM users_organizations WHERE user_uuid=? AND organization_uuid=?
 `
 
 const findUsersOrOrganizations = `
-SELECT * FROM users_organizations o JOIN users u ON o.organization_uuid = u.uuid WHERE o.%s_uuid = ?
+SELECT * FROM users_organizations o JOIN users u ON o.%s_uuid = u.uuid WHERE o.%s_uuid = ?
 `
 
 // Add adds a user to the user<->organization mapping
@@ -43,9 +43,16 @@ func (org User) Del(user User) error {
 // key=user --> find all organizations
 // key=organization --> find all users
 func SelectMapping(key string, value uuid.UUID) (orgs []User, err error) {
-	err = store.GetDB().Select(
+	other := "user"
+	if key == "user" {
+		other = "organization"
+	}
+
+	// we need to use unsafe as some fields returned from
+	// the JOIN are not used, and that's by design
+	err = store.GetDB().Unsafe().Select(
 		&orgs,
-		fmt.Sprintf(findUsersOrOrganizations, key),
+		fmt.Sprintf(findUsersOrOrganizations, other, key),
 		value,
 	)
 	return
