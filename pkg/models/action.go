@@ -1,10 +1,11 @@
 package models
 
 import (
-	"encoding/json"
+	"errors"
 	"time"
 
-	"github.com/jinzhu/gorm"
+	"github.com/jmoiron/sqlx/types"
+	"github.com/lucat1/o2/pkg/store"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -16,31 +17,91 @@ const (
 	CommitEvent = EventKind("commit")
 )
 
+const insertEvent = `
+INSERT INTO events (
+	created_at,
+	updated_at,
+	deleted_at,
+
+	resource,
+	time,
+	kind,
+	data
+) VALUES (
+	?, ?, ?, ?,
+	?, ?, ?, ?
+) RETURNING id
+`
+
+const updateEvent = `
+UPDATE events SET
+	created_at=?,
+	updated_at=?,
+	deleted_at=?,
+
+	resource=?,
+	time=?,
+	kind=?,
+	data=?
+WHERE id=?
+`
+
 // Event is the database model for a git event
 type Event struct {
-	Base
+	Model
 
-	Time         time.Time              `json:"time"`
-	Kind         EventKind              `json:"kind"`
-	ResourceUUID uuid.UUID              `gorm:"type:char(36);primary_index"`
-	Data         map[string]interface{} `gorm:"-" json:"data"`
-	RawData      []byte                 `gorm:"type:text" json:"-"`
+	Resource uuid.UUID      `json:"resource"`
+	Time     time.Time      `json:"time"`
+	Kind     EventKind      `json:"kind"`
+	Data     types.JSONText `gorm:"-" json:"data"`
 }
 
-// BeforeSave converts the Data into RawData
-func (e *Event) BeforeSave(scope *gorm.Scope) (err error) {
-	data, err := json.Marshal(e.Data)
+// Insert inserts an event into the database
+func (event *Event) Insert() error {
+	event.generate()
+
+	// query the db
+	rows, err := store.GetDB().Query(
+		store.GetDB().Rebind(insertEvent),
+		event.CreatedAt,
+		event.UpdatedAt,
+		event.DeletedAt,
+
+		event.Resource,
+		event.Time,
+		event.Kind,
+		event.Data,
+	)
 	if err != nil {
 		return err
 	}
+	if !rows.Next() {
+		return errors.New("Insert didn't return any row")
+	}
 
-	return scope.SetColumn("RawData", data)
+	return rows.Scan(&event.ID)
 }
 
-// AfterFind converts the RawData into Data
-func (e *Event) AfterFind() (err error) {
-	if len(e.RawData) != 0 {
-		return json.Unmarshal(e.RawData, &e.Data)
-	}
-	return
+// Update updates an event struct in the database
+func (event Event) Update() error {
+	// update updated_at time stamp
+	event.UpdatedAt = time.Now()
+
+	// query the db
+	_, err := store.GetDB().Exec(
+		store.GetDB().Rebind(updateEvent),
+		event.CreatedAt,
+		event.UpdatedAt,
+		event.DeletedAt,
+
+		event.Resource,
+		event.Time,
+		event.Kind,
+		event.Data,
+
+		// where
+		event.ID,
+	)
+
+	return err
 }

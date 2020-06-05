@@ -5,33 +5,30 @@ import (
 
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
-	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 )
 
 // New prompts the user to create a new repository or an organization
 func New(w http.ResponseWriter, r *http.Request) {
-	username := r.Context().Value(auth.ClaimsKey).(*auth.Claims).Username
-	// find the logged in user
-	var user models.User
-	if err := store.GetDB().
-		Preload("Organizations").
-		Where(&models.User{Username: username}).
-		First(&user).Error; err != nil {
-		log.Error().
-			Str("username", username).
-			Err(err).
-			Msg("Could not find logged in user user")
-
-		datas.NewErr(w, r, "Cannot find the user you are logged into. Please logout and log back in")
+	user := r.Context().Value(auth.AccountKey).(*models.User)
+	if user == nil {
+		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", data.Compose(r, data.Base))
 		return
 	}
 
 	if r.Method != "POST" {
-		quercia.Render(w, r, "new", data.Compose(r, data.Base, datas.NewData(user)))
+		orgs, _ := models.SelectMapping("user", user.UUID)
+
+		quercia.Render(
+			w, r, "new",
+			data.Compose(r,
+				data.Base,
+				data.WithAny("user", user),
+				data.WithAny("organizations", orgs),
+			),
+		)
 		return
 	}
 
@@ -45,7 +42,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 	case "repository":
 		// if the user is creating a repository for another org
 		// we give the creator push permissions
-		if owner != user.Username {
+		if owner != user.Name {
 			newRepo(w, r, owner, &user.UUID)
 		} else {
 			newRepo(w, r, owner, nil)
@@ -53,7 +50,7 @@ func New(w http.ResponseWriter, r *http.Request) {
 		break
 
 	case "organization":
-		newOrg(w, r, user)
+		newOrg(w, r, *user)
 		break
 
 	default:

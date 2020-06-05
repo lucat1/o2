@@ -58,6 +58,7 @@ func main() {
 	mux.Use(auth.With)
 
 	mux.HandleFunc("/", routes.Index)
+	mux.HandleFunc("/favicon.ico", shared.NotFound)
 	mux.HandleFunc("/register", routes.Register)
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", auth.Must(routes.Logout))
@@ -65,14 +66,11 @@ func main() {
 	mux.HandleFunc("/settings", auth.Must(settings.Settings))
 	mux.HandleFunc("/settings/privacy", auth.Must(settings.Privacy))
 
-	profile := mux.Of("/:username")
-	profile.Use(middleware.WithProfile(shared.NotFound))
-	profile.HandleFunc("/", routes.Profile)
-
-	repo := profile.Of("/:reponame")
+	mux.HandleFunc("/:name", routes.Profile)
+	repo := mux.Of("/:name/:repo")
 	repo.Use(middleware.WithRepo(shared.NotFound))
 
-	// generate the resource value based on the :username/:reponame
+	// generate the resource value based on the :name/:repo
 	repo.Use(middleware.WithResource(middleware.RepositoryResource))
 
 	repo.Use(middleware.MustPex([]string{"repo:pull"}, shared.NotFound))

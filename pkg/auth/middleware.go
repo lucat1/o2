@@ -5,14 +5,20 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/quercia"
 )
 
 type authType string
 
-// ClaimsKey is the key used to obtain the user's logged in data
-const ClaimsKey authType = "claims"
+const (
+	// ClaimsKey is the key used to obtain the user's logged in JWT claims
+	ClaimsKey authType = "claims"
+
+	// AccountKey is the key to retrieve the user's logged in struct
+	AccountKey authType = "account"
+)
 
 // With checks if the user is authenticated via JWTs
 func With(f http.Handler) http.Handler {
@@ -23,7 +29,24 @@ func With(f http.Handler) http.Handler {
 			return
 		}
 
-		f.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), ClaimsKey, claims)))
+		// fetch the currently logged in user
+		user, err := models.GetUser("uuid", claims.UUID)
+		if err != nil {
+			log.Debug().
+				Err(err).
+				Str("uuid", claims.UUID.String()).
+				Msg("Could not get logged in user account")
+
+			f.ServeHTTP(w, r)
+			return
+		}
+
+		f.ServeHTTP(w, r.WithContext(
+			context.WithValue(
+				context.WithValue(r.Context(), AccountKey, &user),
+				ClaimsKey, claims,
+			),
+		))
 	})
 }
 
@@ -41,14 +64,14 @@ func Must(f http.HandlerFunc) http.HandlerFunc {
 					return
 				}
 
-				username, password, ok := r.BasicAuth()
+				name, password, ok := r.BasicAuth()
 				if !ok {
 					w.WriteHeader(http.StatusBadRequest)
 					return
 				}
 
 				token, err := Login(models.User{
-					Username: username,
+					Name:     name,
 					Password: password,
 				})
 				if err != nil {

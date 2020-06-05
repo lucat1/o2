@@ -12,9 +12,11 @@ import Divider from '../../components/divider'
 import Left from '../../components/settings/left'
 import Field from '../../components/settings/field'
 
+import { User } from '../../types/data'
+
 export interface SettingsProps {
   error?: string
-  profile: { username: string }
+  profile: User
 }
 
 interface Data {
@@ -71,7 +73,7 @@ export default ({ profile, error }: SettingsProps) => {
           px={[0, 4]}
         >
           <Heading my={3} fontSize='2rem' height={5} width={9}>
-            Privacy - {profile?.username}
+            Privacy - {profile?.name}
           </Heading>
 
           {error && <Heading color='error'>{error}</Heading>}

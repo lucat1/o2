@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/lucat1/o2/pkg/models"
 	"github.com/m1ome/randstr"
 )
 
@@ -32,10 +31,9 @@ type Commit struct {
 
 // CommitAuthor is the generated author of a commit with custom values
 type CommitAuthor struct {
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Picture  string `json:"picture"`
-	Date     string `json:"date"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Date  string `json:"date"`
 }
 
 // Commits is a struct holding the output of the log command with
@@ -63,7 +61,7 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 		"--skip="+strconv.Itoa(offset*amount),
 		"-n "+strconv.Itoa(amount),
 		// the `body` is appended at the end of the json to allor for newlines
-		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"parent\": \"%P\",\"author\": {  \"username\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"username\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%s"+sep+"%b"+sep,
+		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"parent\": \"%P\",\"author\": {  \"name\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"name\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%s"+sep+"%b"+sep,
 	)
 	if err != nil {
 		return res, err
@@ -89,8 +87,6 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 				return res, err
 			}
 
-			commit.Author.Picture = models.Picture(commit.Author.Email)
-			commit.Commiter.Picture = models.Picture(commit.Commiter.Email)
 			res.Commits = append(res.Commits, commit)
 
 			// if we have a parent it means that we have more commits

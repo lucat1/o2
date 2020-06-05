@@ -24,7 +24,7 @@ const Organization: React.FunctionComponent<{ user: User }> = ({ user }) => {
     // instantiate the POST form data
     const body = new FormData()
     body.set('kind', 'organization')
-    body.set('owner', user.username)
+    body.set('owner', user.name)
     body.set('name', data.name)
 
     navigate(`/new`, 'POST', {

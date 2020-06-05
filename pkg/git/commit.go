@@ -5,7 +5,6 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/lucat1/o2/pkg/models"
 	"github.com/m1ome/randstr"
 )
 
@@ -23,7 +22,7 @@ func (r Repository) Commit(sha string) (DetailedCommit, error) {
 		r.Path,
 		"show",
 		sha,
-		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"author\": {  \"username\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"username\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%s"+sep+"%b"+sep,
+		"--pretty=format:{\"commit\": \"%H\",\"abbrv\": \"%h\",\"tree\": \"%T\",\"abbrv_tree\": \"%t\",\"author\": {  \"name\": \"%aN\",  \"email\": \"%aE\",  \"date\": \"%aD\"},\"commiter\": {  \"name\": \"%cN\",  \"email\": \"%cE\",  \"date\": \"%cD\"}}"+sep+"%s"+sep+"%b"+sep,
 	)
 	if err != nil {
 		return DetailedCommit{}, err
@@ -42,10 +41,6 @@ func (r Repository) Commit(sha string) (DetailedCommit, error) {
 	}
 	out.Subject = subject
 	out.Body = body
-
-	// generate profile pictures for authros/commiters
-	out.Author.Picture = models.Picture(out.Author.Email)
-	out.Commiter.Picture = models.Picture(out.Commiter.Email)
 
 	// add git diff
 	out.Diff = diff
