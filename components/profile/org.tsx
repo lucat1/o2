@@ -46,12 +46,12 @@ const Profile = ({
       </Line>
 
       <Flex py={4}>
-        {(users || []).map(({ username, picture }, i) => (
-          <Link key={i} to={`/${username}`}>
+        {(users || []).map(({ name, picture }, i) => (
+          <Link key={i} to={`/${name}`}>
             <Image
               width={4}
               height={4}
-              alt={`${username}'s profile picture`}
+              alt={`${name}'s profile picture`}
               src={`${picture}?s=50`}
             />
           </Link>

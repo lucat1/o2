@@ -17,7 +17,7 @@ func Login(user models.User) (string, error) {
 	if user.Email != "" {
 		found, err = models.GetUser("email", user.Email)
 	} else {
-		// use username instead on git cli logins
+		// use `name` instead for git cli logins
 		found, err = models.GetUser("name", user.Name)
 	}
 

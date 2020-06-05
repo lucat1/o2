@@ -70,7 +70,7 @@ func main() {
 	repo := mux.Of("/:name/:repo")
 	repo.Use(middleware.WithRepo(shared.NotFound))
 
-	// generate the resource value based on the :username/:reponame
+	// generate the resource value based on the :name/:repo
 	repo.Use(middleware.WithResource(middleware.RepositoryResource))
 
 	repo.Use(middleware.MustPex([]string{"repo:pull"}, shared.NotFound))

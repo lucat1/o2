@@ -27,14 +27,14 @@ const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
       <Link
         known
         css={{ outline: 'none', flexShrink: 0, display: 'flex' }}
-        to={`/${commit?.author?.username}`}
+        to={`/${commit?.author?.name}`}
       >
         <Image
           width={5}
           height={5}
           alt={
             commit
-              ? `${commit.author.username}'s profile picture`
+              ? `${commit.author.name}'s profile picture`
               : "commit author's profile picture"
           }
           src={commit ? `${commit.author.picture}?s=75` : ''}
@@ -56,8 +56,8 @@ const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
         </Link>
 
         <Text known fontSize='xs' display='flex' mt={2} as='span'>
-          <Link height={2} to={`/${commit?.author.username}`}>
-            {commit?.author?.username}
+          <Link height={2} to={`/${commit?.author.name}`}>
+            {commit?.author?.name}
           </Link>
           <Text height={2} px={1}>
             commited on

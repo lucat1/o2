@@ -20,15 +20,15 @@ export default ({
 }>) => (
   <Parent py={6} px={[0, 9]}>
     <Head>
-      <title>{SSG ? 'user' : profile.username} - o2</title>
+      <title>{SSG ? 'user' : profile.name} - o2</title>
       <meta
         name='description'
-        content={'the user profile page' + SSG ? '' : `of ${profile.username}`}
+        content={'the user profile page' + SSG ? '' : `of ${profile.name}`}
       />
     </Head>
     <User organizations={organizations} profile={profile} />
     <Repos
-      owner={profile?.username}
+      owner={profile?.name}
       repositories={repositories}
       account={account}
     />

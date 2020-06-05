@@ -26,9 +26,6 @@ const lifespan = 8 * time.Hour
 func Token(user models.User) (string, error) {
 	claims := &Claims{
 		UUID: user.UUID,
-		// Email:    user.Email,
-		// Username: user.Name,
-		// Picture:  user.Picture,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(lifespan).Unix(),
 		},

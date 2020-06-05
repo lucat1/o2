@@ -73,7 +73,7 @@ type User struct {
 
 	Type     Type   `json:"type"`
 	Email    string `json:"email"`
-	Name     string `json:"username"`
+	Name     string `json:"name"`
 	Password string `json:"-"`
 
 	Firstname   string `json:"firstname"`

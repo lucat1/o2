@@ -40,7 +40,7 @@ const Repository: React.FunctionComponent<Props> = ({
 }) => {
   const options: Option[] = React.useMemo(
     () => [
-      { type: 'user', value: user?.username, picture: user?.picture },
+      { type: 'user', value: user?.name, picture: user?.picture },
       ...(organizations || []).map(({ name, picture }) => ({
         type: 'org' as Type,
         value: name,

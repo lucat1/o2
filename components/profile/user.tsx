@@ -31,14 +31,14 @@ const Profile = ({
       height={8}
       alt={
         profile
-          ? `${profile.username}'s profile picture`
+          ? `${profile.name}'s profile picture`
           : "The user's profile picture"
       }
       src={profile?.picture + '?s=300'}
     />
     <Box py={4}>
       <Line css={{ wordWrap: 'break-word' }}>
-        <Heading fontSize='lg'>{profile?.username}</Heading>
+        <Heading fontSize='lg'>{profile?.name}</Heading>
       </Line>
       <Line>
         <Heading as={'h3'} width={8} height={3} fontSize='xs'>

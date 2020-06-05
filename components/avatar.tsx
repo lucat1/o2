@@ -12,7 +12,7 @@ import { List, Item } from './list'
 
 import { LoggedUser } from '../types/data'
 
-const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
+const Avatar: React.FC<LoggedUser> = ({ picture, name }) => {
   const [open, setOpen] = React.useState(false)
   const go = React.useCallback((url: string) => {
     setOpen(false)
@@ -45,7 +45,7 @@ const Avatar: React.FC<LoggedUser> = ({ picture, username }) => {
         onClose={() => setOpen(false)}
       >
         <List>
-          <Item onClick={() => go(`/${username}`)}>Your profile</Item>
+          <Item onClick={() => go(`/${name}`)}>Your profile</Item>
           <Divider />
           <Item onClick={() => go('/settings')}>Settings</Item>
           <Divider />

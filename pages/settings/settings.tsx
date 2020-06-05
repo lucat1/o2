@@ -37,7 +37,7 @@ export default ({ profile, error }: SettingsProps) => {
 
     // instantiate the POST form data
     const body = new FormData()
-    body.set('name', data.username)
+    body.set('name', data.name)
     body.set('firstname', data.firstname)
     body.set('lastname', data.lastname)
     body.set('location', data.location)
@@ -71,7 +71,7 @@ export default ({ profile, error }: SettingsProps) => {
           px={[0, 4]}
         >
           <Heading my={3} fontSize='2rem' height={5} width={9}>
-            Settings - {profile?.username}
+            Settings - {profile?.name}
           </Heading>
 
           {error && <Heading color='error'>{error}</Heading>}
@@ -81,7 +81,7 @@ export default ({ profile, error }: SettingsProps) => {
             disabled={isLoading}
             name='username'
             placeholder='Username'
-            defaultValue={profile?.username}
+            defaultValue={profile?.name}
             description='The username is displayed in your profile and in every repository you own / contribute to.'
             ref={register({
               required: 'Required',

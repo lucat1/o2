@@ -64,14 +64,14 @@ func Must(f http.HandlerFunc) http.HandlerFunc {
 					return
 				}
 
-				username, password, ok := r.BasicAuth()
+				name, password, ok := r.BasicAuth()
 				if !ok {
 					w.WriteHeader(http.StatusBadRequest)
 					return
 				}
 
 				token, err := Login(models.User{
-					Name:     username,
+					Name:     name,
 					Password: password,
 				})
 				if err != nil {
