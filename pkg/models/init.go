@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS users (
 	updated_at DATETIME NOT NULL,
 	deleted_at DATETIME NULL,
 
+	type CHAR(12) NOT NULL,
 	email VARCHAR(100) UNIQUE NOT NULL,
 	name 	VARCHAR(32) UNIQUE NOT NULL,
 	password TEXT NOT NULL,
@@ -67,22 +68,6 @@ CREATE TABLE IF NOT EXISTS repositories (
 )
 `
 
-const createOrganization = `
-CREATE TABLE IF NOT EXISTS organizations (
-	uuid CHAR(36) NOT NULL,
-	created_at DATETIME NOT NULL,
-	updated_at DATETIME NOT NULL,
-	deleted_at DATETIME NULL,
-
-	name 	VARCHAR(32) UNIQUE NOT NULL,
-	description VARCHAR(250),
-	location VARCHAR(100),
-	picture TEXT,
-
-	PRIMARY KEY (uuid, name)
-)
-`
-
 const createUserToOrganization = `
 CREATE TABLE IF NOT EXISTS users_organizations (
 	user_uuid CHAR(36) NOT NULL,
@@ -96,7 +81,7 @@ CREATE TABLE IF NOT EXISTS users_organizations (
 		ON UPDATE CASCADE ON DELETE CASCADE,
 
 	FOREIGN KEY (organization_uuid)
-		REFERENCES organizations(uuid)
+		REFERENCES users(uuid)
 		ON UPDATE CASCADE ON DELETE CASCADE
 )
 `
@@ -142,13 +127,6 @@ func Init() {
 		log.Fatal().
 			Err(err).
 			Msg("Could not create the `users` table")
-	}
-
-	_, err = store.GetDB().Exec(createOrganization + collation)
-	if err != nil {
-		log.Fatal().
-			Err(err).
-			Msg("Could not create the `organizations` table")
 	}
 
 	_, err = store.GetDB().Exec(createUserToOrganization + collation)

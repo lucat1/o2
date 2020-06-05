@@ -3,10 +3,10 @@ package routes
 import (
 	"net/http"
 
+	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
-	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/pex"
 	"github.com/lucat1/o2/routes/shared"
@@ -41,8 +41,17 @@ func filterRepositories(owner uuid.UUID, viewer uuid.UUID) (res []models.Reposit
 
 // Profile renders the user profile and
 func Profile(w http.ResponseWriter, r *http.Request) {
-	u := r.Context().Value(middleware.User)
-	o := r.Context().Value(middleware.Organization)
+	name := muxie.GetParam(w, "name")
+	user, err := models.GetUser("name", name)
+	if err != nil {
+		log.Debug().
+			Err(err).
+			Str("name", name).
+			Msg("Could not find user to render profile page")
+
+		shared.NotFound(w, r)
+		return
+	}
 	// get the logged in user's ID
 	account := uuid.Nil
 	if auth.IsAuthenticated(r) {
@@ -50,42 +59,20 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		account = claims.UUID
 	}
 
-	// if we have a user
-	if u != nil && u.(models.User).Name != "" {
-		user := u.(models.User)
-		repos, err := filterRepositories(user.UUID, account)
-		if err != nil {
-			shared.NotFound(w, r)
-			return
-		}
-
-		quercia.Render(
-			w, r, "user",
-			data.Compose(r,
-				data.Base,
-				data.WithAny("profile", user),
-				data.WithAny("repositories", repos),
-			),
-		)
+	repos, err := filterRepositories(user.UUID, account)
+	if err != nil {
+		shared.NotFound(w, r)
 		return
 	}
 
-	// if we have and organization
-	if o != nil && o.(models.Organization).Name != "" {
-		org := u.(models.Organization)
-		repos, err := filterRepositories(org.UUID, account)
-		if err != nil {
-			shared.NotFound(w, r)
-			return
-		}
-
-		quercia.Render(
-			w, r, "organization",
-			data.Compose(r,
-				data.Base,
-				data.WithAny("profile", org),
-				data.WithAny("repositories", repos),
-			),
-		)
-	}
+	// TODO: frontend -> mergeuser/organization pages
+	quercia.Render(
+		w, r, "user",
+		data.Compose(r,
+			data.Base,
+			data.WithAny("profile", user),
+			data.WithAny("repositories", repos),
+		),
+	)
+	return
 }

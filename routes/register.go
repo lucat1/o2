@@ -34,6 +34,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	token, err := auth.Register(models.User{
+		Type:  models.UserType,
 		Email: email,
 		Name:  username,
 	}, password)

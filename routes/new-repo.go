@@ -3,7 +3,6 @@ package routes
 import (
 	"net/http"
 
-	"github.com/lucat1/o2/pkg/actions"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/log"
@@ -16,40 +15,28 @@ import (
 
 func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.UUID) {
 	reponame := r.Form.Get("name")
-	userOwner, orgOwner := actions.GetProfile(owner)
+	user, err := models.GetUser("name", owner)
+	if err != nil {
+		log.Error().
+			Err(err).
+			Str("owner", owner).
+			Str("reponame", reponame).
+			Msg("Could not find new repository owner")
 
-	var (
-		username string
-		UUID     uuid.UUID
-	)
-
-	if userOwner != nil {
-		username = userOwner.Name
-		UUID = userOwner.UUID
+		datas.NewErr(w, r, "Internal error. Please try again layer")
+		return
 	}
 
-	if orgOwner != nil {
-		username = orgOwner.Name
-		UUID = orgOwner.UUID
-	}
-
-	_, err := models.GetRepository(UUID, reponame)
+	_, err = models.GetRepository(user.UUID, reponame)
 	if err == nil {
 		datas.NewErr(w, r, "You already own a repository with this name")
 		return
 	}
 
 	repo := models.Repository{
-		OwnerUUID: UUID,
-		OwnerName: username,
+		OwnerUUID: user.UUID,
+		OwnerName: user.Name,
 		Name:      reponame,
-		// Permissions: []models.Permission{{
-		// 	For:   "*",
-		// 	Scope: "repo:pull",
-		// }, {
-		// 	For:   UUID.String(),
-		// 	Scope: "repo:push",
-		// }},
 	}
 
 	if err = repo.Insert(); err != nil {
@@ -65,7 +52,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 	}
 
 	if err = repo.Add(models.Permission{
-		Beneficiary: UUID,
+		Beneficiary: user.UUID,
 		Scope:       "repo:push",
 	}); err != nil {
 		goto fatal
@@ -83,7 +70,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 
 	if _, err := git.Init(repo.UUID.String()); err != nil {
 		log.Error().
-			Str("owner", UUID.String()).
+			Str("owner", user.UUID.String()).
 			Str("reponame", reponame).
 			Str("repoUUID", repo.UUID.String()).
 			Err(err).
@@ -95,7 +82,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 
 	quercia.Redirect(
 		w, r,
-		"/"+username+"/"+reponame, "repository/repository",
+		"/"+user.Name+"/"+reponame, "repository/repository",
 		data.Compose(r, data.Base, datas.RepositoryData(repo), datas.TreeData(nil)),
 	)
 	return
@@ -103,7 +90,7 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 fatal:
 	log.Error().
 		Err(err).
-		Str("owner", UUID.String()).
+		Str("owner", user.UUID.String()).
 		Str("reponame", reponame).
 		Msg("Could not save new repository in the database")
 

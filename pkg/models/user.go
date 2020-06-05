@@ -9,6 +9,17 @@ import (
 	"github.com/lucat1/o2/pkg/store"
 )
 
+// Type is a custom string to hold user/organization values
+type Type string
+
+const (
+	// UserType is a custom type to identify a user struct
+	UserType Type = "user"
+
+	// OrganizationType is a custom type to identify an organization struct
+	OrganizationType Type = "organization"
+)
+
 const insertUser = `
 INSERT INTO users (
 	uuid,
@@ -16,6 +27,7 @@ INSERT INTO users (
 	updated_at,
 	deleted_at,
 
+	type,
 	email,
 	name,
 	password,
@@ -26,10 +38,9 @@ INSERT INTO users (
 	location,
 	picture
 ) VALUES (
-	?, ?, ?,
-	?, ?, ?,
-	?, ?, ?,
-	?, ?, ?
+	?, ?, ?, ?,
+	?, ?, ?, ?,
+	?, ?, ?, ?, ?
 )
 `
 
@@ -39,6 +50,7 @@ UPDATE users SET
 	updated_at=?,
 	deleted_at=?,
 
+	type=?,
 	email=?,
 	name=?,
 	password=?,
@@ -59,6 +71,7 @@ SELECT * FROM users WHERE %s=? AND deleted_at IS NULL
 type User struct {
 	Base
 
+	Type     Type   `json:"type"`
 	Email    string `json:"email"`
 	Name     string `json:"username"`
 	Password string `json:"-"`
@@ -89,6 +102,7 @@ func (user *User) Insert() error {
 		user.UpdatedAt,
 		user.DeletedAt,
 
+		user.Type,
 		user.Email,
 		user.Name,
 		user.Password,
@@ -115,6 +129,7 @@ func (user User) Update() error {
 		user.UpdatedAt,
 		user.DeletedAt,
 
+		user.Type,
 		user.Email,
 		user.Name,
 		user.Password,

@@ -66,10 +66,7 @@ func main() {
 	mux.HandleFunc("/settings", auth.Must(settings.Settings))
 	mux.HandleFunc("/settings/privacy", auth.Must(settings.Privacy))
 
-	profile := mux.Of("/:name")
-	profile.Use(middleware.WithProfile(shared.NotFound))
-	profile.HandleFunc("/", routes.Profile)
-
+	mux.HandleFunc("/:name", routes.Profile)
 	repo := mux.Of("/:name/:repo")
 	repo.Use(middleware.WithRepo(shared.NotFound))
 

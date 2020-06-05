@@ -41,6 +41,10 @@ const findRepositories = `
 SELECT * FROM repositories WHERE owner_uuid=? AND deleted_at IS NULL
 `
 
+const findRepositoriesByName = `
+SELECT * FROM repositories WHERE owner_name=? AND deleted_at IS NULL
+`
+
 // Repository is the database model for a git repository
 type Repository struct {
 	Base
@@ -127,8 +131,18 @@ func GetRepository(owner uuid.UUID, name string) (repository Repository, err err
 	return
 }
 
-// GetByUUID fetches for a single repository with the given UUID
-func GetByUUID(id uuid.UUID) (repository Repository, err error) {
+// GetRepositoryByName fetches for a single repository with the given owner_name and name
+func GetRepositoryByName(ownerName string, name string) (repository Repository, err error) {
+	err = store.GetDB().Get(
+		&repository,
+		findRepositoriesByName+"AND name=? LIMIT 1",
+		ownerName, name,
+	)
+	return
+}
+
+// GetRepositoryByUUID fetches for a single repository with the given UUID
+func GetRepositoryByUUID(id uuid.UUID) (repository Repository, err error) {
 	err = store.GetDB().Get(
 		&repository,
 		"SELECT * FROM repositories WHERE uuid=? AND deleted_at IS NULL LIMIT 1",

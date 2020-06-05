@@ -48,7 +48,7 @@ func findDatabaseRepository(dir string) models.Repository {
 		log.Fatal().Err(err).Msg("Could not parse UUID")
 	}
 
-	repo, err := models.GetByUUID(id)
+	repo, err := models.GetRepositoryByUUID(id)
 	if err != nil {
 		log.Fatal().
 			Err(err).

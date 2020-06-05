@@ -12,20 +12,14 @@ import (
 
 func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 	orgname := r.Form.Get("name")
-
 	_, err := models.GetUser("name", orgname)
 	if err == nil {
-		datas.NewErr(w, r, "This name is already taken by a user")
+		datas.NewErr(w, r, "This name is already taken")
 		return
 	}
 
-	_, err = models.GetOrganization("name", orgname)
-	if err == nil {
-		datas.NewErr(w, r, "This name is already taken by another organization")
-		return
-	}
-
-	org := models.Organization{
+	org := models.User{
+		Type: models.OrganizationType,
 		Name: orgname,
 	}
 
