@@ -61,11 +61,8 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 			goto renderError
 		}
 
-		quercia.Redirect(
-			w, r,
-			"/"+user.Name, "user",
-			data.Compose(r, data.Base, data.WithAny("profile", user)),
-		)
+		// Hard redirect to refresh the data
+		http.Redirect(w, r, "/"+user.Name, http.StatusTemporaryRedirect)
 		return
 	}
 
