@@ -8,7 +8,8 @@ COPY . .
 
 RUN go mod download
 RUN go mod verify
-RUN go get github.com/markbates/pkger/cmd/pkger && \
+RUN go get -d -v github.com/markbates/pkger@v0.16.0 && \
+  go get github.com/markbates/pkger/cmd/pkger && \
   rm -rf __quercia/*/server && \
   pkger
 
