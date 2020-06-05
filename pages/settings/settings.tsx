@@ -79,7 +79,7 @@ export default ({ profile, error }: SettingsProps) => {
           <Field
             errors={errors}
             disabled={isLoading}
-            name='username'
+            name='name'
             placeholder='Username'
             defaultValue={profile?.name}
             description='The username is displayed in your profile and in every repository you own / contribute to.'
