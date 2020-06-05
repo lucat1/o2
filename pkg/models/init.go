@@ -33,9 +33,9 @@ CREATE TABLE IF NOT EXISTS users (
 	deleted_at DATETIME NULL,
 
 	type CHAR(12) NOT NULL,
-	email VARCHAR(100) UNIQUE NOT NULL,
+	email VARCHAR(100) UNIQUE,
 	name 	VARCHAR(32) UNIQUE NOT NULL,
-	password TEXT NOT NULL,
+	password TEXT,
 
 	firstname VARCHAR(50),
 	lastname VARCHAR(50),

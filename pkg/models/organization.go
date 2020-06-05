@@ -1,6 +1,10 @@
 package models
 
-import "github.com/lucat1/o2/pkg/store"
+import (
+	"fmt"
+
+	"github.com/lucat1/o2/pkg/store"
+)
 
 const addMapping = `
 INSERT INTO users_organizations (user_uuid, organization_uuid) VALUES (?, ?)
@@ -16,6 +20,7 @@ func (org User) Add(user User) error {
 		store.GetDB().Rebind(addMapping),
 		user.UUID, org.UUID,
 	)
+	fmt.Print("error heah", err)
 	return err
 }
 
@@ -26,4 +31,4 @@ func (org User) Del(user User) error {
 		user.UUID, org.UUID,
 	)
 	return err
-} 
+}

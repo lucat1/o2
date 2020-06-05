@@ -38,6 +38,7 @@ func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 		"/"+org.Name, "organization",
 		data.Compose(r, data.Base, datas.ProfileData(org)),
 	)
+	return
 
 fatal:
 	log.Error().

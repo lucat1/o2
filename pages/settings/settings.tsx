@@ -37,7 +37,7 @@ export default ({ profile, error }: SettingsProps) => {
 
     // instantiate the POST form data
     const body = new FormData()
-    body.set('username', data.username)
+    body.set('name', data.username)
     body.set('firstname', data.firstname)
     body.set('lastname', data.lastname)
     body.set('location', data.location)
