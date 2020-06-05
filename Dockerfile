@@ -24,5 +24,6 @@ RUN apk update && apk add --no-cache git
 WORKDIR /
 COPY --from=builder /data /data
 COPY --from=builder /go/bin/o2 /bin/o2
+COPY --from=builder /go/bin/o2-post-receive /bin/o2-post-receive
 
 ENTRYPOINT ["/bin/o2", "--debug"]
