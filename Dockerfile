@@ -8,12 +8,13 @@ COPY . .
 
 RUN go mod download
 RUN go mod verify
-RUN go get -d -v github.com/markbates/pkger@v0.16.0 && \
-  go get github.com/markbates/pkger/cmd/pkger && \
+RUN go get -v -t -d ./... && \
+  go get -d -v github.com/markbates/pkger@v0.16.0 && \
+  go build -o /go/bin/pkger github.com/markbates/pkger/cmd/pkger && \
   rm -rf __quercia/*/server && \
   pkger
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w -s' -o /go/bin/o2
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w -s' -o /go/bin/o2 *.go
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w -s' -o /go/bin/o2-post-receive cmd/post-receive/*.go
 
 RUN mkdir -p /data/repos

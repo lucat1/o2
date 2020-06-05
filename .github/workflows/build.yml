@@ -87,7 +87,7 @@ jobs:
         run: |
           go get -v -t -d ./...
           go get -d -v github.com/markbates/pkger@v0.16.0
-          go get github.com/markbates/pkger/cmd/pkger
+          go build -o /go/bin/pkger github.com/markbates/pkger/cmd/pkger
           rm -rf __quercia/*/server
           rm data/CascadiaCode.woff2
           pkger
@@ -99,8 +99,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: ./o2
-          name: o2-${{ matrix.platform }}
-          uses: docker/build-push-action@v1
 
   docker:
     needs: frontend
