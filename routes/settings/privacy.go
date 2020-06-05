@@ -26,7 +26,7 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 		quercia.Render(
 			w, r,
 			"settings/privacy",
-			data.Compose(r, data.Base, datas.ProfileData(user)),
+			data.Compose(r, data.Base, data.WithAny("profile", user)),
 		)
 		return
 	}
@@ -64,7 +64,7 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 		quercia.Redirect(
 			w, r,
 			"/"+user.Name, "user",
-			data.Compose(r, data.Base, datas.ProfileData(user)),
+			data.Compose(r, data.Base, data.WithAny("profile", user)),
 		)
 		return
 	}

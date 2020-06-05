@@ -36,7 +36,7 @@ func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 	quercia.Redirect(
 		w, r,
 		"/"+org.Name, "organization",
-		data.Compose(r, data.Base, datas.ProfileData(org)),
+		data.Compose(r, data.Base, data.WithAny("profile", org)),
 	)
 	return
 

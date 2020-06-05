@@ -24,7 +24,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		quercia.Render(
 			w, r,
 			"settings/settings",
-			data.Compose(r, data.Base, datas.ProfileData(user)),
+			data.Compose(r, data.Base, data.WithAny("profile", user)),
 		)
 		return
 	}
