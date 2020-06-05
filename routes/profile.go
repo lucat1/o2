@@ -39,7 +39,7 @@ func filterRepositories(owner uuid.UUID, viewer uuid.UUID) (res []models.Reposit
 	return
 }
 
-// Profile renders the user profile and
+// Profile renders an user/organization profile
 func Profile(w http.ResponseWriter, r *http.Request) {
 	name := muxie.GetParam(w, "name")
 	user, err := models.GetUser("name", name)
@@ -52,6 +52,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		shared.NotFound(w, r)
 		return
 	}
+
 	// get the logged in user's ID
 	account := uuid.Nil
 	if auth.IsAuthenticated(r) {
@@ -65,13 +66,34 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO: frontend -> mergeuser/organization pages
+	typ, key := "user", "organizations"
+	if user.Type == models.OrganizationType {
+		typ, key = "organization", "users"
+	}
+
+	value, err := models.SelectMapping(typ, user.UUID)
+	if err != nil {
+		log.Debug().
+			Err(err).
+			Str("user-type", string(user.Type)).
+			Str("typ", typ).
+			Str("key", key).
+			Str("uuid", user.UUID.String()).
+			Msg("Error while looking for user<->orgs mapping")
+
+		shared.NotFound(w, r)
+		return
+	}
+
+	// TODO: frontend -> merge user/organization pages
 	quercia.Render(
 		w, r, "user",
 		data.Compose(r,
 			data.Base,
 			data.WithAny("profile", user),
 			data.WithAny("repositories", repos),
+			// either organizations -> []orgs, or users -> []users
+			data.WithAny(key, value),
 		),
 	)
 	return
