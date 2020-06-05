@@ -10,18 +10,19 @@ import Header from '../components/new/head'
 import Repository from '../components/new/repository'
 import Organization from '../components/new/organization'
 
-import { Base, User } from '../types/data'
+import { Base, User, Organization as Org } from '../types/data'
 
 interface AddProps {
   error?: string
   user: User
+  organizations: Org[]
 }
 
 const types = ['Repository', 'Organization']
 
-export default ({ user, error }: Base<AddProps>) => {
+export default ({ user, organizations, error }: Base<AddProps>) => {
   const [selected, setSelected] = React.useState(0)
-  const Element = [Repository, Organization][selected]
+  const Element = [Repository, Organization][selected] as any
 
   return (
     <Center css={{ height: 'calc(100vh - 3.5rem)', flex: 1 }}>
@@ -36,7 +37,7 @@ export default ({ user, error }: Base<AddProps>) => {
         <Header types={types} selected={selected} setSelected={setSelected} />
         <Divider />
         <Center>{error && <Heading color='error'>{error}</Heading>}</Center>
-        <Element user={user} />
+        <Element organizations={organizations} user={user} />
       </Container>
     </Center>
   )

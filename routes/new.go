@@ -19,7 +19,16 @@ func New(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method != "POST" {
-		quercia.Render(w, r, "new", data.Compose(r, data.Base, datas.NewData(*user)))
+		orgs, _ := models.SelectMapping("user", user.UUID)
+
+		quercia.Render(
+			w, r, "new",
+			data.Compose(r,
+				data.Base,
+				data.WithAny("user", user),
+				data.WithAny("organizations", orgs),
+			),
+		)
 		return
 	}
 
