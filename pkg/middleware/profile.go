@@ -24,7 +24,7 @@ const (
 func WithProfile(fallback http.HandlerFunc) muxie.Wrapper {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			username := muxie.GetParam(w, "username")
+			username := muxie.GetParam(w, "name")
 			_user, _organization := actions.GetProfile(username)
 
 			var (

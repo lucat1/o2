@@ -24,7 +24,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
-	username := r.Form.Get("username")
+	username := r.Form.Get("name")
 	email := r.Form.Get("email")
 	password := r.Form.Get("password")
 

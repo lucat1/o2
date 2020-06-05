@@ -66,11 +66,11 @@ func main() {
 	mux.HandleFunc("/settings", auth.Must(settings.Settings))
 	mux.HandleFunc("/settings/privacy", auth.Must(settings.Privacy))
 
-	profile := mux.Of("/:username")
+	profile := mux.Of("/:name")
 	profile.Use(middleware.WithProfile(shared.NotFound))
 	profile.HandleFunc("/", routes.Profile)
 
-	repo := profile.Of("/:reponame")
+	repo := mux.Of("/:name/:repo")
 	repo.Use(middleware.WithRepo(shared.NotFound))
 
 	// generate the resource value based on the :username/:reponame

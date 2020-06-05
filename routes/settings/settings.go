@@ -32,7 +32,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
 	// Upadte the database informations with the changed data
 	// 1. Gather data
-	user.Name = r.Form.Get("username")
+	user.Name = r.Form.Get("name")
 	user.Firstname = r.Form.Get("firstname")
 	user.Lastname = r.Form.Get("lastname")
 	user.Location = r.Form.Get("location")
@@ -42,7 +42,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	if err := user.Update(); err != nil {
 		log.Debug().
 			Err(err).
-			Str("username", user.Name).
+			Str("name", user.Name).
 			Str("firstname", user.Firstname).
 			Str("lastname", user.Lastname).
 			Str("location", user.Location).
@@ -58,7 +58,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Debug().
-		Str("username", user.Name).
+		Str("name", user.Name).
 		Str("firstname", user.Firstname).
 		Str("lastname", user.Lastname).
 		Str("location", user.Location).

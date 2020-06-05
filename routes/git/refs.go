@@ -20,11 +20,11 @@ func InfoRefs(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dbRepo := r.Context().Value(middleware.DbRepo).(models.Repository)
-	username := muxie.GetParam(w, "username")
-	reponame := muxie.GetParam(w, "reponame")
+	name := muxie.GetParam(w, "name")
+	repo := muxie.GetParam(w, "repo")
 	log.Debug().
-		Str("username", username).
-		Str("reponame", reponame).
+		Str("name", name).
+		Str("repo", repo).
 		Msg("Handling git info refs")
 
 	dir := git.GetPath(dbRepo.UUID.String())
