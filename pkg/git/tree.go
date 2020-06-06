@@ -76,7 +76,7 @@ func (b Branch) Tree(p string) (tree *Tree, err error) {
 		_kind := parts[1]
 		sha := parts[2]
 		size, _ := strconv.ParseUint(parts[3], 10, 64)
-		name := parts[4]
+		name := strings.Join(parts[4:], " ")
 
 		// The real kind
 		kind := BlobKind
