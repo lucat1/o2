@@ -50,7 +50,7 @@ func main() {
 	dbRepo := findDatabaseRepository(dir)
 	commits := findCommits(repo, previous, next)
 	log.Info().
-		Int("commits", len(commits.Commits)).
+		Strs("commits", commitsHashes(commits)).
 		Msg("Found commits")
 
 	raw, _ := json.Marshal(map[string]interface{}{
@@ -59,8 +59,8 @@ func main() {
 	// push the action to the database
 	event := models.Event{
 		Time:     time.Now(),
-		Kind:     models.CommitEvent,
-		Resource: dbRepo.OwnerUUID,
+		Type:     models.CommitEvent,
+		Resource: dbRepo.UUID,
 		Data:     raw,
 	}
 

@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS permissions (
 	scope VARCHAR(100) NOT NULL,
 
 	PRIMARY KEY (beneficiary, resource, scope),
+	INDEX (resource),
 
 	FOREIGN KEY (resource)
 		REFERENCES repositories(uuid)
@@ -109,10 +110,15 @@ CREATE TABLE IF NOT EXISTS events (
 
 	resource CHAR(36) NOT NULL,
 	time DATETIME NOT NULL,
-	kind VARCHAR(100) NOT NULL,
+	type VARCHAR(100) NOT NULL,
 	data TEXT NOT NULL,
 
-	PRIMARY KEY (id, resource)
+	PRIMARY KEY (id, resource),
+	INDEX (resource),
+
+	FOREIGN KEY (resource)
+		REFERENCES repositories(uuid)
+		ON UPDATE CASCADE ON DELETE CASCADE
 )
 `
 

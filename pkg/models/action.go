@@ -8,12 +8,9 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-// EventKind is the custom type for events kinds
-type EventKind string
-
 const (
 	// CommitEvent is the kind for a commit event
-	CommitEvent = EventKind("commit")
+	CommitEvent = Type("commit")
 )
 
 const insertEvent = `
@@ -24,7 +21,7 @@ INSERT INTO events (
 
 	resource,
 	time,
-	kind,
+	type,
 	data
 ) VALUES (
 	?, ?, ?,
@@ -40,7 +37,7 @@ UPDATE events SET
 
 	resource=?,
 	time=?,
-	kind=?,
+	type=?,
 	data=?
 WHERE id=?
 `
@@ -51,7 +48,7 @@ type Event struct {
 
 	Resource uuid.UUID      `json:"resource"`
 	Time     time.Time      `json:"time"`
-	Kind     EventKind      `json:"kind"`
+	Type     Type           `json:"type"`
 	Data     types.JSONText `json:"data"`
 }
 
@@ -68,7 +65,7 @@ func (event *Event) Insert() error {
 
 		event.Resource,
 		event.Time,
-		event.Kind,
+		event.Type,
 		event.Data,
 	)
 	if err != nil {
@@ -93,7 +90,7 @@ func (event Event) Update() error {
 
 		event.Resource,
 		event.Time,
-		event.Kind,
+		event.Type,
 		event.Data,
 
 		// where
