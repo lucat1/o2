@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"os"
 	"path"
@@ -52,6 +53,9 @@ func main() {
 		Int("commits", len(commits.Commits)).
 		Msg("Found commits")
 
+	raw, _ := json.Marshal(map[string]interface{}{
+		"commits": commits.Commits,
+	})
 	// push the action to the database
 	event := models.Event{
 		Time:         time.Now(),

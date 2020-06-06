@@ -1,7 +1,10 @@
 package models
 
 import (
+<<<<<<< Updated upstream
 	"encoding/json"
+=======
+>>>>>>> Stashed changes
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -16,6 +19,38 @@ const (
 	CommitEvent = EventKind("commit")
 )
 
+<<<<<<< Updated upstream
+=======
+const insertEvent = `
+INSERT INTO events (
+	created_at,
+	updated_at,
+	deleted_at,
+
+	resource,
+	time,
+	kind,
+	data
+) VALUES (
+	?, ?, ?,
+	?, ?, ?, ?
+)
+`
+
+const updateEvent = `
+UPDATE events SET
+	created_at=?,
+	updated_at=?,
+	deleted_at=?,
+
+	resource=?,
+	time=?,
+	kind=?,
+	data=?
+WHERE id=?
+`
+
+>>>>>>> Stashed changes
 // Event is the database model for a git event
 type Event struct {
 	Base
@@ -27,14 +62,32 @@ type Event struct {
 	RawData      []byte                 `gorm:"type:text" json:"-"`
 }
 
-// BeforeSave converts the Data into RawData
-func (e *Event) BeforeSave(scope *gorm.Scope) (err error) {
-	data, err := json.Marshal(e.Data)
+// Insert inserts an event into the database
+func (event *Event) Insert() error {
+	event.generate()
+
+	// query the db
+	res, err := store.GetDB().Exec(
+		store.GetDB().Rebind(insertEvent),
+		event.CreatedAt,
+		event.UpdatedAt,
+		event.DeletedAt,
+
+		event.Resource,
+		event.Time,
+		event.Kind,
+		event.Data,
+	)
 	if err != nil {
 		return err
 	}
 
+<<<<<<< Updated upstream
 	return scope.SetColumn("RawData", data)
+=======
+	event.ID, err = res.LastInsertId()
+	return err
+>>>>>>> Stashed changes
 }
 
 // AfterFind converts the RawData into Data
