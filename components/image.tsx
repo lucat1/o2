@@ -16,6 +16,7 @@ const Image: React.FC<ImageProps> = ({ src, alt, ...props }) => {
   }
 
   const [loaded, setLoaded] = React.useState(false)
+  const [hidden, setHidden] = React.useState(false)
   return (
     <Skeleton sx={sx} {...(props as any)}>
       <RebassImage
@@ -31,8 +32,12 @@ const Image: React.FC<ImageProps> = ({ src, alt, ...props }) => {
           },
           props.css
         )}
-        style={{ opacity: loaded ? 1 : 0 }}
+        style={Object.assign(
+          { opacity: loaded ? 1 : 0 },
+          hidden ? { display: 'none' } : {}
+        )}
         onLoad={() => setLoaded(true)}
+        onError={() => setHidden(true)}
         alt={alt}
         src={src}
         {...(props as any)}

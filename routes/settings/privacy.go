@@ -1,14 +1,12 @@
 package settings
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 	"golang.org/x/crypto/bcrypt"
@@ -17,19 +15,9 @@ import (
 // Privacy is a settings tab used to change privacy-concerned settings
 // like passwords, emails and such
 func Privacy(w http.ResponseWriter, r *http.Request) {
-	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-
-	var user models.User
-	if err := store.GetDB().
-		Where(&models.User{Username: claims.Username}).
-		First(&user).
-		Error; err != nil {
-		log.Debug().
-			Err(err).
-			Str("username", claims.Username).
-			Msg("Couldn't fetch user to render the settings/privacy page")
-
-		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", quercia.Props{})
+	user := r.Context().Value(auth.AccountKey).(*models.User)
+	if user == nil {
+		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", data.Compose(r, data.Base))
 		return
 	}
 
@@ -38,7 +26,7 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 		quercia.Render(
 			w, r,
 			"settings/privacy",
-			data.Compose(r, data.Base, datas.ProfileData(user)),
+			data.Compose(r, data.Base, data.WithAny("profile", user)),
 		)
 		return
 	}
@@ -66,19 +54,15 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 		}
 
 		user.Password = string(hashed)
-		if e := store.GetDB().Save(&user).Error; e != nil {
+		if e := user.Update(); e != nil {
 			log.Error().Err(e).Bytes("hashed", hashed).Msg("Error while updating a user's password")
 
 			err = "Internal error. Please try again later"
 			goto renderError
 		}
 
-		fmt.Println(user.UUID.String())
-		quercia.Redirect(
-			w, r,
-			"/"+claims.Username, "user",
-			data.Compose(r, data.Base, datas.ProfileData(user)),
-		)
+		// Hard redirect to refresh the data
+		http.Redirect(w, r, "/"+user.Name, http.StatusTemporaryRedirect)
 		return
 	}
 

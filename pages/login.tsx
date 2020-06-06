@@ -11,7 +11,6 @@ import Heading from '../components/heading'
 
 interface Data {
   email: string
-  username: string
   password: string
 }
 

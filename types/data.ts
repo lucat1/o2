@@ -1,14 +1,9 @@
-import { Repository } from './repository'
-
 export interface User extends LoggedUser {
   firstname: string
   lastname: string
   description: string
   location: string
   picture: string
-
-  repositories: Repository[]
-  organizations: Organization[]
 }
 
 export interface Organization {
@@ -16,9 +11,6 @@ export interface Organization {
   description: string
   location: string
   picture: string
-
-  repositories: Repository[]
-  users: User[]
 }
 
 export interface Commit {
@@ -37,14 +29,14 @@ export interface DetailedCommit extends Commit {
 }
 
 export interface Author {
-  username: string
+  name: string
   email: string
   picture: string
   date: string
 }
 
 export interface LoggedUser {
-  username: string
+  name: string
   email: string
   picture: string
 }

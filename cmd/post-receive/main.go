@@ -58,15 +58,13 @@ func main() {
 	})
 	// push the action to the database
 	event := models.Event{
-		Time:         time.Now(),
-		Kind:         models.CommitEvent,
-		ResourceUUID: dbRepo.OwnerUUID,
-		Data: map[string]interface{}{
-			"commits": commitsHashes(commits),
-		},
+		Time:     time.Now(),
+		Kind:     models.CommitEvent,
+		Resource: dbRepo.OwnerUUID,
+		Data:     raw,
 	}
 
-	if err := store.GetDB().Save(&event).Error; err != nil {
+	if err := event.Insert(); err != nil {
 		log.Fatal().Err(err).Msg("Could not save event in the database")
 	}
 

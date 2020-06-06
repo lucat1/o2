@@ -24,18 +24,19 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
-	username := r.Form.Get("username")
+	name := r.Form.Get("name")
 	email := r.Form.Get("email")
 	password := r.Form.Get("password")
 
-	if username == "" || email == "" || password == "" {
+	if name == "" || email == "" || password == "" {
 		datas.RegisterErr(w, r, "Please fill in all the required fields")
 		return
 	}
 
 	token, err := auth.Register(models.User{
-		Email:    email,
-		Username: username,
+		Type:  models.UserType,
+		Email: email,
+		Name:  name,
 	}, password)
 
 	if err != nil {

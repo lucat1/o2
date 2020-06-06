@@ -11,7 +11,7 @@ import Heading from '../components/heading'
 
 interface Data {
   email: string
-  username: string
+  name: string
   password: string
 }
 
@@ -31,7 +31,7 @@ export default ({ error }: RegisterProps) => {
     // instantiate the POST form data
     const body = new FormData()
     body.set('email', data.email)
-    body.set('username', data.username)
+    body.set('name', data.name)
     body.set('password', data.password)
 
     navigate(window.location.pathname, 'POST', {
@@ -74,7 +74,7 @@ export default ({ error }: RegisterProps) => {
 
         <Box py={4} width={9}>
           <Input
-            name='username'
+            name='name'
             placeholder='Username'
             disabled={isLoading}
             ref={register({
@@ -86,9 +86,9 @@ export default ({ error }: RegisterProps) => {
               }
             })}
           />
-          {errors.username && (
-            <Label htmlFor='username' variant='error'>
-              {errors.username?.message.toString()}
+          {errors.name && (
+            <Label htmlFor='name' variant='error'>
+              {errors.name?.message.toString()}
             </Label>
           )}
         </Box>

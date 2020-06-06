@@ -1,13 +1,10 @@
 package models
 
 import (
-<<<<<<< Updated upstream
-	"encoding/json"
-=======
->>>>>>> Stashed changes
 	"time"
 
-	"github.com/jinzhu/gorm"
+	"github.com/jmoiron/sqlx/types"
+	"github.com/lucat1/o2/pkg/store"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -19,8 +16,6 @@ const (
 	CommitEvent = EventKind("commit")
 )
 
-<<<<<<< Updated upstream
-=======
 const insertEvent = `
 INSERT INTO events (
 	created_at,
@@ -50,16 +45,14 @@ UPDATE events SET
 WHERE id=?
 `
 
->>>>>>> Stashed changes
 // Event is the database model for a git event
 type Event struct {
-	Base
+	Model
 
-	Time         time.Time              `json:"time"`
-	Kind         EventKind              `json:"kind"`
-	ResourceUUID uuid.UUID              `gorm:"type:char(36);primary_index"`
-	Data         map[string]interface{} `gorm:"-" json:"data"`
-	RawData      []byte                 `gorm:"type:text" json:"-"`
+	Resource uuid.UUID      `json:"resource"`
+	Time     time.Time      `json:"time"`
+	Kind     EventKind      `json:"kind"`
+	Data     types.JSONText `json:"data"`
 }
 
 // Insert inserts an event into the database
@@ -82,18 +75,30 @@ func (event *Event) Insert() error {
 		return err
 	}
 
-<<<<<<< Updated upstream
-	return scope.SetColumn("RawData", data)
-=======
 	event.ID, err = res.LastInsertId()
 	return err
->>>>>>> Stashed changes
 }
 
-// AfterFind converts the RawData into Data
-func (e *Event) AfterFind() (err error) {
-	if len(e.RawData) != 0 {
-		return json.Unmarshal(e.RawData, &e.Data)
-	}
-	return
+// Update updates an event struct in the database
+func (event Event) Update() error {
+	// update updated_at time stamp
+	event.UpdatedAt = time.Now()
+
+	// query the db
+	_, err := store.GetDB().Exec(
+		store.GetDB().Rebind(updateEvent),
+		event.CreatedAt,
+		event.UpdatedAt,
+		event.DeletedAt,
+
+		event.Resource,
+		event.Time,
+		event.Kind,
+		event.Data,
+
+		// where
+		event.ID,
+	)
+
+	return err
 }

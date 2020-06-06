@@ -8,6 +8,8 @@ import (
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/pex"
+	uuid "github.com/satori/go.uuid"
 )
 
 // MustPex checks if the authenticated user has access to the required permission
@@ -15,37 +17,29 @@ import (
 func MustPex(scopes []string, fallback http.HandlerFunc) muxie.Wrapper {
 	return func(f http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			resource := r.Context().Value(Resource).(string)
+			resource := r.Context().Value(Resource).(uuid.UUID)
+			user, ok := r.Context().Value(auth.AccountKey).(*models.User)
 			log.Debug().
 				Strs("scopes", scopes).
-				Str("resource", resource).
+				Str("resource", resource.String()).
+				Bool("logged", user != nil).
 				Msg("Checking the user's permission for the required scopes")
 
-			pexes, ok := models.FetchPexes(resource, scopes)
-			if !ok {
-				fallback.ServeHTTP(w, r)
+			id := uuid.Nil
+			if ok {
+				id = user.UUID
+			}
+
+			if pex.Can(resource, id, scopes) {
+				handle(w, r, true, f, fallback)
 				return
 			}
 
-			authRequired := false
-			for _, pex := range pexes {
-				if pex.RequiresAuth {
-					authRequired = true
-					break
-				}
-			}
-
-			if !authRequired {
-				has := models.HasAll(pexes, scopes)
-				handle(w, r, has, f, fallback)
-				return
-			}
-
+			// if the user/id cannot do that we ask them to log in again
 			auth.Must(func(w http.ResponseWriter, r *http.Request) {
 				// we have authentication inside of here
-				claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-				has := models.HasPex(pexes, claims.UUID, scopes)
-
+				user := r.Context().Value(auth.AccountKey).(*models.User)
+				has := pex.Can(resource, user.UUID, scopes)
 				handle(w, r, has, f, fallback)
 			})(w, r)
 		})

@@ -44,7 +44,7 @@ const Repositories = ({
     return (
       <Right flexDirection='column' alignItems='center'>
         <Text as='h4'>
-          {owner == account?.username ? (
+          {owner == account?.name ? (
             "You don't"
           ) : (
             <>
@@ -55,7 +55,7 @@ const Repositories = ({
         </Text>
         <VCS style={{ width: '70%' }} />
 
-        {owner == account?.username && (
+        {owner == account?.name && (
           <Button onClick={() => navigate('/new')}>Create</Button>
         )}
       </Right>

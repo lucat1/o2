@@ -1,6 +1,7 @@
 __quercia
 node_modules
 bins
+test/data
 data/repos/*
 data/*.log
 pkged.go

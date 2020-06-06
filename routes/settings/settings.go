@@ -7,26 +7,15 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/pkg/store"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/quercia"
 )
 
 // Settings renders the settings of a user/organization
 func Settings(w http.ResponseWriter, r *http.Request) {
-	claims := r.Context().Value(auth.ClaimsKey).(*auth.Claims)
-
-	var user models.User
-	if err := store.GetDB().
-		Where(&models.User{Username: claims.Username}).
-		First(&user).
-		Error; err != nil {
-		log.Debug().
-			Err(err).
-			Str("username", claims.Username).
-			Msg("Couldn't fetch user to render the settings page")
-
-		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", quercia.Props{})
+	user := r.Context().Value(auth.AccountKey).(*models.User)
+	if user == nil {
+		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", data.Compose(r, data.Base))
 		return
 	}
 
@@ -35,7 +24,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		quercia.Render(
 			w, r,
 			"settings/settings",
-			data.Compose(r, data.Base, datas.ProfileData(user)),
+			data.Compose(r, data.Base, data.WithAny("profile", user)),
 		)
 		return
 	}
@@ -43,20 +32,26 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
 	// Upadte the database informations with the changed data
 	// 1. Gather data
-	user.Username = r.Form.Get("username")
+	user.Name = r.Form.Get("name")
 	user.Firstname = r.Form.Get("firstname")
 	user.Lastname = r.Form.Get("lastname")
 	user.Location = r.Form.Get("location")
 	user.Description = r.Form.Get("description")
 
+	if user.Name == "" {
+		datas.SettingsError(
+			w, r,
+			"settings/settings",
+			"Your username cannot be empty!",
+		)
+		return
+	}
+
 	// 2. Update the database
-	if err := store.
-		GetDB().
-		Save(user).
-		Error; err != nil {
+	if err := user.Update(); err != nil {
 		log.Debug().
 			Err(err).
-			Str("username", user.Username).
+			Str("name", user.Name).
 			Str("firstname", user.Firstname).
 			Str("lastname", user.Lastname).
 			Str("location", user.Location).
@@ -72,7 +67,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Debug().
-		Str("username", user.Username).
+		Str("name", user.Name).
 		Str("firstname", user.Firstname).
 		Str("lastname", user.Lastname).
 		Str("location", user.Location).
@@ -80,12 +75,9 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		Msg("Updated user settings")
 
 	// update auth token
-	token, _ := auth.Token(user)
+	token, _ := auth.Token(*user)
 	auth.SetCookie(w, r, token)
 
-	quercia.Redirect(
-		w, r,
-		"/"+user.Username, "user",
-		data.Compose(r, data.Base, datas.ProfileData(user)),
-	)
+	// Hard redirect to refresh the data
+	http.Redirect(w, r, "/"+user.Name, http.StatusTemporaryRedirect)
 }
