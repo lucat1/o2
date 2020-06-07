@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { Flex, Box } from 'rebass'
+import { Flex } from 'rebass'
 import { Head } from '@quercia/quercia'
+import format from 'tinydate'
 
 import Heading from '../components/heading'
 import Link from '../components/link'
@@ -23,7 +24,7 @@ export default ({ events }: FeedProps) => {
         />
       </Head>
 
-      <Heading known fontSize='lg' my={5}>
+      <Heading known fontSize='lg' my={4}>
         Latest events:
       </Heading>
 
@@ -31,14 +32,19 @@ export default ({ events }: FeedProps) => {
         const base = '/' + event.owner + '/' + event.name
         return (
           <Flex flex={1} flexDirection='column' my={2} key={i}>
-            <Text my={1}>
+            <Text color='bg.3' fontSize='xs'>
+              {format('on the {DD} {MM} {YYYY} at {HH}:{mm}:{ss}')(
+                new Date(event.time)
+              )}
+            </Text>
+            <Heading fontWeight='normal'>
               {event.data.commits.length} commit
               {event.data.commits.length > 1 ? 's' : ''} have been pushed to{' '}
               <Link to={base}>
                 {event.owner}/{event.name}
               </Link>
               :
-            </Text>
+            </Heading>
 
             <Flex flexDirection='row'>
               <Flex width='1px' bg='bg.3' ml={[1, 3]} mr={[3, 6]} />
