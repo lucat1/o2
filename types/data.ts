@@ -49,6 +49,8 @@ export interface CommitEvent extends Event<'commit'> {
   data: CommitEventData
 }
 
+export type CreateRepositoryEvent = Event<'create-repository'>
+
 export interface CommitEventData {
   commits: Commit[]
   more: boolean

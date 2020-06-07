@@ -9,8 +9,11 @@ import (
 )
 
 const (
-	// CommitEvent is the kind for a commit event
+	// CommitEvent is the type for a commit event
 	CommitEvent = Type("commit")
+
+	// CreateRepositoryEvent is the type for a create repository event
+	CreateRepositoryEvent = Type("create-repository")
 )
 
 const insertEvent = `

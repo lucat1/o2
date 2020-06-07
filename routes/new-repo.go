@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/git"
@@ -38,9 +39,22 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 		OwnerName: user.Name,
 		Name:      reponame,
 	}
+	event := models.Event{
+		Time: time.Now(),
+		Type: models.CreateRepositoryEvent,
+	}
 
 	if err = repo.Insert(); err != nil {
 		goto fatal
+	}
+
+	// ony log the error as this is not mandatory for the creation of a repository
+	event.Resource = repo.UUID
+	if err = event.Insert(); err != nil {
+		log.Error().
+			Err(err).
+			Str("resource", repo.UUID.String()).
+			Msg("Could not create a new event for repository creation")
 	}
 
 	// add permissions

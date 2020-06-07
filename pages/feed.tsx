@@ -1,16 +1,19 @@
 import * as React from 'react'
 import { Flex } from 'rebass'
 import { Head } from '@quercia/quercia'
-import format from 'tinydate'
 
 import Heading from '../components/heading'
-import Link from '../components/link'
-import Text from '../components/text'
-import Commit from '../components/commit/commit'
-import { CommitEvent } from '../types/data'
+import CommitEvent from '../components/feed/commit-event'
+import CreateRepositoryEvent from '../components/feed/create-repository-event'
+
+import {
+  Event,
+  CommitEvent as CEvent,
+  CreateRepositoryEvent as CREvent
+} from '../types/data'
 
 interface FeedProps {
-  events: CommitEvent[]
+  events: Event[]
 }
 
 export default ({ events }: FeedProps) => {
@@ -29,35 +32,18 @@ export default ({ events }: FeedProps) => {
       </Heading>
 
       {(events || []).map((event, i) => {
-        const base = '/' + event.owner + '/' + event.name
-        return (
-          <Flex flex={1} flexDirection='column' my={2} key={i}>
-            <Text color='bg.3' fontSize='xs'>
-              {format('on the {DD} {MM} {YYYY} at {HH}:{mm}:{ss}')(
-                new Date(event.time)
-              )}
-            </Text>
-            <Heading fontWeight='normal'>
-              {event.data.commits.length} commit
-              {event.data.commits.length > 1 ? 's' : ''} have been pushed to{' '}
-              <Link to={base}>
-                {event.owner}/{event.name}
-              </Link>
-              :
-            </Heading>
+        switch (event.type) {
+          case 'commit':
+            return <CommitEvent event={event as CEvent} />
 
-            <Flex flexDirection='row'>
-              <Flex width='1px' bg='bg.3' ml={[1, 3]} mr={[3, 6]} />
-              <Flex pt={2} flexDirection='column' flex={1}>
-                {event.data.commits.map(commit => (
-                  <Commit base={base} commit={commit} />
-                ))}
-              </Flex>
-            </Flex>
+          case 'create-repository':
+            return (
+              <CreateRepositoryEvent event={event as CreateRepositoryEvent} />
+            )
 
-            {event.data.more && <Text my={1}>and more</Text>}
-          </Flex>
-        )
+          default:
+            return null
+        }
       })}
     </Flex>
   )
