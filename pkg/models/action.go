@@ -50,7 +50,7 @@ SELECT * FROM events e
 JOIN permissions p ON e.resource = p.resource
 JOIN repositories r ON e.resource = r.uuid
 WHERE (p.beneficiary = ? OR p.beneficiary = ?) AND p.scope = "repo:pull"
-LIMIT ? OFFSET ?
+ORDER BY time DESC LIMIT ? OFFSET ?
 `
 
 // Event is the database model for a git event
