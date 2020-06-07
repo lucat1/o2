@@ -70,7 +70,7 @@ func Must(f http.HandlerFunc) http.HandlerFunc {
 					return
 				}
 
-				token, err := Login(models.User{
+				token, err := Login(&models.User{
 					Name:     name,
 					Password: password,
 				})

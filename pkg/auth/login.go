@@ -8,7 +8,7 @@ import (
 )
 
 // Login checks the given email/password and authenticates a user
-func Login(user models.User) (string, error) {
+func Login(user *models.User) (string, error) {
 	var (
 		found models.User
 		err   error

@@ -9,7 +9,7 @@ import (
 )
 
 // Register creates a new database instance of the given user
-func Register(user models.User, password string) (string, error) {
+func Register(user *models.User, password string) (string, error) {
 	if _, err := models.GetUser("name", user.Name); err == nil {
 		return "", errors.New("The username is taken")
 	}
@@ -30,5 +30,5 @@ func Register(user models.User, password string) (string, error) {
 		return "", errors.New("Internal error. Please try again later")
 	}
 
-	return Token(user)
+	return Token(*user)
 }

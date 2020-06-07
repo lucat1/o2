@@ -14,7 +14,15 @@ import (
 func Register(w http.ResponseWriter, r *http.Request) {
 	// ignore already logged-in users
 	if auth.IsAuthenticated(r) {
-		quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
+		user := r.Context().Value(auth.ClaimsKey).(*auth.Claims).UUID
+		events, _ := models.SelectVisileEvents(user, 20, 0)
+		quercia.Redirect(
+			w, r, "/", "feed",
+			data.Compose(
+				r, data.Base,
+				data.WithAny("events", events),
+			),
+		)
 		return
 	}
 
@@ -33,11 +41,12 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := auth.Register(models.User{
+	user := models.User{
 		Type:  models.UserType,
 		Email: email,
 		Name:  name,
-	}, password)
+	}
+	token, err := auth.Register(&user, password)
 
 	if err != nil {
 		datas.RegisterErr(w, r, err.Error())
@@ -45,5 +54,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	r = auth.SetCookie(w, r, token)
-	quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
+	events, _ := models.SelectVisileEvents(user.UUID, 20, 0)
+	quercia.Redirect(w, r, "/", "feed", data.Compose(r, data.Base, data.WithAny("events", events)))
 }
