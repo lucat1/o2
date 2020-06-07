@@ -35,6 +35,25 @@ export interface Author {
   date: string
 }
 
+export interface Event<T = string> {
+  type: T
+  time: string
+  data: any
+
+  // repository data
+  owner: string
+  name: string
+}
+
+export interface CommitEvent extends Event<'commit'> {
+  data: CommitEventData
+}
+
+export interface CommitEventData {
+  commits: Commit[]
+  more: boolean
+}
+
 export interface LoggedUser {
   name: string
   email: string

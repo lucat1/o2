@@ -57,7 +57,8 @@ func main() {
 	mux.Use(middleware.DebugMiddleware)
 	mux.Use(auth.With)
 
-	mux.HandleFunc("/", routes.Index)
+	mux.HandleFunc("/", routes.Feed)
+	mux.HandleFunc("/feed/:page", routes.Feed)
 	mux.HandleFunc("/favicon.ico", shared.NotFound)
 	mux.HandleFunc("/register", routes.Register)
 	mux.HandleFunc("/login", routes.Login)
