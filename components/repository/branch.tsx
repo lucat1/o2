@@ -29,7 +29,7 @@ const Tag: React.FC<FlexProps> = props => (
   />
 )
 
-const Branch: React.FunctionComponent<{
+const Branch: React.FC<{
   current: string
   refs: Ref[]
   repository: Repository

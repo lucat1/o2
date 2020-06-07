@@ -24,7 +24,7 @@ const _tabs: [Page, string][] = [
   ['Settings', '/settings']
 ]
 
-const Layout: React.FunctionComponent<Base<{ page: Page }>> = ({
+const Layout: React.FC<Base<{ page: Page }>> = ({
   page,
   children,
   repository,

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const NotFound: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = (
+const NotFound: React.FC<React.SVGProps<SVGSVGElement>> = (
   props: React.SVGProps<SVGSVGElement>
 ) => (
   <svg viewBox='0 0 797.5 834.5' {...props}>

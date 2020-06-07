@@ -3,7 +3,7 @@ import { Box, BoxProps } from 'rebass'
 import merge from '../types/xtend'
 import useOnClickOutside from 'use-onclickoutside'
 
-const Dropdown: React.FunctionComponent<BoxProps & {
+const Dropdown: React.FC<BoxProps & {
   open: boolean
   onClose: () => void
 }> = ({ open, onClose, ...props }) => {

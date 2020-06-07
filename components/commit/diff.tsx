@@ -11,7 +11,7 @@ import Arrow from '../svgs/arrow'
 import Pre from '../code/pre'
 import Gutter from '../code/gutter'
 
-const Diff: React.FunctionComponent<{ file: File }> = ({ file }) => {
+const Diff: React.FC<{ file: File }> = ({ file }) => {
   const [visible, setVisible] = React.useState(
     !file.deleted && file.deletions < 500 && file.additions < 500
   )

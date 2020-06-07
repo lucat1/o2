@@ -39,7 +39,7 @@ const Cell: React.FC<BoxProps> = props => (
 const rnd = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min
 
-const Tree: React.FunctionComponent<Except<Base<{ tree: ITree }>, 'owns'>> = ({
+const Tree: React.FC<Except<Base<{ tree: ITree }>, 'owns'>> = ({
   tree,
   repository
 }) => {

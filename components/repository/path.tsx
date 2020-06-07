@@ -34,7 +34,7 @@ export const basename = (path: string): string => {
   return splits[splits.length - 1]
 }
 
-const Path: React.FunctionComponent<{
+const Path: React.FC<{
   entry: Entry
   repository: Repository
 }> = ({ entry, repository }) => {

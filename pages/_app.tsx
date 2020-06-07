@@ -68,7 +68,7 @@ const glob = css`
   }
 `
 
-const App: React.FunctionComponent<AppProps> = ({ Component, pageProps }) => {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   if (process.env.NODE_ENV !== 'production' && !SSG) {
     console.group('Page infos:')
     console.info('props:', pageProps)

@@ -34,10 +34,7 @@ interface Props {
   organizations: Organization[]
 }
 
-const Repository: React.FunctionComponent<Props> = ({
-  user,
-  organizations
-}) => {
+const Repository: React.FC<Props> = ({ user, organizations }) => {
   const options: Option[] = React.useMemo(
     () => [
       { type: 'user', value: user?.name, picture: user?.picture },

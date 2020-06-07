@@ -16,7 +16,7 @@ interface Data {
   description: string
 }
 
-const Organization: React.FunctionComponent<{ user: User }> = ({ user }) => {
+const Organization: React.FC<{ user: User }> = ({ user }) => {
   const { handleSubmit, register, errors } = useForm<Data>()
 
   const ref = React.useRef<HTMLFormElement>()

@@ -1,8 +1,6 @@
 import * as React from 'react'
 
-const GIT: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = (
-  props: React.SVGProps<SVGSVGElement>
-) => (
+const GIT: React.FC<React.SVGProps<SVGSVGElement>> = props => (
   <svg viewBox='0 0 1009.5 789.9' {...props}>
     <ellipse
       cx='354.1'

@@ -13,11 +13,7 @@ interface HeadProps {
   types: string[]
 }
 
-const Head: React.FunctionComponent<HeadProps> = ({
-  selected,
-  setSelected,
-  types
-}) => {
+const Head: React.FC<HeadProps> = ({ selected, setSelected, types }) => {
   const [open, setOpen] = React.useState(false)
   const select = React.useCallback((i: number) => {
     setOpen(false)

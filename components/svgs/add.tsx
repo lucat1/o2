@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const Add: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = (
+const Add: React.FC<React.SVGProps<SVGSVGElement>> = (
   props: React.SVGProps<SVGSVGElement>
 ) => (
   <svg viewBox='0 0 24 24' {...props}>

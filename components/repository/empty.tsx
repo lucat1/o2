@@ -15,7 +15,7 @@ const Spaced: React.FC<FlexProps> = props => (
   <Flex flexDirection='column' {...(props as any)} sx={{ px: 4, py: 2 }} />
 )
 
-const Empty: React.FunctionComponent<Base<{}>> = ({ repository, owns }) => {
+const Empty: React.FC<Base<{}>> = ({ repository, owns }) => {
   const url = `http://${window.location.host}/${repository.owner}/${repository.name}`
 
   return owns ? (

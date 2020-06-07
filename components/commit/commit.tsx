@@ -9,7 +9,7 @@ import Text from '../text'
 
 import { Commit as ICommit } from '../../types/data'
 
-const Commit: React.FunctionComponent<{ commit: ICommit; base: string }> = ({
+const Commit: React.FC<{ commit: ICommit; base: string }> = ({
   commit,
   base
 }) => (

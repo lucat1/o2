@@ -3,7 +3,7 @@ import { Box } from 'rebass'
 
 import { SSG, useRouter } from '@quercia/quercia'
 
-const Progress: React.FunctionComponent = () => {
+const Progress: React.FC = () => {
   if (SSG) {
     return null
   }
