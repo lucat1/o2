@@ -56,7 +56,7 @@ export default ({ events }: FeedProps) => {
             Noting has happened yet
           </Heading>
           <Heading textAlign='center' mb={6} color='primary.default'>
-            Go make something awsome!
+            Go make something awesome!
           </Heading>
           <Box as={NoEvents} width='70%' flex={1} />
         </Center>
