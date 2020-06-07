@@ -14,7 +14,7 @@ import (
 func Register(w http.ResponseWriter, r *http.Request) {
 	// ignore already logged-in users
 	if auth.IsAuthenticated(r) {
-		quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
 
@@ -45,5 +45,5 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	r = auth.SetCookie(w, r, token)
-	quercia.Redirect(w, r, "/", "index", data.Compose(r, data.Base))
+	http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 }

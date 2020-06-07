@@ -14,6 +14,10 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
+// TODO:
+// TODO: remove all hard redirect to the index and use a proper data fetching
+// TODO:
+
 // Feed renders a feed of git events in the homepage
 func Feed(w http.ResponseWriter, r *http.Request) {
 	// find the page, support request parameter
