@@ -55,6 +55,7 @@ func main() {
 
 	raw, _ := json.Marshal(map[string]interface{}{
 		"commits": commits.Commits,
+		"more":    commits.Next,
 	})
 	// push the action to the database
 	event := models.Event{

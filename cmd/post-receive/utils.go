@@ -60,13 +60,21 @@ func findDatabaseRepository(dir string) models.Repository {
 }
 
 func findCommits(repo *git.Repository, prev, next string) git.Commits {
-	commits, err := repo.Branch(prev+".."+next).Commits(0, 100)
+	branch := prev + ".." + next
+	// if the previos commit didn't exist (first push)
+	// we can just log until the `next`
+	if prev == "0000000000000000000000000000000000000000" {
+		branch = next
+	}
+
+	commits, err := repo.Branch(branch).Commits(0, 10)
 	if err != nil {
 		log.Fatal().
 			Err(err).
 			Str("repo", repo.Path).
 			Str("prev", prev).
 			Str("next", next).
+			Str("branch", branch).
 			Msg("Could not find pushed commits")
 	}
 
