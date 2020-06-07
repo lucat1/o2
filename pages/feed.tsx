@@ -53,7 +53,7 @@ export default ({ events }: FeedProps) => {
       ) : !SSG ? (
         <Center height='calc(100vh - 3.5rem)'>
           <Heading textAlign='center' mt={6} fontSize='lg'>
-            Noting has happened yet!
+            Noting has happened yet
           </Heading>
           <Heading textAlign='center' mb={6} color='primary.default'>
             Go make something awsome!
