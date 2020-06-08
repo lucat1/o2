@@ -1,0 +1,33 @@
+# this is an example docker-compose to run an o2 web server
+# with a mysql database for storage
+version: '2'
+
+networks:
+  o2:
+    external: false
+
+services:
+  server:
+    image: lucat1/o2:latest
+    restart: always
+    networks:
+      - o2
+    volumes:
+      - ./o2:/data
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=o2
+      - MYSQL_PASSWORD=o2
+      - MYSQL_DATABASE=o2
+    networks:
+      - o2
+    volumes:
+      - ./mysql:/var/lib/mysql
