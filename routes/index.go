@@ -8,26 +8,23 @@ import (
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/render"
 	"github.com/lucat1/o2/routes/shared"
 	"github.com/lucat1/quercia"
 	"github.com/rs/zerolog/log"
 	uuid "github.com/satori/go.uuid"
 )
 
-// TODO:
-// TODO: remove all hard redirect to the index and use a proper data fetching
-// TODO:
-
-// Feed renders a feed of git events in the homepage
-func Feed(w http.ResponseWriter, r *http.Request) {
+// FeedRenderer fetches the database for the user's feed and
+// returns the page and data to render
+var FeedRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) (string, quercia.Props) {
 	// find the page, support request parameter
 	s := muxie.GetParam(w, "page")
 	var page int
 	if len(s) > 0 {
 		p, err := strconv.Atoi(s)
 		if err != nil {
-			shared.NotFound(w, r)
-			return
+			return shared.NotFoundRenderer(w, r)
 		}
 		page = p
 	} else {
@@ -47,9 +44,16 @@ func Feed(w http.ResponseWriter, r *http.Request) {
 			Int("page", page).
 			Msg("Could not get list of events")
 
-		shared.NotFound(w, r)
-		return
+		return shared.NotFoundRenderer(w, r)
 	}
 
-	quercia.Render(w, r, "feed", data.Compose(r, data.Base, data.WithAny("events", events)))
+	return "feed", data.Compose(
+		r, data.Base,
+		data.WithAny("events", events),
+	)
+}
+
+// Feed renders a feed of git events in the homepage
+func Feed(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, FeedRenderer)
 }
