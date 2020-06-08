@@ -10,14 +10,13 @@ import (
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/render"
 	"github.com/lucat1/o2/routes/shared"
-	"github.com/lucat1/quercia"
 	"github.com/rs/zerolog/log"
 	uuid "github.com/satori/go.uuid"
 )
 
 // FeedRenderer fetches the database for the user's feed and
 // returns the page and data to render
-var FeedRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) (string, quercia.Props) {
+var FeedRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	// find the page, support request parameter
 	s := muxie.GetParam(w, "page")
 	var page int
@@ -47,10 +46,13 @@ var FeedRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) 
 		return shared.NotFoundRenderer(w, r)
 	}
 
-	return "feed", data.Compose(
-		r, data.Base,
-		data.WithAny("events", events),
-	)
+	return render.Result{
+		Page: "feed",
+		Data: data.Compose(
+			r, data.Base,
+			data.WithAny("events", events),
+		),
+	}
 }
 
 // Feed renders a feed of git events in the homepage

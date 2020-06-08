@@ -6,29 +6,21 @@ import (
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/routes/datas"
-	"github.com/lucat1/quercia"
+	"github.com/lucat1/o2/pkg/render"
 )
 
-// Login renders the login page and handles authentication
-func Login(w http.ResponseWriter, r *http.Request) {
-	// ignore already logged-in users
+// LoginRenderer returns the page and the render data for login
+var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
+	// ignore already logged-in users - redirect to home(feed)
 	if auth.IsAuthenticated(r) {
-		user := r.Context().Value(auth.ClaimsKey).(*auth.Claims).UUID
-		events, _ := models.SelectVisileEvents(user, 20, 0)
-		quercia.Redirect(
-			w, r, "/", "feed",
-			data.Compose(
-				r, data.Base,
-				data.WithAny("events", events),
-			),
-		)
-		return
+		return render.WithRedirect(FeedRenderer(w, r), "/")
 	}
 
 	if r.Method != "POST" {
-		quercia.Render(w, r, "login", data.Compose(r, data.Base))
-		return
+		return render.Result{
+			Page: "login",
+			Data: data.Compose(r, data.Base),
+		}
 	}
 
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
@@ -36,8 +28,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	password := r.Form.Get("password")
 
 	if email == "" || password == "" {
-		datas.LoginErr(w, r, "Please fill in all the required fields")
-		return
+		return render.Result{
+			Page: "login",
+			Data: data.Compose(
+				r,
+				data.Base,
+				data.WithAny("error", "Please fill in all the required fields"),
+			),
+		}
 	}
 
 	user := models.User{
@@ -46,18 +44,29 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 	token, err := auth.Login(&user)
 	if err != nil {
-		datas.LoginErr(w, r, err.Error())
-		return
-	}
-
-	to := r.URL.Query().Get("to")
-	page := ""
-	if to == "" {
-		to = "/"
-		page = "feed"
+		return render.Result{
+			Page: "login",
+			Data: data.Compose(
+				r,
+				data.Base,
+				data.WithAny("error", err.Error()),
+			),
+		}
 	}
 
 	r = auth.SetCookie(w, r, token)
-	events, _ := models.SelectVisileEvents(user.UUID, 20, 0)
-	quercia.Redirect(w, r, to, page, data.Compose(r, data.Base, data.WithAny("events", events)))
+	if to := r.URL.Query().Get("to"); len(to) > 0 {
+		return render.Result{
+			Redirect: to,
+			Page:     "",
+			Data:     data.Compose(r, data.Base),
+		}
+	}
+
+	return render.WithRedirect(FeedRenderer(w, r), "/")
+}
+
+// Login renders the login page and handles authentication
+func Login(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, LoginRenderer)
 }
