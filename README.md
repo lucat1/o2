@@ -1,8 +1,18 @@
-> The project is still in early development and is not ready to be deployed
-
 <p align="center">
-  <strong>o2 - self-hosted git ui</strong>
+  <strong>o2 - self-hosted git web app</strong>
 </p>
+
+> The project is still in early development, and while we try to provide the
+> best support you may encounter bugs and rough edges. Be sure to always report
+> anything you find so that we can improve your experience!
+
+### Setting up
+
+There is currently no official documentation, but if you want to get a glimpse
+at what `o2` is capable of you can try running it via the CI built docker image.
+To get a quick start you can use this
+[`docker-compose.yml`](https://github.com/lucat1/o2/blob/master/docker-compose.yml)
+example file.
 
 ### screenshots
 
