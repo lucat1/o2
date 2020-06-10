@@ -47,11 +47,8 @@ var FeedRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) 
 	}
 
 	return render.Result{
-		Page: "feed",
-		Data: data.Compose(
-			r, data.Base,
-			data.WithAny("events", events),
-		),
+		Page:      "feed",
+		Composers: []data.Composer{data.WithAny("events", events)},
 	}
 }
 

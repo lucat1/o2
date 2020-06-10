@@ -53,7 +53,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	r = auth.SetCookie(w, r, token)
+	/* r = */
+	auth.SetCookie(w, r, token)
 	events, _ := models.SelectVisileEvents(user.UUID, 20, 0)
 	quercia.Redirect(w, r, "/", "feed", data.Compose(r, data.Base, data.WithAny("events", events)))
 }

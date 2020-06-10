@@ -18,8 +18,8 @@ var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request)
 
 	if r.Method != "POST" {
 		return render.Result{
-			Page: "login",
-			Data: data.Compose(r, data.Base),
+			Page:      "login",
+			Composers: []data.Composer{},
 		}
 	}
 
@@ -29,12 +29,8 @@ var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request)
 
 	if email == "" || password == "" {
 		return render.Result{
-			Page: "login",
-			Data: data.Compose(
-				r,
-				data.Base,
-				data.WithAny("error", "Please fill in all the required fields"),
-			),
+			Page:      "login",
+			Composers: []data.Composer{data.WithAny("error", "Please fill in all the required fields")},
 		}
 	}
 
@@ -45,21 +41,18 @@ var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request)
 	token, err := auth.Login(&user)
 	if err != nil {
 		return render.Result{
-			Page: "login",
-			Data: data.Compose(
-				r,
-				data.Base,
-				data.WithAny("error", err.Error()),
-			),
+			Page:      "login",
+			Composers: []data.Composer{data.WithAny("error", err.Error())},
 		}
 	}
 
-	r = auth.SetCookie(w, r, token)
+	/* r = */
+	auth.SetCookie(w, r, token)
 	if to := r.URL.Query().Get("to"); len(to) > 0 {
 		return render.Result{
-			Redirect: to,
-			Page:     "",
-			Data:     data.Compose(r, data.Base),
+			Redirect:  to,
+			Page:      "",
+			Composers: []data.Composer{},
 		}
 	}
 

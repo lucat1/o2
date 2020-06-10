@@ -79,7 +79,8 @@ func Must(f http.HandlerFunc) http.HandlerFunc {
 					return
 				}
 
-				r = SetCookie(w, r, token)
+				/* r = */
+				SetCookie(w, r, token)
 				f.ServeHTTP(w, r)
 				return
 			}

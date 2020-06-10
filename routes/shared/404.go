@@ -11,8 +11,8 @@ import (
 var NotFoundRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	w.WriteHeader(http.StatusNotFound)
 	return render.Result{
-		Page: "404",
-		Data: data.Compose(r, data.Base, data.WithAny("path", r.URL.Path)),
+		Page:      "404",
+		Composers: []data.Composer{data.WithAny("path", r.URL.Path)},
 	}
 }
 

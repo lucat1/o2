@@ -42,7 +42,7 @@ func Token(user models.User) (string, error) {
 }
 
 // SetCookie sets the cookie on the connection
-func SetCookie(w http.ResponseWriter, r *http.Request, token string) *http.Request {
+func SetCookie(w http.ResponseWriter, r *http.Request, token string) {
 	cookie := &http.Cookie{
 		Name:    "token",
 		Value:   token,
@@ -55,7 +55,7 @@ func SetCookie(w http.ResponseWriter, r *http.Request, token string) *http.Reque
 
 	claims, _ := _isAuthenticated(token)
 	user, _ := models.GetUser("uuid", claims.UUID)
-	return r.WithContext(context.WithValue(
+	*r = *r.WithContext(context.WithValue(
 		context.WithValue(r.Context(), AccountKey, &user),
 		ClaimsKey, claims),
 	)
