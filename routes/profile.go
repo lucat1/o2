@@ -9,8 +9,8 @@ import (
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/pex"
+	"github.com/lucat1/o2/pkg/render"
 	"github.com/lucat1/o2/routes/shared"
-	"github.com/lucat1/quercia"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -39,18 +39,18 @@ func filterRepositories(owner uuid.UUID, viewer uuid.UUID) (res []models.Reposit
 	return
 }
 
-// Profile renders an user/organization profile
-func Profile(w http.ResponseWriter, r *http.Request) {
+// ProfileRenderer returns the page and the render data for the profile
+var ProfileRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	name := muxie.GetParam(w, "name")
 	user, err := models.GetUser("name", name)
+
 	if err != nil {
 		log.Debug().
 			Err(err).
 			Str("name", name).
 			Msg("Could not find user to render profile page")
 
-		shared.NotFound(w, r)
-		return
+		return shared.NotFoundRenderer(w, r)
 	}
 
 	// get the logged in user's ID
@@ -62,8 +62,13 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 
 	repos, err := filterRepositories(user.UUID, account)
 	if err != nil {
-		shared.NotFound(w, r)
-		return
+		log.Debug().
+			Err(err).
+			Str("owner", user.UUID.String()).
+			Str("viewer", account.String()).
+			Msg("Could not filter user to repositories")
+
+		return shared.NotFoundRenderer(w, r)
 	}
 
 	typ, key := "user", "organizations"
@@ -81,20 +86,21 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 			Str("uuid", user.UUID.String()).
 			Msg("Error while looking for user<->orgs mapping")
 
-		shared.NotFound(w, r)
-		return
+		return shared.NotFoundRenderer(w, r)
 	}
 
-	// TODO: frontend -> merge user/organization pages
-	quercia.Render(
-		w, r, string(user.Type),
-		data.Compose(r,
-			data.Base,
+	return render.Result{
+		Page: string(user.Type),
+		Composers: []data.Composer{
 			data.WithAny("profile", user),
 			data.WithAny("repositories", repos),
 			// either organizations -> []orgs, or users -> []users
 			data.WithAny(key, value),
-		),
-	)
-	return
+		},
+	}
+}
+
+// Profile renders an user/organization profile
+func Profile(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, ProfileRenderer)
 }
