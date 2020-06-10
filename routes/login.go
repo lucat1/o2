@@ -46,7 +46,6 @@ var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request)
 		}
 	}
 
-	/* r = */
 	auth.SetCookie(w, r, token)
 	if to := r.URL.Query().Get("to"); len(to) > 0 {
 		return render.Result{
