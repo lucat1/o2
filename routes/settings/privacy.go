@@ -79,4 +79,5 @@ renderError:
 // Privacy is a settings tab used to change privacy-concerned settings
 // like passwords, emails and such
 func Privacy(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, PrivacyRenderer)
 }
