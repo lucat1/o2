@@ -10,13 +10,13 @@ import (
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/render"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/o2/routes/shared"
-	"github.com/lucat1/quercia"
 )
 
-// Commits lists the latest 20 commits of a repository
-func Commits(w http.ResponseWriter, r *http.Request) {
+// CommitsRenderer returns the page and the render data for the commits page
+var CommitsRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	dbRepo := r.Context().Value(middleware.DbRepo).(models.Repository)
 	repo := r.Context().Value(middleware.GitRepo).(*git.Repository)
 	branch := muxie.GetParam(w, "branch")
@@ -32,9 +32,10 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 				Str("page", _page).
 				Err(err).
 				Msg("Invalid commits page")
-			shared.NotFound(w, r)
-			return
+
+			return shared.NotFoundRenderer(w, r)
 		}
+
 		page = id
 	}
 
@@ -46,17 +47,20 @@ func Commits(w http.ResponseWriter, r *http.Request) {
 			Int("page", page).
 			Err(err).
 			Msg("Error while getting git commits from the filesystem repository")
-		shared.NotFound(w, r)
-		return
+
+		return shared.NotFoundRenderer(w, r)
 	}
 
-	quercia.Render(
-		w, r,
-		"repository/commits",
-		data.Compose(r,
-			data.Base,
+	return render.Result{
+		Page: "repository/commits",
+		Composers: []data.Composer{
 			datas.RepositoryData(dbRepo),
 			datas.CommitsData(branch, commits),
-		),
-	)
+		},
+	}
+}
+
+// Commits lists the latest 20 commits of a repository
+func Commits(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, CommitsRenderer)
 }
