@@ -7,26 +7,25 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/routes/datas"
-	"github.com/lucat1/quercia"
+	"github.com/lucat1/o2/pkg/render"
+	"github.com/lucat1/o2/routes"
 )
 
-// Settings renders the settings of a user/organization
-func Settings(w http.ResponseWriter, r *http.Request) {
+// SettingsRenderer returns the page and the render data for the general settings view
+var SettingsRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	user := r.Context().Value(auth.AccountKey).(*models.User)
 	if user == nil {
-		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", data.Compose(r, data.Base))
-		return
+		return render.WithRedirect(routes.LoginRenderer(w, r), "/login?to="+r.URL.Path)
 	}
 
 	// render the ui if the request is not a post
 	if r.Method != "POST" {
-		quercia.Render(
-			w, r,
-			"settings/settings",
-			data.Compose(r, data.Base, data.WithAny("profile", user)),
-		)
-		return
+		return render.Result{
+			Page: "settings/settings",
+			Composers: []data.Composer{
+				data.WithAny("profile", user),
+			},
+		}
 	}
 
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
@@ -39,12 +38,12 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	user.Description = r.Form.Get("description")
 
 	if user.Name == "" {
-		datas.SettingsError(
-			w, r,
-			"settings/settings",
-			"Your username cannot be empty!",
-		)
-		return
+		return render.Result{
+			Page: "settings/settings",
+			Composers: []data.Composer{
+				data.WithAny("error", "Your username cannot be empty!"),
+			},
+		}
 	}
 
 	// 2. Update the database
@@ -58,12 +57,12 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 			Str("description", user.Description).
 			Msg("Could not upate user's settings")
 
-		datas.SettingsError(
-			w, r,
-			"settings/settings",
-			"Internal error. Please try again later",
-		)
-		return
+		return render.Result{
+			Page: "settings/settings",
+			Composers: []data.Composer{
+				data.WithAny("error", "Internal error. Please try again later"),
+			},
+		}
 	}
 
 	log.Debug().
@@ -78,6 +77,14 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	token, _ := auth.Token(*user)
 	auth.SetCookie(w, r, token)
 
-	// Hard redirect to refresh the data
-	http.Redirect(w, r, "/"+user.Name, http.StatusTemporaryRedirect)
+	// HARD redirect to the (new) profile
+	return render.Result{
+		Redirect: "/" + user.Name,
+		Page:     "",
+	}
+}
+
+// Settings renders the settings of a user/organization
+func Settings(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, SettingsRenderer)
 }
