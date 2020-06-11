@@ -9,13 +9,13 @@ import (
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/render"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/o2/routes/shared"
-	"github.com/lucat1/quercia"
 )
 
-// Tree renders a folder inside a repository
-func Tree(w http.ResponseWriter, r *http.Request) {
+// TreeRenderer returns the page and the render data for a tree view
+var TreeRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	branch := muxie.GetParam(w, "branch")
 	path := muxie.GetParam(w, "path")
 	dbRepo := r.Context().Value(middleware.DbRepo).(models.Repository)
@@ -32,13 +32,19 @@ func Tree(w http.ResponseWriter, r *http.Request) {
 			Str("path", path).
 			Err(err).
 			Msg("Error while getting git tree from the filesystem repository")
-		shared.NotFound(w, r)
-		return
+		return shared.NotFoundRenderer(w, r)
 	}
 
-	quercia.Render(
-		w, r,
-		"repository/tree",
-		data.Compose(r, data.Base, datas.RepositoryData(dbRepo), data.WithAny("tree", tree)),
-	)
+	return render.Result{
+		Page: "repository/tree",
+		Composers: []data.Composer{
+			datas.RepositoryData(dbRepo),
+			data.WithAny("tree", tree),
+		},
+	}
+}
+
+// Tree renders a folder inside a repository
+func Tree(w http.ResponseWriter, r *http.Request) {
+	render.Renderer(w, r, TreeRenderer)
 }
