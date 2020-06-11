@@ -9,12 +9,12 @@ import (
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/render"
 	"github.com/lucat1/o2/routes/datas"
-	"github.com/lucat1/quercia"
 )
 
-// Repository renders the view of a git repository
-func Repository(w http.ResponseWriter, r *http.Request) {
+// RepositoryRenderer returns the page and the render data for a repository view
+var RepositoryRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	dbRepo := r.Context().Value(middleware.DbRepo).(models.Repository)
 	repo := r.Context().Value(middleware.GitRepo).(*git.Repository)
 
@@ -59,15 +59,18 @@ func Repository(w http.ResponseWriter, r *http.Request) {
 	// also provide all refs(branches/tags)
 	refs, _ := repo.Refs()
 
-	quercia.Render(
-		w, r,
-		"repository/repository",
-		data.Compose(
-			r, data.Base,
+	return render.Result{
+		Page: "repository/repository",
+		Composers: []data.Composer{
 			datas.RepositoryData(dbRepo),
-			datas.TreeData(tree),
-			datas.ReadmeData(readmeContent),
-			datas.RefsData(refs),
-		),
-	)
+			data.WithAny("tree", tree),
+			data.WithAny("readme", readmeContent),
+			data.WithAny("refs", refs),
+		},
+	}
+}
+
+// Repository renders the view of a git repository
+func Repository(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, RepositoryRenderer)
 }

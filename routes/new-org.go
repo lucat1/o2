@@ -6,16 +6,19 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/routes/datas"
-	"github.com/lucat1/quercia"
+	"github.com/lucat1/o2/pkg/render"
 )
 
-func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
+func newOrg(w http.ResponseWriter, r *http.Request, user models.User) render.Result {
 	orgname := r.Form.Get("name")
 	_, err := models.GetUser("name", orgname)
 	if err == nil {
-		datas.NewErr(w, r, "This name is already taken")
-		return
+		return render.Result{
+			Page: "new",
+			Composers: []data.Composer{
+				data.WithAny("error", "This name is already taken"),
+			},
+		}
 	}
 
 	org := models.User{
@@ -33,12 +36,13 @@ func newOrg(w http.ResponseWriter, r *http.Request, user models.User) {
 		goto fatal
 	}
 
-	quercia.Redirect(
-		w, r,
-		"/"+org.Name, "organization",
-		data.Compose(r, data.Base, data.WithAny("profile", org)),
-	)
-	return
+	return render.Result{
+		Page:     "organization",
+		Redirect: "/" + org.Name,
+		Composers: []data.Composer{
+			data.WithAny("profile", org),
+		},
+	}
 
 fatal:
 	log.Error().
@@ -47,6 +51,10 @@ fatal:
 		Str("orgname", orgname).
 		Msg("Could not save new organization in the database")
 
-	datas.NewErr(w, r, "Internal error. Please try again layer")
-	return
+	return render.Result{
+		Page: "new",
+		Composers: []data.Composer{
+			data.WithAny("error", "Internal error. Please try again layer"),
+		},
+	}
 }

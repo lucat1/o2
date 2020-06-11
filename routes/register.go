@@ -18,8 +18,7 @@ var RegisterRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reque
 
 	if r.Method != "POST" {
 		return render.Result{
-			Page:      "register",
-			Composers: []data.Composer{},
+			Page: "register",
 		}
 	}
 

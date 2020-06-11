@@ -39,6 +39,6 @@ func Tree(w http.ResponseWriter, r *http.Request) {
 	quercia.Render(
 		w, r,
 		"repository/tree",
-		data.Compose(r, data.Base, datas.RepositoryData(dbRepo), datas.TreeData(tree)),
+		data.Compose(r, data.Base, datas.RepositoryData(dbRepo), data.WithAny("tree", tree)),
 	)
 }

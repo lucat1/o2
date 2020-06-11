@@ -8,13 +8,13 @@ import (
 	"github.com/lucat1/o2/pkg/git"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/render"
 	"github.com/lucat1/o2/routes/datas"
-	"github.com/lucat1/quercia"
 
 	uuid "github.com/satori/go.uuid"
 )
 
-func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.UUID) {
+func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.UUID) render.Result {
 	reponame := r.Form.Get("name")
 	user, err := models.GetUser("name", owner)
 	if err != nil {
@@ -24,14 +24,22 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 			Str("reponame", reponame).
 			Msg("Could not find new repository owner")
 
-		datas.NewErr(w, r, "Internal error. Please try again layer")
-		return
+		return render.Result{
+			Page: "new",
+			Composers: []data.Composer{
+				data.WithAny("error", "Internal error. Please try again layer"),
+			},
+		}
 	}
 
-	_, err = models.GetRepository(user.UUID, reponame)
-	if err == nil {
-		datas.NewErr(w, r, "You already own a repository with this name")
-		return
+	re, err := models.GetRepository(user.UUID, reponame)
+	if err == nil && re.UUID != uuid.Nil {
+		return render.Result{
+			Page: "new",
+			Composers: []data.Composer{
+				data.WithAny("error", "You already own a repository with this name"),
+			},
+		}
 	}
 
 	repo := models.Repository{
@@ -48,10 +56,10 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 		goto fatal
 	}
 
-	// ony log the error as this is not mandatory for the creation of a repository
+	// don't log the error as this is not mandatory for the creation of a repository
 	event.Resource = repo.UUID
 	if err = event.Insert(); err != nil {
-		log.Error().
+		log.Debug().
 			Err(err).
 			Str("resource", repo.UUID.String()).
 			Msg("Could not create a new event for repository creation")
@@ -90,16 +98,17 @@ func newRepo(w http.ResponseWriter, r *http.Request, owner string, extra *uuid.U
 			Err(err).
 			Msg("Could not initialize a bare git repository")
 
-		datas.NewErr(w, r, "Internal error. Please try again layer")
-		return
+		goto fatal
 	}
 
-	quercia.Redirect(
-		w, r,
-		"/"+user.Name+"/"+reponame, "repository/repository",
-		data.Compose(r, data.Base, datas.RepositoryData(repo), datas.TreeData(nil)),
-	)
-	return
+	return render.Result{
+		Redirect: "/" + user.Name + "/" + reponame,
+		Page:     "repository/repository",
+		Composers: []data.Composer{
+			datas.RepositoryData(repo),
+			data.WithAny("tree", nil),
+		},
+	}
 
 fatal:
 	log.Error().
@@ -108,6 +117,10 @@ fatal:
 		Str("reponame", reponame).
 		Msg("Could not save new repository in the database")
 
-	datas.NewErr(w, r, "Internal error. Please try again layer")
-	return
+	return render.Result{
+		Page: "new",
+		Composers: []data.Composer{
+			data.WithAny("error", "Internal error. Please try again layer"),
+		},
+	}
 }

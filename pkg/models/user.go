@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/lucat1/o2/pkg/store"
+	"github.com/m1ome/randstr"
 )
 
 // Type is a custom string to hold user/organization values
@@ -85,6 +86,10 @@ type User struct {
 func (user *User) Insert() error {
 	// generate uuids and timestamps
 	user.generate()
+
+	if user.Type == OrganizationType {
+		user.Email = randstr.GetString(10)
+	}
 
 	// query the db
 	_, err := store.GetDB().Exec(

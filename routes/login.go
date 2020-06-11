@@ -18,8 +18,7 @@ var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request)
 
 	if r.Method != "POST" {
 		return render.Result{
-			Page:      "login",
-			Composers: []data.Composer{},
+			Page: "login",
 		}
 	}
 
@@ -49,9 +48,7 @@ var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request)
 	auth.SetCookie(w, r, token)
 	if to := r.URL.Query().Get("to"); len(to) > 0 {
 		return render.Result{
-			Redirect:  to,
-			Page:      "",
-			Composers: []data.Composer{},
+			Redirect: to,
 		}
 	}
 
