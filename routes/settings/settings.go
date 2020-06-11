@@ -80,7 +80,6 @@ var SettingsRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reque
 	// HARD redirect to the (new) profile
 	return render.Result{
 		Redirect: "/" + user.Name,
-		Page:     "",
 	}
 }
 

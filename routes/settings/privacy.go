@@ -7,28 +7,26 @@ import (
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/models"
-	"github.com/lucat1/o2/routes/datas"
-	"github.com/lucat1/quercia"
+	"github.com/lucat1/o2/pkg/render"
+	"github.com/lucat1/o2/routes"
 	"golang.org/x/crypto/bcrypt"
 )
 
-// Privacy is a settings tab used to change privacy-concerned settings
-// like passwords, emails and such
-func Privacy(w http.ResponseWriter, r *http.Request) {
+// PrivacyRenderer returns the page and the render data for the privacy settings view
+var PrivacyRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	user := r.Context().Value(auth.AccountKey).(*models.User)
 	if user == nil {
-		quercia.Redirect(w, r, "/login?to="+r.URL.Path, "login", data.Compose(r, data.Base))
-		return
+		return render.WithRedirect(routes.LoginRenderer(w, r), "/login?to="+r.URL.Path)
 	}
 
 	// render the ui if the request is not a post
 	if r.Method != "POST" {
-		quercia.Render(
-			w, r,
-			"settings/privacy",
-			data.Compose(r, data.Base, data.WithAny("profile", user)),
-		)
-		return
+		return render.Result{
+			Page: "settings/privacy",
+			Composers: []data.Composer{
+				data.WithAny("profile", user),
+			},
+		}
 	}
 
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
@@ -62,16 +60,23 @@ func Privacy(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Hard redirect to refresh the data
-		http.Redirect(w, r, "/"+user.Name, http.StatusTemporaryRedirect)
-		return
+		return render.Result{
+			Redirect: "/" + user.Name,
+		}
 	}
 
 	goto renderError
 
 renderError:
-	datas.SettingsError(
-		w, r,
-		"settings/privacy",
-		err,
-	)
+	return render.Result{
+		Page: "settings/privacy",
+		Composers: []data.Composer{
+			data.WithAny("error", err),
+		},
+	}
+}
+
+// Privacy is a settings tab used to change privacy-concerned settings
+// like passwords, emails and such
+func Privacy(w http.ResponseWriter, r *http.Request) {
 }
