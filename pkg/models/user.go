@@ -88,7 +88,7 @@ func (user *User) Insert() error {
 	user.generate()
 
 	if user.Type == OrganizationType {
-		user.Email = randstr.GetString(10)
+		user.Email = randstr.GetString(100)
 	}
 
 	// query the db
