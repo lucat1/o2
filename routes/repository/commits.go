@@ -55,7 +55,11 @@ var CommitsRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reques
 		Page: "repository/commits",
 		Composers: []data.Composer{
 			datas.RepositoryData(dbRepo),
-			datas.CommitsData(branch, commits),
+			data.WithAny("branch", branch),
+			data.WithAny("commits", commits),
+			data.WithAny("index", commits.Index),
+			data.WithAny("prev", commits.Prev),
+			data.WithAny("next", commits.Next),
 		},
 	}
 }

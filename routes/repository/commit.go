@@ -36,7 +36,7 @@ var CommitRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request
 		Page: "repository/commit",
 		Composers: []data.Composer{
 			datas.RepositoryData(dbRepo),
-			datas.CommitData(commit),
+			data.WithAny("commit", commit),
 		},
 	}
 }

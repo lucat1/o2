@@ -9,13 +9,13 @@ import (
 	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
+	"github.com/lucat1/o2/pkg/render"
 	"github.com/lucat1/o2/routes/datas"
 	"github.com/lucat1/o2/routes/shared"
-	"github.com/lucat1/quercia"
 )
 
-// Blob renders a file inside a repository
-func Blob(w http.ResponseWriter, r *http.Request) {
+// BlobRenderer returns the page and the render data for a blob page
+var BlobRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	dbRepo := r.Context().Value(middleware.DbRepo).(models.Repository)
 	repo := r.Context().Value(middleware.GitRepo).(*git.Repository)
 	branch := muxie.GetParam(w, "branch")
@@ -30,14 +30,20 @@ func Blob(w http.ResponseWriter, r *http.Request) {
 			Str("path", path).
 			Err(err).
 			Msg("Error while reading git blob from the filesystem repository")
-		shared.NotFound(w, r)
-		return
+
+		return shared.NotFoundRenderer(w, r)
 	}
 
-	quercia.Render(
-		w, r,
-		"repository/blob",
-		data.Compose(r, data.Base, datas.RepositoryData(dbRepo), datas.BlobData(blob, d)),
-	)
+	return render.Result{
+		Page: "repository/blob",
+		Composers: []data.Composer{
+			datas.RepositoryData(dbRepo),
+			datas.BlobData(blob, d),
+		},
+	}
+}
 
+// Blob renders a file inside a repository
+func Blob(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, BlobRenderer)
 }
