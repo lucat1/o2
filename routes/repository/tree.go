@@ -46,5 +46,5 @@ var TreeRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) 
 
 // Tree renders a folder inside a repository
 func Tree(w http.ResponseWriter, r *http.Request) {
-	render.Renderer(w, r, TreeRenderer)
+	render.Render(w, r, TreeRenderer)
 }
