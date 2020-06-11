@@ -12,6 +12,6 @@ func SettingsError(w http.ResponseWriter, r *http.Request, page, msg string) {
 	quercia.Render(w, r, page, data.Compose(
 		r,
 		data.Base,
-		ErrorData(msg),
+		data.WithAny("error", msg),
 	))
 }
