@@ -46,8 +46,16 @@ var FeedRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) 
 		return shared.NotFoundRenderer(w, r)
 	}
 
+	title := "A tiny and fast Git web ui"
+	desc := "Work on code together with your team using a fast and seamless Git web interface"
 	return render.Result{
-		Page:      "feed",
+		Page: "feed",
+		Tags: []string{
+			render.OGPTag("title", title),
+			render.TwitterTag("title", title),
+			render.OGPTag("description", desc),
+			render.TwitterTag("description", desc),
+		},
 		Composers: []data.Composer{data.WithAny("events", events)},
 	}
 }

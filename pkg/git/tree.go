@@ -52,7 +52,6 @@ func (b Branch) Tree(p string) (tree *Tree, err error) {
 		p += "/"
 	}
 
-	// TODO: use branch id(sha) instead of name could be better
 	res, err := Command(b.repo.Path, "ls-tree", "-l", b.Name, p)
 	if err != nil {
 		return nil, err

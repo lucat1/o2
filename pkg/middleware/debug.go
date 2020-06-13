@@ -7,8 +7,8 @@ import (
 	"github.com/lucat1/o2/pkg/log"
 )
 
-// DebugMiddleware logs route response timings and request data in debug mode
-func DebugMiddleware(f http.Handler) http.Handler {
+// Debug logs route response timings and request data in debug mode
+func Debug(f http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		startTime := time.Now()
 		f.ServeHTTP(w, r)

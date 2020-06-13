@@ -10,8 +10,16 @@ import (
 // NotFoundRenderer returns the page and data to render a 404 url
 var NotFoundRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) render.Result {
 	w.WriteHeader(http.StatusNotFound)
+
+	desc := "Work on code together with your team using a fast and seamless Git web interface"
 	return render.Result{
-		Page:      "404",
+		Page: "404",
+		Tags: []string{
+			render.OGPTag("title", "Not found"),
+			render.TwitterTag("title", "Not found"),
+			render.OGPTag("description", desc),
+			render.TwitterTag("description", desc),
+		},
 		Composers: []data.Composer{data.WithAny("path", r.URL.Path)},
 	}
 }

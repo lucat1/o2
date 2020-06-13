@@ -54,7 +54,8 @@ func main() {
 	mux.Handle("/__quercia/*", http.StripPrefix("/__quercia/", http.FileServer(dir)))
 
 	// log requests during debug
-	mux.Use(middleware.DebugMiddleware)
+	mux.Use(middleware.Scheme)
+	mux.Use(middleware.Debug)
 	mux.Use(auth.With)
 
 	mux.HandleFunc("/", routes.Feed)

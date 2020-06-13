@@ -16,9 +16,18 @@ var RegisterRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reque
 		render.WithRedirect(FeedRenderer(w, r), "/")
 	}
 
+	desc := "Register on the o2 platform to" +
+		" work on code together with your team using a fast and" +
+		"seamless Git web interface"
 	if r.Method != "POST" {
 		return render.Result{
 			Page: "register",
+			Tags: []string{
+				render.OGPTag("title", "Login"),
+				render.TwitterTag("title", "Login"),
+				render.OGPTag("description", desc),
+				render.TwitterTag("description", desc),
+			},
 		}
 	}
 

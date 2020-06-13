@@ -14,10 +14,7 @@ import (
 func NewRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 	user := r.Context().Value(auth.AccountKey).(*models.User)
 	if user == nil {
-		return render.Result{
-			Redirect: "/login?to=" + r.URL.Path,
-			Page:     "login",
-		}
+		return render.WithRedirect(LoginRenderer(w, r), "/login?to="+r.URL.Path)
 	}
 
 	if r.Method != "POST" {
@@ -29,8 +26,15 @@ func NewRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 				Msg("Could not find user's oganizations")
 		}
 
+		desc := "Create a new repository or organization on the o2 platform"
 		return render.Result{
 			Page: "new",
+			Tags: []string{
+				render.OGPTag("title", "New"),
+				render.TwitterTag("title", "New"),
+				render.OGPTag("description", desc),
+				render.TwitterTag("description", desc),
+			},
 			Composers: []data.Composer{data.WithAny("user", user),
 				data.WithAny("organizations", orgs),
 			},

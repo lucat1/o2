@@ -91,6 +91,15 @@ var ProfileRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reques
 
 	return render.Result{
 		Page: string(user.Type),
+		Tags: []string{
+			render.OGPTag("type", "profile"),
+			render.OGPTag("title", user.Name),
+			render.TwitterTag("title", user.Name),
+			render.OGPTag("image", ""), // TODO: profile images!!!!
+			render.ProfileTag("username", user.Name),
+			render.ProfileTag("first_name", user.Firstname),
+			render.ProfileTag("last_name", user.Lastname),
+		},
 		Composers: []data.Composer{
 			data.WithAny("profile", user),
 			data.WithAny("repositories", repos),
