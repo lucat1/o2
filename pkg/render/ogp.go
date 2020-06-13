@@ -13,6 +13,11 @@ func OGPTag(property string, value string) string {
 	return `<meta property="og:` + property + `" content="` + value + `">`
 }
 
+// ProfileTag returns a profile: prefixed meta tag (Open Graph Protocol)
+func ProfileTag(property string, value string) string {
+	return `<meta property="profile:` + property + `" content="` + value + `">`
+}
+
 // TwitterTag returns a twitter: prefixed meta tag
 func TwitterTag(property string, value string) string {
 	return `<meta name="twitter:` + property + `" content="` + value + `">`
