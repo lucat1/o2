@@ -94,7 +94,6 @@ var ProfileRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reques
 		Tags: []string{
 			render.OGPTag("type", "profile"),
 			render.OGPTag("title", user.Name),
-			render.OGPTag("description", user.Description),
 			render.OGPTag("image", ""), // TODO: profile images!!!!
 			render.OGPTag("description", user.Description),
 			render.ProfileTag("username", user.Name),
