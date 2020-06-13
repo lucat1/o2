@@ -21,10 +21,12 @@ func TwitterTag(property string, value string) string {
 // SEO returns a skeleton HTML containing only a head tag with SEO metadata
 func SEO(w http.ResponseWriter, r *http.Request, tags ...string) {
 	tags = append([]string{
-		OGPTag("url", r.URL.Scheme+"://"+r.Host),
+		OGPTag("url", r.URL.Scheme+"://"+r.Host+r.URL.Path),
 		OGPTag("locale", "en"),
 		OGPTag("site_name", "o2"),
+		OGPTag("type", "website"),
 		TwitterTag("card", "summary"),
 	}, tags...)
+
 	w.Write([]byte(`<!DOCTYPE html><html lang="en"><head>` + strings.Join(tags, "") + `</head></html>`))
 }

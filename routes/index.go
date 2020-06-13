@@ -47,7 +47,12 @@ var FeedRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request) 
 	}
 
 	return render.Result{
-		Page:      "feed",
+		Page: "feed",
+		Tags: []string{
+			render.OGPTag("title", "A tiny and fast Git web ui"),
+			render.OGPTag("image", ""), // TODO: move the logo somewhere static
+			render.OGPTag("description", "Work on code together with your team using a fast and seamless Git web interface"),
+		},
 		Composers: []data.Composer{data.WithAny("events", events)},
 	}
 }
