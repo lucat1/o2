@@ -25,6 +25,8 @@ func SEO(w http.ResponseWriter, r *http.Request, tags ...string) {
 		OGPTag("locale", "en"),
 		OGPTag("site_name", "o2"),
 		OGPTag("type", "website"),
+		// TODO: move the logo somewhere static
+		// OGPTag("image", ""),
 		TwitterTag("card", "summary"),
 	}, tags...)
 

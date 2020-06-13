@@ -21,7 +21,6 @@ var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request)
 			Page: "login",
 			Tags: []string{
 				render.OGPTag("title", "Login"),
-				render.OGPTag("image", ""), // TODO: move the logo somewhere static
 				render.OGPTag("description", "Login into the o2 platform; here you can"+
 					" work on code together with your team using a fast and"+
 					"seamless Git web interface",

@@ -14,7 +14,6 @@ var NotFoundRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reque
 		Page: "404",
 		Tags: []string{
 			render.OGPTag("title", "Not found"),
-			render.OGPTag("image", ""), // TODO: move the logo somewhere static
 			render.OGPTag("description", "Work on code together with your team using a fast and seamless Git web interface"),
 		},
 		Composers: []data.Composer{data.WithAny("path", r.URL.Path)},
