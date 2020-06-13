@@ -19,6 +19,14 @@ var RegisterRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reque
 	if r.Method != "POST" {
 		return render.Result{
 			Page: "register",
+			Tags: []string{
+				render.OGPTag("title", "Login"),
+				render.OGPTag("image", ""), // TODO: move the logo somewhere static
+				render.OGPTag("description", "Register on the o2 platform to"+
+					" work on code together with your team using a fast and"+
+					"seamless Git web interface",
+				),
+			},
 		}
 	}
 
