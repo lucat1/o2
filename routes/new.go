@@ -26,11 +26,14 @@ func NewRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 				Msg("Could not find user's oganizations")
 		}
 
+		desc := "Create a new repository or organization on the o2 platform"
 		return render.Result{
 			Page: "new",
 			Tags: []string{
 				render.OGPTag("title", "New"),
-				render.OGPTag("description", "Create a new repository or organization on the o2 platform"),
+				render.TwitterTag("title", "New"),
+				render.OGPTag("description", desc),
+				render.TwitterTag("description", desc),
 			},
 			Composers: []data.Composer{data.WithAny("user", user),
 				data.WithAny("organizations", orgs),

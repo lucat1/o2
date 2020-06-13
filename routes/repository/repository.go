@@ -59,8 +59,19 @@ var RepositoryRenderer render.Renderer = func(w http.ResponseWriter, r *http.Req
 	// also provide all refs(branches/tags)
 	refs, _ := repo.Refs()
 
+	title := dbRepo.OwnerName + "/" + dbRepo.Name
 	return render.Result{
 		Page: "repository/repository",
+		Tags: []string{
+			render.OGPTag("image", ""), // TODO: repository images!!
+			render.OGPTag("type", "object"),
+
+			render.OGPTag("title", title),
+			render.TwitterTag("title", title),
+
+			render.OGPTag("description", dbRepo.Description),
+			render.TwitterTag("description", dbRepo.Description),
+		},
 		Composers: []data.Composer{
 			datas.RepositoryData(dbRepo),
 			data.WithAny("tree", tree),

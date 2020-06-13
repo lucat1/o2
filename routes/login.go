@@ -16,15 +16,17 @@ var LoginRenderer render.Renderer = func(w http.ResponseWriter, r *http.Request)
 		return render.WithRedirect(FeedRenderer(w, r), "/")
 	}
 
+	desc := "Login into the o2 platform; here you can" +
+		" work on code together with your team using a fast and" +
+		"seamless Git web interface"
 	if r.Method != "POST" {
 		return render.Result{
 			Page: "login",
 			Tags: []string{
 				render.OGPTag("title", "Login"),
-				render.OGPTag("description", "Login into the o2 platform; here you can"+
-					" work on code together with your team using a fast and"+
-					"seamless Git web interface",
-				),
+				render.TwitterTag("title", "Login"),
+				render.OGPTag("description", desc),
+				render.TwitterTag("description", desc),
 			},
 		}
 	}
