@@ -53,6 +53,13 @@ func main() {
 	//mux.Use(auth.Middleware)
 	mux.Handle("/__quercia/*", http.StripPrefix("/__quercia/", http.FileServer(dir)))
 
+	mux.Use(func(f http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Add("Access-Control-Allow-Origin", "*")
+			f.ServeHTTP(w, r)
+		})
+	})
+
 	// log requests during debug
 	mux.Use(middleware.DebugMiddleware)
 	mux.Use(auth.With)
