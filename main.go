@@ -61,6 +61,7 @@ func main() {
 	mux.HandleFunc("/", routes.Feed)
 	mux.HandleFunc("/feed/:page", routes.Feed)
 	mux.HandleFunc("/favicon.ico", shared.NotFound)
+	mux.HandleFunc("/picture/:hash", routes.Picture)
 	mux.HandleFunc("/register", routes.Register)
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", auth.Must(routes.Logout))
