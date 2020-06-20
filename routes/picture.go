@@ -22,5 +22,6 @@ func Picture(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Add("Content-Type", "image/jpeg")
 	w.Write([]byte(data))
 }

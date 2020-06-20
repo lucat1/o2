@@ -13,7 +13,7 @@ import (
 	cache "github.com/patrickmn/go-cache"
 )
 
-var Cache = cache.New(24*time.Hour, 24*time.Hour)
+var Cache = cache.New(time.Hour, time.Hour)
 
 func Init() {
 	folder := store.GetConfig().Section("pictures").Key("directory").String()
@@ -32,9 +32,16 @@ func Get(hash string) (res []byte, err error) {
 	if data, has := Cache.Get(hash); has {
 		return data.([]byte), err
 	}
+	log.Debug().
+		Str("hash", hash).
+		Msg("Reading image from the filesystem")
 
 	folder := store.GetConfig().Section("pictures").Key("directory").String()
-	res, err = ioutil.ReadFile(path.Join(folder, hash+".jpg"))
+	res, err = ioutil.ReadFile(path.Join(folder, hash+".jpeg"))
+
+	// since we read the image we should now cache it to prevent further readings
+	Cache.Add(hash, res, cache.DefaultExpiration)
+
 	return
 }
 
