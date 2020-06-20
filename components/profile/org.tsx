@@ -29,7 +29,7 @@ const Profile = ({
           ? `${profile.name}'s profile picture`
           : "The organization's profile picture"
       }
-      src={profile?.picture + '?s=300'}
+      src={'/picture/' + profile?.picture + '?s=300'}
     />
     <Box py={4}>
       <Line>

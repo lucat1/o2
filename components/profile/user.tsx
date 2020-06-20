@@ -34,7 +34,7 @@ const Profile = ({
           ? `${profile.name}'s profile picture`
           : "The user's profile picture"
       }
-      src={profile?.picture + '?s=300'}
+      src={'/picture/' + profile?.picture + '?s=300'}
     />
     <Box py={4}>
       <Line css={{ wordWrap: 'break-word' }}>

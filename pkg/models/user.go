@@ -90,7 +90,7 @@ func (user *User) generate() error {
 		return err
 	}
 
-	user.Picture = "/" + hash
+	user.Picture = hash
 	return nil
 }
 
@@ -124,6 +124,10 @@ func (user *User) Insert() error {
 		user.Location,
 		user.Picture,
 	)
+
+	// invalidate the profile picture cache
+	// as the user could have changed the image
+	images.Cache.Delete(user.Picture)
 
 	return err
 }

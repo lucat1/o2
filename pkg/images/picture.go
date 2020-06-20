@@ -4,14 +4,29 @@ import (
 	"crypto/aes"
 	"encoding/hex"
 	"io/ioutil"
+	"os"
 	"path"
 	"time"
 
+	"github.com/lucat1/o2/pkg/log"
 	"github.com/lucat1/o2/pkg/store"
 	cache "github.com/patrickmn/go-cache"
 )
 
 var Cache = cache.New(24*time.Hour, 24*time.Hour)
+
+func Init() {
+	folder := store.GetConfig().Section("pictures").Key("directory").String()
+	if _, err := os.Stat(folder); os.IsNotExist(err) {
+		// create the pictures folder if it doesn't exists
+		if err = os.Mkdir(folder, 0666); err != nil {
+			log.Fatal().
+				Err(err).
+				Str("path", folder).
+				Msg("Could not create the pictures folder")
+		}
+	}
+}
 
 func Get(hash string) (res []byte, err error) {
 	if data, has := Cache.Get(hash); has {

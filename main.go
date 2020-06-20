@@ -7,6 +7,7 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/auth"
+	"github.com/lucat1/o2/pkg/images"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
@@ -39,6 +40,7 @@ func init() {
 	store.InitDatabase()
 	store.InitHooks()
 	models.Init()
+	images.Init()
 
 	// noop to include the default config file
 	pkger.Include("/data/o2.ini")
