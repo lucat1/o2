@@ -41,6 +41,13 @@ func Get(hash string) (res []byte, err error) {
 func Save(hash string, value []byte) (err error) {
 	folder := store.GetConfig().Section("pictures").Key("directory").String()
 	err = ioutil.WriteFile(path.Join(folder, hash+".jpg"), value, 0666)
+	if err != nil {
+		return err
+	}
+
+	// add the image to the cache
+	Cache.Add(hash, value, cache.DefaultExpiration)
+
 	return
 }
 
