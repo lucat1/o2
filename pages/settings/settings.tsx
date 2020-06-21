@@ -36,7 +36,6 @@ export default ({ profile, error }: SettingsProps) => {
     register,
     errors,
     reset,
-    getValues,
     setValue,
     formState: { dirty }
   } = useForm<User>()
@@ -45,7 +44,7 @@ export default ({ profile, error }: SettingsProps) => {
 
     // instantiate the POST form data
     const body = new FormData()
-    body.set('picture', data.picture)
+    body.set('picture', picture)
     body.set('name', data.name)
     body.set('firstname', data.firstname)
     body.set('lastname', data.lastname)
@@ -57,6 +56,9 @@ export default ({ profile, error }: SettingsProps) => {
       credentials: 'same-origin'
     })
   }
+
+  // initialize the custom `picture` input
+  register({ name: 'picture', type: 'text' })
 
   return (
     <>
@@ -97,15 +99,17 @@ export default ({ profile, error }: SettingsProps) => {
                 name='picture'
                 accept='image/png, image/jpeg'
                 ref={pictureRef}
-                onChange={async e => {
+                onChange={async () => {
                   const { files } = pictureRef.current
-                  setValue('picture', files as any)
                   // ignore empty file selection
                   if (files.length < 1) {
                     return
                   }
 
-                  setPicture(await readAsDataURL(files[0]))
+                  // we only care about the first file
+                  const data: string = await readAsDataURL(files[0])
+                  setValue('picture', data)
+                  setPicture(data)
                 }}
               />
               <Image

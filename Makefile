@@ -1,7 +1,7 @@
 all: o2 cmds
 
 run: cmds
-	PATH=$$PATH:$$PWD/bins go run main.go --debug
+	PATH=$$PATH:$$PWD/bins go run main.go 
 
 o2:
 	go build main.go
