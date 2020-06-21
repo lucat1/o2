@@ -95,7 +95,7 @@ var ProfileRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reques
 			render.OGPTag("type", "profile"),
 			render.OGPTag("title", user.Name),
 			render.TwitterTag("title", user.Name),
-			render.OGPTag("image", ""), // TODO: profile images!!!!
+			render.OGPTag("image", "/picture/"+user.Picture),
 			render.ProfileTag("username", user.Name),
 			render.ProfileTag("first_name", user.Firstname),
 			render.ProfileTag("last_name", user.Lastname),
