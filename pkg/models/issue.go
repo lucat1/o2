@@ -37,8 +37,11 @@ UPDATE issues SET (
 WHERE id=?
 `
 
-const findIssues = `
-SELECT * FROM issues WHERE repository=? AND deleted_at IS NULL
+const selectIssues = `
+SELECT * FROM issues i 
+JOIN users u ON u.uuid = i.author 
+WHERE repository=? AND i.deleted_at IS NULL
+ORDER BY i.created_at DESC LIMIT ? OFFSET ?
 `
 
 const findIssueID = `
@@ -49,10 +52,13 @@ SELECT relative_id FROM issues WHERE repository=? AND deleted_at IS NULL ORDER B
 type Issue struct {
 	Model
 
-	Repository uuid.UUID `json:"repository"`
-	Author     uuid.UUID `json:"author"`
+	Repository uuid.UUID `json:"-"`
+	Author     uuid.UUID `json:"-"`
 	RelativeID int64     `db:"relative_id" json:"id"`
 	Title      string    `json:"title"`
+
+	// additional data coming from joins(users, repositories)
+	AuthorName string `db:"name" json:"author_name"`
 }
 
 // Insert inserts an issue into the database
@@ -104,8 +110,12 @@ func (issue Issue) Update() error {
 }
 
 // SelectIssues returns a list of issues inside the requested repository
-func SelectIssues(repository uuid.UUID) (issues []Issue, err error) {
-	err = store.GetDB().Select(&issues, findIssues, repository)
+func SelectIssues(repository uuid.UUID, limit, offset int) (issues []Issue, err error) {
+	err = store.GetDB().Unsafe().Select(
+		&issues,
+		store.GetDB().Rebind(selectIssues),
+		repository, limit, offset*limit,
+	)
 	return
 }
 

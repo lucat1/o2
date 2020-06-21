@@ -51,6 +51,7 @@ func NewIssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 		Repository: repo.UUID,
 		RelativeID: id,
 		Author:     author.UUID,
+		Title:      title,
 	}
 
 	if err := issue.Insert(); err != nil {

@@ -15,7 +15,7 @@ import (
 func IssuesRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 	repo := r.Context().Value(middleware.DbRepo).(models.Repository)
 
-	issues, err := models.SelectIssues(repo.UUID)
+	issues, err := models.SelectIssues(repo.UUID, 20, 0)
 	if err != nil {
 		log.Error().
 			Err(err).
