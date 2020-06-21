@@ -105,7 +105,6 @@ export default ({ profile, error }: SettingsProps) => {
                     return
                   }
 
-                  console.log('setting picture')
                   setPicture(await readAsDataURL(files[0]))
                 }}
               />

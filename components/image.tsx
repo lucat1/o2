@@ -17,6 +17,13 @@ const Image: React.FC<ImageProps> = ({ src, alt, ...props }) => {
 
   const [loaded, setLoaded] = React.useState(false)
   const [hidden, setHidden] = React.useState(false)
+
+  React.useEffect(() => {
+    // reset values when the src prop changes
+    setLoaded(false)
+    setHidden(false)
+  }, [src])
+
   return (
     <Skeleton sx={sx} {...(props as any)}>
       <RebassImage
