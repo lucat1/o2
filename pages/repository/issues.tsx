@@ -29,7 +29,7 @@ export default ({ repository, owns }: Base<IssuesProps>) => {
         />
       </Head>
       <Heading>Issues page</Heading>
-      <Link href={`${base}/issues/new`}>
+      <Link to={`${base}/issues/new`}>
         <Button>New</Button>
       </Link>
     </Layout>
