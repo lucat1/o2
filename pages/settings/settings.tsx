@@ -10,6 +10,8 @@ import Button from '../../components/button'
 import Input from '../../components/input'
 import Label from '../../components/label'
 import Divider from '../../components/divider'
+import Center from '../../components/center'
+import Image from '../../components/image'
 
 import Left from '../../components/settings/left'
 import Field from '../../components/settings/field'
@@ -25,6 +27,8 @@ export default ({ profile, error }: SettingsProps) => {
   const [isLoading, setLoading] = React.useState(
     error ? typeof error == 'string' : false
   )
+  const picture = React.useRef<HTMLInputElement>()
+
   const {
     handleSubmit,
     register,
@@ -75,6 +79,36 @@ export default ({ profile, error }: SettingsProps) => {
           </Heading>
 
           {error && <Heading color='error'>{error}</Heading>}
+
+          <Box px={2} py={4}>
+            <Heading known color='primary.default'>
+              Profile picture
+            </Heading>
+
+            <Center>
+              <input
+                style={{ display: 'none' }}
+                type='file'
+                ref={picture}
+                onChange={() => {
+                  const { files } = picture.current
+                  // we only care about the first inputted file
+                  if (files.length < 1) {
+                    return
+                  }
+                  console.log(files[0])
+                }}
+                accept='image/png, image/jpeg'
+              />
+
+              <Image
+                onClick={() => picture.current.click()}
+                width={8}
+                height={8}
+                src={'/picture/' + profile?.picture}
+              />
+            </Center>
+          </Box>
 
           <Field
             errors={errors}
