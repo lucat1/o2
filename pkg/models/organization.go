@@ -25,7 +25,6 @@ func (org User) Add(user User) error {
 		store.GetDB().Rebind(addMapping),
 		user.UUID, org.UUID,
 	)
-	fmt.Print("error heah", err)
 	return err
 }
 

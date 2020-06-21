@@ -5,12 +5,15 @@ import Layout from '../../components/repository/layout'
 
 import { Base, Issue } from '../../types/repository'
 import Heading from '../../components/heading'
+import Button from '../../components/button'
+import Link from '../../components/link'
 
 export interface IssuesProps {
   issues: Issue[]
 }
 
 export default ({ repository, owns }: Base<IssuesProps>) => {
+  const base = `/${repository?.owner}/${repository?.name}`
   return (
     <Layout owns={owns} repository={repository} page='Issues'>
       <Head>
@@ -26,6 +29,9 @@ export default ({ repository, owns }: Base<IssuesProps>) => {
         />
       </Head>
       <Heading>Issues page</Heading>
+      <Link href={`${base}/issues/new`}>
+        <Button>New</Button>
+      </Link>
     </Layout>
   )
 }

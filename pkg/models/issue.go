@@ -36,13 +36,17 @@ UPDATE issues SET (
 WHERE id=?
 `
 
+const findIssues = `
+SELECT * FROM issues WHERE repository=? AND deleted_at IS NULL
+`
+
 // Issue is a struct holding the data for an issue inside a repository
 type Issue struct {
 	Model
 
 	Repository uuid.UUID `json:"repository"`
 	Author     uuid.UUID `json:"author"`
-	RelativeID int64     `json:"id"`
+	RelativeID int64     `db:"relative_id" json:"id"`
 	Title      string    `json:"title"`
 }
 
@@ -92,4 +96,10 @@ func (issue Issue) Update() error {
 	)
 
 	return err
+}
+
+// SelectIssues returns a list of issues inside the requested repository
+func SelectIssues(repository uuid.UUID) (issues []Issue, err error) {
+	err = store.GetDB().Select(&issues, findIssues, repository)
+	return
 }
