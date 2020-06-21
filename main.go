@@ -7,6 +7,7 @@ import (
 
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/auth"
+	"github.com/lucat1/o2/pkg/images"
 	"github.com/lucat1/o2/pkg/middleware"
 	"github.com/lucat1/o2/pkg/models"
 	"github.com/lucat1/o2/pkg/store"
@@ -39,6 +40,7 @@ func init() {
 	store.InitDatabase()
 	store.InitHooks()
 	models.Init()
+	images.Init()
 
 	// noop to include the default config file
 	pkger.Include("/data/o2.ini")
@@ -61,6 +63,7 @@ func main() {
 	mux.HandleFunc("/", routes.Feed)
 	mux.HandleFunc("/feed/:page", routes.Feed)
 	mux.HandleFunc("/favicon.ico", shared.NotFound)
+	mux.HandleFunc("/picture/:hash", routes.Picture)
 	mux.HandleFunc("/register", routes.Register)
 	mux.HandleFunc("/login", routes.Login)
 	mux.HandleFunc("/logout", auth.Must(routes.Logout))

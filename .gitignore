@@ -2,5 +2,6 @@ __quercia
 node_modules
 bins
 data/repos/*
+data/pictures/*
 data/*.log
 pkged.go

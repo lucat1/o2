@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/lucat1/o2/pkg/images"
 	"github.com/lucat1/o2/pkg/store"
 	"github.com/m1ome/randstr"
 )
@@ -82,10 +83,23 @@ type User struct {
 	Picture     string `json:"picture"`
 }
 
+func (user *User) generate() error {
+	user.Base.generate()
+	hash, err := images.Encrypt(user.UUID.Bytes())
+	if err != nil {
+		return err
+	}
+
+	user.Picture = hash
+	return nil
+}
+
 // Insert inserts a user into the database
 func (user *User) Insert() error {
 	// generate uuids and timestamps
-	user.generate()
+	if err := user.generate(); err != nil {
+		return err
+	}
 
 	if user.Type == OrganizationType {
 		user.Email = randstr.GetString(100)
@@ -110,6 +124,10 @@ func (user *User) Insert() error {
 		user.Location,
 		user.Picture,
 	)
+
+	// invalidate the profile picture cache
+	// as the user could have changed the image
+	images.Cache.Delete(user.Picture)
 
 	return err
 }

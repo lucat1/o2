@@ -16,6 +16,7 @@
     "parse-diff": "^0.7.0",
     "pretty-bytes": "^5.3.0",
     "prismjs": "^1.20.0",
+    "promisify-file-reader": "^4.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.3.1",

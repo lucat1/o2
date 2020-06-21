@@ -36,7 +36,7 @@ const Avatar: React.FC<LoggedUser> = ({ picture, name }) => {
         onClick={() => setOpen(true)}
         onKeyUp={e => e.keyCode == 13 && setOpen(!open)}
         alt='Your profile picture'
-        src={picture}
+        src={'/picture/' + picture}
       />
       <Dropdown
         sx={{ top: 5 }}

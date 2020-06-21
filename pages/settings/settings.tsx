@@ -3,6 +3,7 @@ import { Box, Flex } from 'rebass'
 import { Textarea } from '@rebass/forms'
 import { useForm } from 'react-hook-form'
 import { navigate, Head } from '@quercia/quercia'
+import { readAsDataURL } from 'promisify-file-reader'
 
 import { Parent, Right } from '../../components/split'
 import Heading from '../../components/heading'
@@ -10,6 +11,8 @@ import Button from '../../components/button'
 import Input from '../../components/input'
 import Label from '../../components/label'
 import Divider from '../../components/divider'
+import Center from '../../components/center'
+import Image from '../../components/image'
 
 import Left from '../../components/settings/left'
 import Field from '../../components/settings/field'
@@ -25,11 +28,15 @@ export default ({ profile, error }: SettingsProps) => {
   const [isLoading, setLoading] = React.useState(
     error ? typeof error == 'string' : false
   )
+  const pictureRef = React.useRef<HTMLInputElement>()
+  const [picture, setPicture] = React.useState('/picture/' + profile?.picture)
+
   const {
     handleSubmit,
     register,
     errors,
     reset,
+    setValue,
     formState: { dirty }
   } = useForm<User>()
   const onSubmit = (data: User) => {
@@ -37,6 +44,7 @@ export default ({ profile, error }: SettingsProps) => {
 
     // instantiate the POST form data
     const body = new FormData()
+    body.set('picture', picture)
     body.set('name', data.name)
     body.set('firstname', data.firstname)
     body.set('lastname', data.lastname)
@@ -48,6 +56,9 @@ export default ({ profile, error }: SettingsProps) => {
       credentials: 'same-origin'
     })
   }
+
+  // initialize the custom `picture` input
+  register({ name: 'picture', type: 'text' })
 
   return (
     <>
@@ -76,6 +87,46 @@ export default ({ profile, error }: SettingsProps) => {
 
           {error && <Heading color='error'>{error}</Heading>}
 
+          <Box px={2} py={4}>
+            <Heading known color='primary.default'>
+              Profile picture
+            </Heading>
+
+            <Center>
+              <input
+                style={{ display: 'none' }}
+                type='file'
+                name='picture'
+                accept='image/png, image/jpeg'
+                ref={pictureRef}
+                onChange={async () => {
+                  const { files } = pictureRef.current
+                  // ignore empty file selection
+                  if (files.length < 1) {
+                    return
+                  }
+
+                  // we only care about the first file
+                  const data: string = await readAsDataURL(files[0])
+                  setValue('picture', data)
+                  setPicture(data)
+                }}
+              />
+              <Image
+                onClick={() => pictureRef.current.click()}
+                width={8}
+                height={8}
+                src={picture}
+              />
+            </Center>
+
+            <Label htmlFor='picture'>
+              Select and apply a picture to your profile. It will be displayed
+              on your profile page and on each commit, issue or interaction you
+              make.
+            </Label>
+          </Box>
+
           <Field
             errors={errors}
             disabled={isLoading}
@@ -84,11 +135,11 @@ export default ({ profile, error }: SettingsProps) => {
             defaultValue={profile?.name}
             description='The username is displayed in your profile and in every repository you own / contribute to.'
             ref={register({
-              required: 'Required',
+              required: 'required',
               pattern: {
                 value: /^[a-z0-9_-]{3,15}$/,
                 message:
-                  'Invalid username: can only contain a-z, 0-9, _ and -. No uppercase letters'
+                  'invalid username: can only contain a-z, 0-9, _ and -. no uppercase letters'
               }
             })}
           />
