@@ -122,6 +122,31 @@ CREATE TABLE IF NOT EXISTS events (
 )
 `
 
+const createIssue = `
+CREATE TABLE IF NOT EXISTS issues (
+	id INT NOT NULL AUTO_INCREMENT,
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME NOT NULL,
+	deleted_at DATETIME NULL,
+
+	repository CHAR(36) NOT NULL,
+	author CHAR(36) NOT NULL,
+	relative_id INT NOT NULL,
+	title VARCHAR(255) NOT NULL,
+
+	PRIMARY KEY (id, repository, relative_id),
+	INDEX (repository),
+
+	FOREIGN KEY (repository)
+		REFERENCES repositories(uuid)
+		ON UPDATE CASCADE ON DELETE CASCADE,
+
+	FOREIGN KEY (author)
+		REFERENCES users(uuid)
+		ON UPDATE CASCADE ON DELETE CASCADE
+)
+`
+
 const collation = `
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 `
@@ -161,5 +186,12 @@ func Init() {
 		log.Fatal().
 			Err(err).
 			Msg("Could not create the `events` table")
+	}
+
+	_, err = store.GetDB().Exec(createIssue + collation)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Could not create the `issues` table")
 	}
 }

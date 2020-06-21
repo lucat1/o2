@@ -14,7 +14,7 @@ func Picture(w http.ResponseWriter, r *http.Request) {
 	data, err := images.Get(hash)
 	if err != nil {
 		log.
-			Error().
+			Debug().
 			Err(err).
 			Str("hash", hash).
 			Msg("Could not get profile picture")
