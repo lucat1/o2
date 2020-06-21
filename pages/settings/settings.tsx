@@ -3,6 +3,7 @@ import { Box, Flex } from 'rebass'
 import { Textarea } from '@rebass/forms'
 import { useForm } from 'react-hook-form'
 import { navigate, Head } from '@quercia/quercia'
+import { readAsDataURL } from 'promisify-file-reader'
 
 import { Parent, Right } from '../../components/split'
 import Heading from '../../components/heading'
@@ -27,13 +28,16 @@ export default ({ profile, error }: SettingsProps) => {
   const [isLoading, setLoading] = React.useState(
     error ? typeof error == 'string' : false
   )
-  const picture = React.useRef<HTMLInputElement>()
+  const pictureRef = React.useRef<HTMLInputElement>()
+  const [picture, setPicture] = React.useState('/picture/' + profile?.picture)
 
   const {
     handleSubmit,
     register,
     errors,
     reset,
+    getValues,
+    setValue,
     formState: { dirty }
   } = useForm<User>()
   const onSubmit = (data: User) => {
@@ -41,6 +45,7 @@ export default ({ profile, error }: SettingsProps) => {
 
     // instantiate the POST form data
     const body = new FormData()
+    body.set('picture', data.picture)
     body.set('name', data.name)
     body.set('firstname', data.firstname)
     body.set('lastname', data.lastname)
@@ -89,23 +94,26 @@ export default ({ profile, error }: SettingsProps) => {
               <input
                 style={{ display: 'none' }}
                 type='file'
-                ref={picture}
-                onChange={() => {
-                  const { files } = picture.current
-                  // we only care about the first inputted file
+                name='picture'
+                accept='image/png, image/jpeg'
+                ref={pictureRef}
+                onChange={async e => {
+                  const { files } = pictureRef.current
+                  setValue('picture', files as any)
+                  // ignore empty file selection
                   if (files.length < 1) {
                     return
                   }
-                  console.log(files[0])
-                }}
-                accept='image/png, image/jpeg'
-              />
 
+                  console.log('setting picture')
+                  setPicture(await readAsDataURL(files[0]))
+                }}
+              />
               <Image
-                onClick={() => picture.current.click()}
+                onClick={() => pictureRef.current.click()}
                 width={8}
                 height={8}
-                src={'/picture/' + profile?.picture}
+                src={picture}
               />
             </Center>
           </Box>
@@ -118,11 +126,11 @@ export default ({ profile, error }: SettingsProps) => {
             defaultValue={profile?.name}
             description='The username is displayed in your profile and in every repository you own / contribute to.'
             ref={register({
-              required: 'Required',
+              required: 'required',
               pattern: {
                 value: /^[a-z0-9_-]{3,15}$/,
                 message:
-                  'Invalid username: can only contain a-z, 0-9, _ and -. No uppercase letters'
+                  'invalid username: can only contain a-z, 0-9, _ and -. no uppercase letters'
               }
             })}
           />
