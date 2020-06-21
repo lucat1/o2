@@ -1,4 +1,5 @@
 const { join } = require('path')
+const externals = require('webpack-node-externals')
 
 module.exports = function({ config, target, mode }) {
   config.module.rules.push({
@@ -19,6 +20,19 @@ module.exports = function({ config, target, mode }) {
         'react': 'preact/compat',
         'react-dom': 'preact/compat'
       }
+    }
+  }
+
+  if (target == 'server') {
+    // don't treat `promisify-file-reader` as an external module
+    config.externals[config.externals.length - 1] = externals({
+      whitelist: ['promisify-file-reader']
+    })
+
+    // then alias it to a noop module
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'promisify-file-reader': require.resolve('@quercia/cli/dist/webpack/noop')
     }
   }
 

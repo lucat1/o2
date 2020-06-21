@@ -115,6 +115,12 @@ export default ({ profile, error }: SettingsProps) => {
                 src={picture}
               />
             </Center>
+
+            <Label htmlFor='picture'>
+              Select and apply a picture to your profile. It will be displayed
+              on your profile page and on each commit, issue or interaction you
+              make.
+            </Label>
           </Box>
 
           <Field
