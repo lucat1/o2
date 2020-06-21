@@ -1,6 +1,7 @@
 package models
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/lucat1/o2/pkg/store"
@@ -38,6 +39,10 @@ WHERE id=?
 
 const findIssues = `
 SELECT * FROM issues WHERE repository=? AND deleted_at IS NULL
+`
+
+const findIssueID = `
+SELECT relative_id FROM issues WHERE repository=? AND deleted_at IS NULL ORDER BY created_at DESC LIMIT 1
 `
 
 // Issue is a struct holding the data for an issue inside a repository
@@ -101,5 +106,19 @@ func (issue Issue) Update() error {
 // SelectIssues returns a list of issues inside the requested repository
 func SelectIssues(repository uuid.UUID) (issues []Issue, err error) {
 	err = store.GetDB().Select(&issues, findIssues, repository)
+	return
+}
+
+// GetIssueID returns the id for the latest issue created
+func GetIssueID(repository uuid.UUID) (id int64, err error) {
+	err = store.GetDB().Get(&id, findIssueID, repository)
+
+	// if we have no errors it means this is the first issue created
+	// on the repository. So we start at index 0 and it then gets incremented to 1
+	// inside the `NewIssueRenderer` method
+	if err == sql.ErrNoRows {
+		return 0, nil
+	}
+
 	return
 }

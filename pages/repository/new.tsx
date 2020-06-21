@@ -49,7 +49,7 @@ export default ({ repository, owns }: Base<IssuesProps>) => {
           content='create a new issue on a repository on the o2 service'
         />
       </Head>
-      <Flex as='form' flexDirection='column'>
+      <Flex onSubmit={handleSubmit(onSubmit)} as='form' flexDirection='column'>
         <Field
           errors={errors}
           disabled={isLoading}

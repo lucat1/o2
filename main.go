@@ -95,7 +95,7 @@ func main() {
 	repo.HandleFunc("/commits/:branch/:page", repository.Commits)
 	repo.HandleFunc("/commit/:sha", repository.Commit)
 	repo.HandleFunc("/issues", repository.Issues)
-	repo.HandleFunc("/issues/new", repository.NewIssue)
+	repo.HandleFunc("/issues/new", auth.Must(repository.NewIssue))
 	repo.HandleFunc("/issue/:id", repository.Issue)
 
 	// git smart http protocol
