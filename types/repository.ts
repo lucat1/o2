@@ -49,6 +49,5 @@ export interface RepositoryProps {
 
 export interface Issue {
   id: number
-  author: User
   title: string
 }

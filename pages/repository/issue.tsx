@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Head } from '@quercia/quercia'
+import { Box } from 'rebass'
 
 import Layout from '../../components/repository/layout'
 
@@ -10,7 +11,7 @@ export interface IssuesProps {
   issue: Issue
 }
 
-export default ({ repository, owns }: Base<IssuesProps>) => {
+export default ({ repository, owns, issue }: Base<IssuesProps>) => {
   return (
     <Layout owns={owns} repository={repository} page='Issues'>
       <Head>
@@ -26,6 +27,9 @@ export default ({ repository, owns }: Base<IssuesProps>) => {
         />
       </Head>
       <Heading>Issue page</Heading>
+
+      <Box>{issue?.title}</Box>
+      <Box>{issue?.id}</Box>
     </Layout>
   )
 }

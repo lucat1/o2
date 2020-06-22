@@ -38,14 +38,15 @@ WHERE id=?
 `
 
 const selectIssues = `
-SELECT * FROM issues i 
-JOIN users u ON u.uuid = i.author 
-WHERE repository=? AND i.deleted_at IS NULL
-ORDER BY i.created_at DESC LIMIT ? OFFSET ?
+SELECT * FROM issues i WHERE repository=? AND i.deleted_at IS NULL
 `
 
 const findIssueID = `
 SELECT relative_id FROM issues WHERE repository=? AND deleted_at IS NULL ORDER BY created_at DESC LIMIT 1
+`
+
+const findIssue = `
+SELECT * FROM issues WHERE repository=? AND relative_id=? AND deleted_at IS NULL LIMIT 1 
 `
 
 // Issue is a struct holding the data for an issue inside a repository
@@ -56,9 +57,6 @@ type Issue struct {
 	Author     uuid.UUID `json:"-"`
 	RelativeID int64     `db:"relative_id" json:"id"`
 	Title      string    `json:"title"`
-
-	// additional data coming from joins(users, repositories)
-	AuthorName string `db:"name" json:"author_name"`
 }
 
 // Insert inserts an issue into the database
@@ -114,7 +112,7 @@ func SelectIssues(repository uuid.UUID, limit, offset int) (issues []Issue, err 
 	err = store.GetDB().Unsafe().Select(
 		&issues,
 		store.GetDB().Rebind(selectIssues),
-		repository, limit, offset*limit,
+		repository,
 	)
 	return
 }
@@ -125,10 +123,16 @@ func GetIssueID(repository uuid.UUID) (id int64, err error) {
 
 	// if we have no errors it means this is the first issue created
 	// on the repository. So we start at index 0 and it then gets incremented to 1
-	// inside the `NewIssueRenderer` method
+	// inside the limit, offset*limit, `NewIssueRenderer` method
 	if err == sql.ErrNoRows {
 		return 0, nil
 	}
 
+	return
+}
+
+// GetIssue returns an issue with the requested repository and id
+func GetIssue(repository uuid.UUID, id int) (issue Issue, err error) {
+	err = store.GetDB().Get(&issue, findIssue, repository, id)
 	return
 }
