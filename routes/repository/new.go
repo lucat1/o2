@@ -46,6 +46,7 @@ func NewIssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 	// create a new issue with the given data
 	r.ParseMultipartForm(1 * 1024 * 1024 /* 1mb */)
 	title := r.Form.Get("title")
+	body := r.Form.Get("body")
 
 	issue := models.Issue{
 		Repository: repo.UUID,
@@ -53,7 +54,6 @@ func NewIssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 		Author:     author.UUID,
 		Title:      title,
 	}
-
 	if err := issue.Insert(); err != nil {
 		log.Error().
 			Err(err).
@@ -65,12 +65,29 @@ func NewIssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 		return shared.NotFoundRenderer(w, r)
 	}
 
+	comment := models.IssueComment{
+		Issue:  issue.ID,
+		Author: author.UUID,
+		Body:   body,
+	}
+	if err := comment.Insert(); err != nil {
+		log.Error().
+			Err(err).
+			Int64("issue", issue.ID).
+			Str("author", author.UUID.String()).
+			Str("body", body).
+			Msg("Could not create the first issue comment")
+
+		return shared.NotFoundRenderer(w, r)
+	}
+
 	return render.Result{
 		Redirect: "/" + repo.OwnerName + "/" + repo.Name + "/issue/" + strconv.Itoa(int(id)),
 		Page:     "repository/issue",
 		Composers: []data.Composer{
 			datas.RepositoryData(repo),
 			data.WithAny("issue", issue),
+			data.WithAny("comments", []models.IssueComment{comment}),
 		},
 	}
 }

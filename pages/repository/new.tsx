@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { Flex } from 'rebass'
+import { Textarea } from '@rebass/forms'
 import { useForm } from 'react-hook-form'
 import { Head, navigate } from '@quercia/quercia'
 
 import Layout from '../../components/repository/layout'
 import Field from '../../components/settings/field'
 import Button from '../../components/button'
-import Center from '../../components/center'
+import Input from '../../components/input'
 
 import { Base, Issue } from '../../types/repository'
 
@@ -16,6 +17,7 @@ export interface IssuesProps {
 
 interface Data {
   title: string
+  body: string
 }
 
 export default ({ repository, owns }: Base<IssuesProps>) => {
@@ -28,6 +30,7 @@ export default ({ repository, owns }: Base<IssuesProps>) => {
     // instantiate the POST form data
     const body = new FormData()
     body.set('title', data.title)
+    body.set('body', data.body)
 
     navigate(window.location.pathname, 'POST', {
       body,
@@ -58,6 +61,20 @@ export default ({ repository, owns }: Base<IssuesProps>) => {
           description=''
           ref={register({ required: 'Required' })}
         />
+
+        <Input
+          as={Textarea}
+          css={{
+            minWidth: '100%',
+            maxWidth: '100%'
+          }}
+          sx={{ minHeight: 5, height: 7 }}
+          disabled={isLoading}
+          name='body'
+          placeholder='Explain the issue in detail'
+          ref={register()}
+        />
+
         <Button type='submit'>Create</Button>
       </Flex>
     </Layout>

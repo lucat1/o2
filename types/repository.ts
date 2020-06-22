@@ -51,3 +51,7 @@ export interface Issue {
   id: number
   title: string
 }
+
+export interface Comment {
+  body: string
+}

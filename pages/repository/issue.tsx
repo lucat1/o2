@@ -1,17 +1,19 @@
 import * as React from 'react'
 import { Head } from '@quercia/quercia'
-import { Box } from 'rebass'
+import { Flex } from 'rebass'
 
 import Layout from '../../components/repository/layout'
+import Text from '../../components/text'
+import Divider from '../../components/divider'
 
-import { Base, Issue } from '../../types/repository'
-import Heading from '../../components/heading'
+import { Base, Issue, Comment } from '../../types/repository'
 
 export interface IssuesProps {
   issue: Issue
+  comments: Comment[]
 }
 
-export default ({ repository, owns, issue }: Base<IssuesProps>) => {
+export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
   return (
     <Layout owns={owns} repository={repository} page='Issues'>
       <Head>
@@ -26,10 +28,25 @@ export default ({ repository, owns, issue }: Base<IssuesProps>) => {
           content='an issue on git repository on the o2 service'
         />
       </Head>
-      <Heading>Issue page</Heading>
 
-      <Box>{issue?.title}</Box>
-      <Box>{issue?.id}</Box>
+      <Flex
+        flexDirection='row'
+        justifyContent='space-between'
+        alignItems='center'
+        py={2}
+      >
+        <Text height={4} width={9} fontSize='1.25em'>
+          {issue?.title}
+        </Text>
+        <Text width={5} color='primary.default'>
+          #{issue?.id}
+        </Text>
+      </Flex>
+      <Divider />
+
+      {(comments || []).map(comment => (
+        <Flex>{comment.body}</Flex>
+      ))}
     </Layout>
   )
 }

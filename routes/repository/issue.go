@@ -31,11 +31,22 @@ func IssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 		return shared.NotFoundRenderer(w, r)
 	}
 
+	comments, err := models.SelectIssueComments(id)
+	if err != nil {
+		log.Error().
+			Err(err).
+			Int("issue", id).
+			Msg("Could not get issue comments")
+
+		return shared.NotFoundRenderer(w, r)
+	}
+
 	return render.Result{
 		Page: "repository/issue",
 		Composers: []data.Composer{
 			datas.RepositoryData(repo),
 			data.WithAny("issue", issue),
+			data.WithAny("comments", comments),
 		},
 	}
 }

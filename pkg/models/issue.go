@@ -38,7 +38,7 @@ WHERE id=?
 `
 
 const selectIssues = `
-SELECT * FROM issues i WHERE repository=? AND i.deleted_at IS NULL
+SELECT * FROM issues i WHERE repository=? AND i.deleted_at IS NULL ORDER BY created_at DESC
 `
 
 const findIssueID = `
@@ -90,7 +90,7 @@ func (issue Issue) Update() error {
 
 	// query the db
 	_, err := store.GetDB().Exec(
-		store.GetDB().Rebind(updateEvent),
+		store.GetDB().Rebind(updateIssue),
 		issue.CreatedAt,
 		issue.UpdatedAt,
 		issue.DeletedAt,
@@ -108,7 +108,7 @@ func (issue Issue) Update() error {
 }
 
 // SelectIssues returns a list of issues inside the requested repository
-func SelectIssues(repository uuid.UUID, limit, offset int) (issues []Issue, err error) {
+func SelectIssues(repository uuid.UUID) (issues []Issue, err error) {
 	err = store.GetDB().Unsafe().Select(
 		&issues,
 		store.GetDB().Rebind(selectIssues),
