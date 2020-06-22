@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/auth"
 	"github.com/lucat1/o2/pkg/data"
 	"github.com/lucat1/o2/pkg/log"
@@ -81,15 +82,11 @@ func NewIssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 		return shared.NotFoundRenderer(w, r)
 	}
 
-	return render.Result{
-		Redirect: "/" + repo.OwnerName + "/" + repo.Name + "/issue/" + strconv.Itoa(int(id)),
-		Page:     "repository/issue",
-		Composers: []data.Composer{
-			datas.RepositoryData(repo),
-			data.WithAny("issue", issue),
-			data.WithAny("comments", []models.IssueComment{comment}),
-		},
-	}
+	muxie.SetParam(w, "id", strconv.Itoa(int(issue.ID)))
+	return render.WithRedirect(
+		IssueRenderer(w, r),
+		"/"+repo.OwnerName+"/"+repo.Name+"/issue/"+strconv.Itoa(int(id)),
+	)
 }
 
 func NewIssue(w http.ResponseWriter, r *http.Request) {

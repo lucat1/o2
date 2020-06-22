@@ -5,6 +5,8 @@ import { Flex } from 'rebass'
 import Layout from '../../components/repository/layout'
 import Text from '../../components/text'
 import Divider from '../../components/divider'
+import Container from '../../components/base'
+import Image from '../../components/image'
 
 import { Base, Issue, Comment } from '../../types/repository'
 
@@ -45,7 +47,12 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
       <Divider />
 
       {(comments || []).map(comment => (
-        <Flex>{comment.body}</Flex>
+        <Flex my={4} flex={1}>
+          <Image width={4} height={4} src={`/picture/${comment.picture}`} />
+          <Container flex={1} ml={2} my={0} p={4}>
+            {comment.body}
+          </Container>
+        </Flex>
       ))}
     </Layout>
   )
