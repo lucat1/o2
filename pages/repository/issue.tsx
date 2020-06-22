@@ -31,25 +31,27 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
         />
       </Head>
 
-      <Flex
-        flexDirection='row'
-        justifyContent='space-between'
-        alignItems='center'
-        py={2}
-      >
-        <Text height={4} width={9} fontSize='1.25em'>
-          {issue?.title}
-        </Text>
-        <Text width={5} color='primary.default'>
-          #{issue?.id}
-        </Text>
+      <Flex flexDirection='column' py={2}>
+        <Flex flex={1} justifyContent='space-between'>
+          <Text height={4} width={9} fontSize='1.25em'>
+            {issue?.title}
+          </Text>
+          <Text width={5} color='primary.default'>
+            #{issue?.id}
+          </Text>
+        </Flex>
+        <Flex flex={1}>
+          <Text color='bg.3' fontSize='xs'>
+            {issue?.opened}
+          </Text>
+        </Flex>
       </Flex>
       <Divider />
 
       {(comments || []).map(comment => (
         <Flex my={4} flex={1}>
           <Image width={4} height={4} src={`/picture/${comment.picture}`} />
-          <Container flex={1} ml={2} my={0} p={4}>
+          <Container flex={1} ml={2} my={0} py={2} px={4}>
             {comment.body}
           </Container>
         </Flex>

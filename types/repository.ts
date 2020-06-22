@@ -48,6 +48,7 @@ export interface RepositoryProps {
 }
 
 export interface Issue {
+  opened: string
   id: number
   title: string
 }

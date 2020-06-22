@@ -51,7 +51,10 @@ SELECT * FROM issues WHERE repository=? AND relative_id=? AND deleted_at IS NULL
 
 // Issue is a struct holding the data for an issue inside a repository
 type Issue struct {
-	Model
+	ID        int64      `json:"-"`
+	CreatedAt time.Time  `db:"created_at" json:"opened"`
+	UpdatedAt time.Time  `db:"updated_at" json:"-"`
+	DeletedAt *time.Time `db:"deleted_at" json:"-"`
 
 	Repository uuid.UUID `json:"-"`
 	Author     uuid.UUID `json:"-"`
@@ -61,7 +64,8 @@ type Issue struct {
 
 // Insert inserts an issue into the database
 func (issue *Issue) Insert() error {
-	issue.generate()
+	issue.CreatedAt = time.Now()
+	issue.UpdatedAt = time.Now()
 
 	// query the db
 	res, err := store.GetDB().Exec(
