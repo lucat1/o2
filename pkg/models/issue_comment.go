@@ -35,13 +35,16 @@ WHERE id=?
 `
 
 const selectIssueComments = `
-SELECT * FROM issue_comments i
+SELECT i.*, u.uuid, u.picture FROM issue_comments i
 JOIN users u ON u.uuid = i.author
 WHERE issue=? AND i.deleted_at IS NULL
 `
 
 type IssueComment struct {
-	Model
+	ID        int64      `json:"-"`
+	CreatedAt time.Time  `db:"created_at" json:"commented"`
+	UpdatedAt time.Time  `db:"updated_at" json:"edited"`
+	DeletedAt *time.Time `db:"deleted_at" json:"-"`
 
 	Issue  int64     `json:"-"`
 	Author uuid.UUID `json:"-"`
@@ -51,7 +54,8 @@ type IssueComment struct {
 }
 
 func (issueComment *IssueComment) Insert() error {
-	issueComment.generate()
+	issueComment.CreatedAt = time.Now()
+	issueComment.UpdatedAt = time.Now()
 
 	// query the db
 	res, err := store.GetDB().Exec(

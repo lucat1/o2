@@ -54,6 +54,8 @@ export interface Issue {
 }
 
 export interface Comment {
+  commented: string
+  edited: string
   body: string
   picture: string
 }
