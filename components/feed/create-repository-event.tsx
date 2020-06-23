@@ -19,7 +19,7 @@ const CreateRepositoryEvent: React.FC<{ event: Event }> = ({ event }) => {
       </Text>
 
       <Heading fontWeight='normal'>
-        <Link to={`/{event.owner}`}>{event.owner}</Link> created a new
+        <Link to={`/${event.owner}`}>{event.owner}</Link> created a new
         repository at{' '}
         <Link to={base}>
           {event.owner}/{event.name}
