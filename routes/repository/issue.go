@@ -32,7 +32,7 @@ func IssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 		return shared.NotFoundRenderer(w, r)
 	}
 
-	comments, err := models.SelectIssueComments(id)
+	comments, err := models.SelectIssueComments(int(issue.ID))
 	if err != nil {
 		log.Error().
 			Err(err).
