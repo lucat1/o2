@@ -37,7 +37,7 @@ const Commit: React.FC<{ commit: ICommit; base: string }> = ({
               ? `${commit.author.name}'s profile picture`
               : "commit author's profile picture"
           }
-          src={commit ? `${commit.author.picture}?s=75` : ''}
+          src={`/picture/${commit?.author?.picture}`}
         />
       </Link>
       <Flex

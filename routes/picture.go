@@ -6,6 +6,8 @@ import (
 	"github.com/kataras/muxie"
 	"github.com/lucat1/o2/pkg/images"
 	"github.com/lucat1/o2/pkg/log"
+	"github.com/lucat1/o2/pkg/render"
+	"github.com/lucat1/o2/routes/shared"
 )
 
 // Picture returns a profile picture for the user(identified by a hash)
@@ -18,7 +20,8 @@ func Picture(w http.ResponseWriter, r *http.Request) {
 			Err(err).
 			Str("hash", hash).
 			Msg("Could not get profile picture")
-		w.WriteHeader(http.StatusInternalServerError)
+
+		render.Render(w, r, shared.NotFoundRenderer)
 		return
 	}
 
