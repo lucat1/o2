@@ -5,6 +5,7 @@ import (
 	"errors"
 	"strings"
 
+	"github.com/lucat1/o2/pkg/models"
 	"github.com/m1ome/randstr"
 )
 
@@ -37,10 +38,15 @@ func (r Repository) Commit(sha string) (DetailedCommit, error) {
 
 	var out DetailedCommit
 	if err = json.Unmarshal([]byte(data), &out); err != nil {
-		return out, nil
+		return out, err
 	}
 	out.Subject = subject
 	out.Body = body
+	picture, err := models.GetPicture(out.Author.Name)
+	if err != nil {
+		return out, err
+	}
+	out.Author.Picture = picture
 
 	// add git diff
 	out.Diff = diff

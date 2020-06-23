@@ -23,7 +23,7 @@ const Commit: React.FC<{ commit: ICommit; base: string }> = ({
       justifyContent: 'space-between'
     }}
   >
-    <Flex>
+    <Flex alignItems='center'>
       <Link
         known
         css={{ outline: 'none', flexShrink: 0, display: 'flex' }}

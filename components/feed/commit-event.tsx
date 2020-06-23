@@ -21,7 +21,8 @@ const CommitEvent: React.FC<{ event: Event }> = ({ event }) => {
 
       <Heading fontWeight='normal'>
         {event.data.commits.length} commit
-        {event.data.commits.length > 1 ? 's' : ''} have been pushed to{' '}
+        {event.data.commits.length > 1 ? 's' : ''}{' '}
+        {event.data.commits.length > 1 ? 'have' : 'has'} been pushed to{' '}
         <Link to={base}>
           {event.owner}/{event.name}
         </Link>
