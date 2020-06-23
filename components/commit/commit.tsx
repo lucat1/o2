@@ -15,8 +15,7 @@ const Commit: React.FC<{ commit: ICommit; base: string }> = ({
 }) => (
   <Container
     my={2}
-    px={2}
-    py={3}
+    p={2}
     css={{
       overflow: 'hidden',
       alignItems: 'center',

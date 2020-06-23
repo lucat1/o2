@@ -1,20 +1,19 @@
 import * as React from 'react'
 import { Head } from '@quercia/quercia'
 import { Flex, Box } from 'rebass'
-import format from 'tinydate'
 
 import Layout from '../../components/repository/layout'
 import Text from '../../components/text'
 import Divider from '../../components/divider'
-import Container from '../../components/base'
-import Image from '../../components/image'
+import Comment from '../../components/issue/comment'
+import Write from '../../components/issue/write'
 
-import { Base, Issue, Comment } from '../../types/repository'
+import { Base, Issue, Comment as IComment } from '../../types/repository'
 import elapsed from '../../types/time'
 
 export interface IssuesProps {
   issue: Issue
-  comments: Comment[]
+  comments: IComment[]
 }
 
 export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
@@ -51,22 +50,21 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
       <Divider />
 
       {(comments || []).map((comment, i) => (
-        <Flex key={i} my={4} flex={1}>
-          <Image width={4} height={4} src={`/picture/${comment.picture}`} />
-          <Container flexDirection='column' flex={1} ml={2} my={0}>
-            <Box py={1} px={4}>
-              <Text color='bg.3' fontSize='xs'>
-                commented {elapsed(comment.commented)}
-              </Text>
-            </Box>
-            <Divider />
+        <Comment picture={comment.picture} key={i}>
+          <Box py={1} px={4}>
+            <Text color='bg.3' fontSize='xs'>
+              commented {elapsed(comment.commented)}
+            </Text>
+          </Box>
+          <Divider />
 
-            <Box py={2} px={4}>
-              {comment.body}
-            </Box>
-          </Container>
-        </Flex>
+          <Box py={2} px={4}>
+            {comment.body}
+          </Box>
+        </Comment>
       ))}
+
+      <Write />
     </Layout>
   )
 }
