@@ -7,7 +7,7 @@ import Comment from './comment'
 import Text from '../text'
 import Divider from '../divider'
 
-const Write: React.FC = React.forwardRef((_, ref) => {
+const Write = React.forwardRef((_, ref) => {
   const { account } = usePage()[1]
 
   return (
