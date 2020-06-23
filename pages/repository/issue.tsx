@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head, navigate } from '@quercia/quercia'
+import { Head, navigate, usePage } from '@quercia/quercia'
 import { Flex, Box } from 'rebass'
 
 import Text from '../../components/text'
@@ -18,6 +18,9 @@ export interface IssuesProps {
 }
 
 export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
+  // used to disable the comment button if the user is not logged in
+  const { account } = usePage()[1]
+
   const [isLoading, setLoading] = React.useState(false)
   const input = React.useRef<HTMLTextAreaElement>()
   const comment = () => {
@@ -90,7 +93,7 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
 
       <Write ref={input} />
       <Flex justifyContent='flex-end'>
-        <Button disabled={isLoading} onClick={comment} maxWidth={5}>
+        <Button disabled={!account || isLoading} onClick={comment} maxWidth={5}>
           Comment
         </Button>
       </Flex>

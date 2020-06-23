@@ -14,7 +14,7 @@ const Write = React.forwardRef((_, ref) => {
     <Comment picture={account?.picture}>
       <Box css={{ userSelect: 'none' }} py={1} px={4}>
         <Text color='bg.3' fontSize='xs'>
-          about to comment:
+          {!account ? 'please sign in to comment' : 'about to comment'}:
         </Text>
       </Box>
       <Divider />
@@ -33,6 +33,7 @@ const Write = React.forwardRef((_, ref) => {
             boxShadow: 'focus'
           }
         }}
+        disabled={!account}
         css={{
           outline: 'none',
           border: 0,
