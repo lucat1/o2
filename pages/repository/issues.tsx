@@ -1,6 +1,6 @@
 import * as React from 'react'
+import { Head, usePage } from '@quercia/quercia'
 import { Flex } from 'rebass'
-import { Head } from '@quercia/quercia'
 
 import Layout from '../../components/repository/layout'
 
@@ -15,6 +15,7 @@ export interface IssuesProps {
 }
 
 export default ({ repository, owns, issues }: Base<IssuesProps>) => {
+  const { account } = usePage()[1]
   const base = `/${repository?.owner}/${repository?.name}`
   return (
     <Layout owns={owns} repository={repository} page='Issues'>
@@ -33,8 +34,8 @@ export default ({ repository, owns, issues }: Base<IssuesProps>) => {
 
       <Flex py={2} flex={1} alignItems='center' justifyContent='space-between'>
         <Input pr={4} placeholder='Search' type='search' sx={{ width: 9 }} />
-        <Link to={`${base}/issues/new`}>
-          <Button>New</Button>
+        <Link disabled={!account} to={`${base}/issues/new`}>
+          <Button disabled={!account}>New</Button>
         </Link>
       </Flex>
 
