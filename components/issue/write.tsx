@@ -7,7 +7,7 @@ import Comment from './comment'
 import Text from '../text'
 import Divider from '../divider'
 
-const Write: React.FC = () => {
+const Write: React.FC = React.forwardRef((_, ref) => {
   const { account } = usePage()[1]
 
   return (
@@ -19,6 +19,7 @@ const Write: React.FC = () => {
       </Box>
       <Divider />
       <Textarea
+        ref={ref}
         sx={{
           'fontFamily': 'default',
           'fontSize': 'xs',
@@ -41,6 +42,6 @@ const Write: React.FC = () => {
       />
     </Comment>
   )
-}
+})
 
 export default Write

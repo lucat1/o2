@@ -19,7 +19,7 @@ var RegisterRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reque
 	desc := "Register on the o2 platform to" +
 		" work on code together with your team using a fast and" +
 		"seamless Git web interface"
-	if r.Method != "POST" {
+	if r.Method != http.MethodPost {
 		return render.Result{
 			Page: "register",
 			Tags: []string{

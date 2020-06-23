@@ -27,7 +27,7 @@ var SettingsRenderer render.Renderer = func(w http.ResponseWriter, r *http.Reque
 	}
 
 	// render the ui if the request is not a post
-	if r.Method != "POST" {
+	if r.Method != http.MethodPost {
 		return render.Result{
 			Page: "settings/settings",
 			Composers: []data.Composer{

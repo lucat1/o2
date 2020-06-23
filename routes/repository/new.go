@@ -18,7 +18,7 @@ import (
 func NewIssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 	repo := r.Context().Value(middleware.DbRepo).(models.Repository)
 
-	if r.Method != "POST" {
+	if r.Method != http.MethodPost {
 		return render.Result{
 			Page: "repository/new",
 			Composers: []data.Composer{

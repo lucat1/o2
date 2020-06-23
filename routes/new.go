@@ -17,7 +17,7 @@ func NewRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 		return render.WithRedirect(LoginRenderer(w, r), "/login?to="+r.URL.Path)
 	}
 
-	if r.Method != "POST" {
+	if r.Method != http.MethodPost {
 		orgs, err := models.SelectMapping("user", user.UUID)
 		if err != nil {
 			log.Debug().

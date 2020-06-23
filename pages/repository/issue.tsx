@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Head } from '@quercia/quercia'
+import { Head, navigate } from '@quercia/quercia'
 import { Flex, Box } from 'rebass'
 
 import Text from '../../components/text'
@@ -18,6 +18,29 @@ export interface IssuesProps {
 }
 
 export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
+  const [isLoading, setLoading] = React.useState(false)
+  const input = React.useRef<HTMLTextAreaElement>()
+  const comment = () => {
+    const { value } = input.current
+    if (!value) return
+
+    setLoading(true)
+    const body = new FormData()
+    body.set('body', value)
+
+    navigate(window.location.pathname, 'POST', {
+      body,
+      credentials: 'same-origin'
+    })
+  }
+
+  // when the comments object changes it means we either changed
+  // issue or have posted a comment, so we should clear the input field
+  React.useEffect(() => {
+    setLoading(false)
+    input.current.value = ''
+  }, [comments])
+
   return (
     <Layout owns={owns} repository={repository} page='Issues'>
       <Head>
@@ -65,9 +88,9 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
         </Comment>
       ))}
 
-      <Write />
+      <Write ref={input} />
       <Flex justifyContent='flex-end'>
-        <Button type='submit' maxWidth={5}>
+        <Button disabled={isLoading} onClick={comment} maxWidth={5}>
           Comment
         </Button>
       </Flex>
