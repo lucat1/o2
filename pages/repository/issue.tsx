@@ -2,9 +2,10 @@ import * as React from 'react'
 import { Head } from '@quercia/quercia'
 import { Flex, Box } from 'rebass'
 
-import Layout from '../../components/repository/layout'
 import Text from '../../components/text'
+import Button from '../../components/button'
 import Divider from '../../components/divider'
+import Layout from '../../components/repository/layout'
 import Comment from '../../components/issue/comment'
 import Write from '../../components/issue/write'
 
@@ -51,20 +52,25 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
 
       {(comments || []).map((comment, i) => (
         <Comment picture={comment.picture} key={i}>
-          <Box py={1} px={4}>
+          <Box css={{ userSelect: 'none' }} py={1} px={4}>
             <Text color='bg.3' fontSize='xs'>
-              commented {elapsed(comment.commented)}
+              commented {elapsed(comment.commented)}:
             </Text>
           </Box>
           <Divider />
 
-          <Box py={2} px={4}>
+          <Text fontSize='xs' py={2} px={4}>
             {comment.body}
-          </Box>
+          </Text>
         </Comment>
       ))}
 
       <Write />
+      <Flex justifyContent='flex-end'>
+        <Button type='submit' maxWidth={5}>
+          Comment
+        </Button>
+      </Flex>
     </Layout>
   )
 }

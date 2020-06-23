@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { usePage } from '@quercia/quercia'
-import { Flex } from 'rebass'
+import { Flex, Box } from 'rebass'
 import { Textarea } from '@rebass/forms'
+import { usePage } from '@quercia/quercia'
 
 import Comment from './comment'
-import Button from '../button'
+import Text from '../text'
 import Divider from '../divider'
 
 const Write: React.FC = () => {
@@ -12,18 +12,33 @@ const Write: React.FC = () => {
 
   return (
     <Comment picture={account?.picture}>
-      <Textarea
-        maxWidth='100%'
-        minWidth='100%'
-        minHeight={7}
-        css={{ outline: 'none', border: 0 }}
-      />
+      <Box css={{ userSelect: 'none' }} py={1} px={4}>
+        <Text color='bg.3' fontSize='xs'>
+          about to comment:
+        </Text>
+      </Box>
       <Divider />
-      <Flex justifyContent='flex-end' py={2} px={4}>
-        <Button type='submit' maxWidth={5}>
-          Comment
-        </Button>
-      </Flex>
+      <Textarea
+        sx={{
+          'fontFamily': 'default',
+          'fontSize': 'xs',
+          'minHeight': 7,
+
+          // shadow on focus
+          'transition': 'box-shadow 200ms ease-in-out',
+          'borderBottomRightRadius': 'md',
+          'borderBottomLeftRadius': 'md',
+          ':focus': {
+            boxShadow: 'focus'
+          }
+        }}
+        css={{
+          outline: 'none',
+          border: 0,
+          maxWidth: '100%',
+          minWidth: '100%'
+        }}
+      />
     </Comment>
   )
 }
