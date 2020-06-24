@@ -11,7 +11,7 @@ const Comment: React.FC<{ picture: string; name: string }> = ({
   name
 }) => (
   <Flex my={4} flex={1}>
-    <Link to={`/${name}`}>
+    <Link mt={1} known to={`/${name}`}>
       <Image width={4} height={4} src={`/picture/${picture}`} />
     </Link>
     <Container flexDirection='column' flex={1} ml={2} my={0}>

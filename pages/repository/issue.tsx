@@ -9,6 +9,8 @@ import Layout from '../../components/repository/layout'
 import Comment from '../../components/issue/comment'
 import Write from '../../components/issue/write'
 
+import Pencil from '../../components/svgs/pencil'
+
 import { Base, Issue, Comment as IComment } from '../../types/repository'
 import elapsed from '../../types/time'
 
@@ -29,6 +31,7 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
 
     setLoading(true)
     const body = new FormData()
+    body.set('action', 'comment')
     body.set('body', value)
 
     navigate(window.location.pathname, 'POST', {
@@ -78,11 +81,25 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
 
       {(comments || []).map((comment, i) => (
         <Comment name={comment.name} picture={comment.picture} key={i}>
-          <Box css={{ userSelect: 'none' }} py={1} px={4}>
+          <Flex
+            justifyContent='space-between'
+            alignItems='center'
+            css={{ userSelect: 'none' }}
+            py={1}
+            px={4}
+          >
             <Text color='bg.3' fontSize='xs'>
               commented {elapsed(comment.commented)}:
             </Text>
-          </Box>
+            {comment.name == account.name && (
+              <Box
+                as={Pencil}
+                tabIndex={0}
+                sx={{ height: 2, cursor: 'pointer' }}
+                onClick={console.log}
+              />
+            )}
+          </Flex>
           <Divider />
 
           <Text fontSize='xs' py={2} px={4}>
