@@ -38,7 +38,9 @@ WHERE id=?
 `
 
 const selectIssues = `
-SELECT * FROM issues i WHERE repository=? AND i.deleted_at IS NULL ORDER BY created_at DESC
+SELECT i.*, u.name FROM issues i 
+JOIN users u ON u.uuid = i.author
+WHERE repository=? AND i.deleted_at IS NULL ORDER BY created_at DESC
 `
 
 const findIssueID = `
@@ -60,6 +62,8 @@ type Issue struct {
 	Author     uuid.UUID `json:"-"`
 	RelativeID int64     `db:"relative_id" json:"id"`
 	Title      string    `json:"title"`
+
+	Name string `json:"name"`
 }
 
 // Insert inserts an issue into the database

@@ -3,12 +3,15 @@ import { Head, usePage } from '@quercia/quercia'
 import { Flex } from 'rebass'
 
 import Layout from '../../components/repository/layout'
-
-import { Base, Issue } from '../../types/repository'
 import Input from '../../components/input'
 import Button from '../../components/button'
 import Link from '../../components/link'
+import Text from '../../components/text'
+import Heading from '../../components/heading'
 import Container from '../../components/base'
+
+import { Base, Issue } from '../../types/repository'
+import elapsed from '../../types/time'
 
 export interface IssuesProps {
   issues: Issue[]
@@ -40,8 +43,14 @@ export default ({ repository, owns, issues }: Base<IssuesProps>) => {
       </Flex>
 
       {(issues || []).map(issue => (
-        <Container py={2} px={4} my={2} key={issue.id}>
-          <Link to={`${base}/issue/${issue.id}`}>{issue.title}</Link>
+        <Container flexDirection='column' py={2} px={4} my={2} key={issue.id}>
+          <Heading fontSize='md'>
+            <Link to={`${base}/issue/${issue.id}`}>{issue.title}</Link>
+          </Heading>
+          <Text color='bg.3' fontSize='xs'>
+            opened by <Link to={`/${issue.name}`}>{issue.name}</Link>{' '}
+            {elapsed(issue?.opened)}
+          </Text>
         </Container>
       ))}
     </Layout>
