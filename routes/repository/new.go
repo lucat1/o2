@@ -82,7 +82,10 @@ func NewIssueRenderer(w http.ResponseWriter, r *http.Request) render.Result {
 		return shared.NotFoundRenderer(w, r)
 	}
 
+	// fake a GET request to the new issue to render properly
 	muxie.SetParam(w, "id", strconv.Itoa(int(issue.RelativeID)))
+	r.Method = http.MethodGet
+
 	return render.WithRedirect(
 		IssueRenderer(w, r),
 		"/"+repo.OwnerName+"/"+repo.Name+"/issue/"+strconv.Itoa(int(id)),

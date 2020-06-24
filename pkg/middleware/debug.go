@@ -13,7 +13,7 @@ func Debug(f http.Handler) http.Handler {
 		startTime := time.Now()
 		f.ServeHTTP(w, r)
 		duration := time.Now().Sub(startTime)
-		log.Debug().
+		log.Info().
 			Str("method", r.Method).
 			Str("url", r.URL.Path).
 			Int64("duration", duration.Milliseconds()).

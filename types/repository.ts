@@ -58,4 +58,5 @@ export interface Comment {
   edited: string
   body: string
   picture: string
+  name: string
 }

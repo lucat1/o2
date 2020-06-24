@@ -35,7 +35,7 @@ WHERE id=?
 `
 
 const selectIssueComments = `
-SELECT i.*, u.uuid, u.picture FROM issue_comments i
+SELECT i.*, u.uuid, u.picture, u.name FROM issue_comments i
 JOIN users u ON u.uuid = i.author
 WHERE issue=? AND i.deleted_at IS NULL
 `
@@ -50,7 +50,8 @@ type IssueComment struct {
 	Author uuid.UUID `json:"-"`
 	Body   string    `json:"body"`
 
-	Picture string `db:"picture" json:"picture"`
+	Picture string `json:"picture"`
+	Name    string `json:"name"`
 }
 
 func (issueComment *IssueComment) Insert() error {

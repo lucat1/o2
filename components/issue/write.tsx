@@ -11,7 +11,7 @@ const Write = React.forwardRef((_, ref) => {
   const { account } = usePage()[1]
 
   return (
-    <Comment picture={account?.picture}>
+    <Comment picture={account?.picture} name={account?.name || 'login'}>
       <Box css={{ userSelect: 'none' }} py={1} px={4}>
         <Text color='bg.3' fontSize='xs'>
           {!account ? 'please sign in to comment' : 'about to comment'}:

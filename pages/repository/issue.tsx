@@ -77,7 +77,7 @@ export default ({ repository, owns, issue, comments }: Base<IssuesProps>) => {
       <Divider />
 
       {(comments || []).map((comment, i) => (
-        <Comment picture={comment.picture} key={i}>
+        <Comment name={comment.name} picture={comment.picture} key={i}>
           <Box css={{ userSelect: 'none' }} py={1} px={4}>
             <Text color='bg.3' fontSize='xs'>
               commented {elapsed(comment.commented)}:
