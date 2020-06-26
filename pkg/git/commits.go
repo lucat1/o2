@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/lucat1/o2/pkg/models"
 	"github.com/m1ome/randstr"
 )
 
@@ -31,9 +32,10 @@ type Commit struct {
 
 // CommitAuthor is the generated author of a commit with custom values
 type CommitAuthor struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
-	Date  string `json:"date"`
+	Name    string `json:"name"`
+	Picture string `json:"picture"`
+	Email   string `json:"email"`
+	Date    string `json:"date"`
 }
 
 // Commits is a struct holding the output of the log command with
@@ -86,6 +88,11 @@ func (branch Branch) Commits(offset, amount int) (Commits, error) {
 			if err := json.Unmarshal([]byte(part), &commit); err != nil {
 				return res, err
 			}
+			picture, err := models.GetPicture(commit.Author.Name)
+			if err != nil {
+				return res, err
+			}
+			commit.Author.Picture = picture
 
 			res.Commits = append(res.Commits, commit)
 

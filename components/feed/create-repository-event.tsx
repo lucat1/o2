@@ -5,7 +5,6 @@ import format from 'tinydate'
 import Heading from '../heading'
 import Link from '../link'
 import Text from '../text'
-import Commit from '../commit/commit'
 
 import { CreateRepositoryEvent as Event } from '../../types/data'
 
@@ -20,7 +19,8 @@ const CreateRepositoryEvent: React.FC<{ event: Event }> = ({ event }) => {
       </Text>
 
       <Heading fontWeight='normal'>
-        {event.owner} created a new repository at{' '}
+        <Link to={`/${event.owner}`}>{event.owner}</Link> created a new
+        repository at{' '}
         <Link to={base}>
           {event.owner}/{event.name}
         </Link>

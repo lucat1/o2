@@ -1,4 +1,4 @@
-import { Base as IBase } from './data'
+import { Base as IBase, User } from './data'
 
 export interface Repository {
   owner: string
@@ -45,4 +45,21 @@ export interface RepositoryProps {
   readme: string
   tree: Tree
   refs: Ref[]
+}
+
+export interface Issue {
+  opened: string
+  id: number
+  title: string
+
+  name: string
+}
+
+export interface Comment {
+  commented: string
+  edited: string
+  body: string
+
+  picture: string
+  name: string
 }

@@ -16,13 +16,7 @@ export const Tabs: React.FC<FlexProps> = props => (
       },
       props.css
     )}
-    sx={merge(
-      {
-        py: 2
-        // margin-bottom: 1em;
-      },
-      props.sx
-    )}
+    sx={merge({ py: 2 }, props.sx)}
   />
 )
 

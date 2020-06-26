@@ -11,8 +11,4 @@ const Logo: React.FC<React.SVGProps<SVGSVGElement>> = (
   </svg>
 )
 
-if (process.env.NODE_ENV !== 'production') {
-  Logo.displayName = 'Logo'
-}
-
 export default Logo

@@ -27,7 +27,10 @@ const Link: React.FC<LinkProps & { to?: string }> = ({ to, ...props }) => {
       css={merge(
         {
           'textDecoration': 'none',
-          ':hover': { textDecoration: 'underline' }
+          ':hover': { textDecoration: 'underline' },
+          '&[disabled]': {
+            textDecoration: 'none'
+          }
         },
         props.css
       )}

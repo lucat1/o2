@@ -15,15 +15,14 @@ const Commit: React.FC<{ commit: ICommit; base: string }> = ({
 }) => (
   <Container
     my={2}
-    px={2}
-    py={3}
+    p={2}
     css={{
       overflow: 'hidden',
       alignItems: 'center',
       justifyContent: 'space-between'
     }}
   >
-    <Flex>
+    <Flex alignItems='center'>
       <Link
         known
         css={{ outline: 'none', flexShrink: 0, display: 'flex' }}
@@ -37,7 +36,7 @@ const Commit: React.FC<{ commit: ICommit; base: string }> = ({
               ? `${commit.author.name}'s profile picture`
               : "commit author's profile picture"
           }
-          src={commit ? `${commit.author.picture}?s=75` : ''}
+          src={`/picture/${commit?.author?.picture}`}
         />
       </Link>
       <Flex

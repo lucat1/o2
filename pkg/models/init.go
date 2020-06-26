@@ -122,6 +122,55 @@ CREATE TABLE IF NOT EXISTS events (
 )
 `
 
+const createIssue = `
+create table if not exists issues (
+	id int not null auto_increment,
+	created_at datetime not null,
+	updated_at datetime not null,
+	deleted_at datetime null,
+
+	repository char(36) not null,
+	author char(36) not null,
+	relative_id int not null,
+	title varchar(255) not null,
+
+	primary key (id, repository, relative_id),
+	index (repository),
+
+	foreign key (repository)
+		references repositories(uuid)
+		on update cascade on delete cascade,
+
+	foreign key (author)
+		references users(uuid)
+		on update cascade on delete cascade
+)
+`
+
+const createIssueComment = `
+create table if not exists issue_comments (
+	id int not null auto_increment,
+	created_at datetime not null,
+	updated_at datetime not null,
+	deleted_at datetime null,
+	
+	issue int NOT NULL,
+	author CHAR(36) NOT NULL,
+	body TEXT NOT NULL,
+
+	primary key (id, issue),
+	index (id),
+
+	foreign key (issue)
+		references issues(id)
+		on update cascade on delete cascade,
+
+	foreign key (author)
+		references users(uuid)
+		on update cascade on delete cascade
+)
+`
+
 const collation = `
 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 `
@@ -161,5 +210,19 @@ func Init() {
 		log.Fatal().
 			Err(err).
 			Msg("Could not create the `events` table")
+	}
+
+	_, err = store.GetDB().Exec(createIssue + collation)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Could not create the `issues` table")
+	}
+
+	_, err = store.GetDB().Exec(createIssueComment + collation)
+	if err != nil {
+		log.Fatal().
+			Err(err).
+			Msg("Could not create the `issue_comments` table")
 	}
 }

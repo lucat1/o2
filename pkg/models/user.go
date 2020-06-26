@@ -67,6 +67,10 @@ const findUsers = `
 SELECT * FROM users WHERE %s=? AND deleted_at IS NULL
 `
 
+const findPicture = `
+SELECT picture FROM users WHERE name=? AND deleted_at IS NULL
+`
+
 // User is the database model for a user
 type User struct {
 	Base
@@ -169,6 +173,17 @@ func GetUser(field string, value interface{}) (user User, err error) {
 		&user,
 		fmt.Sprintf(findUsers+"LIMIT 1", field),
 		value,
+	)
+	return
+}
+
+// GetUser returns the first user found when querying the database
+// with the given field and value pair
+func GetPicture(name string) (picture string, err error) {
+	err = store.GetDB().Get(
+		&picture,
+		findPicture,
+		name,
 	)
 	return
 }
