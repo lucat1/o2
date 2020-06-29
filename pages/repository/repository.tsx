@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Flex } from 'rebass'
 import { Head, SSG } from '@quercia/quercia'
-import snarkdown from 'snarkdown'
+import mdown from '../../types/mdown'
 
 import Container from '../../components/base'
 import Text from '../../components/text'
@@ -58,7 +58,7 @@ export default ({
       {readme && (
         <Container
           sx={{ display: 'block', p: 5, overflow: 'auto' }}
-          dangerouslySetInnerHTML={{ __html: snarkdown(readme) }}
+          dangerouslySetInnerHTML={{ __html: mdown(readme) }}
         />
       )}
     </Layout>
