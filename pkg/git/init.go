@@ -5,13 +5,15 @@ import (
 	"os"
 	"path"
 
+	"github.com/go-git/go-git/v5"
 	"github.com/lucat1/o2/pkg/log"
 )
 
 // Init initializes a bare git repository at the given path
 func Init(uuid string) (*Repository, error) {
 	dir := GetPath(uuid)
-	_, err := Command("", "init", "--bare", dir)
+	// _, err := Command("", "init", "--bare", dir)
+	repo, err := git.PlainInit(dir, true)
 	if err != nil {
 		return nil, err
 	}
@@ -35,5 +37,5 @@ func Init(uuid string) (*Repository, error) {
 		log.Error().Err(err).Msg("Error while creating the `post-receive` hook in the new repo")
 	}
 
-	return Get(uuid)
+	return &Repository{repo}, nil
 }
