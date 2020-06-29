@@ -9,10 +9,10 @@ import (
 
 // Repository is the struct that holds the data for the repository
 type Repository struct {
+	repo *git.Repository
+
 	// TODO: remove
 	Path string
-
-	repo *git.Repository
 }
 
 // Get returns the repository object for the given bare repo
@@ -26,5 +26,5 @@ func Get(uuid string) (*Repository, error) {
 		return nil, err
 	}
 
-	return &Repository{repo}, nil
+	return &Repository{repo, path}, nil
 }

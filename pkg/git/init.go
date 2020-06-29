@@ -37,5 +37,5 @@ func Init(uuid string) (*Repository, error) {
 		log.Error().Err(err).Msg("Error while creating the `post-receive` hook in the new repo")
 	}
 
-	return &Repository{repo}, nil
+	return &Repository{repo, dir}, nil
 }
