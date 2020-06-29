@@ -21,6 +21,7 @@ var RepositoryRenderer render.Renderer = func(w http.ResponseWriter, r *http.Req
 	// ignore the error. If we get and error it means the repository has not commits
 	// but that's fine as the client will display the `how to push first commit` message
 	tree, _ := repo.Branch("master").Tree(".")
+	commitsCount, _ := repo.CountCommits()
 
 	// find a readme and read it if available
 	readme, valid := "", []string{"readme.md", "readme"}
@@ -75,6 +76,7 @@ var RepositoryRenderer render.Renderer = func(w http.ResponseWriter, r *http.Req
 		Composers: []data.Composer{
 			datas.RepositoryData(dbRepo),
 			data.WithAny("tree", tree),
+			data.WithAny("count", commitsCount),
 			data.WithAny("readme", readmeContent),
 			data.WithAny("refs", refs),
 		},
